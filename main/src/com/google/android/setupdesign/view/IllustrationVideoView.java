@@ -76,6 +76,20 @@ public class IllustrationVideoView extends TextureView
 
   private boolean prepared;
 
+  /**
+   * The visibility of this view as set by the user. This view combines this with {@link
+   * #isMediaPlayerLoading} to determine the final visibility.
+   */
+  private int visibility = View.VISIBLE;
+
+  /**
+   * Whether the media player is loading. This is used to hide this view to avoid a flash with a
+   * color different from the background while the media player is trying to render the first frame.
+   * Note: if this TextureView is not visible, it will never load the surface texture, and never
+   * play the video.
+   */
+  private boolean isMediaPlayerLoading = false;
+
   public IllustrationVideoView(Context context, AttributeSet attrs) {
     super(context, attrs);
     final TypedArray a =
@@ -186,7 +200,7 @@ public class IllustrationVideoView extends TextureView
     // Reattach only if it has been previously released
     SurfaceTexture surfaceTexture = getSurfaceTexture();
     if (surfaceTexture != null) {
-      setVisibility(View.INVISIBLE);
+      setIsMediaPlayerLoading(true);
       surface = new Surface(surfaceTexture);
     }
   }
@@ -199,6 +213,20 @@ public class IllustrationVideoView extends TextureView
     } else {
       release();
     }
+  }
+
+  @Override
+  public void setVisibility(int visibility) {
+    this.visibility = visibility;
+    if (isMediaPlayerLoading && visibility == View.VISIBLE) {
+      visibility = View.INVISIBLE;
+    }
+    super.setVisibility(visibility);
+  }
+
+  private void setIsMediaPlayerLoading(boolean isMediaPlayerLoading) {
+    this.isMediaPlayerLoading = isMediaPlayerLoading;
+    setVisibility(this.visibility);
   }
 
   /**
@@ -238,7 +266,8 @@ public class IllustrationVideoView extends TextureView
     if (surface != null) {
       createMediaPlayer();
     } else {
-      Log.w(TAG, "Surface creation failed");
+      // This can happen if this view hasn't been drawn yet
+      Log.i(TAG, "Surface is null");
     }
   }
 
@@ -248,8 +277,7 @@ public class IllustrationVideoView extends TextureView
 
   @Override
   public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
-    // Keep the view hidden until video starts
-    setVisibility(View.INVISIBLE);
+    setIsMediaPlayerLoading(true);
     initVideo();
   }
 
@@ -291,8 +319,7 @@ public class IllustrationVideoView extends TextureView
   @Override
   public boolean onInfo(MediaPlayer mp, int what, int extra) {
     if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-      // Video available, show view now
-      setVisibility(View.VISIBLE);
+      setIsMediaPlayerLoading(false);
       onRenderingStart();
     }
     return false;
