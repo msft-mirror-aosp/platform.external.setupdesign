@@ -15,8 +15,7 @@
   limitations under the License.
   -->
 
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:top="@dimen/sud_switch_thumb_margin"
         android:left="@dimen/sud_switch_thumb_margin"
@@ -26,7 +25,7 @@
             <size
                 android:height="@dimen/sud_switch_thumb_size"
                 android:width="@dimen/sud_switch_thumb_size" />
-            <solid android:color="?android:attr/colorAccent" tools:ignore="NewApi" />
+            <solid android:color="?android:attr/colorControlActivated" />
         </shape>
     </item>
 </layer-list>
