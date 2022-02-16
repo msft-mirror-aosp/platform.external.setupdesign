@@ -55,7 +55,9 @@
 
         <LinearLayout
             android:id="@+id/sud_landscape_content_area"
-            style="@style/SudLandContentContianerStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@dimen/sud_glif_land_content_area_weight"
             android:orientation="vertical">
 
             <com.google.android.setupdesign.view.BottomScrollView
@@ -63,8 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fillViewport="true"
-                android:scrollIndicators="?attr/sudScrollIndicators"
-                android:importantForAccessibility="no">
+                android:scrollIndicators="?attr/sudScrollIndicators">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -73,7 +74,6 @@
 
                     <FrameLayout
                         android:id="@+id/sud_layout_content"
-                        android:paddingTop="?attr/sudGlifContentPaddingTop"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
