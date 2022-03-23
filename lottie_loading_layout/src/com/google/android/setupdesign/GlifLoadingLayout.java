@@ -24,14 +24,15 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.Settings.Global;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -61,7 +62,6 @@ import com.google.android.setupcompat.partnerconfig.ResourceEntry;
 import com.google.android.setupcompat.template.FooterBarMixin;
 import com.google.android.setupcompat.util.BuildCompatUtils;
 import com.google.android.setupdesign.lottieloadinglayout.R;
-import com.google.android.setupdesign.util.LayoutStyler;
 import com.google.android.setupdesign.view.IllustrationVideoView;
 import java.io.InputStream;
 import java.lang.annotation.Retention;
@@ -89,11 +89,6 @@ public class GlifLoadingLayout extends GlifLayout {
   @VisibleForTesting @RawRes int customLottieResource = 0;
 
   @VisibleForTesting Map<KeyPath, SimpleColorFilter> customizationMap = new HashMap<>();
-
-  private AnimatorListener animatorListener;
-  private Runnable nextActionRunnable;
-  private boolean workFinished;
-  @VisibleForTesting public boolean runRunnable;
 
   @VisibleForTesting
   public List<LottieAnimationFinishListener> animationFinishListeners = new ArrayList<>();
@@ -130,6 +125,8 @@ public class GlifLoadingLayout extends GlifLayout {
             .obtainStyledAttributes(attrs, R.styleable.SudGlifLoadingLayout, defStyleAttr, 0);
     customLottieResource = a.getResourceId(R.styleable.SudGlifLoadingLayout_sudLottieRes, 0);
     String illustrationType = a.getString(R.styleable.SudGlifLoadingLayout_sudIllustrationType);
+    boolean usePartnerHeavyTheme =
+        a.getBoolean(R.styleable.SudGlifLoadingLayout_sudUsePartnerHeavyTheme, false);
     a.recycle();
 
     if (customLottieResource != 0) {
@@ -148,54 +145,16 @@ public class GlifLoadingLayout extends GlifLayout {
       }
     }
 
-    View view = findManagedViewById(R.id.sud_layout_loading_content);
-    if (view != null) {
-      if (shouldApplyPartnerResource()) {
-        LayoutStyler.applyPartnerCustomizationExtraPaddingStyle(view);
+    boolean applyPartnerHeavyThemeResource = shouldApplyPartnerResource() && usePartnerHeavyTheme;
+    if (applyPartnerHeavyThemeResource) {
+      View view = findManagedViewById(R.id.sud_layout_loading_content);
+      if (view != null) {
+        applyPartnerCustomizationContentPaddingTopStyle(view);
       }
-      tryApplyPartnerCustomizationContentPaddingTopStyle(view);
     }
 
     updateHeaderHeight();
     updateLandscapeMiddleHorizontalSpacing();
-
-    workFinished = false;
-    runRunnable = true;
-
-    LottieAnimationView lottieAnimationView = findLottieAnimationView();
-    if (lottieAnimationView != null) {
-      /*
-       * add the listener used to log animation end and check whether the
-       * work in background finish when repeated.
-       */
-      animatorListener =
-          new AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-              // Do nothing.
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-              Log.i(TAG, "Animate enable:" + isAnimateEnable() + ". Animation end.");
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-              // Do nothing.
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-              if (workFinished) {
-                Log.i(TAG, "Animation repeat but work finished, run the register runnable.");
-                finishRunnable(nextActionRunnable);
-                workFinished = false;
-              }
-            }
-          };
-      lottieAnimationView.addAnimatorListener(animatorListener);
-    }
   }
 
   @Override
@@ -204,21 +163,6 @@ public class GlifLoadingLayout extends GlifLayout {
 
     if (inflatedView instanceof LinearLayout) {
       updateContentPadding((LinearLayout) inflatedView);
-    }
-  }
-
-  private boolean isAnimateEnable() {
-    try {
-      if (Build.VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN_MR1) {
-        return Settings.Global.getFloat(
-                getContext().getContentResolver(), Settings.Global.ANIMATOR_DURATION_SCALE)
-            != 0f;
-      } else {
-        return true;
-      }
-
-    } catch (SettingNotFoundException e) {
-      return true;
     }
   }
 
@@ -307,7 +251,7 @@ public class GlifLoadingLayout extends GlifLayout {
     if (activity == null) {
       throw new NullPointerException("activity should not be null");
     }
-    registerAnimationFinishRunnable(activity::finish);
+    registerAnimationFinishRunnable(activity::finish, /* allowFinishWithMaximumDuration= */ true);
   }
 
   /**
@@ -345,7 +289,8 @@ public class GlifLoadingLayout extends GlifLayout {
           if (finish) {
             activity.finish();
           }
-        });
+        },
+        /* allowFinishWithMaximumDuration= */ true);
   }
 
   /**
@@ -387,16 +332,15 @@ public class GlifLoadingLayout extends GlifLayout {
           if (finish) {
             activity.finish();
           }
-        });
+        },
+        /* allowFinishWithMaximumDuration= */ true);
   }
 
   private void updateHeaderHeight() {
     View headerView = findManagedViewById(R.id.sud_header_scroll_view);
-    Configuration currentConfig = getResources().getConfiguration();
     if (headerView != null
         && PartnerConfigHelper.get(getContext())
-            .isPartnerConfigAvailable(PartnerConfig.CONFIG_LOADING_LAYOUT_HEADER_HEIGHT)
-        && currentConfig.orientation != Configuration.ORIENTATION_LANDSCAPE) {
+            .isPartnerConfigAvailable(PartnerConfig.CONFIG_LOADING_LAYOUT_HEADER_HEIGHT)) {
       float configHeaderHeight =
           PartnerConfigHelper.get(getContext())
               .getDimension(getContext(), PartnerConfig.CONFIG_LOADING_LAYOUT_HEADER_HEIGHT);
@@ -463,7 +407,7 @@ public class GlifLoadingLayout extends GlifLayout {
     linearLayout.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
   }
 
-  private static int getButtonContainerHeight(View view) {
+  private static final int getButtonContainerHeight(View view) {
     view.measure(
         MeasureSpec.makeMeasureSpec(view.getMeasuredWidth(), MeasureSpec.EXACTLY),
         MeasureSpec.makeMeasureSpec(view.getMeasuredHeight(), MeasureSpec.EXACTLY));
@@ -668,8 +612,7 @@ public class GlifLoadingLayout extends GlifLayout {
         String[] splitItem = item.split(":");
         if (splitItem.length == 2) {
           customizationMap.put(
-              new KeyPath("**", splitItem[0], "**"),
-              new SimpleColorFilter(Color.parseColor(splitItem[1])));
+              new KeyPath(splitItem[0]), new SimpleColorFilter(Color.parseColor(splitItem[1])));
         } else {
           Log.w(TAG, "incorrect format customization, value=" + item);
         }
@@ -704,17 +647,7 @@ public class GlifLoadingLayout extends GlifLayout {
   @Override
   protected View onInflateTemplate(LayoutInflater inflater, int template) {
     if (template == 0) {
-      boolean useFullScreenIllustration =
-          PartnerConfigHelper.get(getContext())
-              .getBoolean(
-                  getContext(),
-                  PartnerConfig.CONFIG_LOADING_LAYOUT_FULL_SCREEN_ILLUSTRATION_ENABLED,
-                  false);
-      if (useFullScreenIllustration) {
-        template = R.layout.sud_glif_fullscreen_loading_template;
-      } else {
-        template = R.layout.sud_glif_loading_template;
-      }
+      template = R.layout.sud_glif_loading_template;
     }
     return inflateTemplate(inflater, R.style.SudThemeGlif_Light, template);
   }
@@ -794,31 +727,38 @@ public class GlifLoadingLayout extends GlifLayout {
   }
 
   /**
-   * Register the {@link Runnable} as a callback that will be performed when the animation finished.
+   * Register the {@link Runnable} as a callback class that will be perform when animation finished.
    */
   public void registerAnimationFinishRunnable(Runnable runnable) {
-    workFinished = true;
-    nextActionRunnable = runnable;
-    synchronized (this) {
-      runRunnable = true;
-      animationFinishListeners.add(
-          new LottieAnimationFinishListener(this, () -> finishRunnable(runnable)));
-    }
+    registerAnimationFinishRunnable(runnable, /* allowFinishWithMaximumDuration= */ false);
   }
 
-  @VisibleForTesting
-  public synchronized void finishRunnable(Runnable runnable) {
-    // to avoid run the runnable twice.
-    if (runRunnable) {
-      runnable.run();
+  /**
+   * Register the {@link Runnable} as a callback class that will be perform when animation finished.
+   * {@code allowFinishWithMaximumDuration} to allow the animation finish advanced by {@link
+   * PartnerConfig#CONFIG_PROGRESS_ILLUSTRATION_DISPLAY_MINIMUM_MS} config. The {@code runnable}
+   * will be performed if the Lottie animation finish played and the duration of Lottie animation
+   * less than @link PartnerConfig#CONFIG_PROGRESS_ILLUSTRATION_DISPLAY_MINIMUM_MS} config.
+   */
+  public void registerAnimationFinishRunnable(
+      Runnable runnable, boolean allowFinishWithMaximumDuration) {
+    if (allowFinishWithMaximumDuration) {
+      int delayMs =
+          PartnerConfigHelper.get(getContext())
+              .getInteger(
+                  getContext(), PartnerConfig.CONFIG_PROGRESS_ILLUSTRATION_DISPLAY_MINIMUM_MS, 0);
+      animationFinishListeners.add(new LottieAnimationFinishListener(this, runnable, delayMs));
+    } else {
+      animationFinishListeners.add(
+          new LottieAnimationFinishListener(this, runnable, /* finishWithMinimumDuration= */ 0L));
     }
-    runRunnable = false;
   }
 
   /** The listener that to indicate the playing status for lottie animation. */
   @VisibleForTesting
   public static class LottieAnimationFinishListener {
 
+    private final Handler handler;
     private final Runnable runnable;
     private final GlifLoadingLayout glifLoadingLayout;
     private final LottieAnimationView lottieAnimationView;
@@ -848,28 +788,22 @@ public class GlifLoadingLayout extends GlifLayout {
         };
 
     @VisibleForTesting
-    LottieAnimationFinishListener(GlifLoadingLayout glifLoadingLayout, Runnable runnable) {
+    LottieAnimationFinishListener(
+        GlifLoadingLayout glifLoadingLayout, Runnable runnable, long finishWithMinimumDuration) {
       if (runnable == null) {
         throw new NullPointerException("Runnable can not be null");
       }
       this.glifLoadingLayout = glifLoadingLayout;
       this.runnable = runnable;
+      this.handler = new Handler(Looper.getMainLooper());
       this.lottieAnimationView = glifLoadingLayout.findLottieAnimationView();
 
-      boolean shouldAnimationBeFinished =
-          PartnerConfigHelper.get(glifLoadingLayout.getContext())
-              .getBoolean(
-                  glifLoadingLayout.getContext(),
-                  PartnerConfig.CONFIG_LOADING_LAYOUT_WAIT_FOR_ANIMATION_FINISHED,
-                  true);
-      // TODO: add test case for verify the case which isAnimating returns true.
-      if (glifLoadingLayout.isLottieLayoutVisible()
-          && lottieAnimationView.isAnimating()
-          && !isZeroAnimatorDurationScale()
-          && shouldAnimationBeFinished) {
-        Log.i(TAG, "Register animation finish.");
-        lottieAnimationView.addAnimatorListener(animatorListener);
+      if (glifLoadingLayout.isLottieLayoutVisible() && !isZeroAnimatorDurationScale()) {
         lottieAnimationView.setRepeatCount(0);
+        lottieAnimationView.addAnimatorListener(animatorListener);
+        if (finishWithMinimumDuration > 0) {
+          handler.postDelayed(this::onAnimationFinished, finishWithMinimumDuration);
+        }
       } else {
         onAnimationFinished();
       }
@@ -879,9 +813,8 @@ public class GlifLoadingLayout extends GlifLayout {
     boolean isZeroAnimatorDurationScale() {
       try {
         if (Build.VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN_MR1) {
-          return Settings.Global.getFloat(
-                  glifLoadingLayout.getContext().getContentResolver(),
-                  Settings.Global.ANIMATOR_DURATION_SCALE)
+          return Global.getFloat(
+              glifLoadingLayout.getContext().getContentResolver(), Global.ANIMATOR_DURATION_SCALE)
               == 0f;
         } else {
           return false;
@@ -894,6 +827,7 @@ public class GlifLoadingLayout extends GlifLayout {
 
     @VisibleForTesting
     public void onAnimationFinished() {
+      handler.removeCallbacks(runnable);
       runnable.run();
       if (lottieAnimationView != null) {
         lottieAnimationView.removeAnimatorListener(animatorListener);
