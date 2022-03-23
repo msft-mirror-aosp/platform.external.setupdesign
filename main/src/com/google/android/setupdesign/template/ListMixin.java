@@ -52,6 +52,7 @@ public class ListMixin implements Mixin {
 
   private int dividerInsetStart;
   private int dividerInsetEnd;
+
   /** @param layout The layout this mixin belongs to. */
   public ListMixin(
       @NonNull TemplateLayout layout, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
@@ -67,8 +68,8 @@ public class ListMixin implements Mixin {
       setAdapter(new ItemAdapter(inflated));
     }
 
-    boolean isDividerDisplay = a.getBoolean(R.styleable.SudListMixin_sudDividerShown, true);
-    if (isDividerShown(context, isDividerDisplay)) {
+    boolean isDividerDisplay = isDividerShown(context);
+    if (isDividerDisplay) {
       int dividerInset = a.getDimensionPixelSize(R.styleable.SudListMixin_sudDividerInset, -1);
       if (dividerInset != -1) {
         setDividerInset(dividerInset);
@@ -78,7 +79,7 @@ public class ListMixin implements Mixin {
         int dividerInsetEnd =
             a.getDimensionPixelSize(R.styleable.SudListMixin_sudDividerInsetEnd, 0);
 
-        if (PartnerStyleHelper.shouldApplyPartnerResource(templateLayout)) {
+        if (PartnerStyleHelper.shouldApplyPartnerHeavyThemeResource(templateLayout)) {
           if (PartnerConfigHelper.get(context)
               .isPartnerConfigAvailable(PartnerConfig.CONFIG_LAYOUT_MARGIN_START)) {
             dividerInsetStart =
@@ -97,22 +98,23 @@ public class ListMixin implements Mixin {
         setDividerInsets(dividerInsetStart, dividerInsetEnd);
       }
     }
-    else{
-      getListView().setDivider(null);
-    }
     a.recycle();
   }
 
-  private boolean isDividerShown(Context context, boolean isDividerDisplay) {
+  private boolean isDividerShown(Context context) {
     if (PartnerStyleHelper.shouldApplyPartnerResource(templateLayout)) {
       if (PartnerConfigHelper.get(context)
           .isPartnerConfigAvailable(PartnerConfig.CONFIG_ITEMS_DIVIDER_SHOWN)) {
-        isDividerDisplay =
+        boolean isDividerDisplayed =
             PartnerConfigHelper.get(context)
                 .getBoolean(context, PartnerConfig.CONFIG_ITEMS_DIVIDER_SHOWN, true);
+        if (!isDividerDisplayed) {
+          getListView().setDivider(null);
+          return isDividerDisplayed;
+        }
       }
     }
-    return isDividerDisplay;
+    return true;
   }
 
   /**
