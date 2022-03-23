@@ -71,14 +71,12 @@ public final class ThemeHelper {
   public static final String THEME_GLIF_V3_LIGHT = "glif_v3_light";
 
   /**
-   * Passed in a setup wizard intent as {@link WizardManagerHelper#EXTRA_THEME}. This is the dark
-   * variant of the theme used in setup wizard for T.
+   * Placeholder, not avirailed yet.
    */
   public static final String THEME_GLIF_V4 = "glif_v4";
 
   /**
-   * Passed in a setup wizard intent as {@link WizardManagerHelper#EXTRA_THEME}. This is the default
-   * theme used in setup wizard for T.
+   * Placeholder, not avirailed yet.
    */
   public static final String THEME_GLIF_V4_LIGHT = "glif_v4_light";
 
@@ -168,14 +166,16 @@ public final class ThemeHelper {
     return PartnerConfigHelper.shouldApplyExtendedPartnerConfig(context);
   }
 
-  /** Returns true if the SetupWizard is flow enabled "Material You(Glifv4)" style. */
-  public static boolean shouldApplyMaterialYouStyle(@NonNull Context context) {
-    return PartnerConfigHelper.shouldApplyMaterialYouStyle(context);
+  /**
+   * Returns {@code true} if the partner provider of SetupWizard is ready to support dynamic color.
+   */
+  public static boolean isSetupWizardDynamicColorEnabled(@NonNull Context context) {
+    return PartnerConfigHelper.isSetupWizardDynamicColorEnabled(context);
   }
 
   /** Returns {@code true} if this {@code context} should apply dynamic color. */
   public static boolean shouldApplyDynamicColor(@NonNull Context context) {
-    return PartnerConfigHelper.isSetupWizardDynamicColorEnabled(context);
+    return shouldApplyExtendedPartnerConfig(context) && isSetupWizardDynamicColorEnabled(context);
   }
 
   /**
@@ -237,12 +237,12 @@ public final class ThemeHelper {
 
   /** Returns {@code true} if the dynamic color is set. */
   public static boolean trySetDynamicColor(@NonNull Context context) {
-    if (!BuildCompatUtils.isAtLeastS()) {
-      LOG.w("Dynamic color require platform version at least S.");
+    if (!shouldApplyExtendedPartnerConfig(context)) {
+      LOG.w("SetupWizard does not supports the extended partner configs.");
       return false;
     }
 
-    if (!shouldApplyDynamicColor(context)) {
+    if (!isSetupWizardDynamicColorEnabled(context)) {
       LOG.w("SetupWizard does not support the dynamic color or supporting status unknown.");
       return false;
     }
