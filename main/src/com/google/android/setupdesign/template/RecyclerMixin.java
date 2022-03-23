@@ -17,7 +17,6 @@
 package com.google.android.setupdesign.template;
 
 import android.content.Context;
-import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -27,7 +26,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -92,31 +90,22 @@ public class RecyclerMixin implements Mixin {
       header = ((HeaderRecyclerView) recyclerView).getHeader();
     }
 
-    isDividerDisplay = isShowItemsDivider(layout.getContext());
+    isDividerDisplay = isShowItemsDivider();
     if (isDividerDisplay) {
       this.recyclerView.addItemDecoration(dividerDecoration);
     }
   }
 
-  private boolean isShowItemsDivider(Context context) {
-    // Get the dividershown attribute value from theme
-    TypedValue typedValue = new TypedValue();
-    Theme theme = context.getTheme();
-    theme.resolveAttribute(R.attr.sudDividerShown, typedValue, true);
-    boolean isShownDivider = (typedValue.data != 0);
-
+  private boolean isShowItemsDivider() {
     // Skips to add item decoration if config flag is false.
     if (PartnerStyleHelper.shouldApplyPartnerResource(templateLayout)) {
       if (PartnerConfigHelper.get(recyclerView.getContext())
           .isPartnerConfigAvailable(PartnerConfig.CONFIG_ITEMS_DIVIDER_SHOWN)) {
         return PartnerConfigHelper.get(recyclerView.getContext())
-            .getBoolean(
-                recyclerView.getContext(),
-                PartnerConfig.CONFIG_ITEMS_DIVIDER_SHOWN,
-                isShownDivider);
+            .getBoolean(recyclerView.getContext(), PartnerConfig.CONFIG_ITEMS_DIVIDER_SHOWN, true);
       }
     }
-    return isShownDivider;
+    return true;
   }
 
   /**
@@ -165,7 +154,7 @@ public class RecyclerMixin implements Mixin {
       int dividerInsetEnd =
           a.getDimensionPixelSize(R.styleable.SudRecyclerMixin_sudDividerInsetEnd, 0);
 
-      if (PartnerStyleHelper.shouldApplyPartnerResource(templateLayout)) {
+      if (PartnerStyleHelper.shouldApplyPartnerHeavyThemeResource(templateLayout)) {
         if (PartnerConfigHelper.get(context)
             .isPartnerConfigAvailable(PartnerConfig.CONFIG_LAYOUT_MARGIN_START)) {
           dividerInsetStart =
@@ -280,11 +269,6 @@ public class RecyclerMixin implements Mixin {
     return dividerInsetEnd;
   }
 
-  /** Remove the divider inset from this RecyclerView. */
-  public void removeDividerInset() {
-    recyclerView.removeItemDecoration(dividerDecoration);
-  }
-
   private void updateDivider() {
     boolean shouldUpdate = true;
     if (Build.VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
@@ -309,10 +293,6 @@ public class RecyclerMixin implements Mixin {
   /** @return The drawable used as the divider. */
   public Drawable getDivider() {
     return divider;
-  }
-
-  public boolean hasDivider() {
-    return isDividerDisplay;
   }
 
   /**
