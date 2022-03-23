@@ -17,21 +17,6 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Device default style -->
-
-    <!-- Copy from Widget.DeviceDefault.Button.ButtonBar.AlertDialog -->
-    <!-- Dialog button bar width -->
-    <dimen name="sud_alert_dialog_button_bar_width">64dp</dimen>
-    <!-- Dialog button bar height -->
-    <dimen name="sud_alert_dialog_button_bar_height">48dip</dimen>
-
-    <!-- Dialog button bar button text size -->
-    <dimen name="sud_alert_dialog_button_bar_button_text_size">14sp</dimen>
-    <!-- Dialog title text size -->
-    <dimen name="sud_alert_dialog_title_text_size">20sp</dimen>
-
-    <dimen name="sud_alert_dialog_title_text_size_material_you">24sp</dimen>
-
     <!-- General -->
     <dimen name="sud_layout_margin_sides">40dp</dimen>
 
@@ -52,8 +37,6 @@
     <dimen name="sud_glif_margin_start">24dp</dimen>
     <dimen name="sud_glif_margin_end">24dp</dimen>
     <dimen name="sud_glif_icon_margin_top">56dp</dimen>
-    <dimen name="sud_glif_content_padding_top">0dp</dimen>
-    <dimen name="sud_horizontal_icon_height">32dp</dimen>
 
     <dimen name="sud_glif_alert_dialog_corner_radius">8dp</dimen>
     <dimen name="sud_glif_v3_button_corner_radius">4dp</dimen>
@@ -171,35 +154,6 @@
     <dimen name="sud_items_padding_top">15dp</dimen>
     <dimen name="sud_items_padding_bottom">15dp</dimen>
 
-    <!-- Page Margins Material You -->
-    <!-- Default margins start are 40dp in portrait mode for the large screen. However, If here
-         set this value, it cannot be overwrited by a smaller value from partner config. So here
-         set to 24dp and rewritten to 40dp through partner config the partner config
-         "setup_design_layout_margin_start" for glifv4 default margins. -->
-    <!-- TODO: b/221404901 to remove this limitation -->
-    <dimen name="sud_glif_margin_start_material_you">24dp</dimen>
-    <dimen name="sud_glif_margin_end_material_you">24dp</dimen>
-
-    <!-- Header Area Material You -->
-    <dimen name="sud_header_container_margin_bottom_material_you">24dp</dimen>
-    <dimen name="sud_glif_header_title_size_material_you">36sp</dimen>
-    <dimen name="sud_glif_header_title_margin_top_material_you">24dp</dimen>
-    <dimen name="sud_glif_header_title_margin_bottom_material_you">0dp</dimen>
-    <dimen name="sud_glif_description_text_size_material_you">18sp</dimen>
-    <dimen name="sud_glif_description_margin_top_material_you">24dp</dimen>
-    <dimen name="sud_glif_description_margin_bottom_material_you">0dp</dimen>
-
-    <dimen name="sud_glif_icon_margin_top_material_you">32dp</dimen>
-    <dimen name="sud_glif_icon_max_height_material_you">48dp</dimen>
-
-    <!-- Items Material You -->
-    <dimen name="sud_items_padding_top_material_you">18dp</dimen>
-    <dimen name="sud_items_padding_bottom_material_you">18dp</dimen>
-    <dimen name="sud_items_title_text_size_material_you">20sp</dimen>
-    <dimen name="sud_items_summary_text_size_material_you">14sp</dimen>
-    <dimen name="sud_items_summary_margin_top_material_you">4dp</dimen>
-    <dimen name="sud_items_min_height_material_you">72dp</dimen>
-
     <!-- Ignore UnusedResources: can be used by clients -->
     <dimen name="sud_items_icon_divider_inset" tools:ignore="UnusedResources">88dp</dimen>
     <!-- Ignore UnusedResources: can be used by clients -->
@@ -227,15 +181,12 @@
     <!-- Progress bar -->
     <!-- The margin to compensate for the padding built-in to the widget itself -->
     <dimen name="sud_progress_bar_margin_vertical">-7dp</dimen>
-    <dimen name="sud_progress_bar_margin_top">-7dp</dimen>
-    <dimen name="sud_progress_bar_margin_bottom">-7dp</dimen>
     <dimen name="sud_glif_progress_bar_margin_vertical">7dp</dimen>
     <dimen name="sud_glif_progress_bar_padding">40dp</dimen>
 
     <!-- Edit Text dimensions -->
     <dimen name="sud_edit_text_min_height">56dp</dimen>
     <dimen name="sud_edit_text_padding_horizontal">12dp</dimen>
-    <dimen name="sud_edit_text_corner_radius">28dp</dimen>
 
     <!-- SwitchItem -->
     <dimen name="sud_switch_padding_start">16dp</dimen>
