@@ -21,12 +21,12 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import androidx.annotation.VisibleForTesting;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.annotation.VisibleForTesting;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
@@ -61,7 +61,6 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
 
   private final ItemHierarchy itemHierarchy;
   @VisibleForTesting public final boolean applyPartnerHeavyThemeResource;
-  @VisibleForTesting public final boolean useFullDynamicColor;
   private OnItemSelectedListener listener;
 
   public RecyclerItemAdapter(ItemHierarchy hierarchy) {
@@ -69,15 +68,7 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
   }
 
   public RecyclerItemAdapter(ItemHierarchy hierarchy, boolean applyPartnerHeavyThemeResource) {
-    this(hierarchy, applyPartnerHeavyThemeResource, /* useFullDynamicColor= */ false);
-  }
-
-  public RecyclerItemAdapter(
-      ItemHierarchy hierarchy,
-      boolean applyPartnerHeavyThemeResource,
-      boolean useFullDynamicColor) {
     this.applyPartnerHeavyThemeResource = applyPartnerHeavyThemeResource;
-    this.useFullDynamicColor = useFullDynamicColor;
     itemHierarchy = hierarchy;
     itemHierarchy.registerObserver(this);
   }
@@ -127,9 +118,7 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
       } else {
         background = view.getBackground();
         if (background == null) {
-          // If full dynamic color enabled which means this activity is running outside of setup
-          // flow, the colors should refer to R.style.SudFullDynamicColorThemeGlifV3.
-          if (applyPartnerHeavyThemeResource && !useFullDynamicColor) {
+          if (applyPartnerHeavyThemeResource) {
             int color =
                 PartnerConfigHelper.get(view.getContext())
                     .getColor(view.getContext(), PartnerConfig.CONFIG_LAYOUT_BACKGROUND_COLOR);

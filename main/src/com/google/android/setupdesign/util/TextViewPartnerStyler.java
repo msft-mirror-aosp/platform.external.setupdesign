@@ -18,12 +18,10 @@ package com.google.android.setupdesign.util;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.TypedValue;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import android.util.TypedValue;
+import android.widget.TextView;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 
@@ -39,9 +37,7 @@ final class TextViewPartnerStyler {
     }
 
     Context context = textView.getContext();
-    if (textPartnerConfigs.getTextColorConfig() != null
-        && PartnerConfigHelper.get(context)
-            .isPartnerConfigAvailable(textPartnerConfigs.getTextColorConfig())) {
+    if (textPartnerConfigs.getTextColorConfig() != null) {
       int textColor =
           PartnerConfigHelper.get(context)
               .getColor(context, textPartnerConfigs.getTextColorConfig());
@@ -50,10 +46,7 @@ final class TextViewPartnerStyler {
       }
     }
 
-    if (textPartnerConfigs.getTextLinkedColorConfig() != null
-        && PartnerConfigHelper.get(context)
-            .isPartnerConfigAvailable(textPartnerConfigs.getTextLinkedColorConfig())
-        && !PartnerStyleHelper.useDynamicColor(textView)) {
+    if (textPartnerConfigs.getTextLinkedColorConfig() != null) {
       int linkTextColor =
           PartnerConfigHelper.get(context)
               .getColor(context, textPartnerConfigs.getTextLinkedColorConfig());
@@ -62,9 +55,7 @@ final class TextViewPartnerStyler {
       }
     }
 
-    if (textPartnerConfigs.getTextSizeConfig() != null
-        && PartnerConfigHelper.get(context)
-            .isPartnerConfigAvailable(textPartnerConfigs.getTextSizeConfig())) {
+    if (textPartnerConfigs.getTextSizeConfig() != null) {
       float textSize =
           PartnerConfigHelper.get(context)
               .getDimension(context, textPartnerConfigs.getTextSizeConfig(), 0);
@@ -73,9 +64,7 @@ final class TextViewPartnerStyler {
       }
     }
 
-    if (textPartnerConfigs.getTextFontFamilyConfig() != null
-        && PartnerConfigHelper.get(context)
-            .isPartnerConfigAvailable(textPartnerConfigs.getTextFontFamilyConfig())) {
+    if (textPartnerConfigs.getTextFontFamilyConfig() != null) {
       String fontFamilyName =
           PartnerConfigHelper.get(context)
               .getString(context, textPartnerConfigs.getTextFontFamilyConfig());
@@ -83,54 +72,6 @@ final class TextViewPartnerStyler {
       if (font != null) {
         textView.setTypeface(font);
       }
-    }
-
-    if (textPartnerConfigs.getTextMarginTop() != null
-        || textPartnerConfigs.getTextMarginBottom() != null) {
-      int topMargin;
-      int bottomMargin;
-      final ViewGroup.LayoutParams lp = textView.getLayoutParams();
-      if (lp instanceof LinearLayout.LayoutParams) {
-        final LinearLayout.LayoutParams mlp = (LinearLayout.LayoutParams) lp;
-        if (textPartnerConfigs.getTextMarginTop() != null
-            && PartnerConfigHelper.get(context)
-                .isPartnerConfigAvailable(textPartnerConfigs.getTextMarginTop())) {
-          topMargin =
-              (int)
-                  PartnerConfigHelper.get(context)
-                      .getDimension(context, textPartnerConfigs.getTextMarginTop());
-        } else {
-          topMargin = mlp.topMargin;
-        }
-
-        if (textPartnerConfigs.getTextMarginBottom() != null
-            && PartnerConfigHelper.get(context)
-                .isPartnerConfigAvailable(textPartnerConfigs.getTextMarginBottom())) {
-          bottomMargin =
-              (int)
-                  PartnerConfigHelper.get(context)
-                      .getDimension(context, textPartnerConfigs.getTextMarginBottom());
-        } else {
-          bottomMargin = mlp.bottomMargin;
-        }
-        mlp.setMargins(mlp.leftMargin, topMargin, mlp.rightMargin, bottomMargin);
-        textView.setLayoutParams(lp);
-      }
-    }
-    textView.setGravity(textPartnerConfigs.getTextGravity());
-  }
-
-  /**
-   * Applies given partner configurations {@code textPartnerConfigs} to the {@code textView}.
-   *
-   * @param textView A text view would apply the gravity
-   * @param textPartnerConfigs A partner conflagrations contains text gravity would be set
-   */
-  public static void applyPartnerCustomizationLightStyle(
-      @NonNull TextView textView, @NonNull TextPartnerConfigs textPartnerConfigs) {
-
-    if (textView == null || textPartnerConfigs == null) {
-      return;
     }
 
     textView.setGravity(textPartnerConfigs.getTextGravity());
@@ -142,8 +83,6 @@ final class TextViewPartnerStyler {
     private final PartnerConfig textLinkedColorConfig;
     private final PartnerConfig textSizeConfig;
     private final PartnerConfig textFontFamilyConfig;
-    private final PartnerConfig textMarginTopConfig;
-    private final PartnerConfig textMarginBottomConfig;
     private final int textGravity;
 
     public TextPartnerConfigs(
@@ -151,15 +90,11 @@ final class TextViewPartnerStyler {
         @Nullable PartnerConfig textLinkedColorConfig,
         @Nullable PartnerConfig textSizeConfig,
         @Nullable PartnerConfig textFontFamilyConfig,
-        @Nullable PartnerConfig textMarginTopConfig,
-        @Nullable PartnerConfig textMarginBottomConfig,
         int textGravity) {
       this.textColorConfig = textColorConfig;
       this.textLinkedColorConfig = textLinkedColorConfig;
       this.textSizeConfig = textSizeConfig;
       this.textFontFamilyConfig = textFontFamilyConfig;
-      this.textMarginTopConfig = textMarginTopConfig;
-      this.textMarginBottomConfig = textMarginBottomConfig;
       this.textGravity = textGravity;
     }
 
@@ -177,14 +112,6 @@ final class TextViewPartnerStyler {
 
     public PartnerConfig getTextFontFamilyConfig() {
       return textFontFamilyConfig;
-    }
-
-    public PartnerConfig getTextMarginTop() {
-      return textMarginTopConfig;
-    }
-
-    public PartnerConfig getTextMarginBottom() {
-      return textMarginBottomConfig;
     }
 
     public int getTextGravity() {

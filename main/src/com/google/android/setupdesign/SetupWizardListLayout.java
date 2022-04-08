@@ -59,10 +59,6 @@ public class SetupWizardListLayout extends SetupWizardLayout {
   }
 
   private void init(AttributeSet attrs, int defStyleAttr) {
-    if (isInEditMode()) {
-      return;
-    }
-
     listMixin = new ListMixin(this, attrs, defStyleAttr);
     registerMixin(ListMixin.class, listMixin);
 

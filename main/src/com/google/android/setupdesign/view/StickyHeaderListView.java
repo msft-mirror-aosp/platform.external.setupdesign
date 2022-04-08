@@ -73,10 +73,6 @@ public class StickyHeaderListView extends ListView {
   }
 
   private void init(AttributeSet attrs, int defStyleAttr) {
-    if (isInEditMode()) {
-      return;
-    }
-
     final TypedArray a =
         getContext()
             .obtainStyledAttributes(attrs, R.styleable.SudStickyHeaderListView, defStyleAttr, 0);

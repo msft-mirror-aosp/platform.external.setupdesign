@@ -20,11 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import com.google.android.setupdesign.DividerItemDecoration;
 
-/**
- * ViewHolder for the RecyclerItemAdapter that describes an item view and metadata about its place
- * within the RecyclerView.
- */
-public class ItemViewHolder extends RecyclerView.ViewHolder
+class ItemViewHolder extends RecyclerView.ViewHolder
     implements DividerItemDecoration.DividedViewHolder {
 
   private boolean isEnabled;

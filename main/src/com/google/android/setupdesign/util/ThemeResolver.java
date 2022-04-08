@@ -86,17 +86,6 @@ public class ThemeResolver {
   }
 
   /**
-   * Returns the style for the given SetupWizard intent. If the specified intent does not include
-   * the intent extra {@link WizardManagerHelper#EXTRA_THEME}, the default theme will be returned
-   * instead. Note that the default theme is returned without processing -- it may not be a DayNight
-   * theme even if {@link #useDayNight} is true.
-   */
-  @StyleRes
-  public int resolve(Intent intent, boolean suppressDayNight) {
-    return resolve(intent.getStringExtra(WizardManagerHelper.EXTRA_THEME), suppressDayNight);
-  }
-
-  /**
    * Returns the style for the given string theme. If the specified string theme is older than the
    * oldest supported theme, the default will be returned instead. Note that the default theme is
    * returned without processing -- it may not be a DayNight theme even if {@link #useDayNight} is
@@ -139,11 +128,7 @@ public class ThemeResolver {
 
   /** Reads the theme from the intent, and applies the resolved theme to the activity. */
   public void applyTheme(Activity activity) {
-    activity.setTheme(
-        resolve(
-            activity.getIntent(),
-            /* suppressDayNight= */ WizardManagerHelper.isAnySetupWizard(activity.getIntent())
-                && !ThemeHelper.isSetupWizardDayNightEnabled(activity)));
+    activity.setTheme(resolve(activity.getIntent()));
   }
 
   /**

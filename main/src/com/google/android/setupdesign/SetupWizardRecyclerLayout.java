@@ -60,10 +60,6 @@ public class SetupWizardRecyclerLayout extends SetupWizardLayout {
   }
 
   private void init(AttributeSet attrs, int defStyleAttr) {
-    if (isInEditMode()) {
-      return;
-    }
-
     recyclerMixin.parseAttributes(attrs, defStyleAttr);
     registerMixin(RecyclerMixin.class, recyclerMixin);
 
