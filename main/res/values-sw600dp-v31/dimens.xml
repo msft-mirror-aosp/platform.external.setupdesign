@@ -19,24 +19,22 @@
 
     <!-- General -->
     <!-- Calculated by (sud_glif_margin_start - 4dp internal padding of button) -->
-    <dimen name="sud_glif_button_margin_end">60dp</dimen>
+    <dimen name="sud_glif_button_margin_end">92dp</dimen>
     <!-- Calculated by (sud_glif_margin_start - sud_glif_button_padding) -->
-    <dimen name="sud_glif_button_margin_start">48dp</dimen>
+    <dimen name="sud_glif_button_margin_start">80dp</dimen>
     <!-- Calculated by (sud_glif_margin_start - sud_glif_button_padding) -->
-    <dimen name="sud_glif_footer_padding_start">48dp</dimen>
+    <dimen name="sud_glif_footer_padding_start">80dp</dimen>
     <!-- Calculated by (sud_glif_margin_end - 4dp internal padding of button) -->
-    <dimen name="sud_glif_footer_padding_end">60dp</dimen>
-    <!-- Default margin start/end should be 96dp in portrait mode for the large screen. However, If
-         you set this value, you can no longer overwrite a smaller value from partner config. So
-         here is set to 64dp and rewritten to 96dp through partner config. -->
-    <dimen name="sud_glif_margin_start">64dp</dimen>
-    <dimen name="sud_glif_margin_end">64dp</dimen>
+    <dimen name="sud_glif_footer_padding_end">92dp</dimen>
+
+    <dimen name="sud_glif_margin_start">96dp</dimen>
+    <dimen name="sud_glif_margin_end">96dp</dimen>
 
     <dimen name="sud_glif_footer_min_height">72dp</dimen>
     <dimen name="sud_glif_content_padding_top">0dp</dimen>
 
     <dimen name="sud_header_title_size">24sp</dimen>
-    <dimen name="sud_items_glif_icon_divider_inset">112dp</dimen>
-    <dimen name="sud_items_glif_text_divider_inset">64dp</dimen>
+    <dimen name="sud_items_glif_icon_divider_inset">144dp</dimen>
+    <dimen name="sud_items_glif_text_divider_inset">96dp</dimen>
 
 </resources>
