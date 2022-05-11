@@ -44,6 +44,7 @@ public class Item extends AbstractItem {
   private int layoutRes;
   @Nullable private CharSequence summary;
   @Nullable private CharSequence title;
+  @Nullable private CharSequence contentDescription;
   private boolean visible = true;
   @ColorInt private int iconTint = Color.TRANSPARENT;
   private int iconGravity = Gravity.CENTER_VERTICAL;
@@ -60,10 +61,12 @@ public class Item extends AbstractItem {
     icon = a.getDrawable(R.styleable.SudItem_android_icon);
     title = a.getText(R.styleable.SudItem_android_title);
     summary = a.getText(R.styleable.SudItem_android_summary);
+    contentDescription = a.getText(R.styleable.SudItem_android_contentDescription);
     layoutRes = a.getResourceId(R.styleable.SudItem_android_layout, getDefaultLayoutResource());
     visible = a.getBoolean(R.styleable.SudItem_android_visible, true);
     iconTint = a.getColor(R.styleable.SudItem_sudIconTint, Color.TRANSPARENT);
     iconGravity = a.getInt(R.styleable.SudItem_sudIconGravity, Gravity.CENTER_VERTICAL);
+
     a.recycle();
   }
 
@@ -143,6 +146,16 @@ public class Item extends AbstractItem {
     return title;
   }
 
+  @Nullable
+  public CharSequence getContentDescription() {
+    return contentDescription;
+  }
+
+  public void setContentDescription(@Nullable CharSequence contentDescription) {
+    this.contentDescription = contentDescription;
+    notifyItemChanged();
+  }
+
   public void setVisible(boolean visible) {
     if (this.visible == visible) {
       return;
@@ -159,6 +172,10 @@ public class Item extends AbstractItem {
     return visible;
   }
 
+  private boolean hasSummary(CharSequence summary) {
+    return summary != null && summary.length() > 0;
+  }
+
   @Override
   public int getViewId() {
     return getId();
@@ -171,12 +188,14 @@ public class Item extends AbstractItem {
 
     TextView summaryView = (TextView) view.findViewById(R.id.sud_items_summary);
     CharSequence summary = getSummary();
-    if (summary != null && summary.length() > 0) {
+    if (hasSummary(summary)) {
       summaryView.setText(summary);
       summaryView.setVisibility(View.VISIBLE);
     } else {
       summaryView.setVisibility(View.GONE);
     }
+
+    view.setContentDescription(getContentDescription());
 
     final View iconContainer = view.findViewById(R.id.sud_items_icon_container);
     final Drawable icon = getIcon();
@@ -208,6 +227,7 @@ public class Item extends AbstractItem {
     // get its child view to adjust it first, so skip the Layout padding adjustment.
     // If the item view is a header layout, it doesn't need to adjust the layout padding start/end
     // here. It will be adjusted by HeaderMixin.
+    // TODO: Add partner resource enable check
     if (!(this instanceof ExpandableSwitchItem) && view.getId() != R.id.sud_layout_header) {
       LayoutStyler.applyPartnerCustomizationLayoutPaddingStyle(view);
     }
