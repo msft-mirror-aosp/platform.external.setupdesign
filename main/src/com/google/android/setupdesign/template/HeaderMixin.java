@@ -41,7 +41,6 @@ import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.util.HeaderAreaStyler;
 import com.google.android.setupdesign.util.LayoutStyler;
 import com.google.android.setupdesign.util.PartnerStyleHelper;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
 
 /**
  * A {@link com.google.android.setupcompat.template.Mixin} for setting and getting the header text.
@@ -63,7 +62,6 @@ public class HeaderMixin implements Mixin {
    * @param attrs XML attributes given to the layout
    * @param defStyleAttr The default style attribute as given to the constructor of the layout
    */
-  @CanIgnoreReturnValue
   public HeaderMixin(
       @NonNull TemplateLayout layout, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
     templateLayout = layout;
@@ -79,8 +77,8 @@ public class HeaderMixin implements Mixin {
 
     a.recycle();
 
-    // Try to update the flag of the uto size config settings
-    tryUpdateAutoTextSizeFlagWithPartnerConfig();
+    // overlay the Auto size config settings
+    updateAutoTextSizeWithPartnerConfig();
 
     // Set the header text
     if (headerText != null) {
@@ -92,9 +90,10 @@ public class HeaderMixin implements Mixin {
     }
   }
 
-  private void tryUpdateAutoTextSizeFlagWithPartnerConfig() {
+  private void updateAutoTextSizeWithPartnerConfig() {
     Context context = templateLayout.getContext();
-    if (!PartnerStyleHelper.shouldApplyPartnerResource(templateLayout)) {
+    if (!PartnerStyleHelper.isPartnerHeavyThemeLayout(templateLayout)
+        || !PartnerConfigHelper.shouldApplyExtendedPartnerConfig(context)) {
       autoTextSizeEnabled = false;
       return;
     }
@@ -150,14 +149,18 @@ public class HeaderMixin implements Mixin {
    */
   public void tryApplyPartnerCustomizationStyle() {
     TextView header = templateLayout.findManagedViewById(R.id.suc_layout_title);
-    if (PartnerStyleHelper.shouldApplyPartnerResource(templateLayout)) {
+    boolean partnerLightThemeLayout = PartnerStyleHelper.isPartnerLightThemeLayout(templateLayout);
+    boolean partnerHeavyThemeLayout = PartnerStyleHelper.isPartnerHeavyThemeLayout(templateLayout);
+    if (partnerHeavyThemeLayout) {
       View headerAreaView = templateLayout.findManagedViewById(R.id.sud_layout_header);
-      LayoutStyler.applyPartnerCustomizationExtraPaddingStyle(headerAreaView);
-      HeaderAreaStyler.applyPartnerCustomizationHeaderStyle(header);
+      HeaderAreaStyler.applyPartnerCustomizationHeaderHeavyStyle(header);
       HeaderAreaStyler.applyPartnerCustomizationHeaderAreaStyle((ViewGroup) headerAreaView);
+      LayoutStyler.applyPartnerCustomizationExtraPaddingStyle(headerAreaView);
+      // overlay the Auto size config settings
+      updateAutoTextSizeWithPartnerConfig();
+    } else if (partnerLightThemeLayout) {
+      HeaderAreaStyler.applyPartnerCustomizationHeaderLightStyle(header);
     }
-    // Try to update the flag of the uto size config settings
-    tryUpdateAutoTextSizeFlagWithPartnerConfig();
     if (autoTextSizeEnabled) {
       // Override the text size setting of the header
       autoAdjustTextSize(header);

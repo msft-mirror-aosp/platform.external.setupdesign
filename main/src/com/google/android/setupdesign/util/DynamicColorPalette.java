@@ -19,12 +19,15 @@ package com.google.android.setupdesign.util;
 import android.content.Context;
 import androidx.annotation.ColorInt;
 import androidx.annotation.IntDef;
+import androidx.annotation.VisibleForTesting;
 import com.google.android.setupdesign.R;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /** The class to get dynamic colors. */
 public final class DynamicColorPalette {
+
+  @VisibleForTesting static int colorRes = 0;
 
   private DynamicColorPalette() {}
 
@@ -38,8 +41,7 @@ public final class DynamicColorPalette {
     ColorType.ERROR_WARNING,
     ColorType.SUCCESS_DONE,
     ColorType.FALLBACK_ACCENT,
-    ColorType.BACKGROUND,
-    ColorType.SURFACE,
+    ColorType.BACKGROUND_SURFACE,
   })
   public @interface ColorType {
     int ACCENT = 0;
@@ -49,14 +51,11 @@ public final class DynamicColorPalette {
     int ERROR_WARNING = 4;
     int SUCCESS_DONE = 5;
     int FALLBACK_ACCENT = 6;
-    int BACKGROUND = 7;
-    int SURFACE = 8;
+    int BACKGROUND_SURFACE = 7;
   }
 
   @ColorInt
   public static int getColor(Context context, @ColorType int dynamicColorCategory) {
-    int colorRes = 0;
-
     switch (dynamicColorCategory) {
       case ColorType.ACCENT:
         colorRes = R.color.sud_dynamic_color_accent_glif_v3;
@@ -79,11 +78,8 @@ public final class DynamicColorPalette {
       case ColorType.FALLBACK_ACCENT:
         colorRes = R.color.sud_system_fallback_accent;
         break;
-      case ColorType.BACKGROUND:
+      case ColorType.BACKGROUND_SURFACE:
         colorRes = R.color.sud_system_background_surface;
-        break;
-      case ColorType.SURFACE:
-        colorRes = R.color.sud_system_surface;
         break;
         // fall out
     }

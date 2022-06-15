@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="@dimen/sud_description_line_spacing_extra"
-            android:textAppearance="?attr/sudItemDescriptionTitleTextAppearence"
+            android:textAppearance="@style/TextAppearance.SudDescription"
             tools:ignore="UnusedAttribute" />
 
         <com.google.android.setupdesign.view.RichTextView

@@ -21,7 +21,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build.VERSION_CODES;
 import android.view.View;
-import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
@@ -53,9 +52,7 @@ public final class LayoutStyler {
         PartnerConfigHelper.get(context)
             .isPartnerConfigAvailable(PartnerConfig.CONFIG_LAYOUT_MARGIN_END);
 
-    // TODO: After all users added the check before calling the API, this check can be
-    // deleted.
-    if (PartnerStyleHelper.shouldApplyPartnerResource(view)
+    if (PartnerStyleHelper.shouldApplyPartnerHeavyThemeResource(view)
         && (partnerMarginStartAvailable || partnerMarginEndAvailable)) {
       int paddingStart;
       int paddingEnd;
@@ -104,9 +101,7 @@ public final class LayoutStyler {
         PartnerConfigHelper.get(context)
             .isPartnerConfigAvailable(PartnerConfig.CONFIG_LAYOUT_MARGIN_END);
 
-    // TODO: After all users added the check before calling the API, this check can be
-    // deleted.
-    if (PartnerStyleHelper.shouldApplyPartnerResource(view)
+    if (PartnerStyleHelper.shouldApplyPartnerHeavyThemeResource(view)
         && (partnerMarginStartAvailable || partnerMarginEndAvailable)) {
       int extraPaddingStart;
       int extraPaddingEnd;
@@ -133,41 +128,17 @@ public final class LayoutStyler {
                     PartnerConfigHelper.get(context)
                         .getDimension(context, PartnerConfig.CONFIG_LAYOUT_MARGIN_END))
                 - layoutMarginEnd;
-        // If the view is a content view, padding start and padding end will be the same.
-        if (view.getId() == R.id.sud_layout_content) {
-          extraPaddingEnd =
-              ((int)
-                      PartnerConfigHelper.get(context)
-                          .getDimension(context, PartnerConfig.CONFIG_LAYOUT_MARGIN_START))
-                  - layoutMarginEnd;
-        }
       } else {
         extraPaddingEnd = view.getPaddingEnd();
-        // If the view is a content view, padding start and padding end will be the same.
-        if (view.getId() == R.id.sud_layout_content) {
-          extraPaddingEnd = view.getPaddingStart();
-        }
       }
 
       if (extraPaddingStart != view.getPaddingStart() || extraPaddingEnd != view.getPaddingEnd()) {
-        if (view.getId() == R.id.sud_layout_content) {
-          // The sud_layout_content is framelayout.
-          // The framelayout background maybe infected by this change.
-          // Currently the content background is same as the activity background, and there is no
-          // partner config to customize it.
-          ViewGroup.LayoutParams params = view.getLayoutParams();
-          ViewGroup.MarginLayoutParams marginLayoutParams;
-          if (params instanceof ViewGroup.MarginLayoutParams) {
-            marginLayoutParams = (ViewGroup.MarginLayoutParams) params;
-          } else {
-            marginLayoutParams = new ViewGroup.MarginLayoutParams(params);
-          }
-          marginLayoutParams.setMargins(
-              extraPaddingStart, view.getPaddingTop(), extraPaddingEnd, view.getPaddingBottom());
-        } else {
-          view.setPadding(
-              extraPaddingStart, view.getPaddingTop(), extraPaddingEnd, view.getPaddingBottom());
-        }
+        // If the view is a content view, padding start and padding end will be the same.
+        view.setPadding(
+            extraPaddingStart,
+            view.getPaddingTop(),
+            view.getId() == R.id.sud_layout_content ? extraPaddingStart : extraPaddingEnd,
+            view.getPaddingBottom());
       }
     }
   }
