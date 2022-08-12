@@ -152,6 +152,11 @@
     <dimen name="sud_glif_header_title_margin_bottom">2dp</dimen>
     <dimen name="sud_header_container_margin_bottom">0dp</dimen>
 
+    <!-- Account information -->
+    <dimen name="sud_account_name_text_size">14sp</dimen>
+    <dimen name="sud_account_avatar_margin_end">8dp</dimen>
+    <dimen name="sud_account_avatar_max_height">24dp</dimen>
+
     <!-- This value leverages sud_description_glif_margin_top -->
     <dimen name="sud_glif_description_margin_top">3dp</dimen>
     <dimen name="sud_glif_description_margin_bottom">12dp</dimen>
