@@ -19,6 +19,7 @@
   <!-- Main theme for dynamic color -->
   <style name="SudDynamicColorBaseTheme">
     <item name="colorAccent">@color/sud_dynamic_color_accent_glif_v3_dark</item>
+    <item name="android:colorAccent">?attr/colorAccent</item>
     <item name="android:textColorLink">@color/sud_system_hyperlink_text</item>
     <item name="alertDialogTheme">@style/SudDynamicColorAlertDialogThemeCompat</item>
     <item name="android:datePickerDialogTheme">@style/SudDynamicColorDateTimePickerDialogTheme</item>
@@ -33,6 +34,7 @@
 
   <style name="SudDynamicColorBaseTheme.Light">
     <item name="colorAccent">@color/sud_dynamic_color_accent_glif_v3_light</item>
+    <item name="android:colorAccent">?attr/colorAccent</item>
     <item name="android:textColorLink">@color/sud_system_hyperlink_text</item>
     <item name="alertDialogTheme">@style/SudDynamicColorAlertDialogThemeCompat.Light</item>
     <item name="android:datePickerDialogTheme">@style/SudDynamicColorDateTimePickerDialogTheme.Light</item>
