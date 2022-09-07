@@ -33,6 +33,7 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
@@ -103,7 +104,7 @@ public final class HeaderAreaStyler {
   }
 
   public static void applyPartnerCustomizationAccountStyle(
-    ImageView avatar, TextView name) {
+      ImageView avatar, TextView name, LinearLayout container) {
     if (avatar == null || name == null) {
       return;
     }
@@ -131,7 +132,10 @@ public final class HeaderAreaStyler {
     int textSize =
         (int)
             PartnerConfigHelper.get(context)
-                .getDimension(context, PartnerConfig.CONFIG_ACCOUNT_NAME_TEXT_SIZE);
+                .getDimension(
+                    context,
+                    PartnerConfig.CONFIG_ACCOUNT_NAME_TEXT_SIZE,
+                    context.getResources().getDimension(R.dimen.sud_account_name_text_size));
     name.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
     String textFamily =
@@ -141,6 +145,9 @@ public final class HeaderAreaStyler {
     if (font != null) {
       name.setTypeface(font);
     }
+
+    int gravity = PartnerStyleHelper.getLayoutGravity(container.getContext());
+    container.setGravity(gravity);
   }
 
   /**
