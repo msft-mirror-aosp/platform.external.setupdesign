@@ -60,10 +60,14 @@ public class ProfileMixin implements Mixin {
    */
   public void setAccountName(CharSequence accountName) {
     final TextView accountView = getAccountNameView();
+    final ImageView iconView = getAccountAvatarView();
     final LinearLayout container = getContainerView();
     if (accountView != null && accountName != null) {
       accountView.setText(accountName);
       container.setVisibility(View.VISIBLE);
+      if (iconView != null && getAccountAvatar() == null) {
+        iconView.setVisibility(View.GONE);
+      }
     } else {
       Log.w(TAG, "Didn't get the account name");
     }
@@ -72,7 +76,7 @@ public class ProfileMixin implements Mixin {
   /**
    * Sets the icon on this layout.
    *
-   * @param icon A drawable icon
+   * @param icon A drawable icon to set, or {@code null} to hide the icon
    */
   public void setAccountAvatar(Drawable icon) {
     final ImageView iconView = getAccountAvatarView();
@@ -80,7 +84,9 @@ public class ProfileMixin implements Mixin {
     if (iconView != null && icon != null) {
       iconView.setImageDrawable(icon);
       container.setVisibility(View.VISIBLE);
-    } else {
+      iconView.setVisibility(View.VISIBLE);
+    } else if (iconView != null) {
+      iconView.setVisibility(View.GONE);
       Log.w(TAG, "Didn't get the account avatar");
     }
   }
@@ -88,7 +94,7 @@ public class ProfileMixin implements Mixin {
   /**
    * Sets the icon on this layout.
    *
-   * @param icon A drawable icon resource
+   * @param icon A drawable icon resource to set, or {@code null} to hide the icon
    */
   public void setAccountAvatar(@DrawableRes int icon) {
     final ImageView iconView = getAccountAvatarView();
@@ -98,7 +104,9 @@ public class ProfileMixin implements Mixin {
       // support lib users, which enables vector drawable compat to work on versions pre-L.
       iconView.setImageResource(icon);
       container.setVisibility(View.VISIBLE);
-    } else {
+      iconView.setVisibility(View.VISIBLE);
+    } else if (iconView != null) {
+      iconView.setVisibility(View.GONE);
       Log.w(TAG, "Didn't get the account avatar");
     }
   }
@@ -109,7 +117,7 @@ public class ProfileMixin implements Mixin {
    * @param accountName The text to be set as account name
    * @param icon A drawable icon
    */
-  public void setAcccount(CharSequence accountName, Drawable icon) {
+  public void setAccount(CharSequence accountName, Drawable icon) {
     setAccountName(accountName);
     setAccountAvatar(icon);
   }
@@ -120,7 +128,7 @@ public class ProfileMixin implements Mixin {
    * @param accountName The text to be set as account name
    * @param icon A drawable icon resource
    */
-  public void setAcccount(CharSequence accountName, @DrawableRes int icon) {
+  public void setAccount(CharSequence accountName, @DrawableRes int icon) {
     setAccountName(accountName);
     setAccountAvatar(icon);
   }
@@ -153,9 +161,10 @@ public class ProfileMixin implements Mixin {
     if (PartnerStyleHelper.shouldApplyPartnerResource(templateLayout)) {
       final ImageView iconView = getAccountAvatarView();
       final TextView accountView = getAccountNameView();
+      final LinearLayout container = getContainerView();
       View iconAreaView = templateLayout.findManagedViewById(R.id.sud_layout_header);
       LayoutStyler.applyPartnerCustomizationExtraPaddingStyle(iconAreaView);
-      HeaderAreaStyler.applyPartnerCustomizationAccountStyle(iconView, accountView);
+      HeaderAreaStyler.applyPartnerCustomizationAccountStyle(iconView, accountView, container);
     }
   }
 
