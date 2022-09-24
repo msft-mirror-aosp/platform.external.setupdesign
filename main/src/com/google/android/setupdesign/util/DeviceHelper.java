@@ -24,7 +24,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import java.lang.String;
+import com.google.android.setupdesign.R;
 
 /** Helper class to get attributes of the device, like a friendly display name. */
 public final class DeviceHelper {
@@ -37,8 +37,9 @@ public final class DeviceHelper {
   @VisibleForTesting public static final String GET_DEVICE_NAME_METHOD = "getDeviceName";
 
   /**
-   * Get the device name text from these resources, if they are unavailable, return the device
-   * name as null.
+   * Get the device name text from these resources, if they are unavailable or setupwizard apk is
+   * older which does not contains {@link DeviceHelper#GET_DEVICE_NAME_METHOD} method, return the
+   * device name as default value "device".
    *
    * <p>Priority: partner config ({@link
    * com.google.android.setupwizard.util.PartnerResource#DEVICE_NAME}) > {@link
@@ -61,14 +62,14 @@ public final class DeviceHelper {
                   /* arg= */ null,
                   /* extras= */ null);
     } catch (IllegalArgumentException | SecurityException exception) {
-      Log.w(TAG, "device name unknown; return the device name as null");
+      Log.w(TAG, "device name unknown; return the device name as default value");
     }
 
     if (deviceName != null) {
       return deviceName.getCharSequence(GET_DEVICE_NAME_METHOD, null);
     }
 
-    return null;
+    return context.getString(R.string.sud_default_device_name);
   }
 
   private DeviceHelper() {}
