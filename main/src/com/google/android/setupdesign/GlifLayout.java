@@ -45,6 +45,7 @@ import com.google.android.setupdesign.template.DescriptionMixin;
 import com.google.android.setupdesign.template.HeaderMixin;
 import com.google.android.setupdesign.template.IconMixin;
 import com.google.android.setupdesign.template.IllustrationProgressMixin;
+import com.google.android.setupdesign.template.ProfileMixin;
 import com.google.android.setupdesign.template.ProgressBarMixin;
 import com.google.android.setupdesign.template.RequireScrollMixin;
 import com.google.android.setupdesign.template.ScrollViewScrollHandlingDelegate;
@@ -121,6 +122,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
     registerMixin(HeaderMixin.class, new HeaderMixin(this, attrs, defStyleAttr));
     registerMixin(DescriptionMixin.class, new DescriptionMixin(this, attrs, defStyleAttr));
     registerMixin(IconMixin.class, new IconMixin(this, attrs, defStyleAttr));
+    registerMixin(ProfileMixin.class, new ProfileMixin(this, attrs, defStyleAttr));
     registerMixin(ProgressBarMixin.class, new ProgressBarMixin(this, attrs, defStyleAttr));
     registerMixin(IllustrationProgressMixin.class, new IllustrationProgressMixin(this));
     final RequireScrollMixin requireScrollMixin = new RequireScrollMixin(this);
@@ -184,6 +186,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
     getMixin(HeaderMixin.class).tryApplyPartnerCustomizationStyle();
     getMixin(DescriptionMixin.class).tryApplyPartnerCustomizationStyle();
     getMixin(ProgressBarMixin.class).tryApplyPartnerCustomizationStyle();
+    getMixin(ProfileMixin.class).tryApplyPartnerCustomizationStyle();
     tryApplyPartnerCustomizationStyleToShortDescription();
   }
 
