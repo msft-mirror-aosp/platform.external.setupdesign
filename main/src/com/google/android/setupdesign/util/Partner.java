@@ -33,6 +33,7 @@ import androidx.annotation.AnyRes;
 import androidx.annotation.ArrayRes;
 import androidx.annotation.BoolRes;
 import androidx.annotation.ColorRes;
+import androidx.annotation.DimenRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -81,6 +82,28 @@ public class Partner {
   public static boolean getBoolean(Context context, @BoolRes int id) {
     final ResourceEntry entry = getResourceEntry(context, id);
     return entry.resources.getBoolean(entry.id);
+  }
+
+  /**
+   * Gets a dimension value from partner overlay, or if not available, gets the value from the
+   * original context instead.
+   *
+   * @see #getResourceEntry(Context, int)
+   */
+  public static int getDimensionPixelSize(Context context, @DimenRes int id) {
+    final ResourceEntry entry = getResourceEntry(context, id);
+    return entry.resources.getDimensionPixelSize(entry.id);
+  }
+
+  /**
+   * Gets a dimension value from partner overlay, or if not available, gets the value from the
+   * original context instead.
+   *
+   * @see #getResourceEntry(Context, int)
+   */
+  public static float getDimension(Context context, @DimenRes int id) {
+    final ResourceEntry entry = getResourceEntry(context, id);
+    return entry.resources.getDimension(entry.id);
   }
 
   /**
