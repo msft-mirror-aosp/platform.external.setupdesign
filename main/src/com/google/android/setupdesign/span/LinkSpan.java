@@ -73,10 +73,10 @@ public class LinkSpan extends ClickableSpan {
 
   /* non-static section */
 
-  private final String id;
+  private final String link;
 
-  public LinkSpan(String id) {
-    this.id = id;
+  public LinkSpan(String link) {
+    this.link = link;
   }
 
   @Override
@@ -137,7 +137,16 @@ public class LinkSpan extends ClickableSpan {
     drawState.setUnderlineText(false);
   }
 
+  public String getLink() {
+    return link;
+  }
+
+  /**
+   * @deprecated Method's return type clashes with its superclass. Use {@link #getLink()} instead.
+   * This will be removed in the future.
+   */
+  @Deprecated
   public String getId() {
-    return id;
+    return link;
   }
 }
