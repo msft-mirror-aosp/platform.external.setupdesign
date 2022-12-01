@@ -140,13 +140,4 @@ public class LinkSpan extends ClickableSpan {
   public String getLink() {
     return link;
   }
-
-  /**
-   * @deprecated Method's return type clashes with its superclass. Use {@link #getLink()} instead.
-   * This will be removed in the future.
-   */
-  @Deprecated
-  public String getId() {
-    return link;
-  }
 }
