@@ -26,7 +26,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
@@ -50,7 +49,6 @@ import androidx.annotation.VisibleForTesting;
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.airbnb.lottie.LottieProperty;
-import com.airbnb.lottie.SimpleColorFilter;
 import com.airbnb.lottie.model.KeyPath;
 import com.airbnb.lottie.value.LottieValueCallback;
 import com.airbnb.lottie.value.SimpleLottieValueCallback;
@@ -62,14 +60,13 @@ import com.google.android.setupcompat.template.FooterBarMixin;
 import com.google.android.setupcompat.util.BuildCompatUtils;
 import com.google.android.setupdesign.lottieloadinglayout.R;
 import com.google.android.setupdesign.util.LayoutStyler;
+import com.google.android.setupdesign.util.LottieAnimationHelper;
 import com.google.android.setupdesign.view.IllustrationVideoView;
 import java.io.InputStream;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A GLIF themed layout with a {@link com.airbnb.lottie.LottieAnimationView} to showing lottie
@@ -87,8 +84,6 @@ public class GlifLoadingLayout extends GlifLayout {
   @VisibleForTesting LottieAnimationConfig animationConfig = LottieAnimationConfig.CONFIG_DEFAULT;
 
   @VisibleForTesting @RawRes int customLottieResource = 0;
-
-  @VisibleForTesting Map<KeyPath, SimpleColorFilter> customizationMap = new HashMap<>();
 
   private AnimatorListener animatorListener;
   private Runnable nextActionRunnable;
@@ -230,7 +225,6 @@ public class GlifLoadingLayout extends GlifLayout {
 
     if (!illustrationType.equals(type)) {
       illustrationType = type;
-      customizationMap.clear();
     }
 
     switch (type) {
@@ -521,7 +515,13 @@ public class GlifLoadingLayout extends GlifLayout {
         lottieView.playAnimation();
         setLottieLayoutVisibility(View.VISIBLE);
         setIllustrationLayoutVisibility(View.GONE);
-        applyThemeCustomization();
+        LottieAnimationHelper.get()
+            .applyColor(
+                getContext(),
+                findLottieAnimationView(),
+                isNightMode(getResources().getConfiguration())
+                    ? animationConfig.getDarkThemeCustomization()
+                    : animationConfig.getLightThemeCustomization());
       } else {
         setLottieLayoutVisibility(View.GONE);
         setIllustrationLayoutVisibility(View.VISIBLE);
@@ -651,43 +651,6 @@ public class GlifLoadingLayout extends GlifLayout {
     LottieAnimationView animationView = findLottieAnimationView();
     if (animationView != null) {
       animationView.addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback);
-    }
-  }
-
-  @VisibleForTesting
-  protected void loadCustomization() {
-    if (customizationMap.isEmpty()) {
-      PartnerConfigHelper helper = PartnerConfigHelper.get(getContext());
-      List<String> lists =
-          helper.getStringArray(
-              getContext(),
-              isNightMode(getResources().getConfiguration())
-                  ? animationConfig.getDarkThemeCustomization()
-                  : animationConfig.getLightThemeCustomization());
-      for (String item : lists) {
-        String[] splitItem = item.split(":");
-        if (splitItem.length == 2) {
-          customizationMap.put(
-              new KeyPath("**", splitItem[0], "**"),
-              new SimpleColorFilter(Color.parseColor(splitItem[1])));
-        } else {
-          Log.w(TAG, "incorrect format customization, value=" + item);
-        }
-      }
-    }
-  }
-
-  @VisibleForTesting
-  protected void applyThemeCustomization() {
-    LottieAnimationView animationView = findLottieAnimationView();
-    if (animationView != null) {
-      loadCustomization();
-      for (KeyPath keyPath : customizationMap.keySet()) {
-        animationView.addValueCallback(
-            keyPath,
-            LottieProperty.COLOR_FILTER,
-            new LottieValueCallback<>(customizationMap.get(keyPath)));
-      }
     }
   }
 
