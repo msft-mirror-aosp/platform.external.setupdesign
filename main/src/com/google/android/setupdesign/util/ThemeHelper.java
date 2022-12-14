@@ -201,7 +201,7 @@ public final class ThemeHelper {
     boolean isSetupFlow = WizardManagerHelper.isAnySetupWizard(activity.getIntent());
     boolean isDayNightEnabled = isSetupWizardDayNightEnabled(context);
 
-    if (isSetupFlow) {
+    if (isSetupFlow && !BuildCompatUtils.isAtLeastU()) {
       // return theme for inside setup flow
       resId =
           isDayNightEnabled
