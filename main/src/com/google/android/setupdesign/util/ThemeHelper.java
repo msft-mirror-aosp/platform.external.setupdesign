@@ -19,6 +19,8 @@ package com.google.android.setupdesign.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import androidx.annotation.NonNull;
 import androidx.annotation.StyleRes;
 import com.google.android.setupcompat.PartnerCustomizationLayout;
@@ -71,12 +73,14 @@ public final class ThemeHelper {
   public static final String THEME_GLIF_V3_LIGHT = "glif_v3_light";
 
   /**
-   * Placeholder, not avirailed yet.
+   * Passed in a setup wizard intent as {@link WizardManagerHelper#EXTRA_THEME}. This is the dark
+   * variant of the theme used in setup wizard for T.
    */
   public static final String THEME_GLIF_V4 = "glif_v4";
 
   /**
-   * Placeholder, not avirailed yet.
+   * Passed in a setup wizard intent as {@link WizardManagerHelper#EXTRA_THEME}. This is the default
+   * theme used in setup wizard for T.
    */
   public static final String THEME_GLIF_V4_LIGHT = "glif_v4_light";
 
@@ -166,6 +170,11 @@ public final class ThemeHelper {
     return PartnerConfigHelper.shouldApplyExtendedPartnerConfig(context);
   }
 
+  /** Returns true if the SetupWizard is flow enabled "Material You(Glifv4)" style. */
+  public static boolean shouldApplyMaterialYouStyle(@NonNull Context context) {
+    return PartnerConfigHelper.shouldApplyMaterialYouStyle(context);
+  }
+
   /** Returns {@code true} if this {@code context} should apply dynamic color. */
   public static boolean shouldApplyDynamicColor(@NonNull Context context) {
     return PartnerConfigHelper.isSetupWizardDynamicColorEnabled(context);
@@ -196,19 +205,19 @@ public final class ThemeHelper {
       // return theme for inside setup flow
       resId =
           isDayNightEnabled
-              ? R.style.SudDynamicColorThemeGlifV3_DayNight
-              : R.style.SudDynamicColorThemeGlifV3_Light;
+              ? R.style.SudDynamicColorTheme_DayNight
+              : R.style.SudDynamicColorTheme_Light;
     } else {
       // return theme for outside setup flow
       resId =
           isDayNightEnabled
-              ? R.style.SudFullDynamicColorThemeGlifV3_DayNight
-              : R.style.SudFullDynamicColorThemeGlifV3_Light;
+              ? R.style.SudFullDynamicColorTheme_DayNight
+              : R.style.SudFullDynamicColorTheme_Light;
       LOG.atInfo(
           "Return "
               + (isDayNightEnabled
-                  ? "SudFullDynamicColorThemeGlifV3_DayNight"
-                  : "SudFullDynamicColorThemeGlifV3_Light"));
+                  ? "SudFullDynamicColorTheme_DayNight"
+                  : "SudFullDynamicColorTheme_Light"));
     }
 
     LOG.atDebug(
@@ -226,6 +235,39 @@ public final class ThemeHelper {
                 : "n/a"));
 
     return resId;
+  }
+
+  /** Returns a default theme resource id which provides by setup wizard. */
+  @StyleRes
+  public static int getSuwDefaultTheme(@NonNull Context context) {
+    String themeName = PartnerConfigHelper.getSuwDefaultThemeString(context);
+    @StyleRes int defaultTheme;
+    if (VERSION.SDK_INT < VERSION_CODES.O) {
+      defaultTheme =
+          ThemeHelper.isSetupWizardDayNightEnabled(context)
+              ? R.style.SudThemeGlif_DayNight
+              : R.style.SudThemeGlif_Light;
+    } else if (VERSION.SDK_INT < VERSION_CODES.P) {
+      defaultTheme =
+          ThemeHelper.isSetupWizardDayNightEnabled(context)
+              ? R.style.SudThemeGlifV2_DayNight
+              : R.style.SudThemeGlifV2_Light;
+    } else if (VERSION.SDK_INT < VERSION_CODES.TIRAMISU) {
+      defaultTheme =
+          ThemeHelper.isSetupWizardDayNightEnabled(context)
+              ? R.style.SudThemeGlifV3_DayNight
+              : R.style.SudThemeGlifV3_Light;
+    } else {
+      defaultTheme =
+          ThemeHelper.isSetupWizardDayNightEnabled(context)
+              ? R.style.SudThemeGlifV4_DayNight
+              : R.style.SudThemeGlifV4_Light;
+    }
+    return new ThemeResolver.Builder()
+        .setDefaultTheme(defaultTheme)
+        .setUseDayNight(isSetupWizardDayNightEnabled(context))
+        .build()
+        .resolve(themeName, /* suppressDayNight= */ !isSetupWizardDayNightEnabled(context));
   }
 
   /** Returns {@code true} if the dynamic color is set. */
