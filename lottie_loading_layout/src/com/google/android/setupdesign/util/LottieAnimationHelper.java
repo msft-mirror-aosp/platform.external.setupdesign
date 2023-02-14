@@ -29,7 +29,6 @@ import com.airbnb.lottie.model.KeyPath;
 import com.airbnb.lottie.value.LottieValueCallback;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
-import com.google.android.setupcompat.util.BuildCompatUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,12 +97,8 @@ public class LottieAnimationHelper {
       String[] splitItem = colorMapping.split(":");
       if (splitItem.length == 2) {
         if (splitItem[1].charAt(0) == '#') { // color code
-          try {
-            customizationMap.put(
-                new KeyPath("**", splitItem[0], "**"), Color.parseColor(splitItem[1]));
-          } catch (IllegalArgumentException exception) {
-            Log.e(TAG, "Unknown color, value=" + colorMapping);
-          }
+          customizationMap.put(
+              new KeyPath("**", splitItem[0], "**"), Color.parseColor(splitItem[1]));
         } else if (splitItem[1].charAt(0) == '@') { // color resource
           int colorResourceId;
           if (colorResourceMapping.containsKey(splitItem[1])) {

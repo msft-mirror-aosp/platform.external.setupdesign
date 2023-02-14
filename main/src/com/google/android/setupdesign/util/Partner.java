@@ -36,11 +36,9 @@ import androidx.annotation.ColorRes;
 import androidx.annotation.DimenRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
-import androidx.annotation.RawRes;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -183,17 +181,6 @@ public class Partner {
       }
     }
     return new ResourceEntry(context.getPackageName(), context.getResources(), id, false);
-  }
-
-  /**
-   * Returns input stream for raw resources from overlay package provided by partners.
-   *
-   * @return an InputStream in the partner overlay's resources, if one is defined. Otherwise the
-   *     InputStream in resources from the original context is returned.
-   */
-  public static InputStream getRawResources(Context context, @RawRes int id) {
-    final ResourceEntry entry = getResourceEntry(context, id);
-    return entry.resources.openRawResource(entry.id);
   }
 
   public static class ResourceEntry {

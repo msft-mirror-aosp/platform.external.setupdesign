@@ -76,8 +76,6 @@
     <item name="android:alertDialogTheme">@style/SudFullDynamicColorAlertDialogTheme</item>
 
     <item name="sucFullDynamicColor">true</item>
-
-    <item name="android:windowAnimationStyle">@style/Animation.SudWindowAnimation.DynamicColor</item>
   </style>
 
   <style name="SudFullDynamicColorTheme.Light" parent="SudDynamicColorTheme.Light">
@@ -103,8 +101,6 @@
     <item name="android:alertDialogTheme">@style/SudFullDynamicColorAlertDialogTheme.Light</item>
 
     <item name="sucFullDynamicColor">true</item>
-
-    <item name="android:windowAnimationStyle">@style/Animation.SudWindowAnimation.DynamicColor</item>
   </style>
 
   <!-- Main theme for dynamic color -->
