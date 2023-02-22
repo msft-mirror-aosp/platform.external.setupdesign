@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Copyright (C) 2021 The Android Open Source Project
+    Copyright (C) 2022 The Android Open Source Project
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -15,7 +15,12 @@
     limitations under the License.
 -->
 
-<resources xmlns:tools="http://schemas.android.com/tools">
-  <item name="sud_glif_loading_template" type="layout"  tools:ignore="UnusedResources">@layout/sud_glif_loading_template_card</item>
-  <item name="sud_glif_loading_embedded_template" type="layout"  tools:ignore="UnusedResources">@layout/sud_glif_loading_embedded_template_card</item>
-</resources>
+<com.google.android.setupcompat.view.StatusBarBackgroundLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/suc_layout_status"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/sud_glif_list_embedded_template_content" />
+
+</com.google.android.setupcompat.view.StatusBarBackgroundLayout>
