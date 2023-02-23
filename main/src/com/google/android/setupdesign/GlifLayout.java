@@ -37,6 +37,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.window.embedding.ActivityEmbeddingController;
 import com.google.android.setupcompat.PartnerCustomizationLayout;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
@@ -285,7 +286,12 @@ public class GlifLayout extends PartnerCustomizationLayout {
   protected View onInflateTemplate(LayoutInflater inflater, @LayoutRes int template) {
     if (template == 0) {
       template = R.layout.sud_glif_template;
+      // if the activity is embedded should apply an embedded layout.
+      if (isEmbeddedActivityOnePaneEnabled(getContext())) {
+        template = R.layout.sud_glif_embedded_template;
+      }
     }
+
     return inflateTemplate(inflater, R.style.SudThemeGlif_Light, template);
   }
 
@@ -440,7 +446,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
     updateBackground();
   }
 
-  /** @return True if this view uses {@link GlifPatternDrawable} as background. */
+  /** Returns true if this view uses {@link GlifPatternDrawable} as background. */
   public boolean isBackgroundPatterned() {
     return backgroundPatterned;
   }
@@ -482,6 +488,13 @@ public class GlifLayout extends PartnerCustomizationLayout {
     return applyPartnerHeavyThemeResource
         || (shouldApplyPartnerResource()
             && PartnerConfigHelper.shouldApplyExtendedPartnerConfig(getContext()));
+  }
+
+  /** Check if the one pane layout is enabled in embedded activity */
+  protected boolean isEmbeddedActivityOnePaneEnabled(Context context) {
+    return PartnerConfigHelper.isEmbeddedActivityOnePaneEnabled(context)
+        && ActivityEmbeddingController.getInstance(context)
+            .isActivityEmbedded(PartnerCustomizationLayout.lookupActivityFromContext(context));
   }
 
   /** Updates the background color of this layout with the partner-customizable background color. */
