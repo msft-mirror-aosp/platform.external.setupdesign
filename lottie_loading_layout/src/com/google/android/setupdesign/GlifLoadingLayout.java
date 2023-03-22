@@ -28,6 +28,7 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.ColorFilter;
 import android.os.Build;
+import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -37,6 +38,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.LinearLayout;
@@ -705,14 +707,12 @@ public class GlifLoadingLayout extends GlifLayout {
 
   @Override
   protected void onDetachedFromWindow() {
-    if (BuildCompatUtils.isAtLeastU()) {
+    if (VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
       PersistableBundle bundle = new PersistableBundle();
       bundle.putString(GLIF_LAYOUT_TYPE, LOADING_LAYOUT);
       setLayoutTypeMetrics(bundle);
-    } else {
-      setLayoutTypeMetrics(null);
+      super.onDetachedFromWindow();
     }
-    super.onDetachedFromWindow();
   }
 
   /** The progress config used to maps to different animation */
