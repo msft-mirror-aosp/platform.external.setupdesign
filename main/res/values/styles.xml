@@ -196,6 +196,7 @@
         <item name="textAppearanceListItemSmall">@style/TextAppearance.SudGlifItemSummary</item>
         <item name="sucFooterBarButtonFontFamily">?attr/sudButtonFontFamily</item>
         <item name="sucFooterBarButtonCornerRadius">?attr/sudButtonCornerRadius</item>
+        <item name="sucFooterBarButtonAlignEnd">false</item>
         <item name="sucFooterBarButtonAllCaps">?attr/sudButtonAllCaps</item>
         <item name="sucFooterBarButtonColorControlHighlightRipple">?attr/colorAccent</item>
         <item name="sucFooterBarButtonHighlightAlpha">?attr/sudButtonHighlightAlpha</item>
@@ -294,6 +295,7 @@
         <item name="textAppearanceListItemSmall">@style/TextAppearance.SudGlifItemSummary</item>
         <item name="sucFooterBarButtonFontFamily">?attr/sudButtonFontFamily</item>
         <item name="sucFooterBarButtonCornerRadius">?attr/sudButtonCornerRadius</item>
+        <item name="sucFooterBarButtonAlignEnd">false</item>
         <item name="sucFooterBarButtonAllCaps">?attr/sudButtonAllCaps</item>
         <item name="sucFooterBarButtonColorControlHighlightRipple">?attr/colorAccent</item>
         <item name="sucFooterBarButtonHighlightAlpha">?attr/sudButtonHighlightAlpha</item>
@@ -402,6 +404,7 @@
         <item name="sucHeaderContainerMarginBottom">@dimen/sud_header_container_margin_bottom_material_you</item>
         <item name="sucFooterBarButtonFontFamily">@string/sudFontSecondaryMediumMaterialYou</item>
         <item name="sucGlifIconMarginTop">@dimen/sud_glif_icon_margin_top_material_you</item>
+        <item name="sucFooterBarButtonAlignEnd">@bool/suc_footer_bar_button_align_end</item>
         <item name="sudButtonCornerRadius">@dimen/sud_footer_bar_button_radius_material_you</item>
         <item name="sudButtonTertiaryGravity">center_horizontal</item>
         <item name="sudGlifIconSize">@dimen/sud_glif_icon_max_height_material_you</item>
@@ -433,6 +436,7 @@
         <item name="sucFooterBarPaddingStart">@dimen/sud_glif_footer_bar_padding_start_material_you</item>
         <item name="sucFooterBarPaddingEnd">@dimen/sud_glif_footer_bar_padding_end_material_you</item>
         <item name="sucFooterBarMinHeight">@dimen/sud_glif_footer_bar_min_height_material_you</item>
+        <item name="sucFooterBarButtonAlignEnd">@bool/suc_footer_bar_button_align_end</item>
         <item name="sudMarginEnd">@dimen/sud_glif_margin_end_material_you</item>
         <item name="sucHeaderContainerMarginBottom">@dimen/sud_header_container_margin_bottom_material_you</item>
         <item name="sucFooterBarButtonFontFamily">@string/sudFontSecondaryMediumMaterialYou</item>

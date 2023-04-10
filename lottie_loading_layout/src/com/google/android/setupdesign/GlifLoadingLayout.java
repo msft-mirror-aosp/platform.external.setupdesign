@@ -17,10 +17,10 @@
 package com.google.android.setupdesign;
 
 import static com.google.android.setupcompat.partnerconfig.Util.isNightMode;
+import static java.lang.Math.min;
 
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,14 +28,17 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.ColorFilter;
 import android.os.Build;
+import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.LinearLayout;
@@ -88,6 +91,8 @@ public class GlifLoadingLayout extends GlifLayout {
   private AnimatorListener animatorListener;
   private Runnable nextActionRunnable;
   private boolean workFinished;
+  protected static final String GLIF_LAYOUT_TYPE = "GlifLayoutType";
+  protected static final String LOADING_LAYOUT = "LoadingLayout";
   @VisibleForTesting public boolean runRunnable;
 
   @VisibleForTesting
@@ -111,7 +116,6 @@ public class GlifLoadingLayout extends GlifLayout {
     init(attrs, R.attr.sudLayoutTheme);
   }
 
-  @TargetApi(VERSION_CODES.HONEYCOMB)
   public GlifLoadingLayout(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
     init(attrs, defStyleAttr);
@@ -447,7 +451,7 @@ public class GlifLoadingLayout extends GlifLayout {
           paddingBottom =
               (int) configPaddingBottom
                   - (int)
-                      Math.min(
+                      min(
                           configPaddingBottom,
                           getButtonContainerHeight(footerBarMixin.getButtonContainer()));
         }
@@ -666,17 +670,28 @@ public class GlifLoadingLayout extends GlifLayout {
 
   @Override
   protected View onInflateTemplate(LayoutInflater inflater, int template) {
+    Context context = getContext();
     if (template == 0) {
       boolean useFullScreenIllustration =
-          PartnerConfigHelper.get(getContext())
+          PartnerConfigHelper.get(context)
               .getBoolean(
-                  getContext(),
+                  context,
                   PartnerConfig.CONFIG_LOADING_LAYOUT_FULL_SCREEN_ILLUSTRATION_ENABLED,
                   false);
       if (useFullScreenIllustration) {
         template = R.layout.sud_glif_fullscreen_loading_template;
+
+        // if the activity is embedded should apply an embedded layout.
+        if (isEmbeddedActivityOnePaneEnabled(context)) {
+          template = R.layout.sud_glif_fullscreen_loading_embedded_template;
+        }
       } else {
         template = R.layout.sud_glif_loading_template;
+
+        // if the activity is embedded should apply an embedded layout.
+        if (isEmbeddedActivityOnePaneEnabled(context)) {
+          template = R.layout.sud_glif_loading_embedded_template;
+        }
       }
     }
     return inflateTemplate(inflater, R.style.SudThemeGlif_Light, template);
@@ -688,6 +703,16 @@ public class GlifLoadingLayout extends GlifLayout {
       containerId = R.id.sud_layout_content;
     }
     return super.findContainer(containerId);
+  }
+
+  @Override
+  protected void onDetachedFromWindow() {
+    if (VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+      PersistableBundle bundle = new PersistableBundle();
+      bundle.putString(GLIF_LAYOUT_TYPE, LOADING_LAYOUT);
+      setLayoutTypeMetrics(bundle);
+      super.onDetachedFromWindow();
+    }
   }
 
   /** The progress config used to maps to different animation */
