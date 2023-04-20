@@ -198,6 +198,8 @@
   </style>
 
   <style name="SudAppCompatButtonButtonBarAlertDialog" parent="Widget.AppCompat.ButtonBar.AlertDialog">
+    <item name="android:layout_marginStart">@dimen/sud_glif_alert_dialog_footer_bar_padding_start</item>
+    <item name="android:layout_marginLeft">@dimen/sud_glif_alert_dialog_footer_bar_padding_start</item>
     <item name="android:textAppearance">@style/SudTextAppearanceDeviceDefaultMedium</item>
     <item name="android:minWidth">@dimen/sud_alert_dialog_button_bar_width</item>
     <item name="android:minHeight">@dimen/sud_alert_dialog_button_bar_height</item>

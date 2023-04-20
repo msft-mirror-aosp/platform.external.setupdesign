@@ -16,25 +16,33 @@
 
 package com.google.android.setupdesign.util;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.Resources.NotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import com.google.android.setupcompat.util.Logger;
 import com.google.android.setupdesign.R;
 
 /** Helper class to get attributes of the device, like a friendly display name. */
 public final class DeviceHelper {
 
+  private static final Logger LOG = new Logger("DeviceHelper");
   private static final String TAG = DeviceHelper.class.getSimpleName();
 
   @VisibleForTesting
   public static final String SUW_AUTHORITY = "com.google.android.setupwizard.partner";
 
+  @VisibleForTesting public static final String DEVICE_NAME = "device_name";
+  private static final String STRING = "string";
   @VisibleForTesting public static final String GET_DEVICE_NAME_METHOD = "getDeviceName";
+
+  @VisibleForTesting public static Bundle deviceName = null;
 
   /**
    * Get the device name text from these resources, if they are unavailable or setupwizard apk is
@@ -45,28 +53,45 @@ public final class DeviceHelper {
    * com.google.android.setupwizard.util.PartnerResource#DEVICE_NAME}) > {@link
    * android.provider.Settings.Global#DEVICE_NAME} > system property ro.product.model)
    */
-  @Nullable
+  @NonNull
+  @SuppressLint("DiscouragedApi")
   public static CharSequence getDeviceName(@NonNull Context context) {
-    Bundle deviceName = null;
-
-    try {
-      deviceName =
-          context
-              .getContentResolver()
-              .call(
-                  new Uri.Builder()
-                      .scheme(ContentResolver.SCHEME_CONTENT)
-                      .authority(SUW_AUTHORITY)
-                      .build(),
-                  GET_DEVICE_NAME_METHOD,
-                  /* arg= */ null,
-                  /* extras= */ null);
-    } catch (IllegalArgumentException | SecurityException exception) {
-      Log.w(TAG, "device name unknown; return the device name as default value");
+    if (deviceName == null || deviceName.isEmpty()) {
+      try {
+        deviceName =
+            context
+                .getContentResolver()
+                .call(
+                    new Uri.Builder()
+                        .scheme(ContentResolver.SCHEME_CONTENT)
+                        .authority(SUW_AUTHORITY)
+                        .build(),
+                    GET_DEVICE_NAME_METHOD,
+                    /* arg= */ null,
+                    /* extras= */ null);
+      } catch (IllegalArgumentException | SecurityException exception) {
+        Log.w(TAG, "device name unknown; return the device name as default value");
+      }
     }
 
-    if (deviceName != null) {
+    if (deviceName != null && !deviceName.isEmpty()) {
       return deviceName.getCharSequence(GET_DEVICE_NAME_METHOD, null);
+    }
+
+    Partner partner = Partner.get(context);
+    if (partner != null) {
+      try {
+        int resId =
+            partner.getResources().getIdentifier(DEVICE_NAME, STRING, partner.getPackageName());
+        String overlayDeviceName = partner.getResources().getString(resId);
+        if (!TextUtils.isEmpty(overlayDeviceName)) {
+          return overlayDeviceName;
+        } else {
+          LOG.w("The overlayDeviceName is null!");
+        }
+      } catch (NotFoundException ex) {
+        // fall through
+      }
     }
 
     return context.getString(R.string.sud_default_device_name);
