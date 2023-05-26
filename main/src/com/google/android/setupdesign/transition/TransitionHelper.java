@@ -127,6 +127,9 @@ public class TransitionHelper {
   // TODO: Add new partner resource to determine which transition type would be apply.
   public static final int TRANSITION_CAPTIVE = 5;
 
+  /** Override the transition to a fade-through-from-right (or from-left for RTL locales). */
+  public static final int TRANSITION_FADE_THROUGH = 6;
+
   /**
    * No override. If this is specified as the transition, the enter/exit transition of the window
    * will not be set and keep original behavior.
@@ -221,13 +224,18 @@ public class TransitionHelper {
 
   /**
    * Apply the transition for going forward which is decided by {@code Animation.SudWindowAnimation}
-   * theme if the API level is equal or higher than {@link android.os.Build.VERSION_CODES#U}, or
-   * argument {@code useClientTransitionSettings} is false, or System property {@code
-   * suw_apply_glif_theme_controlled_transition} is true.
+   * theme if the API level is equal or higher than {@link android.os.Build.VERSION_CODES#U}, and
+   * argument {@code useClientTransitionSettings} is false, and System property {@code
+   * suw_apply_glif_theme_controlled_transition} is true, and {@code TRANSITION_FADE_THOUGH}
+   * transition is not specified.
    *
    * <p>Otherwise, apply the transition for going forward which is decided by the argument {@code
-   * transitionId} if the API level is equal or lower than {@link android.os.Build.VERSION_CODES#T},
-   * or argument {@code useClientTransitionSettings} is true, or System property {@code
+   * transitionId}, {@code shared_x_axis_activity} transition is used only when {@code
+   * TRANSITION_FADE_TROUGH} transition is specified, and System property {@code *
+   * suw_apply_glif_theme_controlled_transition} is true, and the API level is equal or more than
+   * {@link android.os.Build.VERSION_CODES#U}, other {@code transitionId} can be specified if the
+   * API level is equal or lower than {@link android.os.Build.VERSION_CODES#T}, or argument {@code
+   * useClientTransitionSettings} is true, or System property {@code
    * suw_apply_glif_theme_controlled_transition} is false. The default transition that will be
    * applied is {@link #TRANSITION_SLIDE}.
    *
@@ -242,8 +250,20 @@ public class TransitionHelper {
       Activity activity, @TransitionType int transitionId, boolean useClientTransitionSettings) {
     if (BuildCompatUtils.isAtLeastU()
         && !useClientTransitionSettings
-        && PartnerConfigHelper.isGlifThemeControlledTransitionApplied(activity)) {
+        && PartnerConfigHelper.isGlifThemeControlledTransitionApplied(activity)
+        && transitionId != TRANSITION_FADE_THROUGH) {
       // Do nothing
+    } else if (BuildCompatUtils.isAtLeastU() && transitionId == TRANSITION_FADE_THROUGH) {
+      int openEnterTransition = R.anim.shared_x_axis_activity_open_enter;
+      if (PartnerConfigHelper.isGlifThemeControlledTransitionApplied(activity)) {
+        if (ThemeHelper.shouldApplyDynamicColor(activity)) {
+          openEnterTransition = R.anim.shared_x_axis_activity_open_enter_dynamic_color;
+        }
+        activity.overridePendingTransition(
+            openEnterTransition, R.anim.shared_x_axis_activity_open_exit);
+      } else {
+        activity.overridePendingTransition(R.anim.sud_slide_next_in, R.anim.sud_slide_next_out);
+      }
     } else if (transitionId == TRANSITION_SLIDE) {
       activity.overridePendingTransition(R.anim.sud_slide_next_in, R.anim.sud_slide_next_out);
     } else if (transitionId == TRANSITION_FADE) {
@@ -363,12 +383,17 @@ public class TransitionHelper {
   /**
    * Apply the transition for going backward which is decided by {@code
    * Animation.SudWindowAnimation} theme if the API level is equal or higher than {@link
-   * android.os.Build.VERSION_CODES#U}, or argument {@code useClientTransitionSettings} is false, or
-   * System property {@code suw_apply_glif_theme_controlled_transition} is true.
+   * android.os.Build.VERSION_CODES#U}, and argument {@code useClientTransitionSettings} is false,
+   * and System property {@code suw_apply_glif_theme_controlled_transition} is true, and {@code
+   * TRANSITION_FADE_THOUGH} transition is not specified.
    *
    * <p>Otherwise, apply the transition for going backward which is decided by the argument {@code
-   * transitionId} if the API level is equal or lower than {@link android.os.Build.VERSION_CODES#T},
-   * or argument {@code useClientTransitionSettings} is true, or System property {@code
+   * transitionId}, {@code shared_x_axis_activity} transition is used only when {@code
+   * TRANSITION_FADE_TROUGH} transition is specified, and System property {@code *
+   * suw_apply_glif_theme_controlled_transition} is true, and the API level is equal or more than
+   * {@link android.os.Build.VERSION_CODES#U}, other {@code transitionId} can be specified if the
+   * API level is equal or lower than {@link android.os.Build.VERSION_CODES#T}, or argument {@code
+   * useClientTransitionSettings} is true, or System property {@code
    * suw_apply_glif_theme_controlled_transition} is false. The default transition that will be
    * applied is {@link #TRANSITION_SLIDE}.
    *
@@ -383,8 +408,20 @@ public class TransitionHelper {
       Activity activity, @TransitionType int transitionId, boolean useClientTransitionSettings) {
     if (BuildCompatUtils.isAtLeastU()
         && !useClientTransitionSettings
-        && PartnerConfigHelper.isGlifThemeControlledTransitionApplied(activity)) {
+        && PartnerConfigHelper.isGlifThemeControlledTransitionApplied(activity)
+        && transitionId != TRANSITION_FADE_THROUGH) {
       // Do nothing
+    } else if (BuildCompatUtils.isAtLeastU() && transitionId == TRANSITION_FADE_THROUGH) {
+      if (PartnerConfigHelper.isGlifThemeControlledTransitionApplied(activity)) {
+        int closeEnterTransition = R.anim.shared_x_axis_activity_close_enter;
+        if (ThemeHelper.shouldApplyDynamicColor(activity)) {
+          closeEnterTransition = R.anim.shared_x_axis_activity_close_enter_dynamic_color;
+        }
+        activity.overridePendingTransition(
+            closeEnterTransition, R.anim.shared_x_axis_activity_close_exit);
+      } else {
+        activity.overridePendingTransition(R.anim.sud_slide_back_in, R.anim.sud_slide_back_out);
+      }
     } else if (transitionId == TRANSITION_SLIDE) {
       activity.overridePendingTransition(R.anim.sud_slide_back_in, R.anim.sud_slide_back_out);
     } else if (transitionId == TRANSITION_FADE) {
