@@ -53,10 +53,25 @@ public final class DeviceHelper {
    * com.google.android.setupwizard.util.PartnerResource#DEVICE_NAME}) > {@link
    * android.provider.Settings.Global#DEVICE_NAME} > system property ro.product.model)
    */
+  public static CharSequence getDeviceName(@NonNull Context context) {
+    return getDeviceName(context, /* enableCache= */ true);
+  }
+
+  /**
+   * Get the device name text from these resources, if they are unavailable or setupwizard apk is
+   * older which does not contains {@link DeviceHelper#GET_DEVICE_NAME_METHOD} method, return the
+   * device name as default value "device".
+   *
+   * <p>Priority: partner config ({@link
+   * com.google.android.setupwizard.util.PartnerResource#DEVICE_NAME}) > {@link
+   * android.provider.Settings.Global#DEVICE_NAME} > system property ro.product.model)
+   *
+   * @param enableCache Indicates whether the device name is preferentially obtained from the cache.
+   */
   @NonNull
   @SuppressLint("DiscouragedApi")
-  public static CharSequence getDeviceName(@NonNull Context context) {
-    if (deviceName == null || deviceName.isEmpty()) {
+  public static CharSequence getDeviceName(@NonNull Context context, boolean enableCache) {
+    if (deviceName == null || deviceName.isEmpty() || !enableCache) {
       try {
         deviceName =
             context
