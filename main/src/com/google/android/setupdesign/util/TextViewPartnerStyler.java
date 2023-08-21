@@ -16,6 +16,9 @@
 
 package com.google.android.setupdesign.util;
 
+import static com.google.android.setupcompat.partnerconfig.PartnerConfigHelper.isFontWeightEnabled;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.TypedValue;
@@ -31,7 +34,11 @@ import com.google.android.setupdesign.view.RichTextView;
 /** Helper class to apply partner configurations to a textView. */
 final class TextViewPartnerStyler {
 
+  /** Normal font weight. */
+  private static final int FONT_WEIGHT_NORMAL = 400;
+
   /** Applies given partner configurations {@code textPartnerConfigs} to the {@code textView}. */
+  @SuppressLint("NewApi") // Applying partner config should be guarded before Android S
   public static void applyPartnerCustomizationStyle(
       @NonNull TextView textView, @NonNull TextPartnerConfigs textPartnerConfigs) {
 
@@ -74,16 +81,35 @@ final class TextViewPartnerStyler {
       }
     }
 
+    Typeface fontFamily = null;
     if (textPartnerConfigs.getTextFontFamilyConfig() != null
         && PartnerConfigHelper.get(context)
             .isPartnerConfigAvailable(textPartnerConfigs.getTextFontFamilyConfig())) {
       String fontFamilyName =
           PartnerConfigHelper.get(context)
               .getString(context, textPartnerConfigs.getTextFontFamilyConfig());
-      Typeface font = Typeface.create(fontFamilyName, Typeface.NORMAL);
-      if (font != null) {
-        textView.setTypeface(font);
+      fontFamily = Typeface.create(fontFamilyName, Typeface.NORMAL);
+    }
+
+    Typeface font;
+    if (isFontWeightEnabled(context)
+        && textPartnerConfigs.getTextFontWeightConfig() != null
+        && PartnerConfigHelper.get(context)
+            .isPartnerConfigAvailable(textPartnerConfigs.getTextFontWeightConfig())) {
+      int weight =
+          PartnerConfigHelper.get(context)
+              .getInteger(
+                  context, textPartnerConfigs.getTextFontWeightConfig(), FONT_WEIGHT_NORMAL);
+      if (fontFamily == null) {
+        fontFamily = textView.getTypeface();
       }
+      font = Typeface.create(fontFamily, weight, /* italic= */ false);
+    } else {
+      font = fontFamily;
+    }
+
+    if (font != null) {
+      textView.setTypeface(font);
     }
 
     if (textView instanceof RichTextView && textPartnerConfigs.getLinkTextFontFamilyConfig() != null
@@ -162,6 +188,7 @@ final class TextViewPartnerStyler {
     private final PartnerConfig textLinkedColorConfig;
     private final PartnerConfig textSizeConfig;
     private final PartnerConfig textFontFamilyConfig;
+    private final PartnerConfig textFontWeightConfig;
     private final PartnerConfig textLinkFontFamilyConfig;
     private final PartnerConfig textMarginTopConfig;
     private final PartnerConfig textMarginBottomConfig;
@@ -172,6 +199,7 @@ final class TextViewPartnerStyler {
         @Nullable PartnerConfig textLinkedColorConfig,
         @Nullable PartnerConfig textSizeConfig,
         @Nullable PartnerConfig textFontFamilyConfig,
+        @Nullable PartnerConfig textFontWeightConfig,
         @Nullable PartnerConfig textLinkFontFamilyConfig,
         @Nullable PartnerConfig textMarginTopConfig,
         @Nullable PartnerConfig textMarginBottomConfig,
@@ -180,6 +208,7 @@ final class TextViewPartnerStyler {
       this.textLinkedColorConfig = textLinkedColorConfig;
       this.textSizeConfig = textSizeConfig;
       this.textFontFamilyConfig = textFontFamilyConfig;
+      this.textFontWeightConfig = textFontWeightConfig;
       this.textLinkFontFamilyConfig = textLinkFontFamilyConfig;
       this.textMarginTopConfig = textMarginTopConfig;
       this.textMarginBottomConfig = textMarginBottomConfig;
@@ -200,6 +229,10 @@ final class TextViewPartnerStyler {
 
     public PartnerConfig getTextFontFamilyConfig() {
       return textFontFamilyConfig;
+    }
+
+    public PartnerConfig getTextFontWeightConfig() {
+      return textFontWeightConfig;
     }
 
     public PartnerConfig getLinkTextFontFamilyConfig() {
