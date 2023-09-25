@@ -27,7 +27,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import com.google.android.setupcompat.util.Logger;
-import com.google.android.setupdesign.R;
 
 /** Helper class to get attributes of the device, like a friendly display name. */
 public final class DeviceHelper {
@@ -109,7 +108,8 @@ public final class DeviceHelper {
       }
     }
 
-    return context.getString(R.string.sud_default_device_name);
+    return context.getString(
+        com.google.android.setupdesign.strings.R.string.sud_default_device_name);
   }
 
   private DeviceHelper() {}
