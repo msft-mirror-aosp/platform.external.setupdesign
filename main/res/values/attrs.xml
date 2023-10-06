@@ -157,6 +157,8 @@
 
     <attr name="sudHasStableIds" format="boolean|reference" />
 
+    <attr name="selectableItemBackground" format="reference" />
+
     <declare-styleable name="SudIllustration">
         <attr name="sudAspectRatio" format="float" />
     </declare-styleable>

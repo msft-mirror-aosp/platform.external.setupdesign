@@ -60,7 +60,7 @@ android_library {
 
 android_library {
     name: "setupdesign-strings",
-    manifest: "main/AndroidManifest.xml",
+    manifest: "strings/AndroidManifest.xml",
     resource_dirs: [
         "strings/res",
     ],
