@@ -108,12 +108,12 @@ public class GlifLoadingLayout extends GlifLayout {
 
   public GlifLoadingLayout(Context context, int template, int containerId) {
     super(context, template, containerId);
-    init(null, R.attr.sudLayoutTheme);
+    init(null, com.google.android.setupdesign.R.attr.sudLayoutTheme);
   }
 
   public GlifLoadingLayout(Context context, AttributeSet attrs) {
     super(context, attrs);
-    init(attrs, R.attr.sudLayoutTheme);
+    init(attrs, com.google.android.setupdesign.R.attr.sudLayoutTheme);
   }
 
   public GlifLoadingLayout(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -694,7 +694,10 @@ public class GlifLoadingLayout extends GlifLayout {
         }
       }
     }
-    return inflateTemplate(inflater, R.style.SudThemeGlif_Light, template);
+    return inflateTemplate(
+        inflater,
+        com.google.android.setupdesign.R.style.SudThemeGlif_Light,
+        template);
   }
 
   @Override
