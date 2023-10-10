@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2021 The Android Open Source Project
+    Copyright (C) 2022 The Android Open Source Project
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
     limitations under the License.
 -->
 
-<resources xmlns:tools="http://schemas.android.com/tools">
-  <item name="sud_glif_loading_template" type="layout"  tools:ignore="UnusedResources">@layout/sud_glif_loading_template_card</item>
-  <item name="sud_glif_loading_embedded_template" type="layout"  tools:ignore="UnusedResources">@layout/sud_glif_loading_embedded_template_card</item>
+<resources>
+  <!-- Accent color -->
+  <color name="sud_dynamic_color_accent_glif_v3_dark">@color/sud_system_accent1_300</color>
 </resources>
