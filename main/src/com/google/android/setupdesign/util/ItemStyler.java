@@ -89,13 +89,14 @@ public final class ItemStyler {
     TextViewPartnerStyler.applyPartnerCustomizationStyle(
         titleTextView,
         new TextPartnerConfigs(
-            null,
-            null,
+            /* textColorConfig= */ null,
+            /* textLinkedColorConfig= */ null,
             PartnerConfig.CONFIG_ITEMS_TITLE_TEXT_SIZE,
             PartnerConfig.CONFIG_ITEMS_TITLE_FONT_FAMILY,
-            null,
-            null,
-            null,
+            /* textFontWeightConfig= */ null,
+            /* textLinkFontFamilyConfig= */ null,
+            /* textMarginTopConfig= */ null,
+            /* textMarginBottomConfig= */ null,
             PartnerStyleHelper.getLayoutGravity(titleTextView.getContext())));
   }
 
@@ -113,13 +114,14 @@ public final class ItemStyler {
     TextViewPartnerStyler.applyPartnerCustomizationStyle(
         summaryTextView,
         new TextPartnerConfigs(
-            null,
-            null,
+            /* textColorConfig= */ null,
+            /* textLinkedColorConfig= */ null,
             PartnerConfig.CONFIG_ITEMS_SUMMARY_TEXT_SIZE,
             PartnerConfig.CONFIG_ITEMS_SUMMARY_FONT_FAMILY,
-            null,
+            /* textFontWeightConfig= */ null,
+            /* textLinkFontFamilyConfig= */ null,
             PartnerConfig.CONFIG_ITEMS_SUMMARY_MARGIN_TOP,
-            null,
+            /* textMarginBottomConfig= */ null,
             PartnerStyleHelper.getLayoutGravity(summaryTextView.getContext())));
   }
 
