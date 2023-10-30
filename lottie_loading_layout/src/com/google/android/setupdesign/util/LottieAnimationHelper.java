@@ -29,7 +29,6 @@ import com.airbnb.lottie.model.KeyPath;
 import com.airbnb.lottie.value.LottieValueCallback;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
-import com.google.android.setupcompat.util.BuildCompatUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,7 +117,7 @@ public class LottieAnimationHelper {
           try {
             customizationMap.put(
                 new KeyPath("**", splitItem[0], "**"),
-                context.getResources().getColor(colorResourceId));
+                context.getResources().getColor(colorResourceId, null));
           } catch (Resources.NotFoundException exception) {
             Log.e(TAG, "Resource Not found, resource value=" + colorMapping);
           }
