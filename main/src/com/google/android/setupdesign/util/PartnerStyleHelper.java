@@ -113,9 +113,9 @@ public final class PartnerStyleHelper {
     if (activity != null) {
       isSetupFlow = WizardManagerHelper.isAnySetupWizard(activity.getIntent());
     }
-    TypedArray a = context.obtainStyledAttributes(new int[] {
-        com.google.android.setupcompat.R.attr.sucUsePartnerResource
-    });
+    TypedArray a =
+        context.obtainStyledAttributes(
+            new int[] {com.google.android.setupcompat.R.attr.sucUsePartnerResource});
     boolean usePartnerResource = a.getBoolean(0, true);
     a.recycle();
 
@@ -182,9 +182,9 @@ public final class PartnerStyleHelper {
     }
 
     // try best to get dynamic color settings from attr
-    TypedArray a = context.obtainStyledAttributes(new int[] {
-        com.google.android.setupcompat.R.attr.sucFullDynamicColor
-    });
+    TypedArray a =
+        context.obtainStyledAttributes(
+            new int[] {com.google.android.setupcompat.R.attr.sucFullDynamicColor});
     boolean useDynamicColorTheme =
         a.hasValue(
             com.google
