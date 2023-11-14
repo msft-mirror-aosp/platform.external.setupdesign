@@ -21,6 +21,8 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
+import com.google.android.setupcompat.partnerconfig.PartnerConfig;
+import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
 
 /**
@@ -66,7 +68,16 @@ public class FillContentLayout extends FrameLayout {
         context.obtainStyledAttributes(attrs, R.styleable.SudFillContentLayout, defStyleAttr, 0);
 
     maxHeight = a.getDimensionPixelSize(R.styleable.SudFillContentLayout_android_maxHeight, -1);
-    maxWidth = a.getDimensionPixelSize(R.styleable.SudFillContentLayout_android_maxWidth, -1);
+
+    if (PartnerConfigHelper.get(context)
+        .isPartnerConfigAvailable(PartnerConfig.CONFIG_ILLUSTRATION_MAX_WIDTH)) {
+      maxWidth =
+          (int)
+              PartnerConfigHelper.get(context)
+                  .getDimension(context, PartnerConfig.CONFIG_ILLUSTRATION_MAX_WIDTH);
+    } else {
+      maxWidth = a.getDimensionPixelSize(R.styleable.SudFillContentLayout_android_maxWidth, -1);
+    }
 
     a.recycle();
   }
@@ -91,7 +102,6 @@ public class FillContentLayout extends FrameLayout {
     final MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
 
     // Create measure specs that are no bigger than min(parentSize, maxSize)
-
     int childWidthMeasureSpec =
         getMaxSizeMeasureSpec(
             Math.min(maxWidth, parentWidth),
