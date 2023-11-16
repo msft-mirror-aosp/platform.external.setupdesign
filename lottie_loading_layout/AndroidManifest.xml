@@ -19,7 +19,7 @@
     package="com.google.android.setupdesign.lottieloadinglayout">
 
   <uses-sdk
-      android:minSdkVersion="14"
-      android:targetSdkVersion="32" />
+      android:minSdkVersion="23"
+      android:targetSdkVersion="34" />
 
 </manifest>
