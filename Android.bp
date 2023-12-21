@@ -50,7 +50,10 @@ android_library {
     min_sdk_version: "19",
     optimize: {
         proguard_flags_files: ["proguard.flags"],
-    }
+    },
+    lint: {
+        baseline_filename: "lint-baseline.xml",
+    },
 }
 
 //
@@ -65,5 +68,8 @@ android_library {
         "strings/res",
     ],
     min_sdk_version: "19",
-    sdk_version: "current"
+    sdk_version: "current",
+    lint: {
+        baseline_filename: "lint-baseline.xml",
+    },
 }
