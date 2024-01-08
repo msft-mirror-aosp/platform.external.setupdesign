@@ -67,7 +67,15 @@ public class FillContentLayout extends FrameLayout {
     TypedArray a =
         context.obtainStyledAttributes(attrs, R.styleable.SudFillContentLayout, defStyleAttr, 0);
 
-    maxHeight = a.getDimensionPixelSize(R.styleable.SudFillContentLayout_android_maxHeight, -1);
+    if (PartnerConfigHelper.get(context)
+        .isPartnerConfigAvailable(PartnerConfig.CONFIG_ILLUSTRATION_MAX_HEIGHT)) {
+      maxHeight =
+          (int)
+              PartnerConfigHelper.get(context)
+                  .getDimension(context, PartnerConfig.CONFIG_ILLUSTRATION_MAX_HEIGHT);
+    } else {
+      maxHeight = a.getDimensionPixelSize(R.styleable.SudFillContentLayout_android_maxHeight, -1);
+    }
 
     if (PartnerConfigHelper.get(context)
         .isPartnerConfigAvailable(PartnerConfig.CONFIG_ILLUSTRATION_MAX_WIDTH)) {
