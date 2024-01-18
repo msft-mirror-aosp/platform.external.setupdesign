@@ -16,7 +16,6 @@
 
 package com.google.android.setupdesign.view;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -36,7 +35,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.view.ViewCompat;
+import com.google.android.setupcompat.util.BuildCompatUtils;
 import com.google.android.setupdesign.accessibility.LinkAccessibilityHelper;
+import com.google.android.setupdesign.span.BoldLinkSpan;
 import com.google.android.setupdesign.span.LinkSpan;
 import com.google.android.setupdesign.span.LinkSpan.OnLinkClickListener;
 import com.google.android.setupdesign.span.SpanHelper;
@@ -63,13 +64,12 @@ public class RichTextView extends AppCompatTextView implements OnLinkClickListen
    *
    * <ol>
    *   <li>&lt;annotation link="foobar"&gt; will create a {@link
-   *       com.google.android.setupdesign.span.LinkSpan} that broadcasts with the key "foobar"
+   *       com.google.android.setupdesign.span.BoldLinkSpan} that broadcasts with the key "foobar"
    *   <li>&lt;annotation textAppearance="TextAppearance.FooBar"&gt; will create a {@link
    *       android.text.style.TextAppearanceSpan} with @style/TextAppearance.FooBar
    * </ol>
    */
   @TargetApi(28)
-  @SuppressLint("NewApi")
   public static CharSequence getRichText(Context context, CharSequence text) {
     if (text instanceof Spanned) {
       final SpannableString spannable = new SpannableString(text);
@@ -88,7 +88,12 @@ public class RichTextView extends AppCompatTextView implements OnLinkClickListen
           final TextAppearanceSpan textAppearanceSpan = new TextAppearanceSpan(context, style);
           SpanHelper.replaceSpan(spannable, span, textAppearanceSpan);
         } else if (ANNOTATION_LINK.equals(key)) {
-          LinkSpan link = new LinkSpan(span.getValue());
+          LinkSpan link;
+          if (BuildCompatUtils.isAtLeastU()) {
+            link = new BoldLinkSpan(context, span.getValue());
+          } else {
+            link = new LinkSpan(span.getValue());
+          }
           TypefaceSpan typefaceSpan =
               (spanTypeface != null)
                   ? new TypefaceSpan(spanTypeface)
