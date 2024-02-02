@@ -47,10 +47,13 @@ android_library {
     srcs: [
         "main/src/**/*.java",
     ],
-    min_sdk_version: "14",
+    min_sdk_version: "19",
     optimize: {
         proguard_flags_files: ["proguard.flags"],
-    }
+    },
+    lint: {
+        baseline_filename: "lint-baseline.xml",
+    },
 }
 
 //
@@ -64,6 +67,9 @@ android_library {
     resource_dirs: [
         "strings/res",
     ],
-    min_sdk_version: "14",
-    sdk_version: "current"
+    min_sdk_version: "19",
+    sdk_version: "current",
+    lint: {
+        baseline_filename: "lint-baseline.xml",
+    },
 }
