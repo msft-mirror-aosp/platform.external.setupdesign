@@ -23,14 +23,12 @@ import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.ColorFilter;
 import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
-import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
@@ -108,12 +106,12 @@ public class GlifLoadingLayout extends GlifLayout {
 
   public GlifLoadingLayout(Context context, int template, int containerId) {
     super(context, template, containerId);
-    init(null, R.attr.sudLayoutTheme);
+    init(null, com.google.android.setupdesign.R.attr.sudLayoutTheme);
   }
 
   public GlifLoadingLayout(Context context, AttributeSet attrs) {
     super(context, attrs);
-    init(attrs, R.attr.sudLayoutTheme);
+    init(attrs, com.google.android.setupdesign.R.attr.sudLayoutTheme);
   }
 
   public GlifLoadingLayout(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -306,86 +304,6 @@ public class GlifLoadingLayout extends GlifLayout {
       throw new NullPointerException("activity should not be null");
     }
     registerAnimationFinishRunnable(activity::finish);
-  }
-
-  /**
-   * Launch a new activity after the animation finished.
-   *
-   * @param activity The activity which is GlifLoadingLayout attached to.
-   * @param intent The intent to start.
-   * @param options Additional options for how the Activity should be started. See {@link
-   *     android.content.Context#startActivity(Intent, Bundle)} for more details.
-   * @param finish Finish the activity after startActivity
-   * @see Activity#startActivity(Intent)
-   * @see Activity#startActivityForResult
-   */
-  public void startActivity(
-      @NonNull Activity activity,
-      @NonNull Intent intent,
-      @Nullable Bundle options,
-      boolean finish) {
-    if (activity == null) {
-      throw new NullPointerException("activity should not be null");
-    }
-
-    if (intent == null) {
-      throw new NullPointerException("intent should not be null");
-    }
-
-    registerAnimationFinishRunnable(
-        () -> {
-          if (options == null || Build.VERSION.SDK_INT < VERSION_CODES.JELLY_BEAN) {
-            activity.startActivity(intent);
-          } else {
-            activity.startActivity(intent, options);
-          }
-
-          if (finish) {
-            activity.finish();
-          }
-        });
-  }
-
-  /**
-   * Waiting for the animation finished and launch an activity for which you would like a result
-   * when it finished.
-   *
-   * @param activity The activity which the GlifLoadingLayout attached to.
-   * @param intent The intent to start.
-   * @param requestCode If >= 0, this code will be returned in onActivityResult() when the activity
-   *     exits.
-   * @param options Additional options for how the Activity should be started.
-   * @param finish Finish the activity after startActivityForResult. The onActivityResult might not
-   *     be called because the activity already finished.
-   *     <p>See {@link android.content.Context#startActivity(Intent, Bundle)}
-   *     Context.startActivity(Intent, Bundle)} for more details.
-   */
-  public void startActivityForResult(
-      @NonNull Activity activity,
-      @NonNull Intent intent,
-      int requestCode,
-      @Nullable Bundle options,
-      boolean finish) {
-    if (activity == null) {
-      throw new NullPointerException("activity should not be null");
-    }
-
-    if (intent == null) {
-      throw new NullPointerException("intent should not be null");
-    }
-
-    registerAnimationFinishRunnable(
-        () -> {
-          if (options == null || Build.VERSION.SDK_INT < VERSION_CODES.JELLY_BEAN) {
-            activity.startActivityForResult(intent, requestCode);
-          } else {
-            activity.startActivityForResult(intent, requestCode, options);
-          }
-
-          if (finish) {
-            activity.finish();
-          }
-        });
   }
 
   private void updateHeaderHeight() {
@@ -694,7 +612,8 @@ public class GlifLoadingLayout extends GlifLayout {
         }
       }
     }
-    return inflateTemplate(inflater, R.style.SudThemeGlif_Light, template);
+    return inflateTemplate(
+        inflater, com.google.android.setupdesign.R.style.SudThemeGlif_Light, template);
   }
 
   @Override

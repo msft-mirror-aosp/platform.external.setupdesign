@@ -201,13 +201,10 @@ public final class ThemeHelper {
     boolean isSetupFlow = WizardManagerHelper.isAnySetupWizard(activity.getIntent());
     boolean isDayNightEnabled = isSetupWizardDayNightEnabled(context);
 
-    if (isSetupFlow && !BuildCompatUtils.isAtLeastU()) {
-      // return theme for inside setup flow
-      resId =
-          isDayNightEnabled
-              ? R.style.SudDynamicColorTheme_DayNight
-              : R.style.SudDynamicColorTheme_Light;
-    } else {
+    boolean isSUWFullDynamicColorEnabled =
+        PartnerConfigHelper.isSetupWizardFullDynamicColorEnabled(context);
+
+    if (!isSetupFlow || (BuildCompatUtils.isAtLeastU() && isSUWFullDynamicColorEnabled)) {
       // return theme for outside setup flow
       resId =
           isDayNightEnabled
@@ -218,6 +215,12 @@ public final class ThemeHelper {
               + (isDayNightEnabled
                   ? "SudFullDynamicColorTheme_DayNight"
                   : "SudFullDynamicColorTheme_Light"));
+    } else {
+      // return theme for inside setup flow
+      resId =
+          isDayNightEnabled
+              ? R.style.SudDynamicColorTheme_DayNight
+              : R.style.SudDynamicColorTheme_Light;
     }
 
     LOG.atDebug(

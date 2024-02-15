@@ -53,9 +53,10 @@ public final class ContentStyler {
             PartnerConfig.CONFIG_CONTENT_LINK_TEXT_COLOR,
             PartnerConfig.CONFIG_CONTENT_TEXT_SIZE,
             PartnerConfig.CONFIG_CONTENT_FONT_FAMILY,
+            /* textFontWeightConfig= */ null,
             PartnerConfig.CONFIG_DESCRIPTION_LINK_FONT_FAMILY,
-            null,
-            null,
+            /* textMarginTopConfig= */ null,
+            /* textMarginBottomConfig= */ null,
             ContentStyler.getPartnerContentTextGravity(contentText.getContext())));
   }
 
@@ -90,16 +91,17 @@ public final class ContentStyler {
     TextViewPartnerStyler.applyPartnerCustomizationStyle(
         infoText,
         new TextPartnerConfigs(
-            null,
-            null,
+            /* textColorConfig= */ null,
+            /* textLinkedColorConfig= */ null,
             textSizeConfigAvailable ? PartnerConfig.CONFIG_CONTENT_INFO_TEXT_SIZE : null,
             fontFamilyConfigAvailable ? PartnerConfig.CONFIG_CONTENT_INFO_FONT_FAMILY : null,
+            /* textFontWeightConfig= */ null,
             linkFontFamilyConfigAvailable
                 ? PartnerConfig.CONFIG_DESCRIPTION_LINK_FONT_FAMILY
                 : null,
-            null,
-            null,
-            0));
+            /* textMarginTopConfig= */ null,
+            /* textMarginBottomConfig= */ null,
+            /* textGravity= */ 0));
 
     // TODO: Move CONFIG_CONTENT_INFO_LINE_SPACING_EXTRA to TextPartnerConfigs for
     // customize

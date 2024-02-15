@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Copyright (C) 2020 The Android Open Source Project
+    Copyright (C) 2024 The Android Open Source Project
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -15,11 +15,13 @@
     limitations under the License.
 -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.google.android.setupdesign.lottieloadinglayout">
-
-  <uses-sdk
-      android:minSdkVersion="23"
-      android:targetSdkVersion="34" />
-
-</manifest>
+<com.google.android.setupdesign.view.HeaderRecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sud_recycler_view"
+    android:scrollIndicators="?attr/sudScrollIndicators"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:scrollbars="vertical"
+    app:sudHeader="@layout/sud_glif_header" />
