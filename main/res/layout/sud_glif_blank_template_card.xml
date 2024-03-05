@@ -31,6 +31,7 @@
         android:visibility="invisible" />
 
     <com.google.android.setupdesign.view.IntrinsicSizeFrameLayout
+        android:id="@+id/suc_intrinsic_size_layout"
         style="@style/SudGlifCardContainer"
         android:layout_width="@dimen/sud_glif_card_width"
         android:layout_height="wrap_content"

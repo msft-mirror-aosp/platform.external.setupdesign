@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import com.google.android.setupcompat.util.ForceTwoPaneHelper;
 import com.google.android.setupdesign.template.ListMixin;
 import com.google.android.setupdesign.template.ListViewScrollHandlingDelegate;
 import com.google.android.setupdesign.template.RequireScrollMixin;
@@ -94,6 +95,8 @@ public class GlifListLayout extends GlifLayout {
       // if the activity is embedded should apply an embedded layout.
       if (isEmbeddedActivityOnePaneEnabled(getContext())) {
         template = R.layout.sud_glif_list_embedded_template;
+      } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
+        template = ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), template);
       }
     }
     return super.onInflateTemplate(inflater, template);
