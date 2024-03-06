@@ -15,7 +15,8 @@
     limitations under the License.
 -->
 
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@layout/*_two_pane">
 
     <item name="sud_template" type="layout">@layout/sud_template_header</item>
 
