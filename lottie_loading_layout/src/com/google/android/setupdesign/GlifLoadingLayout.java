@@ -59,6 +59,7 @@ import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.partnerconfig.ResourceEntry;
 import com.google.android.setupcompat.template.FooterBarMixin;
 import com.google.android.setupcompat.util.BuildCompatUtils;
+import com.google.android.setupcompat.util.ForceTwoPaneHelper;
 import com.google.android.setupdesign.lottieloadinglayout.R;
 import com.google.android.setupdesign.util.LayoutStyler;
 import com.google.android.setupdesign.util.LottieAnimationHelper;
@@ -602,6 +603,8 @@ public class GlifLoadingLayout extends GlifLayout {
         // if the activity is embedded should apply an embedded layout.
         if (isEmbeddedActivityOnePaneEnabled(context)) {
           template = R.layout.sud_glif_fullscreen_loading_embedded_template;
+        } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
+          template = ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), template);
         }
       } else {
         template = R.layout.sud_glif_loading_template;
@@ -609,6 +612,8 @@ public class GlifLoadingLayout extends GlifLayout {
         // if the activity is embedded should apply an embedded layout.
         if (isEmbeddedActivityOnePaneEnabled(context)) {
           template = R.layout.sud_glif_loading_embedded_template;
+        } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
+          template = ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), template);
         }
       }
     }
