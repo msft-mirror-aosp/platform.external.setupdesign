@@ -30,6 +30,7 @@
     <item name="sudSwitchBarTrackOnColor">@color/sud_dynamic_switch_track_on_dark</item>
     <item name="sudSwitchBarThumbOffColor">@color/sud_dynamic_switch_thumb_off_dark</item>
     <item name="sudSwitchBarTrackOffColor">@color/sud_dynamic_switch_track_off_dark</item>
+    <item name="sudSwitchBarTrackOffOutlineColor">@color/sud_dynamic_switch_thumb_off_outline_dark</item>
     <item name="sudEditBoxColor">@color/sud_dynamic_color_accent_glif_v3_dark</item>
   </style>
 
@@ -46,6 +47,7 @@
     <item name="sudSwitchBarTrackOnColor">@color/sud_dynamic_switch_track_on_light</item>
     <item name="sudSwitchBarThumbOffColor">@color/sud_dynamic_switch_thumb_off_light</item>
     <item name="sudSwitchBarTrackOffColor">@color/sud_dynamic_switch_track_off_light</item>
+    <item name="sudSwitchBarTrackOffOutlineColor">@color/sud_dynamic_switch_thumb_off_outline_light</item>
     <item name="sudEditBoxColor">@color/sud_dynamic_color_accent_glif_v3_light</item>
   </style>
 
@@ -120,6 +122,7 @@
     <item name="sudSwitchBarTrackOnColor">@color/sud_dynamic_switch_track_on_dark</item>
     <item name="sudSwitchBarThumbOffColor">@color/sud_dynamic_switch_thumb_off_dark</item>
     <item name="sudSwitchBarTrackOffColor">@color/sud_dynamic_switch_track_off_dark</item>
+    <item name="sudSwitchBarTrackOffOutlineColor">@color/sud_dynamic_switch_thumb_off_outline_dark</item>
     <item name="sudEditBoxColor">@color/sud_dynamic_color_accent_glif_v3_dark</item>
   </style>
 
@@ -134,6 +137,7 @@
     <item name="sudSwitchBarTrackOnColor">@color/sud_dynamic_switch_track_on_light</item>
     <item name="sudSwitchBarThumbOffColor">@color/sud_dynamic_switch_thumb_off_light</item>
     <item name="sudSwitchBarTrackOffColor">@color/sud_dynamic_switch_track_off_light</item>
+    <item name="sudSwitchBarTrackOffOutlineColor">@color/sud_dynamic_switch_thumb_off_outline_light</item>
     <item name="sudEditBoxColor">@color/sud_dynamic_color_accent_glif_v3_light</item>
   </style>
 
