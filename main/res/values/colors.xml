@@ -178,9 +178,12 @@
 
 
     <color name="sud_switch_track_off_light">#FF55575E</color>
+    <color name="sud_switch_track_outline_off_light">#FFA5ACB2</color>
     <color name="sud_switch_thumb_off_light">#FFA5ACB2</color>
     <color name="sud_switch_track_off_dark">#FF454749</color>
+    <color name="sud_switch_track_outline_off_dark">#FF8F9193</color>
     <color name="sud_switch_thumb_off_dark">#FF8F9193</color>
+
 
     <color name="sud_switch_track_on_light">#3B78E7</color>
 

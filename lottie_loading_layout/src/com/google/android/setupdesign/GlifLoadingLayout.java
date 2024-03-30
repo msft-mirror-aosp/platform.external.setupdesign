@@ -33,12 +33,14 @@ import android.os.PersistableBundle;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import androidx.annotation.IntDef;
@@ -93,6 +95,9 @@ public class GlifLoadingLayout extends GlifLayout {
   protected static final String GLIF_LAYOUT_TYPE = "GlifLayoutType";
   protected static final String LOADING_LAYOUT = "LoadingLayout";
   @VisibleForTesting public boolean runRunnable;
+  private boolean isHeaderFullTextEnabled = false;
+  // This value is decided by local test expereince.
+  @VisibleForTesting static final float MIN_ALLOWED_ILLUSTRATION_HEIGHT_RATIO = 0.25f;
 
   @VisibleForTesting
   public List<LottieAnimationFinishListener> animationFinishListeners = new ArrayList<>();
@@ -194,6 +199,16 @@ public class GlifLoadingLayout extends GlifLayout {
           };
       lottieAnimationView.addAnimatorListener(animatorListener);
     }
+  }
+
+  public void setHeaderFullTextEnabled(boolean enabled) {
+    isHeaderFullTextEnabled = enabled;
+    // Update header height again.
+    updateHeaderHeight();
+  }
+
+  public boolean isHeaderFullTextEnabled() {
+    return isHeaderFullTextEnabled;
   }
 
   @Override
@@ -314,11 +329,96 @@ public class GlifLoadingLayout extends GlifLayout {
         && PartnerConfigHelper.get(getContext())
             .isPartnerConfigAvailable(PartnerConfig.CONFIG_LOADING_LAYOUT_HEADER_HEIGHT)
         && currentConfig.orientation != Configuration.ORIENTATION_LANDSCAPE) {
-      float configHeaderHeight =
-          PartnerConfigHelper.get(getContext())
-              .getDimension(getContext(), PartnerConfig.CONFIG_LOADING_LAYOUT_HEADER_HEIGHT);
-      headerView.getLayoutParams().height = (int) configHeaderHeight;
+      if (isHeaderFullTextEnabled) {
+        // Set header height to wrap content for rendering full text view as much as possible.
+        headerView.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        // Optimize loading style if there's no extra space for showing illustration view.
+        optimizeLoadingStyle(headerView);
+      } else {
+        float configHeaderHeight =
+            PartnerConfigHelper.get(getContext())
+                .getDimension(getContext(), PartnerConfig.CONFIG_LOADING_LAYOUT_HEADER_HEIGHT);
+        headerView.getLayoutParams().height = (int) configHeaderHeight;
+      }
     }
+  }
+
+  /**
+   * If there's no space in the loading screen page, layout will hide the original illustration view
+   * and show a linear progress bar for saving space.
+   */
+  private void optimizeLoadingStyle(View headerView) {
+    if (headerView == null) {
+      return;
+    }
+    // Listen for layout changes to header view
+    headerView
+        .getViewTreeObserver()
+        .addOnGlobalLayoutListener(
+            new ViewTreeObserver.OnGlobalLayoutListener() {
+              @Override
+              public void onGlobalLayout() {
+                // Remove the listener to avoid multiple calls
+                getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                // Check if linear progress should be shown
+                if (shouldShowTopLinearProgress(headerView)) {
+                  showTopLinearProgress();
+                  hideLoadingIllustration();
+                }
+              }
+            });
+  }
+
+  private boolean shouldShowTopLinearProgress(View headerView) {
+    Context context = getContext();
+    // Get device height in dp
+    DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+    float deviceHeightDp = displayPixelsToDp(displayMetrics.heightPixels, context);
+
+    // Get height of the view in dp
+    float headerViewHeightDp = displayPixelsToDp(headerView.getHeight(), context);
+
+    // Calculate remaining height after subtracting view's height in dp
+    float remainingHeightDp = deviceHeightDp - headerViewHeightDp;
+    if (deviceHeightDp <= 0) {
+      return false;
+    }
+
+    Log.i(
+        TAG,
+        "deviceHeightDp : "
+            + deviceHeightDp
+            + " viewHeightDp : "
+            + headerViewHeightDp
+            + " remainingHeightDp : "
+            + remainingHeightDp
+            + " remainingHeightRatio : "
+            + remainingHeightDp / deviceHeightDp);
+
+    // Check if remaining height ratio is less than the minimum allowed ratio
+    return (remainingHeightDp / deviceHeightDp) < MIN_ALLOWED_ILLUSTRATION_HEIGHT_RATIO;
+  }
+
+  private void showTopLinearProgress() {
+    View view = findViewById(R.id.sud_glif_top_progress_bar);
+    if (view == null) {
+      return;
+    }
+    view.setVisibility(View.VISIBLE);
+  }
+
+  private void hideLoadingIllustration() {
+    View lottieAnimationView = findViewById(R.id.sud_lottie_view);
+    if (lottieAnimationView == null) {
+      return;
+    }
+    lottieAnimationView.setVisibility(View.GONE);
+  }
+
+  private float displayPixelsToDp(int pixels, Context context) {
+    DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+    return pixels / displayMetrics.density;
   }
 
   private void updateContentPadding(LinearLayout linearLayout) {

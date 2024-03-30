@@ -22,6 +22,16 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <ProgressBar
+        android:id="@+id/sud_glif_top_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="?attr/sudMarginStart"
+        android:layout_marginRight="?attr/sudMarginStart"
+        android:visibility="gone"
+        android:indeterminate="true" />
+
     <FrameLayout
         android:id="@+id/sud_layout_icon_container"
         style="@style/SudGlifIconContainer"

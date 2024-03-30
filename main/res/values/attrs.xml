@@ -307,4 +307,5 @@
     <attr name="sudSwitchBarThumbOffColor" format="color|reference" />
     <attr name="sudSwitchBarTrackOnColor" format="color|reference" />
     <attr name="sudSwitchBarTrackOffColor" format="color|reference" />
+    <attr name="sudSwitchBarTrackOffOutlineColor" format="color|reference" />
 </resources>

@@ -115,8 +115,12 @@ public class GlifPreferenceLayout extends GlifRecyclerLayout {
     // Inflate the recycler view here, so attributes on the decoration views can be applied
     // immediately.
     final LayoutInflater inflater = LayoutInflater.from(getContext());
-    RecyclerView recyclerView =
-        (RecyclerView) inflater.inflate(R.layout.sud_glif_preference_recycler_view, this, false);
+    int recyclerViewLayoutId = R.layout.sud_glif_preference_recycler_view;
+    if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
+      recyclerViewLayoutId =
+          ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), recyclerViewLayoutId);
+    }
+    RecyclerView recyclerView = (RecyclerView) inflater.inflate(recyclerViewLayoutId, this, false);
     recyclerMixin = new RecyclerMixin(this, recyclerView);
   }
 }
