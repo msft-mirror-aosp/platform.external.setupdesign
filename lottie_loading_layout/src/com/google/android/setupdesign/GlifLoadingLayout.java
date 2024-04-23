@@ -401,7 +401,7 @@ public class GlifLoadingLayout extends GlifLayout {
   }
 
   private void showTopLinearProgress() {
-    View view = findViewById(R.id.sud_glif_top_progress_bar);
+    View view = findViewById(com.google.android.setupdesign.R.id.sud_glif_top_progress_bar);
     if (view == null) {
       return;
     }
