@@ -70,10 +70,11 @@ public final class HeaderAreaStyler {
         header,
         new TextPartnerConfigs(
             PartnerConfig.CONFIG_HEADER_TEXT_COLOR,
-            null,
+            /* textLinkedColorConfig= */ null,
             PartnerConfig.CONFIG_HEADER_TEXT_SIZE,
             PartnerConfig.CONFIG_HEADER_FONT_FAMILY,
-            null,
+            PartnerConfig.CONFIG_HEADER_FONT_WEIGHT,
+            /* textLinkFontFamilyConfig= */ null,
             PartnerConfig.CONFIG_HEADER_TEXT_MARGIN_TOP,
             PartnerConfig.CONFIG_HEADER_TEXT_MARGIN_BOTTOM,
             PartnerStyleHelper.getLayoutGravity(header.getContext())));
@@ -97,6 +98,7 @@ public final class HeaderAreaStyler {
             PartnerConfig.CONFIG_DESCRIPTION_LINK_TEXT_COLOR,
             PartnerConfig.CONFIG_DESCRIPTION_TEXT_SIZE,
             PartnerConfig.CONFIG_DESCRIPTION_FONT_FAMILY,
+            PartnerConfig.CONFIG_DESCRIPTION_FONT_WEIGHT,
             PartnerConfig.CONFIG_DESCRIPTION_LINK_FONT_FAMILY,
             PartnerConfig.CONFIG_DESCRIPTION_TEXT_MARGIN_TOP,
             PartnerConfig.CONFIG_DESCRIPTION_TEXT_MARGIN_BOTTOM,

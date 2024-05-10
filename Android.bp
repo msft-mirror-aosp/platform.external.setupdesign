@@ -29,10 +29,11 @@ android_library {
     name: "setupdesign",
     static_libs: [
         "androidx.annotation_annotation",
+        "androidx.appcompat_appcompat",
         "androidx.core_core",
         "androidx.legacy_legacy-support-core-ui",
-        "androidx.appcompat_appcompat",
         "androidx.recyclerview_recyclerview",
+        "androidx.window_window",
         "com.google.android.material_material",
         "error_prone_annotations",
         "setupcompat",
@@ -46,7 +47,13 @@ android_library {
     srcs: [
         "main/src/**/*.java",
     ],
-    min_sdk_version: "14",
+    min_sdk_version: "19",
+    optimize: {
+        proguard_flags_files: ["proguard.flags"],
+    },
+    lint: {
+        baseline_filename: "lint-baseline.xml",
+    },
 }
 
 //
@@ -56,10 +63,13 @@ android_library {
 
 android_library {
     name: "setupdesign-strings",
-    manifest: "main/AndroidManifest.xml",
+    manifest: "strings/AndroidManifest.xml",
     resource_dirs: [
         "strings/res",
     ],
-    min_sdk_version: "14",
-    sdk_version: "current"
+    min_sdk_version: "19",
+    sdk_version: "current",
+    lint: {
+        baseline_filename: "lint-baseline.xml",
+    },
 }
