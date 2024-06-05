@@ -157,6 +157,8 @@
 
     <attr name="sudHasStableIds" format="boolean|reference" />
 
+    <attr name="selectableItemBackground" format="reference" />
+
     <declare-styleable name="SudIllustration">
         <attr name="sudAspectRatio" format="float" />
     </declare-styleable>
@@ -305,4 +307,5 @@
     <attr name="sudSwitchBarThumbOffColor" format="color|reference" />
     <attr name="sudSwitchBarTrackOnColor" format="color|reference" />
     <attr name="sudSwitchBarTrackOffColor" format="color|reference" />
+    <attr name="sudSwitchBarTrackOffOutlineColor" format="color|reference" />
 </resources>

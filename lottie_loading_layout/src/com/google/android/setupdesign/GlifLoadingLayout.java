@@ -23,24 +23,24 @@ import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.ColorFilter;
 import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
-import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import androidx.annotation.IntDef;
@@ -61,6 +61,7 @@ import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.partnerconfig.ResourceEntry;
 import com.google.android.setupcompat.template.FooterBarMixin;
 import com.google.android.setupcompat.util.BuildCompatUtils;
+import com.google.android.setupcompat.util.ForceTwoPaneHelper;
 import com.google.android.setupdesign.lottieloadinglayout.R;
 import com.google.android.setupdesign.util.LayoutStyler;
 import com.google.android.setupdesign.util.LottieAnimationHelper;
@@ -94,6 +95,9 @@ public class GlifLoadingLayout extends GlifLayout {
   protected static final String GLIF_LAYOUT_TYPE = "GlifLayoutType";
   protected static final String LOADING_LAYOUT = "LoadingLayout";
   @VisibleForTesting public boolean runRunnable;
+  private boolean isHeaderFullTextEnabled = false;
+  // This value is decided by local test expereince.
+  @VisibleForTesting static final float MIN_ALLOWED_ILLUSTRATION_HEIGHT_RATIO = 0.25f;
 
   @VisibleForTesting
   public List<LottieAnimationFinishListener> animationFinishListeners = new ArrayList<>();
@@ -108,12 +112,12 @@ public class GlifLoadingLayout extends GlifLayout {
 
   public GlifLoadingLayout(Context context, int template, int containerId) {
     super(context, template, containerId);
-    init(null, R.attr.sudLayoutTheme);
+    init(null, com.google.android.setupdesign.R.attr.sudLayoutTheme);
   }
 
   public GlifLoadingLayout(Context context, AttributeSet attrs) {
     super(context, attrs);
-    init(attrs, R.attr.sudLayoutTheme);
+    init(attrs, com.google.android.setupdesign.R.attr.sudLayoutTheme);
   }
 
   public GlifLoadingLayout(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -195,6 +199,16 @@ public class GlifLoadingLayout extends GlifLayout {
           };
       lottieAnimationView.addAnimatorListener(animatorListener);
     }
+  }
+
+  public void setHeaderFullTextEnabled(boolean enabled) {
+    isHeaderFullTextEnabled = enabled;
+    // Update header height again.
+    updateHeaderHeight();
+  }
+
+  public boolean isHeaderFullTextEnabled() {
+    return isHeaderFullTextEnabled;
   }
 
   @Override
@@ -308,86 +322,6 @@ public class GlifLoadingLayout extends GlifLayout {
     registerAnimationFinishRunnable(activity::finish);
   }
 
-  /**
-   * Launch a new activity after the animation finished.
-   *
-   * @param activity The activity which is GlifLoadingLayout attached to.
-   * @param intent The intent to start.
-   * @param options Additional options for how the Activity should be started. See {@link
-   *     android.content.Context#startActivity(Intent, Bundle)} for more details.
-   * @param finish Finish the activity after startActivity
-   * @see Activity#startActivity(Intent)
-   * @see Activity#startActivityForResult
-   */
-  public void startActivity(
-      @NonNull Activity activity,
-      @NonNull Intent intent,
-      @Nullable Bundle options,
-      boolean finish) {
-    if (activity == null) {
-      throw new NullPointerException("activity should not be null");
-    }
-
-    if (intent == null) {
-      throw new NullPointerException("intent should not be null");
-    }
-
-    registerAnimationFinishRunnable(
-        () -> {
-          if (options == null || Build.VERSION.SDK_INT < VERSION_CODES.JELLY_BEAN) {
-            activity.startActivity(intent);
-          } else {
-            activity.startActivity(intent, options);
-          }
-
-          if (finish) {
-            activity.finish();
-          }
-        });
-  }
-
-  /**
-   * Waiting for the animation finished and launch an activity for which you would like a result
-   * when it finished.
-   *
-   * @param activity The activity which the GlifLoadingLayout attached to.
-   * @param intent The intent to start.
-   * @param requestCode If >= 0, this code will be returned in onActivityResult() when the activity
-   *     exits.
-   * @param options Additional options for how the Activity should be started.
-   * @param finish Finish the activity after startActivityForResult. The onActivityResult might not
-   *     be called because the activity already finished.
-   *     <p>See {@link android.content.Context#startActivity(Intent, Bundle)}
-   *     Context.startActivity(Intent, Bundle)} for more details.
-   */
-  public void startActivityForResult(
-      @NonNull Activity activity,
-      @NonNull Intent intent,
-      int requestCode,
-      @Nullable Bundle options,
-      boolean finish) {
-    if (activity == null) {
-      throw new NullPointerException("activity should not be null");
-    }
-
-    if (intent == null) {
-      throw new NullPointerException("intent should not be null");
-    }
-
-    registerAnimationFinishRunnable(
-        () -> {
-          if (options == null || Build.VERSION.SDK_INT < VERSION_CODES.JELLY_BEAN) {
-            activity.startActivityForResult(intent, requestCode);
-          } else {
-            activity.startActivityForResult(intent, requestCode, options);
-          }
-
-          if (finish) {
-            activity.finish();
-          }
-        });
-  }
-
   private void updateHeaderHeight() {
     View headerView = findManagedViewById(R.id.sud_header_scroll_view);
     Configuration currentConfig = getResources().getConfiguration();
@@ -395,11 +329,96 @@ public class GlifLoadingLayout extends GlifLayout {
         && PartnerConfigHelper.get(getContext())
             .isPartnerConfigAvailable(PartnerConfig.CONFIG_LOADING_LAYOUT_HEADER_HEIGHT)
         && currentConfig.orientation != Configuration.ORIENTATION_LANDSCAPE) {
-      float configHeaderHeight =
-          PartnerConfigHelper.get(getContext())
-              .getDimension(getContext(), PartnerConfig.CONFIG_LOADING_LAYOUT_HEADER_HEIGHT);
-      headerView.getLayoutParams().height = (int) configHeaderHeight;
+      if (isHeaderFullTextEnabled) {
+        // Set header height to wrap content for rendering full text view as much as possible.
+        headerView.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        // Optimize loading style if there's no extra space for showing illustration view.
+        optimizeLoadingStyle(headerView);
+      } else {
+        float configHeaderHeight =
+            PartnerConfigHelper.get(getContext())
+                .getDimension(getContext(), PartnerConfig.CONFIG_LOADING_LAYOUT_HEADER_HEIGHT);
+        headerView.getLayoutParams().height = (int) configHeaderHeight;
+      }
     }
+  }
+
+  /**
+   * If there's no space in the loading screen page, layout will hide the original illustration view
+   * and show a linear progress bar for saving space.
+   */
+  private void optimizeLoadingStyle(View headerView) {
+    if (headerView == null) {
+      return;
+    }
+    // Listen for layout changes to header view
+    headerView
+        .getViewTreeObserver()
+        .addOnGlobalLayoutListener(
+            new ViewTreeObserver.OnGlobalLayoutListener() {
+              @Override
+              public void onGlobalLayout() {
+                // Remove the listener to avoid multiple calls
+                getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                // Check if linear progress should be shown
+                if (shouldShowTopLinearProgress(headerView)) {
+                  showTopLinearProgress();
+                  hideLoadingIllustration();
+                }
+              }
+            });
+  }
+
+  private boolean shouldShowTopLinearProgress(View headerView) {
+    Context context = getContext();
+    // Get device height in dp
+    DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+    float deviceHeightDp = displayPixelsToDp(displayMetrics.heightPixels, context);
+
+    // Get height of the view in dp
+    float headerViewHeightDp = displayPixelsToDp(headerView.getHeight(), context);
+
+    // Calculate remaining height after subtracting view's height in dp
+    float remainingHeightDp = deviceHeightDp - headerViewHeightDp;
+    if (deviceHeightDp <= 0) {
+      return false;
+    }
+
+    Log.i(
+        TAG,
+        "deviceHeightDp : "
+            + deviceHeightDp
+            + " viewHeightDp : "
+            + headerViewHeightDp
+            + " remainingHeightDp : "
+            + remainingHeightDp
+            + " remainingHeightRatio : "
+            + remainingHeightDp / deviceHeightDp);
+
+    // Check if remaining height ratio is less than the minimum allowed ratio
+    return (remainingHeightDp / deviceHeightDp) < MIN_ALLOWED_ILLUSTRATION_HEIGHT_RATIO;
+  }
+
+  private void showTopLinearProgress() {
+    View view = findViewById(com.google.android.setupdesign.R.id.sud_glif_top_progress_bar);
+    if (view == null) {
+      return;
+    }
+    view.setVisibility(View.VISIBLE);
+  }
+
+  private void hideLoadingIllustration() {
+    View lottieAnimationView = findViewById(R.id.sud_lottie_view);
+    if (lottieAnimationView == null) {
+      return;
+    }
+    lottieAnimationView.setVisibility(View.GONE);
+  }
+
+  private float displayPixelsToDp(int pixels, Context context) {
+    DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+    return pixels / displayMetrics.density;
   }
 
   private void updateContentPadding(LinearLayout linearLayout) {
@@ -684,6 +703,8 @@ public class GlifLoadingLayout extends GlifLayout {
         // if the activity is embedded should apply an embedded layout.
         if (isEmbeddedActivityOnePaneEnabled(context)) {
           template = R.layout.sud_glif_fullscreen_loading_embedded_template;
+        } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
+          template = ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), template);
         }
       } else {
         template = R.layout.sud_glif_loading_template;
@@ -691,10 +712,13 @@ public class GlifLoadingLayout extends GlifLayout {
         // if the activity is embedded should apply an embedded layout.
         if (isEmbeddedActivityOnePaneEnabled(context)) {
           template = R.layout.sud_glif_loading_embedded_template;
+        } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
+          template = ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), template);
         }
       }
     }
-    return inflateTemplate(inflater, R.style.SudThemeGlif_Light, template);
+    return inflateTemplate(
+        inflater, com.google.android.setupdesign.R.style.SudThemeGlif_Light, template);
   }
 
   @Override

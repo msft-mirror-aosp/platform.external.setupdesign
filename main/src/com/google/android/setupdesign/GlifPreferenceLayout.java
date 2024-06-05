@@ -23,6 +23,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.android.setupcompat.util.ForceTwoPaneHelper;
 import com.google.android.setupdesign.template.RecyclerMixin;
 
 /**
@@ -102,6 +103,8 @@ public class GlifPreferenceLayout extends GlifRecyclerLayout {
       // if the activity is embedded should apply an embedded layout.
       if (isEmbeddedActivityOnePaneEnabled(getContext())) {
         template = R.layout.sud_glif_preference_embedded_template;
+      } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
+        template = ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), template);
       }
     }
     return super.onInflateTemplate(inflater, template);
@@ -112,8 +115,12 @@ public class GlifPreferenceLayout extends GlifRecyclerLayout {
     // Inflate the recycler view here, so attributes on the decoration views can be applied
     // immediately.
     final LayoutInflater inflater = LayoutInflater.from(getContext());
-    RecyclerView recyclerView =
-        (RecyclerView) inflater.inflate(R.layout.sud_glif_preference_recycler_view, this, false);
+    int recyclerViewLayoutId = R.layout.sud_glif_preference_recycler_view;
+    if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
+      recyclerViewLayoutId =
+          ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), recyclerViewLayoutId);
+    }
+    RecyclerView recyclerView = (RecyclerView) inflater.inflate(recyclerViewLayoutId, this, false);
     recyclerMixin = new RecyclerMixin(this, recyclerView);
   }
 }
