@@ -69,7 +69,4 @@ android_library {
     ],
     min_sdk_version: "19",
     sdk_version: "current",
-    lint: {
-        baseline_filename: "lint-baseline.xml",
-    },
 }
