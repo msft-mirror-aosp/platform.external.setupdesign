@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Copyright (C) 2021 The Android Open Source Project
+    Copyright (C) 2024 The Android Open Source Project
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+         http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,12 +15,7 @@
     limitations under the License.
 -->
 
-<com.google.android.setupdesign.view.HeaderRecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/sud_recycler_view"
-    android:scrollIndicators="?attr/sudScrollIndicators"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:scrollbars="vertical" />
+<resources xmlns:tools="http://schemas.android.com/tools">
+  <item name="sud_glif_loading_template_two_pane" type="layout" tools:ignore="UnusedResources">@layout/sud_glif_loading_template_card_two_pane</item>
+  <item name="sud_glif_fullscreen_loading_template_two_pane" type="layout" tools:ignore="UnusedResources">@layout/sud_glif_fullscreen_loading_template_card_two_pane</item>
+</resources>
