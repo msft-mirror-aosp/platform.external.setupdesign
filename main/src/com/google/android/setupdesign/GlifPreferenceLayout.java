@@ -104,7 +104,7 @@ public class GlifPreferenceLayout extends GlifRecyclerLayout {
       if (isEmbeddedActivityOnePaneEnabled(getContext())) {
         template = R.layout.sud_glif_preference_embedded_template;
       } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
-        template = ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), template);
+        template = R.layout.sud_glif_preference_template_two_pane;
       }
     }
     return super.onInflateTemplate(inflater, template);
@@ -117,8 +117,7 @@ public class GlifPreferenceLayout extends GlifRecyclerLayout {
     final LayoutInflater inflater = LayoutInflater.from(getContext());
     int recyclerViewLayoutId = R.layout.sud_glif_preference_recycler_view;
     if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
-      recyclerViewLayoutId =
-          ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), recyclerViewLayoutId);
+      recyclerViewLayoutId = R.layout.sud_glif_preference_recycler_view_two_pane;
     }
     RecyclerView recyclerView = (RecyclerView) inflater.inflate(recyclerViewLayoutId, this, false);
     recyclerMixin = new RecyclerMixin(this, recyclerView);
