@@ -18,16 +18,15 @@
 <resources>
   <!-- Accent color -->
   <color name="sud_dynamic_color_accent_glif_v3_dark">@color/sud_system_accent1_300</color>
-
-
-  <color name="sud_system_neutral2_600">@android:color/system_neutral2_600</color>
+  <!-- Surface container color -->
+  <color name="sud_system_sc_highest_dark">@android:color/system_surface_container_highest_dark</color>
 
 
   <color name="sud_dynamic_switch_thumb_off_light">@color/sud_system_neutral2_500</color>
 
   <color name="sud_dynamic_switch_thumb_off_outline_light">@color/sud_system_neutral2_500</color>
 
-  <color name="sud_dynamic_switch_track_off_dark">@color/sud_system_neutral2_600</color>
+  <color name="sud_dynamic_switch_track_off_dark">@color/sud_system_sc_highest_dark</color>
 
   <color name="sud_dynamic_switch_thumb_off_dark">@color/sud_system_neutral2_400</color>
 

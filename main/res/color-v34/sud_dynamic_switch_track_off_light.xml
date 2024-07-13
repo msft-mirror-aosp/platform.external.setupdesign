@@ -15,5 +15,5 @@
 -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:color="@android:color/system_neutral1_100" />
+  <item android:color="@android:color/system_surface_container_highest_light" />
 </selector>
