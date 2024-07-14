@@ -66,6 +66,7 @@ import com.google.android.setupdesign.lottieloadinglayout.R;
 import com.google.android.setupdesign.util.LayoutStyler;
 import com.google.android.setupdesign.util.LottieAnimationHelper;
 import com.google.android.setupdesign.view.IllustrationVideoView;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -534,6 +535,12 @@ public class GlifLoadingLayout extends GlifLayout {
       if (resourceEntry != null) {
         InputStream inputRaw =
             resourceEntry.getResources().openRawResource(resourceEntry.getResourceId());
+        try {
+          Log.i(TAG, "setAnimation " + resourceEntry.getResourceName() + " length=" + inputRaw.available());
+        } catch (IOException e) {
+          Log.w(TAG, "IOException while length of " + resourceEntry.getResourceName());
+        }
+
         lottieView.setAnimation(inputRaw, null);
         lottieView.playAnimation();
         setLottieLayoutVisibility(View.VISIBLE);
@@ -704,7 +711,7 @@ public class GlifLoadingLayout extends GlifLayout {
         if (isEmbeddedActivityOnePaneEnabled(context)) {
           template = R.layout.sud_glif_fullscreen_loading_embedded_template;
         } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
-          template = ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), template);
+          template = R.layout.sud_glif_fullscreen_loading_template_two_pane;
         }
       } else {
         template = R.layout.sud_glif_loading_template;
@@ -713,7 +720,7 @@ public class GlifLoadingLayout extends GlifLayout {
         if (isEmbeddedActivityOnePaneEnabled(context)) {
           template = R.layout.sud_glif_loading_embedded_template;
         } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
-          template = ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), template);
+          template = R.layout.sud_glif_loading_template_two_pane;
         }
       }
     }
