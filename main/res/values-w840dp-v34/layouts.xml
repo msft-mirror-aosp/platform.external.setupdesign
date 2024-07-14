@@ -15,8 +15,7 @@
     limitations under the License.
 -->
 
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:keep="@layout/*_two_pane">
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Layout for supporting force two pane even if it is portrait mode. -->
     <item name="sud_glif_template_two_pane" type="layout">@layout/sud_glif_template_card_two_pane</item>
