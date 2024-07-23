@@ -158,6 +158,11 @@ public class ExpandableSwitchItem extends SwitchItem
   public void onBindView(View view) {
     // TODO: If it is possible to detect, log a warning if this is being used with ListView.
     super.onBindView(view);
+
+    // Expandable switch item is using this view's child to listen clickable event, to avoid
+    // accessibility issue, remove clickable event in this view.
+    view.setClickable(false);
+
     View content = view.findViewById(R.id.sud_items_expandable_switch_content);
     content.setOnClickListener(this);
 
