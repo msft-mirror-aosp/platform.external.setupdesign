@@ -27,6 +27,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.android.setupcompat.util.ForceTwoPaneHelper;
 import com.google.android.setupdesign.template.RecyclerMixin;
 import com.google.android.setupdesign.template.RecyclerViewScrollHandlingDelegate;
 import com.google.android.setupdesign.template.RequireScrollMixin;
@@ -95,6 +96,8 @@ public class GlifRecyclerLayout extends GlifLayout {
       // if the activity is embedded should apply an embedded layout.
       if (isEmbeddedActivityOnePaneEnabled(getContext())) {
         template = R.layout.sud_glif_recycler_embedded_template;
+      } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
+        template = ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), template);
       }
     }
     return super.onInflateTemplate(inflater, template);
