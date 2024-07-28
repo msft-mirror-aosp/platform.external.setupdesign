@@ -19,5 +19,6 @@
 
     <!-- Layout for supporting force two pane even if it is portrait mode. -->
     <item name="sud_glif_preference_template_two_pane" type="layout">@layout/sud_glif_preference_template_compact</item>
+    <item name="sud_glif_preference_recycler_view_compat_two_pane" type="layout">@layout/sud_glif_preference_recycler_view</item>
 
 </resources>
