@@ -901,7 +901,6 @@
         <!-- Before Honeycomb, layout_gravity is needed for FrameLayout to apply the margins -->
         <item name="android:layout_gravity">top</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">3</item>
         <item name="android:gravity">?attr/sudGlifHeaderGravity</item>
         <item name="android:layout_marginBottom">?attr/sucGlifHeaderMarginBottom</item>
         <item name="android:layout_marginLeft">?attr/sudMarginStart</item>
