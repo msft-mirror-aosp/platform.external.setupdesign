@@ -86,6 +86,7 @@ public class TransitionHelper {
     TRANSITION_FADE,
     TRANSITION_FRAMEWORK_DEFAULT_PRE_P,
     TRANSITION_CAPTIVE,
+    TRANSITION_FADE_THROUGH,
   })
   public @interface TransitionType {}
 
