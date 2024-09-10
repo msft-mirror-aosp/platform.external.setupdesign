@@ -97,7 +97,7 @@ public class GlifRecyclerLayout extends GlifLayout {
       if (isEmbeddedActivityOnePaneEnabled(getContext())) {
         template = R.layout.sud_glif_recycler_embedded_template;
       } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
-        template = ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), template);
+        template = R.layout.sud_glif_recycler_template_two_pane;
       }
     }
     return super.onInflateTemplate(inflater, template);
