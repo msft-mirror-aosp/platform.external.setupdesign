@@ -112,6 +112,7 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
       if (intrinsicHeight == 0 && intrinsicWidth == 0) {
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        setElevation(0.0f);
       }
     }
     super.setLayoutParams(params);
