@@ -167,35 +167,22 @@ public final class PartnerStyleHelper {
     if (view == null) {
       return false;
     }
-    return getDynamicColorAttributeFromTheme(view.getContext());
+    return getDynamicColorPatnerConfig(view.getContext());
   }
 
-  static boolean getDynamicColorAttributeFromTheme(Context context) {
+  static boolean getDynamicColorPatnerConfig(Context context) {
     try {
       Activity activity = PartnerCustomizationLayout.lookupActivityFromContext(context);
       TemplateLayout layout = findLayoutFromActivity(activity);
       if (layout instanceof GlifLayout) {
         return ((GlifLayout) layout).shouldApplyDynamicColor();
       }
+      return PartnerConfigHelper.isSetupWizardFullDynamicColorEnabled(activity);
     } catch (IllegalArgumentException | ClassCastException ex) {
       // fall through
     }
 
-    // try best to get dynamic color settings from attr
-    TypedArray a =
-        context.obtainStyledAttributes(
-            new int[] {com.google.android.setupcompat.R.attr.sucFullDynamicColor});
-    boolean useDynamicColorTheme =
-        a.hasValue(
-            com.google
-                .android
-                .setupcompat
-                .R
-                .styleable
-                .SucPartnerCustomizationLayout_sucFullDynamicColor);
-    a.recycle();
-
-    return useDynamicColorTheme;
+    return false;
   }
 
   private static TemplateLayout findLayoutFromActivity(Activity activity) {
