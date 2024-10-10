@@ -34,7 +34,6 @@ import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.MeasureSpec;
@@ -62,6 +61,7 @@ import com.google.android.setupcompat.partnerconfig.ResourceEntry;
 import com.google.android.setupcompat.template.FooterBarMixin;
 import com.google.android.setupcompat.util.BuildCompatUtils;
 import com.google.android.setupcompat.util.ForceTwoPaneHelper;
+import com.google.android.setupcompat.util.Logger;
 import com.google.android.setupdesign.lottieloadinglayout.R;
 import com.google.android.setupdesign.util.LayoutStyler;
 import com.google.android.setupdesign.util.LottieAnimationHelper;
@@ -81,8 +81,7 @@ import java.util.List;
  * app:sudLottieRes} can assign the json file of Lottie resource.
  */
 public class GlifLoadingLayout extends GlifLayout {
-
-  private static final String TAG = "GlifLoadingLayout";
+  private static final Logger LOG = new Logger(GlifLoadingLayout.class);
   View inflatedView;
 
   @VisibleForTesting @IllustrationType String illustrationType = IllustrationType.DEFAULT;
@@ -181,7 +180,7 @@ public class GlifLoadingLayout extends GlifLayout {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-              Log.i(TAG, "Animate enable:" + isAnimateEnable() + ". Animation end.");
+              LOG.atInfo("Animate enable:" + isAnimateEnable() + ". Animation end.");
             }
 
             @Override
@@ -192,7 +191,7 @@ public class GlifLoadingLayout extends GlifLayout {
             @Override
             public void onAnimationRepeat(Animator animation) {
               if (workFinished) {
-                Log.i(TAG, "Animation repeat but work finished, run the register runnable.");
+                LOG.atInfo("Animation repeat but work finished, run the register runnable.");
                 finishRunnable(nextActionRunnable);
                 workFinished = false;
               }
@@ -200,6 +199,8 @@ public class GlifLoadingLayout extends GlifLayout {
           };
       lottieAnimationView.addAnimatorListener(animatorListener);
     }
+
+    initBackButton();
   }
 
   public void setHeaderFullTextEnabled(boolean enabled) {
@@ -386,8 +387,7 @@ public class GlifLoadingLayout extends GlifLayout {
       return false;
     }
 
-    Log.i(
-        TAG,
+    LOG.atInfo(
         "deviceHeightDp : "
             + deviceHeightDp
             + " viewHeightDp : "
@@ -519,10 +519,18 @@ public class GlifLoadingLayout extends GlifLayout {
   private void setLottieResource() {
     LottieAnimationView lottieView = findViewById(R.id.sud_lottie_view);
     if (lottieView == null) {
-      Log.w(TAG, "Lottie view not found, skip set resource. Wait for layout inflated.");
+      LOG.w("Lottie view not found, skip set resource. Wait for layout inflated.");
       return;
     }
     if (customLottieResource != 0) {
+      try {
+        LOG.atInfo(
+            "setCustom Lottie resource=" + getResources().getResourceName(customLottieResource));
+      } catch (Exception e) {
+        // Dump the resource id when it failed to get the resource name.
+        LOG.atInfo("setCustom Lottie resource 0x" + Integer.toHexString(customLottieResource));
+      }
+
       InputStream inputRaw = getResources().openRawResource(customLottieResource);
       lottieView.setAnimation(inputRaw, null);
       lottieView.playAnimation();
@@ -536,9 +544,13 @@ public class GlifLoadingLayout extends GlifLayout {
         InputStream inputRaw =
             resourceEntry.getResources().openRawResource(resourceEntry.getResourceId());
         try {
-          Log.i(TAG, "setAnimation " + resourceEntry.getResourceName() + " length=" + inputRaw.available());
+          LOG.atInfo(
+              "setAnimation "
+                  + resourceEntry.getResourceName()
+                  + " length="
+                  + inputRaw.available());
         } catch (IOException e) {
-          Log.w(TAG, "IOException while length of " + resourceEntry.getResourceName());
+          LOG.w("IOException while length of " + resourceEntry.getResourceName());
         }
 
         lottieView.setAnimation(inputRaw, null);
@@ -553,6 +565,9 @@ public class GlifLoadingLayout extends GlifLayout {
                     ? animationConfig.getDarkThemeCustomization()
                     : animationConfig.getLightThemeCustomization());
       } else {
+        LOG.w(
+            "Can not find the resource entry for "
+                + animationConfig.getLottieConfig().getResourceName());
         setLottieLayoutVisibility(View.GONE);
         setIllustrationLayoutVisibility(View.VISIBLE);
         inflateIllustrationStub();
@@ -583,7 +598,7 @@ public class GlifLoadingLayout extends GlifLayout {
   private void setIllustrationResource() {
     View illustrationLayout = findViewById(R.id.sud_layout_progress_illustration);
     if (illustrationLayout == null) {
-      Log.i(TAG, "Illustration stub not inflated, skip set resource");
+      LOG.atInfo("Illustration stub not inflated, skip set resource");
       return;
     }
 
@@ -709,7 +724,15 @@ public class GlifLoadingLayout extends GlifLayout {
 
         // if the activity is embedded should apply an embedded layout.
         if (isEmbeddedActivityOnePaneEnabled(context)) {
-          template = R.layout.sud_glif_fullscreen_loading_embedded_template;
+          // TODO add unit test for this case.
+          if (isGlifExpressiveEnabled()) {
+            template = R.layout.sud_glif_expressive_fullscreen_loading_embedded_template;
+          } else {
+            template = R.layout.sud_glif_fullscreen_loading_embedded_template;
+          }
+          // TODO add unit test for this case.
+        } else if (isGlifExpressiveEnabled()) {
+          template = R.layout.sud_glif_expressive_fullscreen_loading_template;
         } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
           template = R.layout.sud_glif_fullscreen_loading_template_two_pane;
         }
@@ -718,7 +741,15 @@ public class GlifLoadingLayout extends GlifLayout {
 
         // if the activity is embedded should apply an embedded layout.
         if (isEmbeddedActivityOnePaneEnabled(context)) {
-          template = R.layout.sud_glif_loading_embedded_template;
+          if (isGlifExpressiveEnabled()) {
+            template = R.layout.sud_glif_expressive_loading_embedded_template;
+            // TODO add unit test for this case.
+          } else {
+            template = R.layout.sud_glif_loading_embedded_template;
+          }
+          // TODO add unit test for this case.
+        } else if (isGlifExpressiveEnabled()) {
+          template = R.layout.sud_glif_expressive_loading_template;
         } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
           template = R.layout.sud_glif_loading_template_two_pane;
         }
@@ -886,7 +917,7 @@ public class GlifLoadingLayout extends GlifLayout {
           && lottieAnimationView.isAnimating()
           && !isZeroAnimatorDurationScale()
           && shouldAnimationBeFinished) {
-        Log.i(TAG, "Register animation finish.");
+        LOG.atInfo("Register animation finish.");
         lottieAnimationView.addAnimatorListener(animatorListener);
         lottieAnimationView.setRepeatCount(0);
       } else {
