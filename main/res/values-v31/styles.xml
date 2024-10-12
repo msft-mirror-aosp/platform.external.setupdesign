@@ -379,4 +379,115 @@
     <item name="android:textAppearanceSmallPopupMenu">@android:style/TextAppearance.DeviceDefault.Widget.PopupMenu.Small</item>
   </style>
 
+    <style name="SudThemeGlifExpressive" parent="SudBaseThemeGlifExpressive">
+        <!-- Copied from v31 SudThemeGlif -->
+        <item name="sucSystemNavBarBackgroundColor">?android:attr/navigationBarColor</item>
+        <item name="android:windowSplashScreenBackground">?android:attr/colorBackground</item>
+
+        <!-- Copied from v31 SudThemeGlifV3 -->
+        <item name="android:navigationBarDividerColor" tools:ignore="NewApi">@color/sud_glif_v3_nav_bar_divider_color_dark</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">false</item>
+        <item name="sucLightSystemNavBar" tools:ignore="NewApi">?android:attr/windowLightNavigationBar</item>
+        <item name="sucSystemNavBarDividerColor" tools:ignore="NewApi">?android:attr/navigationBarDividerColor</item>
+        <!-- Default font family-->
+        <item name="android:textAppearance">@android:style/TextAppearance.DeviceDefault</item>
+        <item name="android:textAppearanceInverse">@android:style/TextAppearance.DeviceDefault.Inverse</item>
+        <item name="android:textAppearanceLarge">@android:style/TextAppearance.DeviceDefault.Large</item>
+        <item name="android:textAppearanceMedium">@android:style/TextAppearance.DeviceDefault.Medium</item>
+        <!-- For textView -->
+        <item name="android:textAppearanceSmall">@android:style/TextAppearance.DeviceDefault.Small</item>
+        <item name="android:textAppearanceLargeInverse">@android:style/TextAppearance.DeviceDefault.Large.Inverse</item>
+        <!-- For editText -->
+        <item name="android:textAppearanceMediumInverse">@android:style/TextAppearance.DeviceDefault.Medium.Inverse</item>
+        <item name="android:textAppearanceSmallInverse">@android:style/TextAppearance.DeviceDefault.Small.Inverse</item>
+        <item name="android:textAppearanceSearchResultTitle">@android:style/TextAppearance.DeviceDefault.SearchResult.Title</item>
+        <item name="android:textAppearanceSearchResultSubtitle">@android:style/TextAppearance.DeviceDefault.SearchResult.Subtitle</item>
+        <item name="android:textAppearanceButton">@android:style/TextAppearance.DeviceDefault.Widget.Button</item>
+
+        <!-- Copied from v31 SudDynamicColorBaseTheme -->
+        <item name="android:colorAccent">?attr/colorAccent</item>
+
+        <!-- Copied from v31 SudFullDynamicColorTheme -->
+        <item name="android:alertDialogTheme">@style/SudFullDynamicColorAlertDialogTheme</item>
+        <item name="android:windowAnimationStyle">@style/Animation.SudWindowAnimation.DynamicColor</item>
+
+        <!-- Copied from v31 SudDynamicColorThemeGlifV3 -->
+        <item name="android:datePickerDialogTheme">@style/SudDynamicColorDateTimePickerDialogTheme</item>
+        <item name="android:timePickerDialogTheme">@style/SudDynamicColorDateTimePickerDialogTheme</item>
+        <item name="sudSwitchBarThumbOnColor">@color/sud_dynamic_switch_thumb_on_dark</item>
+        <item name="sudSwitchBarTrackOnColor">@color/sud_dynamic_switch_track_on_dark</item>
+        <item name="sudSwitchBarThumbOffColor">@color/sud_dynamic_switch_thumb_off_dark</item>
+        <item name="sudSwitchBarTrackOffColor">@color/sud_dynamic_switch_track_off_dark</item>
+        <item name="sudSwitchBarTrackOffOutlineColor">@color/sud_dynamic_switch_thumb_off_outline_dark</item>
+        <item name="sudEditBoxColor">@color/sud_dynamic_color_accent_glif_v3_dark</item>
+
+        <!-- Copied from v31 SudFullDynamicColorThemeGlifV3 -->
+        <item name="android:colorForeground">@android:color/system_neutral1_50</item>
+        <item name="android:colorForegroundInverse">@color/sud_system_background_surface</item>
+        <item name="android:colorBackgroundCacheHint">@color/sud_system_background_surface</item>
+        <item name="colorBackgroundFloating">@color/sud_system_background_surface</item>
+        <item name="android:navigationBarColor">@color/sud_system_background_surface</item>
+        <item name="colorControlNormal">?android:attr/textColorSecondary</item>
+        <item name="colorControlHighlight">@color/ripple_material_dark</item>
+        <item name="colorButtonNormal">@color/button_material_dark</item>
+        <item name="colorSwitchThumbNormal">@color/switch_thumb_material_dark</item>
+        <item name="alertDialogTheme">@style/SudFullDynamicColorAlertDialogThemeCompat</item>
+        <item name="sucFullDynamicColor">true</item>
+    </style>
+
+    <style name="SudThemeGlifExpressive.Light" parent="SudBaseThemeGlifExpressive.Light">
+        <!-- Copied from v31 SudThemeGlif.Light -->
+        <item name="sucSystemNavBarBackgroundColor">?android:attr/navigationBarColor</item>
+        <item name="android:windowSplashScreenBackground">?android:attr/colorBackground</item>
+
+        <!-- Copied from v31 SudThemeGlifV3.Light -->
+        <item name="android:navigationBarDividerColor">@color/sud_glif_v3_nav_bar_divider_color_light</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="sucLightSystemNavBar" tools:ignore="NewApi">?android:attr/windowLightNavigationBar</item>
+        <item name="sucSystemNavBarDividerColor" tools:ignore="NewApi">?android:attr/navigationBarDividerColor</item>
+        <!-- Default font family-->
+        <item name="android:textAppearance">@android:style/TextAppearance.DeviceDefault</item>
+        <item name="android:textAppearanceInverse">@android:style/TextAppearance.DeviceDefault.Inverse</item>
+        <item name="android:textAppearanceLarge">@android:style/TextAppearance.DeviceDefault.Large</item>
+        <item name="android:textAppearanceMedium">@android:style/TextAppearance.DeviceDefault.Medium</item>
+        <!-- For textView -->
+        <item name="android:textAppearanceSmall">@android:style/TextAppearance.DeviceDefault.Small</item>
+        <item name="android:textAppearanceLargeInverse">@android:style/TextAppearance.DeviceDefault.Large.Inverse</item>
+        <!-- For editText -->
+        <item name="android:textAppearanceMediumInverse">@android:style/TextAppearance.DeviceDefault.Medium.Inverse</item>
+        <item name="android:textAppearanceSmallInverse">@android:style/TextAppearance.DeviceDefault.Small.Inverse</item>
+        <item name="android:textAppearanceSearchResultTitle">@android:style/TextAppearance.DeviceDefault.SearchResult.Title</item>
+        <item name="android:textAppearanceSearchResultSubtitle">@android:style/TextAppearance.DeviceDefault.SearchResult.Subtitle</item>
+        <item name="android:textAppearanceButton">@android:style/TextAppearance.DeviceDefault.Widget.Button</item>
+
+        <!-- Copied from v31 SudDynamicColorBaseTheme.Light -->
+        <item name="android:colorAccent">?attr/colorAccent</item>
+
+        <!-- Copied from v31 SudDynamicColorThemeGlifV3.Light -->
+        <item name="android:windowAnimationStyle">@style/Animation.SudWindowAnimation.DynamicColor</item>
+
+        <!-- Copied from v31 SudDynamicColorThemeGlifV3.Light -->
+        <item name="android:datePickerDialogTheme">@style/SudDynamicColorDateTimePickerDialogTheme.Light</item>
+        <item name="android:timePickerDialogTheme">@style/SudDynamicColorDateTimePickerDialogTheme.Light</item>
+        <item name="sudSwitchBarThumbOnColor">@color/sud_dynamic_switch_thumb_on_light</item>
+        <item name="sudSwitchBarTrackOnColor">@color/sud_dynamic_switch_track_on_light</item>
+        <item name="sudSwitchBarThumbOffColor">@color/sud_dynamic_switch_thumb_off_light</item>
+        <item name="sudSwitchBarTrackOffColor">@color/sud_dynamic_switch_track_off_light</item>
+        <item name="sudSwitchBarTrackOffOutlineColor">@color/sud_dynamic_switch_thumb_off_outline_light</item>
+        <item name="sudEditBoxColor">@color/sud_dynamic_color_accent_glif_v3_light</item>
+
+        <!-- Copied from v31 SudFullDynamicColorThemeGlifV3.Light -->
+        <item name="android:colorForeground">@android:color/system_neutral1_900</item>
+        <item name="android:colorForegroundInverse">@color/sud_system_background_surface</item>
+        <item name="android:colorBackgroundCacheHint">@color/sud_system_background_surface</item>
+        <item name="colorBackgroundFloating">@color/sud_system_background_surface</item>
+        <item name="android:navigationBarColor">@color/sud_system_background_surface</item>
+        <item name="colorControlNormal">?android:attr/textColorSecondary</item>
+        <item name="colorControlHighlight">@color/ripple_material_light</item>
+        <item name="colorButtonNormal">@color/button_material_light</item>
+        <item name="colorSwitchThumbNormal">@color/switch_thumb_material_light</item>
+        <item name="alertDialogTheme">@style/SudFullDynamicColorAlertDialogThemeCompat.Light</item>
+        <item name="sucFullDynamicColor">true</item>
+    </style>
+
 </resources>
