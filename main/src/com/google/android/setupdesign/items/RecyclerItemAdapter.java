@@ -16,11 +16,16 @@
 
 package com.google.android.setupdesign.items;
 
+import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -113,7 +118,6 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     final View view = inflater.inflate(viewType, parent, false);
     final ItemViewHolder viewHolder = new ItemViewHolder(view);
     Drawable background = null;
-
     final Object viewTag = view.getTag();
     if (!TAG_NO_BACKGROUND.equals(viewTag)) {
       final TypedArray typedArray =
@@ -140,7 +144,6 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
           }
         }
       }
-
       if (selectableItemBackground == null || background == null) {
         Log.e(
             TAG,
@@ -171,11 +174,101 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     return viewHolder;
   }
 
+  @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
+  private Drawable getFirstBackground(Context context) {
+    TypedArray a =
+        context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundFirst});
+    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+  }
+
+  @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
+  private Drawable getLastBackground(Context context) {
+    TypedArray a =
+        context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundLast});
+    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+  }
+
+  @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
+  private Drawable getMiddleBackground(Context context) {
+    TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackground});
+    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+  }
+
+  @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
+  private Drawable getSingleBackground(Context context) {
+    TypedArray a =
+        context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundSingle});
+    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+  }
+
+  private float getCornerRadius(Context context) {
+    TypedArray a =
+        context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemCornerRadius});
+    return context.getResources().getDimension(a.getResourceId(0, 0));
+  }
+
+  public void updateBackground(View view, int position) {
+    if (TAG_NO_BACKGROUND.equals(view.getTag())) {
+      return;
+    }
+    float groupCornerRadius =
+        PartnerConfigHelper.get(view.getContext())
+            .getDimension(view.getContext(), PartnerConfig.CONFIG_ITEMS_GROUP_CORNER_RADIUS);
+    float cornerRadius = getCornerRadius(view.getContext());
+    Drawable drawable = view.getBackground();
+    // TODO add test case for list item group corner partner config
+    if (drawable instanceof LayerDrawable) {
+      Drawable clickDrawable = ((LayerDrawable) drawable).getDrawable(1);
+      Drawable backgroundDrawable = null;
+      GradientDrawable background = null;
+
+      if (position == 0 && getItemCount() == 1) {
+        backgroundDrawable = getSingleBackground(view.getContext());
+      } else if (position == 0) {
+        backgroundDrawable = getFirstBackground(view.getContext());
+      } else if (position == getItemCount() - 1) {
+        backgroundDrawable = getLastBackground(view.getContext());
+      } else {
+        backgroundDrawable = getMiddleBackground(view.getContext());
+      }
+
+      if (backgroundDrawable instanceof GradientDrawable) {
+        float topCornerRadius = cornerRadius;
+        float bottomCornerRadius = cornerRadius;
+        if (position == 0) {
+          topCornerRadius = groupCornerRadius;
+        }
+        if (position == getItemCount() - 1) {
+          bottomCornerRadius = groupCornerRadius;
+        }
+        background = (GradientDrawable) backgroundDrawable;
+        background.setCornerRadii(
+            new float[] {
+              topCornerRadius,
+              topCornerRadius,
+              topCornerRadius,
+              topCornerRadius,
+              bottomCornerRadius,
+              bottomCornerRadius,
+              bottomCornerRadius,
+              bottomCornerRadius
+            });
+        final Drawable[] layers = {background, clickDrawable};
+        view.setBackgroundDrawable(new PatchedLayerDrawable(layers));
+      }
+    }
+  }
+
   @Override
   public void onBindViewHolder(ItemViewHolder holder, int position) {
     final IItem item = getItem(position);
     holder.setEnabled(item.isEnabled());
     holder.setItem(item);
+    // TODO  when getContext is not activity context then fallback to out suw behavior
+    if (PartnerConfigHelper.isGlifExpressiveEnabled(holder.itemView.getContext())
+        && Build.VERSION.SDK_INT >= VERSION_CODES.VANILLA_ICE_CREAM) {
+      updateBackground(holder.itemView, position);
+    }
     item.onBindView(holder.itemView);
   }
 
