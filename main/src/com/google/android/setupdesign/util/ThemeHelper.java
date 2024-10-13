@@ -84,6 +84,18 @@ public final class ThemeHelper {
    */
   public static final String THEME_GLIF_V4_LIGHT = "glif_v4_light";
 
+  /**
+   * Passed in a setup wizard intent as {@link WizardManagerHelper#EXTRA_THEME}. This is the dark
+   * variant of the theme used in setup wizard for Android W.
+   */
+  public static final String THEME_GLIF_EXPRESSIVE = "glif_expressive";
+
+  /**
+   * Passed in a setup wizard intent as {@link WizardManagerHelper#EXTRA_THEME}. This is the default
+   * theme used in setup wizard for Android W.
+   */
+  public static final String THEME_GLIF_EXPRESSIVE_LIGHT = "glif_expressive_light";
+
   public static final String THEME_HOLO = "holo";
   public static final String THEME_HOLO_LIGHT = "holo_light";
   public static final String THEME_MATERIAL = "material";
@@ -118,14 +130,16 @@ public final class ThemeHelper {
         || THEME_GLIF_LIGHT.equals(theme)
         || THEME_GLIF_V2_LIGHT.equals(theme)
         || THEME_GLIF_V3_LIGHT.equals(theme)
-        || THEME_GLIF_V4_LIGHT.equals(theme)) {
+        || THEME_GLIF_V4_LIGHT.equals(theme)
+        || THEME_GLIF_EXPRESSIVE_LIGHT.equals(theme)) {
       return true;
     } else if (THEME_HOLO.equals(theme)
         || THEME_MATERIAL.equals(theme)
         || THEME_GLIF.equals(theme)
         || THEME_GLIF_V2.equals(theme)
         || THEME_GLIF_V3.equals(theme)
-        || THEME_GLIF_V4.equals(theme)) {
+        || THEME_GLIF_V4.equals(theme)
+        || THEME_GLIF_EXPRESSIVE.equals(theme)) {
       return false;
     } else {
       return def;
@@ -178,6 +192,11 @@ public final class ThemeHelper {
   /** Returns {@code true} if this {@code context} should apply dynamic color. */
   public static boolean shouldApplyDynamicColor(@NonNull Context context) {
     return PartnerConfigHelper.isSetupWizardDynamicColorEnabled(context);
+  }
+
+  /** Returns {@code true} if this {@code context} should applied Glif expressive style. */
+  public static boolean shouldApplyGlifExpressiveStyle(@NonNull Context context) {
+    return PartnerConfigHelper.isGlifExpressiveEnabled(context);
   }
 
   /**
@@ -245,6 +264,13 @@ public final class ThemeHelper {
   public static int getSuwDefaultTheme(@NonNull Context context) {
     String themeName = PartnerConfigHelper.getSuwDefaultThemeString(context);
     @StyleRes int defaultTheme;
+
+    if (shouldApplyGlifExpressiveStyle(context)) {
+      return ThemeHelper.isSetupWizardDayNightEnabled(context)
+          ? R.style.SudThemeGlifExpressive_DayNight
+          : R.style.SudThemeGlifExpressive_Light;
+    }
+
     if (VERSION.SDK_INT < VERSION_CODES.O) {
       defaultTheme =
           ThemeHelper.isSetupWizardDayNightEnabled(context)
@@ -273,10 +299,48 @@ public final class ThemeHelper {
         .resolve(themeName, /* suppressDayNight= */ !isSetupWizardDayNightEnabled(context));
   }
 
+  /** Returns {@code true} if the SUW theme is set. */
+  public static boolean trySetSuwTheme(@NonNull Context context) {
+    @StyleRes int theme = getSuwDefaultTheme(context);
+    Activity activity;
+    try {
+      activity = PartnerCustomizationLayout.lookupActivityFromContext(context);
+    } catch (IllegalArgumentException ex) {
+      LOG.e(Objects.requireNonNull(ex.getMessage()));
+      return false;
+    }
+    // Apply theme
+    if (theme != 0) {
+      activity.setTheme(theme);
+    } else {
+      LOG.w("Error occurred on getting suw default theme.");
+      return false;
+    }
+
+    if (!BuildCompatUtils.isAtLeastS()) {
+      LOG.w("Skip set theme with dynamic color, it is require platform version at least S.");
+      return true;
+    }
+
+    // Don't apply dynamic theme when BC25 is enabled.
+    if (shouldApplyGlifExpressiveStyle(context)) {
+      LOG.w("Skip set theme with dynamic color, due to glif expressive sytle enabled.");
+      return true;
+    }
+
+    return trySetDynamicColor(context);
+  }
+
   /** Returns {@code true} if the dynamic color is set. */
   public static boolean trySetDynamicColor(@NonNull Context context) {
     if (!BuildCompatUtils.isAtLeastS()) {
       LOG.w("Dynamic color require platform version at least S.");
+      return false;
+    }
+
+    // Don't apply dynamic theme when BC25 is enabled.
+    if (shouldApplyGlifExpressiveStyle(context)) {
+      LOG.w("Dynamic color theme isn't needed to set in glif expressive theme.");
       return false;
     }
 

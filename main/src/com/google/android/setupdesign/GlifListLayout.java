@@ -24,8 +24,11 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.util.ForceTwoPaneHelper;
 import com.google.android.setupdesign.template.ListMixin;
 import com.google.android.setupdesign.template.ListViewScrollHandlingDelegate;
@@ -80,6 +83,12 @@ public class GlifListLayout extends GlifLayout {
       tryApplyPartnerCustomizationContentPaddingTopStyle(view);
     }
     updateLandscapeMiddleHorizontalSpacing();
+
+    if (PartnerConfigHelper.isGlifExpressiveEnabled(getContext())) {
+      initScrollingListener();
+    }
+
+    initBackButton();
   }
 
   @Override
@@ -92,9 +101,17 @@ public class GlifListLayout extends GlifLayout {
   protected View onInflateTemplate(LayoutInflater inflater, int template) {
     if (template == 0) {
       template = R.layout.sud_glif_list_template;
+
       // if the activity is embedded should apply an embedded layout.
       if (isEmbeddedActivityOnePaneEnabled(getContext())) {
-        template = R.layout.sud_glif_list_embedded_template;
+        if (isGlifExpressiveEnabled()) {
+          template = R.layout.sud_glif_expressive_list_embedded_template;
+        } else {
+          template = R.layout.sud_glif_list_embedded_template;
+        }
+        // TODO add unit test for this case.
+      } else if (isGlifExpressiveEnabled()) {
+        template = R.layout.sud_glif_expressive_list_template;
       } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
         template = R.layout.sud_glif_list_template_two_pane;
       }
@@ -108,6 +125,29 @@ public class GlifListLayout extends GlifLayout {
       containerId = android.R.id.list;
     }
     return super.findContainer(containerId);
+  }
+
+  @Override
+  protected void initScrollingListener() {
+    ListView listView = null;
+    if (listMixin != null) {
+      listView = listMixin.getListView();
+    }
+
+    if (listView != null) {
+      listView.setOnScrollListener(
+          new OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {}
+
+            @Override
+            public void onScroll(
+                AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+              onScrolling(
+                  firstVisibleItem + visibleItemCount >= totalItemCount && totalItemCount > 0);
+            }
+          });
+    }
   }
 
   public ListView getListView() {
