@@ -349,7 +349,10 @@
     <dimen name="sud_glif_expressive_item_corner_radius">2dp</dimen>
     <dimen name="sud_glif_expressive_footer_button_middle_spacing">8dp</dimen>
 
-    <!-- BC25 floating back button-->
+    <!-- Header layout expressive -->
+    <dimen name="sud_glif_expressive_header_title_line_spacing_extra">8sp</dimen>
+
+    <!-- Material floating back button-->
     <dimen name="sud_glif_expressive_back_button_margin_top">12dp</dimen>
 
     <!-- Glif expressive footer bar -->
