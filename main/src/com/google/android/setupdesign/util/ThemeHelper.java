@@ -262,36 +262,40 @@ public final class ThemeHelper {
   /** Returns a default theme resource id which provides by setup wizard. */
   @StyleRes
   public static int getSuwDefaultTheme(@NonNull Context context) {
+    boolean isDayNightEnabled = ThemeHelper.isSetupWizardDayNightEnabled(context);
     String themeName = PartnerConfigHelper.getSuwDefaultThemeString(context);
     @StyleRes int defaultTheme;
 
     if (shouldApplyGlifExpressiveStyle(context)) {
-      return ThemeHelper.isSetupWizardDayNightEnabled(context)
+      LOG.atInfo(
+          "Return "
+              + (isDayNightEnabled
+                  ? "SudThemeGlifExpressive_DayNight"
+                  : "SudThemeGlifExpressive_Light"));
+      return isDayNightEnabled
           ? R.style.SudThemeGlifExpressive_DayNight
           : R.style.SudThemeGlifExpressive_Light;
     }
 
+    String themeResToString = "";
     if (VERSION.SDK_INT < VERSION_CODES.O) {
-      defaultTheme =
-          ThemeHelper.isSetupWizardDayNightEnabled(context)
-              ? R.style.SudThemeGlif_DayNight
-              : R.style.SudThemeGlif_Light;
+      defaultTheme = isDayNightEnabled ? R.style.SudThemeGlif_DayNight : R.style.SudThemeGlif_Light;
+      themeResToString = isDayNightEnabled ? "SudThemeGlif_DayNight" : "SudThemeGlif_Light";
     } else if (VERSION.SDK_INT < VERSION_CODES.P) {
       defaultTheme =
-          ThemeHelper.isSetupWizardDayNightEnabled(context)
-              ? R.style.SudThemeGlifV2_DayNight
-              : R.style.SudThemeGlifV2_Light;
+          isDayNightEnabled ? R.style.SudThemeGlifV2_DayNight : R.style.SudThemeGlifV2_Light;
+      themeResToString = isDayNightEnabled ? "SudThemeGlifV2_DayNight" : "SudThemeGlifV2_Light";
     } else if (VERSION.SDK_INT < VERSION_CODES.TIRAMISU) {
       defaultTheme =
-          ThemeHelper.isSetupWizardDayNightEnabled(context)
-              ? R.style.SudThemeGlifV3_DayNight
-              : R.style.SudThemeGlifV3_Light;
+          isDayNightEnabled ? R.style.SudThemeGlifV3_DayNight : R.style.SudThemeGlifV3_Light;
+      themeResToString = isDayNightEnabled ? "SudThemeGlifV3_DayNight" : "SudThemeGlifV3_Light";
     } else {
       defaultTheme =
-          ThemeHelper.isSetupWizardDayNightEnabled(context)
-              ? R.style.SudThemeGlifV4_DayNight
-              : R.style.SudThemeGlifV4_Light;
+          isDayNightEnabled ? R.style.SudThemeGlifV4_DayNight : R.style.SudThemeGlifV4_Light;
+      themeResToString = isDayNightEnabled ? "SudThemeGlifV4_DayNight" : "SudThemeGlifV4_Light";
     }
+    LOG.atInfo("Default theme: " + themeResToString + ", return theme: " + themeName);
+
     return new ThemeResolver.Builder()
         .setDefaultTheme(defaultTheme)
         .setUseDayNight(isSetupWizardDayNightEnabled(context))
@@ -322,7 +326,7 @@ public final class ThemeHelper {
       return true;
     }
 
-    // Don't apply dynamic theme when BC25 is enabled.
+    // Don't apply dynamic theme when glif expressive is enabled.
     if (shouldApplyGlifExpressiveStyle(context)) {
       LOG.w("Skip set theme with dynamic color, due to glif expressive sytle enabled.");
       return true;
@@ -338,7 +342,7 @@ public final class ThemeHelper {
       return false;
     }
 
-    // Don't apply dynamic theme when BC25 is enabled.
+    // Don't apply dynamic theme when glif expressive is enabled.
     if (shouldApplyGlifExpressiveStyle(context)) {
       LOG.w("Dynamic color theme isn't needed to set in glif expressive theme.");
       return false;

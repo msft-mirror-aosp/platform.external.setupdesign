@@ -217,7 +217,7 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     float cornerRadius = getCornerRadius(view.getContext());
     Drawable drawable = view.getBackground();
     // TODO add test case for list item group corner partner config
-    if (drawable instanceof LayerDrawable) {
+    if (drawable instanceof LayerDrawable && ((LayerDrawable) drawable).getNumberOfLayers() >= 2) {
       Drawable clickDrawable = ((LayerDrawable) drawable).getDrawable(1);
       Drawable backgroundDrawable = null;
       GradientDrawable background = null;
