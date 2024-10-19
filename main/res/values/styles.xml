@@ -618,7 +618,7 @@
         <item name="sudButtonTertiaryGravity">center_horizontal</item>
         <item name="sudGlifIconSize">@dimen/sud_glif_icon_max_height_material_you</item>
         <item name="sudGlifAccountContainerStyle">@style/SudGlifAccountContainerMaterialYou</item>
-        <item name="sudGlifHeaderTitleStyle">@style/SudGlifHeaderTitleMaterialYou</item>
+        <item name="sudGlifHeaderTitleStyle">@style/SudGlifHeaderTitleExpressive</item>
         <item name="sudGlifHeaderGravity">start</item>
         <item name="sudGlifIconGravity">center_horizontal</item>
         <item name="sucGlifHeaderMarginTop">@dimen/sud_glif_header_title_margin_top_material_you</item>
@@ -755,7 +755,7 @@
         <item name="sudButtonTertiaryGravity">center_horizontal</item>
         <item name="sudGlifIconSize">@dimen/sud_glif_icon_max_height_material_you</item>
         <item name="sudGlifAccountContainerStyle">@style/SudGlifAccountContainerMaterialYou</item>
-        <item name="sudGlifHeaderTitleStyle">@style/SudGlifHeaderTitleMaterialYou</item>
+        <item name="sudGlifHeaderTitleStyle">@style/SudGlifHeaderTitleExpressive</item>
         <item name="sudGlifHeaderGravity">start</item>
         <item name="sudGlifIconGravity">center_horizontal</item>
         <item name="sucGlifHeaderMarginTop">@dimen/sud_glif_header_title_margin_top_material_you</item>
@@ -1276,6 +1276,10 @@
         <item name="android:accessibilityHeading" tools:targetApi="p">true</item>
         <item name="android:textSize">@dimen/sud_glif_header_title_size_material_you</item>
         <item name="android:hyphenationFrequency" tools:targetApi="23">full</item>
+    </style>
+
+    <style name="SudGlifHeaderTitleExpressive" parent="SudGlifHeaderTitleMaterialYou">
+        <item name="android:lineSpacingExtra">@dimen/sud_glif_expressive_header_title_line_spacing_extra</item>
     </style>
 
     <style name="SudGlifDescription" parent="SudDescription.Glif">
