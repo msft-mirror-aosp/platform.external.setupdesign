@@ -23,7 +23,7 @@
     android:visibility="gone"
     tools:visibility="visible">
 
-  <Button
+  <com.google.android.material.button.MaterialButton
       android:id="@+id/sud_floating_back_button"
       style="?attr/materialIconButtonFilledStyle"
       android:layout_width="wrap_content"
@@ -35,5 +35,6 @@
       android:filterTouchesWhenObscured="true"
       android:visibility="gone"
       app:icon="@drawable/sud_ic_arrow_back"
+      app:iconSize="24dp"
       tools:visibility="visible" />
 </FrameLayout>
