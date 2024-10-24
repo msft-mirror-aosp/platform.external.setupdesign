@@ -17,18 +17,23 @@
 package com.google.android.setupdesign;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -41,10 +46,13 @@ import androidx.window.embedding.ActivityEmbeddingController;
 import com.google.android.setupcompat.PartnerCustomizationLayout;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
+import com.google.android.setupcompat.template.FooterBarMixin;
 import com.google.android.setupcompat.template.StatusBarMixin;
 import com.google.android.setupcompat.util.ForceTwoPaneHelper;
+import com.google.android.setupcompat.util.KeyboardHelper;
 import com.google.android.setupcompat.util.Logger;
 import com.google.android.setupdesign.template.DescriptionMixin;
+import com.google.android.setupdesign.template.FloatingBackButtonMixin;
 import com.google.android.setupdesign.template.HeaderMixin;
 import com.google.android.setupdesign.template.IconMixin;
 import com.google.android.setupdesign.template.IllustrationProgressMixin;
@@ -54,6 +62,8 @@ import com.google.android.setupdesign.template.RequireScrollMixin;
 import com.google.android.setupdesign.template.ScrollViewScrollHandlingDelegate;
 import com.google.android.setupdesign.util.DescriptionStyler;
 import com.google.android.setupdesign.util.LayoutStyler;
+import com.google.android.setupdesign.view.BottomScrollView;
+import com.google.android.setupdesign.view.BottomScrollView.BottomScrollListener;
 
 /**
  * Layout for the GLIF theme used in Setup Wizard for N.
@@ -130,6 +140,8 @@ public class GlifLayout extends PartnerCustomizationLayout {
     registerMixin(ProfileMixin.class, new ProfileMixin(this, attrs, defStyleAttr));
     registerMixin(ProgressBarMixin.class, new ProgressBarMixin(this, attrs, defStyleAttr));
     registerMixin(IllustrationProgressMixin.class, new IllustrationProgressMixin(this));
+    registerMixin(
+        FloatingBackButtonMixin.class, new FloatingBackButtonMixin(this, attrs, defStyleAttr));
     final RequireScrollMixin requireScrollMixin = new RequireScrollMixin(this);
     registerMixin(RequireScrollMixin.class, requireScrollMixin);
 
@@ -169,6 +181,8 @@ public class GlifLayout extends PartnerCustomizationLayout {
 
     updateLandscapeMiddleHorizontalSpacing();
 
+    updateViewFocusable();
+
     ColorStateList backgroundColor =
         a.getColorStateList(R.styleable.SudGlifLayout_sudBackgroundBaseColor);
     setBackgroundBaseColor(backgroundColor);
@@ -181,6 +195,13 @@ public class GlifLayout extends PartnerCustomizationLayout {
     if (stickyHeader != 0) {
       inflateStickyHeader(stickyHeader);
     }
+
+    if (PartnerConfigHelper.isGlifExpressiveEnabled(getContext())) {
+      initScrollingListener();
+    }
+
+    initBackButton();
+
     a.recycle();
   }
 
@@ -192,7 +213,21 @@ public class GlifLayout extends PartnerCustomizationLayout {
     getMixin(DescriptionMixin.class).tryApplyPartnerCustomizationStyle();
     getMixin(ProgressBarMixin.class).tryApplyPartnerCustomizationStyle();
     getMixin(ProfileMixin.class).tryApplyPartnerCustomizationStyle();
+    getMixin(FloatingBackButtonMixin.class).tryApplyPartnerCustomizationStyle();
     tryApplyPartnerCustomizationStyleToShortDescription();
+  }
+
+  private void updateViewFocusable() {
+    if (KeyboardHelper.isKeyboardFocusEnhancementEnabled(getContext())) {
+      View headerView = this.findManagedViewById(R.id.sud_header_scroll_view);
+      if (headerView != null) {
+        headerView.setFocusable(false);
+      }
+      View view = this.findManagedViewById(R.id.sud_scroll_view);
+      if (view != null) {
+        view.setFocusable(false);
+      }
+    }
   }
 
   // TODO: remove when all sud_layout_description has migrated to
@@ -290,9 +325,17 @@ public class GlifLayout extends PartnerCustomizationLayout {
   protected View onInflateTemplate(LayoutInflater inflater, @LayoutRes int template) {
     if (template == 0) {
       template = R.layout.sud_glif_template;
+
       // if the activity is embedded should apply an embedded layout.
       if (isEmbeddedActivityOnePaneEnabled(getContext())) {
-        template = R.layout.sud_glif_embedded_template;
+        if (isGlifExpressiveEnabled()) {
+          template = R.layout.sud_glif_expressive_embedded_template;
+        } else {
+          template = R.layout.sud_glif_embedded_template;
+        }
+        // TODO add unit test for this case.
+      } else if (isGlifExpressiveEnabled()) {
+        template = R.layout.sud_glif_expressive_template;
       } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
         template = R.layout.sud_glif_template_two_pane;
       }
@@ -390,7 +433,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
   }
 
   /**
-   * Sets the visibility of header area in landscape mode. These views inlcudes icon, header title
+   * Sets the visibility of header area in landscape mode. These views includes icon, header title
    * and subtitle. It can make the content view become full screen when set false.
    */
   @TargetApi(Build.VERSION_CODES.S)
@@ -544,5 +587,73 @@ public class GlifLayout extends PartnerCustomizationLayout {
             view.getPaddingStart(), paddingTop, view.getPaddingEnd(), view.getPaddingBottom());
       }
     }
+  }
+
+  protected void initScrollingListener() {
+    ScrollView scrollView = getScrollView();
+
+    if (scrollView instanceof BottomScrollView) {
+      ((BottomScrollView) scrollView)
+          .setBottomScrollListener(
+              new BottomScrollListener() {
+                @Override
+                public void onScrolledToBottom() {
+                  onScrolling(true);
+                }
+
+                @Override
+                public void onRequiresScroll() {
+                  onScrolling(false);
+                }
+              });
+    }
+  }
+
+  protected void onScrolling(boolean isBottom) {
+    FooterBarMixin footerBarMixin = getMixin(FooterBarMixin.class);
+    if (footerBarMixin != null) {
+      LinearLayout footerContainer = footerBarMixin.getButtonContainer();
+      if (footerContainer != null) {
+        if (isBottom) {
+          footerContainer.setBackgroundColor(Color.TRANSPARENT);
+        } else {
+          footerContainer.setBackgroundColor(getFooterBackgroundColorFromStyle());
+        }
+      }
+    }
+  }
+
+  /**
+   * Make button visible and register the {@link Activity#onBackPressed()} to the on click event of
+   * the floating back button. It works when {@link
+   * PartnerConfigHelper#isGlifExpressiveEnabled(Context)} return true.
+   */
+  protected void initBackButton() {
+    if (PartnerConfigHelper.isGlifExpressiveEnabled(getContext())) {
+      Activity activity = PartnerCustomizationLayout.lookupActivityFromContext(getContext());
+
+      FloatingBackButtonMixin floatingBackButtonMixin = getMixin(FloatingBackButtonMixin.class);
+      if (floatingBackButtonMixin != null) {
+        floatingBackButtonMixin.setVisibility(VISIBLE);
+        floatingBackButtonMixin.setOnClickListener(v -> activity.onBackPressed());
+      } else {
+        LOG.w("FloatingBackButtonMixin button is null");
+      }
+    } else {
+      LOG.atDebug("isGlifExpressiveEnabled is false");
+    }
+  }
+
+  private int getFooterBackgroundColorFromStyle() {
+    TypedValue typedValue = new TypedValue();
+    Theme theme = getContext().getTheme();
+    theme.resolveAttribute(R.attr.sudFooterBackgroundColor, typedValue, true);
+    @ColorInt int color = typedValue.data;
+    return color;
+  }
+
+  protected boolean isGlifExpressiveEnabled() {
+    return PartnerConfigHelper.isGlifExpressiveEnabled(getContext())
+        && Build.VERSION.SDK_INT >= VERSION_CODES.VANILLA_ICE_CREAM;
   }
 }
