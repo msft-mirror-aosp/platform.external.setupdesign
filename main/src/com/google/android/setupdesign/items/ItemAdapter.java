@@ -123,7 +123,7 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
     float cornerRadius = getCornerRadius(convertView.getContext());
     Drawable drawable = convertView.getBackground();
     // TODO add test case for list item group corner partner config
-    if (drawable instanceof LayerDrawable) {
+    if (drawable instanceof LayerDrawable && ((LayerDrawable) drawable).getNumberOfLayers() >= 2) {
       Drawable clickDrawable = ((LayerDrawable) drawable).getDrawable(1);
       Drawable backgroundDrawable = null;
       GradientDrawable background = null;
