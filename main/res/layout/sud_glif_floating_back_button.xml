@@ -23,7 +23,7 @@
     android:visibility="gone"
     tools:visibility="visible">
 
-  <com.google.android.material.button.MaterialButton
+  <Button
       android:id="@+id/sud_floating_back_button"
       style="?attr/materialIconButtonFilledStyle"
       android:layout_width="wrap_content"
