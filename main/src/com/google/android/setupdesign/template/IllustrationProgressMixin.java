@@ -33,6 +33,7 @@ import com.google.android.setupcompat.partnerconfig.PartnerConfig.ResourceType;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.partnerconfig.ResourceEntry;
 import com.google.android.setupcompat.template.Mixin;
+import com.google.android.setupcompat.util.Logger;
 import com.google.android.setupdesign.GlifLayout;
 import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.view.IllustrationVideoView;
@@ -46,6 +47,7 @@ import com.google.android.setupdesign.view.IllustrationVideoView;
 @TargetApi(VERSION_CODES.ICE_CREAM_SANDWICH)
 @Deprecated
 public class IllustrationProgressMixin implements Mixin {
+  private static final Logger LOG = new Logger(IllustrationProgressMixin.class);
 
   private final GlifLayout glifLayout;
   private final Context context;
@@ -66,6 +68,7 @@ public class IllustrationProgressMixin implements Mixin {
    *     GONE}
    */
   public void setShown(boolean shown) {
+    LOG.atInfo("setShown(" + shown + ")");
     if (!shown) {
       View view = peekProgressIllustrationLayout();
       if (view != null) {
