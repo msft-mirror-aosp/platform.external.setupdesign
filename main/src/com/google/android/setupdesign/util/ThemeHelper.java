@@ -84,6 +84,18 @@ public final class ThemeHelper {
    */
   public static final String THEME_GLIF_V4_LIGHT = "glif_v4_light";
 
+  /**
+   * Passed in a setup wizard intent as {@link WizardManagerHelper#EXTRA_THEME}. This is the dark
+   * variant of the theme used in setup wizard for Android W.
+   */
+  public static final String THEME_GLIF_EXPRESSIVE = "glif_expressive";
+
+  /**
+   * Passed in a setup wizard intent as {@link WizardManagerHelper#EXTRA_THEME}. This is the default
+   * theme used in setup wizard for Android W.
+   */
+  public static final String THEME_GLIF_EXPRESSIVE_LIGHT = "glif_expressive_light";
+
   public static final String THEME_HOLO = "holo";
   public static final String THEME_HOLO_LIGHT = "holo_light";
   public static final String THEME_MATERIAL = "material";
@@ -118,14 +130,16 @@ public final class ThemeHelper {
         || THEME_GLIF_LIGHT.equals(theme)
         || THEME_GLIF_V2_LIGHT.equals(theme)
         || THEME_GLIF_V3_LIGHT.equals(theme)
-        || THEME_GLIF_V4_LIGHT.equals(theme)) {
+        || THEME_GLIF_V4_LIGHT.equals(theme)
+        || THEME_GLIF_EXPRESSIVE_LIGHT.equals(theme)) {
       return true;
     } else if (THEME_HOLO.equals(theme)
         || THEME_MATERIAL.equals(theme)
         || THEME_GLIF.equals(theme)
         || THEME_GLIF_V2.equals(theme)
         || THEME_GLIF_V3.equals(theme)
-        || THEME_GLIF_V4.equals(theme)) {
+        || THEME_GLIF_V4.equals(theme)
+        || THEME_GLIF_EXPRESSIVE.equals(theme)) {
       return false;
     } else {
       return def;
@@ -178,6 +192,11 @@ public final class ThemeHelper {
   /** Returns {@code true} if this {@code context} should apply dynamic color. */
   public static boolean shouldApplyDynamicColor(@NonNull Context context) {
     return PartnerConfigHelper.isSetupWizardDynamicColorEnabled(context);
+  }
+
+  /** Returns {@code true} if this {@code context} should applied Glif expressive style. */
+  public static boolean shouldApplyGlifExpressiveStyle(@NonNull Context context) {
+    return PartnerConfigHelper.isGlifExpressiveEnabled(context);
   }
 
   /**
@@ -243,29 +262,40 @@ public final class ThemeHelper {
   /** Returns a default theme resource id which provides by setup wizard. */
   @StyleRes
   public static int getSuwDefaultTheme(@NonNull Context context) {
+    boolean isDayNightEnabled = ThemeHelper.isSetupWizardDayNightEnabled(context);
     String themeName = PartnerConfigHelper.getSuwDefaultThemeString(context);
     @StyleRes int defaultTheme;
+
+    if (shouldApplyGlifExpressiveStyle(context)) {
+      LOG.atInfo(
+          "Return "
+              + (isDayNightEnabled
+                  ? "SudThemeGlifExpressive_DayNight"
+                  : "SudThemeGlifExpressive_Light"));
+      return isDayNightEnabled
+          ? R.style.SudThemeGlifExpressive_DayNight
+          : R.style.SudThemeGlifExpressive_Light;
+    }
+
+    String themeResToString = "";
     if (VERSION.SDK_INT < VERSION_CODES.O) {
-      defaultTheme =
-          ThemeHelper.isSetupWizardDayNightEnabled(context)
-              ? R.style.SudThemeGlif_DayNight
-              : R.style.SudThemeGlif_Light;
+      defaultTheme = isDayNightEnabled ? R.style.SudThemeGlif_DayNight : R.style.SudThemeGlif_Light;
+      themeResToString = isDayNightEnabled ? "SudThemeGlif_DayNight" : "SudThemeGlif_Light";
     } else if (VERSION.SDK_INT < VERSION_CODES.P) {
       defaultTheme =
-          ThemeHelper.isSetupWizardDayNightEnabled(context)
-              ? R.style.SudThemeGlifV2_DayNight
-              : R.style.SudThemeGlifV2_Light;
+          isDayNightEnabled ? R.style.SudThemeGlifV2_DayNight : R.style.SudThemeGlifV2_Light;
+      themeResToString = isDayNightEnabled ? "SudThemeGlifV2_DayNight" : "SudThemeGlifV2_Light";
     } else if (VERSION.SDK_INT < VERSION_CODES.TIRAMISU) {
       defaultTheme =
-          ThemeHelper.isSetupWizardDayNightEnabled(context)
-              ? R.style.SudThemeGlifV3_DayNight
-              : R.style.SudThemeGlifV3_Light;
+          isDayNightEnabled ? R.style.SudThemeGlifV3_DayNight : R.style.SudThemeGlifV3_Light;
+      themeResToString = isDayNightEnabled ? "SudThemeGlifV3_DayNight" : "SudThemeGlifV3_Light";
     } else {
       defaultTheme =
-          ThemeHelper.isSetupWizardDayNightEnabled(context)
-              ? R.style.SudThemeGlifV4_DayNight
-              : R.style.SudThemeGlifV4_Light;
+          isDayNightEnabled ? R.style.SudThemeGlifV4_DayNight : R.style.SudThemeGlifV4_Light;
+      themeResToString = isDayNightEnabled ? "SudThemeGlifV4_DayNight" : "SudThemeGlifV4_Light";
     }
+    LOG.atInfo("Default theme: " + themeResToString + ", return theme: " + themeName);
+
     return new ThemeResolver.Builder()
         .setDefaultTheme(defaultTheme)
         .setUseDayNight(isSetupWizardDayNightEnabled(context))
@@ -273,10 +303,48 @@ public final class ThemeHelper {
         .resolve(themeName, /* suppressDayNight= */ !isSetupWizardDayNightEnabled(context));
   }
 
+  /** Returns {@code true} if the SUW theme is set. */
+  public static boolean trySetSuwTheme(@NonNull Context context) {
+    @StyleRes int theme = getSuwDefaultTheme(context);
+    Activity activity;
+    try {
+      activity = PartnerCustomizationLayout.lookupActivityFromContext(context);
+    } catch (IllegalArgumentException ex) {
+      LOG.e(Objects.requireNonNull(ex.getMessage()));
+      return false;
+    }
+    // Apply theme
+    if (theme != 0) {
+      activity.setTheme(theme);
+    } else {
+      LOG.w("Error occurred on getting suw default theme.");
+      return false;
+    }
+
+    if (!BuildCompatUtils.isAtLeastS()) {
+      LOG.w("Skip set theme with dynamic color, it is require platform version at least S.");
+      return true;
+    }
+
+    // Don't apply dynamic theme when glif expressive is enabled.
+    if (shouldApplyGlifExpressiveStyle(context)) {
+      LOG.w("Skip set theme with dynamic color, due to glif expressive sytle enabled.");
+      return true;
+    }
+
+    return trySetDynamicColor(context);
+  }
+
   /** Returns {@code true} if the dynamic color is set. */
   public static boolean trySetDynamicColor(@NonNull Context context) {
     if (!BuildCompatUtils.isAtLeastS()) {
       LOG.w("Dynamic color require platform version at least S.");
+      return false;
+    }
+
+    // Don't apply dynamic theme when glif expressive is enabled.
+    if (shouldApplyGlifExpressiveStyle(context)) {
+      LOG.w("Dynamic color theme isn't needed to set in glif expressive theme.");
       return false;
     }
 
