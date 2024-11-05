@@ -243,7 +243,8 @@ public final class HeaderAreaStyler {
     Context context = iconImage.getContext();
     int reducedIconHeight = 0;
     int gravity = PartnerStyleHelper.getLayoutGravity(context);
-    if (gravity != 0) {
+    // Skip the partner customization when isGlifExpressiveEnabled is true
+    if (gravity != 0 && !PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
       setGravity(iconImage, gravity);
     }
 
