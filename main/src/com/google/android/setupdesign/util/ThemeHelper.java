@@ -209,6 +209,11 @@ public final class ThemeHelper {
   public static int getDynamicColorTheme(@NonNull Context context) {
     @StyleRes int resId = 0;
 
+    // Don't return the dynamic theme when glif expressive is enabled.
+    if (shouldApplyGlifExpressiveStyle(context)) {
+      return resId;
+    }
+
     Activity activity;
     try {
       activity = PartnerCustomizationLayout.lookupActivityFromContext(context);
