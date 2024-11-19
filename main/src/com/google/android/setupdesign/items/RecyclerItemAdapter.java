@@ -178,33 +178,43 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
   private Drawable getFirstBackground(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundFirst});
-    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+    Drawable firstBackground = a.getDrawable(0);
+    a.recycle();
+    return firstBackground;
   }
 
   @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getLastBackground(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundLast});
-    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+    Drawable lastBackground = a.getDrawable(0);
+    a.recycle();
+    return lastBackground;
   }
 
   @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getMiddleBackground(Context context) {
     TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackground});
-    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+    Drawable middleBackground = a.getDrawable(0);
+    a.recycle();
+    return middleBackground;
   }
 
   @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getSingleBackground(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundSingle});
-    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+    Drawable singleBackground = a.getDrawable(0);
+    a.recycle();
+    return singleBackground;
   }
 
   private float getCornerRadius(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemCornerRadius});
-    return context.getResources().getDimension(a.getResourceId(0, 0));
+    float conerRadius = a.getDimension(0, 0);
+    a.recycle();
+    return conerRadius;
   }
 
   public void updateBackground(View view, int position) {

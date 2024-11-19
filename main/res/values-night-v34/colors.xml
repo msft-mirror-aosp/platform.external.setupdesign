@@ -30,6 +30,8 @@
   <color name="sud_on_surface_variant">@android:color/system_on_surface_variant_dark</color>
   <!-- On secondary container -->
   <color name="sud_on_secondary_container">@android:color/system_on_secondary_container_dark</color>
+  <!-- Surface container high dark -->
+  <color name="sud_color_surface_container_high">@android:color/system_surface_container_high_dark</color>
 
   <!-- Glif expressive colors -->
 
