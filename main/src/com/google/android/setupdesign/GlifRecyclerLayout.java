@@ -20,7 +20,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION_CODES;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener;
@@ -163,12 +162,10 @@ public class GlifRecyclerLayout extends GlifLayout {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
               super.onScrolled(recyclerView, dx, dy);
-              LinearLayoutManager layoutManager =
-                  (LinearLayoutManager) recyclerView.getLayoutManager();
-              int lastItemPosition = layoutManager.findLastVisibleItemPosition();
-              int totalCount = layoutManager.getItemCount();
-
-              onScrolling(lastItemPosition == totalCount - 1);
+              // direction > 0 means view can scroll down, direction < 0 means view can scroll up.
+              // Here we use direction > 0 to detect whether the view can be scrolling down or not.
+              boolean isAtBottom = !recyclerView.canScrollVertically(/* direction= */ 1);
+              onScrolling(isAtBottom);
             }
           });
     }
