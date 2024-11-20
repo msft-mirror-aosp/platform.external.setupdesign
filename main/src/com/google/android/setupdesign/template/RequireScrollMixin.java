@@ -17,6 +17,7 @@
 package com.google.android.setupdesign.template;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -33,6 +35,7 @@ import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.template.FooterBarMixin;
 import com.google.android.setupcompat.template.FooterButton;
 import com.google.android.setupcompat.template.Mixin;
+import com.google.android.setupdesign.GlifLayout;
 import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.view.NavigationBar;
 
@@ -343,39 +346,54 @@ public class RequireScrollMixin implements Mixin {
 
   public void requireScrollWithDownButton(
       @NonNull Context context, @Nullable OnClickListener onClickListener) {
-    Drawable icon = context.getResources().getDrawable(R.drawable.sud_ic_down_arrow);
     FooterBarMixin footerBarMixin = templateLayout.getMixin(FooterBarMixin.class);
-    FooterButton primaryButton = footerBarMixin.getPrimaryButton();
-    CharSequence nextText = primaryButton.getText();
-    Button button = footerBarMixin.getPrimaryButtonView();
-    button.setVisibility(View.INVISIBLE);
-    primaryButton.setOnClickListener(createOnClickListener(onClickListener));
+    Button primaryButtonView = footerBarMixin.getPrimaryButtonView();
+    Button secondaryButtonView = footerBarMixin.getSecondaryButtonView();
+    CharSequence nextText = primaryButtonView.getText();
+    primaryButtonView.setVisibility(View.INVISIBLE);
+    primaryButtonView.setOnClickListener(createOnClickListener(onClickListener));
     footerBarMixin.setButtonWidthForExpressiveStyle(/* isDownButton= */ false);
+    LinearLayout footerContainer = footerBarMixin.getButtonContainer();
 
     setOnRequireScrollStateChangedListener(
         scrollNeeded -> {
           if (scrollNeeded) {
-            if (button instanceof MaterialButton) {
-              button.setText("");
-              ((MaterialButton) button).setIcon(icon);
-              ((MaterialButton) button).setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
-              ((MaterialButton) button).setIconPadding(0);
-              footerBarMixin.setButtonWidthForExpressiveStyle(/* isDownButton= */ true);
-            } else {
-              Log.i(LOG_TAG, "Cannot set icon for the button. Skipping clean up text.");
-            }
+            generateGlifExpressiveDownButton(context, primaryButtonView, footerBarMixin);
+            footerContainer.setBackgroundColor(
+                ((GlifLayout) templateLayout).getFooterBackgroundColorFromStyle());
           } else {
-            if (button instanceof MaterialButton) {
-              ((MaterialButton) button).setIcon(null);
-              button.setText(nextText);
+            // Switch style to glif expressive common button.
+            if (primaryButtonView instanceof MaterialButton) {
+              ((MaterialButton) primaryButtonView).setIcon(null);
+              primaryButtonView.setText(nextText);
               footerBarMixin.setButtonWidthForExpressiveStyle(/* isDownButton= */ false);
+              // Screen no need to scroll, sets the secondary button as visible if it exists.
+              if (secondaryButtonView != null) {
+                secondaryButtonView.setVisibility(View.VISIBLE);
+              }
+              footerContainer.setBackgroundColor(Color.TRANSPARENT);
             } else {
               Log.i(LOG_TAG, "Cannot clean up icon for the button. Skipping set text.");
             }
           }
         });
-    button.setVisibility(View.VISIBLE);
+    primaryButtonView.setVisibility(View.VISIBLE);
     requireScroll();
+  }
+
+  private void generateGlifExpressiveDownButton(
+      Context context, Button button, FooterBarMixin footerBarMixin) {
+    Drawable icon = context.getResources().getDrawable(R.drawable.sud_ic_down_arrow);
+    if (button instanceof MaterialButton) {
+      // Remove the text and set down arrow icon to the button.
+      button.setText("");
+      ((MaterialButton) button).setIcon(icon);
+      ((MaterialButton) button).setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
+      ((MaterialButton) button).setIconPadding(0);
+      footerBarMixin.setButtonWidthForExpressiveStyle(/* isDownButton= */ true);
+    } else {
+      Log.i(LOG_TAG, "Cannot set icon for the button. Skipping clean up text.");
+    }
   }
 
   /**

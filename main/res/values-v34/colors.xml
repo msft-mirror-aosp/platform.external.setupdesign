@@ -30,6 +30,8 @@
   <color name="sud_on_secondary_container">@android:color/system_on_secondary_container_light</color>
   <!-- Primary light -->
   <color name="sud_color_primary">@android:color/system_primary_light</color>
+  <!-- Surface container high light -->
+  <color name="sud_color_surface_container_high">@android:color/system_surface_container_high_light</color>
 
 
   <color name="sud_dynamic_switch_thumb_off_light">@color/sud_system_neutral2_500</color>
