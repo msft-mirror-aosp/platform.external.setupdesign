@@ -166,7 +166,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
         // cannot obtain the content resource ID of the client, so the value of the content margin
         // cannot be adjusted through GlifLayout. If the margin sides are changed through the
         // partner config, it can only be based on the increased or decreased value to adjust the
-        // value of pading. In this way, the value of content margin plus padding will be equal to
+        // value of padding. In this way, the value of content margin plus padding will be equal to
         // the value of partner config.
         LayoutStyler.applyPartnerCustomizationExtraPaddingStyle(view);
       }
@@ -644,12 +644,12 @@ public class GlifLayout extends PartnerCustomizationLayout {
     }
   }
 
-  private int getFooterBackgroundColorFromStyle() {
+  /** Gets footer bar background color from theme style. */
+  public int getFooterBackgroundColorFromStyle() {
     TypedValue typedValue = new TypedValue();
     Theme theme = getContext().getTheme();
     theme.resolveAttribute(R.attr.sudFooterBackgroundColor, typedValue, true);
-    @ColorInt int color = typedValue.data;
-    return color;
+    return typedValue.data;
   }
 
   protected boolean isGlifExpressiveEnabled() {

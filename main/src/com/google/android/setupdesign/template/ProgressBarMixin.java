@@ -22,6 +22,7 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
@@ -29,7 +30,10 @@ import android.widget.ProgressBar;
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.setupcompat.internal.TemplateLayout;
+import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.template.Mixin;
 import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.util.HeaderAreaStyler;
@@ -38,9 +42,10 @@ import com.google.android.setupdesign.util.PartnerStyleHelper;
 /** A {@link Mixin} for showing a progress bar. */
 public class ProgressBarMixin implements Mixin {
 
+  private static final String TAG = "ProgressBarMixin";
   private final TemplateLayout templateLayout;
   private final boolean useBottomProgressBar;
-
+  private final boolean isGlifExpressiveEnabled;
   @Nullable private ColorStateList color;
 
   /** @param layout The layout this mixin belongs to. */
@@ -57,6 +62,7 @@ public class ProgressBarMixin implements Mixin {
   public ProgressBarMixin(@NonNull TemplateLayout layout, boolean useBottomProgressBar) {
     templateLayout = layout;
     this.useBottomProgressBar = useBottomProgressBar;
+    isGlifExpressiveEnabled = PartnerConfigHelper.isGlifExpressiveEnabled(layout.getContext());
   }
 
   /**
@@ -90,13 +96,19 @@ public class ProgressBarMixin implements Mixin {
     }
 
     this.useBottomProgressBar = useBottomProgressBar;
+    isGlifExpressiveEnabled = PartnerConfigHelper.isGlifExpressiveEnabled(layout.getContext());
   }
 
   /** @return True if the progress bar is currently shown. */
   public boolean isShown() {
-    final View progressBar =
-        templateLayout.findManagedViewById(
-            useBottomProgressBar ? R.id.sud_glif_progress_bar : R.id.sud_layout_progress);
+    final View progressBar;
+    if (isGlifExpressiveEnabled) {
+      progressBar = templateLayout.findManagedViewById(R.id.sud_layout_progress_indicator);
+    } else {
+      progressBar =
+          templateLayout.findManagedViewById(
+              useBottomProgressBar ? R.id.sud_glif_progress_bar : R.id.sud_layout_progress);
+    }
     return progressBar != null && progressBar.getVisibility() == View.VISIBLE;
   }
 
@@ -127,15 +139,24 @@ public class ProgressBarMixin implements Mixin {
    * @return The progress bar of this layout. May be null only if the template used doesn't have a
    *     progress bar built-in.
    */
-  private ProgressBar getProgressBar() {
+  @VisibleForTesting
+  protected View getProgressBar() {
     final View progressBarView = peekProgressBar();
-    if (progressBarView == null && !useBottomProgressBar) {
-      final ViewStub progressBarStub =
-          (ViewStub) templateLayout.findManagedViewById(R.id.sud_layout_progress_stub);
-      if (progressBarStub != null) {
-        progressBarStub.inflate();
+    if (progressBarView == null) {
+      if (isGlifExpressiveEnabled) {
+        final ViewStub progressIndicatorStub =
+            (ViewStub) templateLayout.findManagedViewById(R.id.sud_glif_progress_indicator_stub);
+        if (progressIndicatorStub != null) {
+          progressIndicatorStub.inflate();
+        }
+      } else if (!useBottomProgressBar) {
+        final ViewStub progressBarStub =
+            (ViewStub) templateLayout.findManagedViewById(R.id.sud_layout_progress_stub);
+        if (progressBarStub != null) {
+          progressBarStub.inflate();
+        }
+        setColor(color);
       }
-      setColor(color);
     }
     return peekProgressBar();
   }
@@ -149,26 +170,43 @@ public class ProgressBarMixin implements Mixin {
    *     or if the template does not contain a progress bar.
    */
   public ProgressBar peekProgressBar() {
-    return (ProgressBar)
-        templateLayout.findManagedViewById(
-            useBottomProgressBar ? R.id.sud_glif_progress_bar : R.id.sud_layout_progress);
+    if (isGlifExpressiveEnabled) {
+      LinearProgressIndicator progressIndicator =
+          templateLayout.findManagedViewById(R.id.sud_layout_progress_indicator);
+      return (ProgressBar) progressIndicator;
+    } else {
+      return (ProgressBar)
+          templateLayout.findManagedViewById(
+              useBottomProgressBar ? R.id.sud_glif_progress_bar : R.id.sud_layout_progress);
+    }
   }
 
   /** Sets the color of the indeterminate progress bar. This method is a no-op on SDK < 21. */
+  /**
+   * @deprecated Use {@link ProgressBar#setProgressBackgroundTintList(int)} or {@link
+   *     LinearProgressIndicator#setIndeterminateTintList(int)} and {@link
+   *     LinearProgressIndicator#setTrackColor(int)} instead.
+   */
+  @Deprecated
   public void setColor(@Nullable ColorStateList color) {
     this.color = color;
     if (Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
-      final ProgressBar bar = peekProgressBar();
-      if (bar != null) {
-        bar.setIndeterminateTintList(color);
-        if (Build.VERSION.SDK_INT >= VERSION_CODES.M || color != null) {
-          // There is a bug in Lollipop where setting the progress tint color to null
-          // will crash with "java.lang.NullPointerException: Attempt to invoke virtual
-          // method 'int android.graphics.Paint.getAlpha()' on a null object reference"
-          // at android.graphics.drawable.NinePatchDrawable.draw(:250)
-          // The bug doesn't affect ProgressBar on M because it uses ShapeDrawable instead
-          // of NinePatchDrawable. (commit 6a8253fdc9f4574c28b4beeeed90580ffc93734a)
-          bar.setProgressBackgroundTintList(color);
+      final View view = peekProgressBar();
+      if (view != null) {
+        if (view instanceof ProgressBar) {
+          ProgressBar bar = (ProgressBar) view;
+          bar.setIndeterminateTintList(color);
+          if (Build.VERSION.SDK_INT >= VERSION_CODES.M || color != null) {
+            // There is a bug in Lollipop where setting the progress tint color to null
+            // will crash with "java.lang.NullPointerException: Attempt to invoke virtual
+            // method 'int android.graphics.Paint.getAlpha()' on a null object reference"
+            // at android.graphics.drawable.NinePatchDrawable.draw(:250)
+            // The bug doesn't affect ProgressBar on M because it uses ShapeDrawable instead
+            // of NinePatchDrawable. (commit 6a8253fdc9f4574c28b4beeeed90580ffc93734a)
+            bar.setProgressBackgroundTintList(color);
+          }
+        } else if (view instanceof LinearProgressIndicator) {
+          // TODO: b/377241556 - Set color from the view LinearProgressIndicator.
         }
       }
     }
@@ -188,7 +226,7 @@ public class ProgressBarMixin implements Mixin {
    * partner config isn't enable.
    */
   public void tryApplyPartnerCustomizationStyle() {
-    ProgressBar progressBar = peekProgressBar();
+    View progressBar = peekProgressBar();
     if (!useBottomProgressBar || progressBar == null) {
       return;
     }
@@ -196,7 +234,11 @@ public class ProgressBarMixin implements Mixin {
     boolean partnerHeavyThemeLayout = PartnerStyleHelper.isPartnerHeavyThemeLayout(templateLayout);
 
     if (partnerHeavyThemeLayout) {
-      HeaderAreaStyler.applyPartnerCustomizationProgressBarStyle(progressBar);
+      if (progressBar instanceof ProgressBar) {
+        HeaderAreaStyler.applyPartnerCustomizationProgressBarStyle((ProgressBar) progressBar);
+      } else {
+        Log.w(TAG, "The view is not a ProgressBar");
+      }
     } else {
       Context context = progressBar.getContext();
       final ViewGroup.LayoutParams lp = progressBar.getLayoutParams();
