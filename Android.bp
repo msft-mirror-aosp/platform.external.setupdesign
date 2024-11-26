@@ -54,6 +54,10 @@ android_library {
     lint: {
         baseline_filename: "lint-baseline.xml",
     },
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.healthfitness",
+    ],
 }
 
 //
@@ -69,4 +73,8 @@ android_library {
     ],
     min_sdk_version: "19",
     sdk_version: "current",
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.healthfitness",
+    ],
 }
