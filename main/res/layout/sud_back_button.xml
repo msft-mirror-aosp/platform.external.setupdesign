@@ -14,25 +14,17 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/SudGlifButtonContainer"
-    android:id="@+id/sud_layout_floating_back_button_container"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:visibility="gone"
-    tools:visibility="visible">
-
-  <ViewStub
-      android:id="@+id/sud_floating_back_button_stub"
+  <com.google.android.material.button.MaterialButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:id="@+id/floating_back_button"
+      style="?attr/materialIconButtonFilledStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:checkable="true"
       android:contentDescription="@string/sud_back_button_label"
       android:filterTouchesWhenObscured="true"
       android:visibility="gone"
-      android:inflatedId="@+id/sud_floating_back_button"
-      android:layout="@layout/sud_back_button"
+      app:icon="@drawable/sud_ic_arrow_back"
       tools:visibility="visible" />
-</FrameLayout>
