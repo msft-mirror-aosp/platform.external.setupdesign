@@ -29,6 +29,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
@@ -87,33 +88,43 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
   private Drawable getFirstBackground(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundFirst});
-    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+    Drawable firstBackground = a.getDrawable(0);
+    a.recycle();
+    return firstBackground;
   }
 
   @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getLastBackground(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundLast});
-    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+    Drawable lastBackground = a.getDrawable(0);
+    a.recycle();
+    return lastBackground;
   }
 
   @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getMiddleBackground(Context context) {
     TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackground});
-    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+    Drawable middleBackground = a.getDrawable(0);
+    a.recycle();
+    return middleBackground;
   }
 
   @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getSingleBackground(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundSingle});
-    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+    Drawable singleBackground = a.getDrawable(0);
+    a.recycle();
+    return singleBackground;
   }
 
   private float getCornerRadius(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemCornerRadius});
-    return context.getResources().getDimension(a.getResourceId(0, 0));
+    float conerRadius = a.getDimension(0, 0);
+    a.recycle();
+    return conerRadius;
   }
 
   public void updateBackground(View convertView, int position) {
@@ -122,64 +133,94 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
             .getDimension(convertView.getContext(), PartnerConfig.CONFIG_ITEMS_GROUP_CORNER_RADIUS);
     float cornerRadius = getCornerRadius(convertView.getContext());
     Drawable drawable = convertView.getBackground();
+    Drawable clickDrawable = null;
+    Drawable backgroundDrawable = null;
+    GradientDrawable background = null;
+
+    if (position == 0 && getCount() == 1) {
+      backgroundDrawable = getSingleBackground(convertView.getContext());
+    } else if (position == 0) {
+      backgroundDrawable = getFirstBackground(convertView.getContext());
+    } else if (position == getCount() - 1) {
+      backgroundDrawable = getLastBackground(convertView.getContext());
+    } else {
+      backgroundDrawable = getMiddleBackground(convertView.getContext());
+    }
     // TODO add test case for list item group corner partner config
     if (drawable instanceof LayerDrawable && ((LayerDrawable) drawable).getNumberOfLayers() >= 2) {
-      Drawable clickDrawable = ((LayerDrawable) drawable).getDrawable(1);
-      Drawable backgroundDrawable = null;
-      GradientDrawable background = null;
-
-      if (position == 0 && getCount() == 1) {
-        backgroundDrawable = getSingleBackground(convertView.getContext());
-      } else if (position == 0) {
-        backgroundDrawable = getFirstBackground(convertView.getContext());
-      } else if (position == getCount() - 1) {
-        backgroundDrawable = getLastBackground(convertView.getContext());
-      } else {
-        backgroundDrawable = getMiddleBackground(convertView.getContext());
+      clickDrawable = ((LayerDrawable) drawable).getDrawable(1);
+    } else {
+      TypedArray a =
+          convertView
+              .getContext()
+              .getTheme()
+              .obtainStyledAttributes(new int[] {R.attr.selectableItemBackground});
+      clickDrawable = a.getDrawable(0);
+      a.recycle();
+    }
+    if (backgroundDrawable instanceof GradientDrawable) {
+      float topCornerRadius = cornerRadius;
+      float bottomCornerRadius = cornerRadius;
+      if (position == 0) {
+        topCornerRadius = groupCornerRadius;
       }
-
-      if (backgroundDrawable instanceof GradientDrawable) {
-        float topCornerRadius = cornerRadius;
-        float bottomCornerRadius = cornerRadius;
-        if (position == 0) {
-          topCornerRadius = groupCornerRadius;
-        }
-        if (position == getCount() - 1) {
-          bottomCornerRadius = groupCornerRadius;
-        }
-        background = (GradientDrawable) backgroundDrawable;
-        background.setCornerRadii(
-            new float[] {
-              topCornerRadius,
-              topCornerRadius,
-              topCornerRadius,
-              topCornerRadius,
-              bottomCornerRadius,
-              bottomCornerRadius,
-              bottomCornerRadius,
-              bottomCornerRadius
-            });
-        final Drawable[] layers = {background, clickDrawable};
-        convertView.setBackgroundDrawable(new LayerDrawable(layers));
+      if (position == getCount() - 1) {
+        bottomCornerRadius = groupCornerRadius;
       }
+      background = (GradientDrawable) backgroundDrawable;
+      background.setCornerRadii(
+          new float[] {
+            topCornerRadius,
+            topCornerRadius,
+            topCornerRadius,
+            topCornerRadius,
+            bottomCornerRadius,
+            bottomCornerRadius,
+            bottomCornerRadius,
+            bottomCornerRadius
+          });
+      final Drawable[] layers = {background, clickDrawable};
+      convertView.setBackgroundDrawable(new LayerDrawable(layers));
     }
   }
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
-    IItem item = getItem(position);
-    if (convertView == null) {
-      LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-      convertView = inflater.inflate(item.getLayoutResource(), parent, false);
-    }
 
     // TODO  when getContext is not activity context then fallback to out suw behavior
-    if (PartnerConfigHelper.isGlifExpressiveEnabled(convertView.getContext())
+    if (PartnerConfigHelper.isGlifExpressiveEnabled(parent.getContext())
         && Build.VERSION.SDK_INT >= VERSION_CODES.VANILLA_ICE_CREAM) {
+      IItem item = getItem(position);
+      LinearLayout linearLayout = null;
+      // The ListView can not handle the margin for the child view. So we need to use the
+      // LinearLayout to wrap the child view.
+      // The getView will trigger several times, for the same position, when the first time
+      // the convertView will be null, we should create the view which we want by ourself.
+      // The second and following times, we should return the same view which we created before.
+      // And for the item#onBindView, we should pass the child view with the wrap linear layout.
+      if (convertView == null) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        linearLayout =
+            (LinearLayout) inflater.inflate(R.layout.sud_empty_linear_layout, parent, false);
+        LayoutInflater linearLayoutInflater = LayoutInflater.from(linearLayout.getContext());
+        convertView = linearLayoutInflater.inflate(item.getLayoutResource(), linearLayout, false);
+        linearLayout.addView(convertView);
+      } else {
+        linearLayout = (LinearLayout) convertView;
+        convertView = linearLayout.getChildAt(0);
+      }
       updateBackground(convertView, position);
+      item.onBindView(convertView);
+      return linearLayout;
+    } else {
+      IItem item = getItem(position);
+      if (convertView == null) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        convertView = inflater.inflate(item.getLayoutResource(), parent, false);
+      }
+      item.onBindView(convertView);
+      return convertView;
     }
-    item.onBindView(convertView);
-    return convertView;
   }
 
   @Override
