@@ -36,4 +36,7 @@
 
     <!-- Glif expressive button styles -->
     <string name="sudExpressiveButtonFontFamily" translatable="false">Roboto</string>
+
+    <!-- Glif expressive alert dialog styles -->
+    <string name="sudGlifExpressiveDialogFontFamily" translatable="false">google-sans-text</string>
 </resources>

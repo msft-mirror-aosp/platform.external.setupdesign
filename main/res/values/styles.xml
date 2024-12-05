@@ -231,6 +231,8 @@
         <item name="sucFooterBarButtonMinHeight">@dimen/sud_glif_button_min_height</item>
         <item name="sucFooterBarButtonMiddleSpacing">@dimen/sud_glif_footer_middle_spacing</item>
         <item name="sucFooterBarButtonFontWeight">@integer/sud_glif_footer_button_weight</item>
+        <item name="sucFooterBarButtonTextSize">@dimen/sud_glif_footer_button_text_size</item>
+        <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_footer_button_line_spacing_extra</item>
         <item name="sudContentIllustrationMaxWidth">@dimen/sud_content_illustration_max_width</item>
         <item name="sudContentIllustrationMaxHeight">@dimen/sud_content_illustration_max_height</item>
         <item name="sudContentIllustrationPaddingTop">@dimen/sud_content_illustration_padding_vertical</item>
@@ -350,6 +352,8 @@
         <item name="sucFooterBarButtonMinHeight">@dimen/sud_glif_button_min_height</item>
         <item name="sucFooterBarButtonMiddleSpacing">@dimen/sud_glif_footer_middle_spacing</item>
         <item name="sucFooterBarButtonFontWeight">@integer/sud_glif_footer_button_weight</item>
+        <item name="sucFooterBarButtonTextSize">@dimen/sud_glif_footer_button_text_size</item>
+        <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_footer_button_line_spacing_extra</item>
         <item name="sudContentIllustrationMaxWidth">@dimen/sud_content_illustration_max_width</item>
         <item name="sudContentIllustrationMaxHeight">@dimen/sud_content_illustration_max_height</item>
         <item name="sudContentIllustrationPaddingTop">@dimen/sud_content_illustration_padding_vertical</item>
@@ -614,7 +618,6 @@
         <item name="sucFooterBarMinHeight">@dimen/sud_glif_footer_bar_min_height_material_you</item>
         <item name="sucHeaderContainerMarginBottom">@dimen/sud_header_container_margin_bottom_material_you</item>
         <item name="sucFooterBarButtonAlignEnd">@bool/suc_footer_bar_button_align_end</item>
-        <item name="sudButtonCornerRadius">@dimen/sud_footer_bar_button_radius_material_you</item>
         <item name="sudButtonTertiaryGravity">center_horizontal</item>
         <item name="sudGlifIconSize">@dimen/sud_glif_icon_max_height_material_you</item>
         <item name="sudGlifAccountContainerStyle">@style/SudGlifAccountContainerMaterialYou</item>
@@ -641,6 +644,7 @@
         <item name="alertDialogTheme">@style/SudMaterialYouAlertDialogThemeCompat</item>
         <item name="android:alertDialogTheme">@style/SudMaterialYouAlertDialogTheme</item>
         <!-- new values for style SudBaseThemeGlifExpressive -->
+        <item name="android:colorBackground" tools:ignore="NewApi">?attr/colorSurfaceContainer</item>
         <item name="sudMarginStart">@dimen/sud_glif_expressive_margin_start</item>
         <item name="sudMarginEnd">@dimen/sud_glif_expressive_margin_end</item>
         <item name="sudGlifContentPaddingTop">@dimen/sud_glif_expressive_content_padding_top</item>
@@ -670,8 +674,14 @@
         <item name="sudItemBackgroundLast">@drawable/sud_item_background_last</item>
         <item name="sudItemBackgroundSingle">@drawable/sud_item_background_single</item>
         <item name="sudItemCornerRadius">@dimen/sud_glif_expressive_item_corner_radius</item>
-        <item name="sudItemBackgroundColor">@color/background_material_dark</item>
+        <item name="sudItemBackgroundColor" tools:ignore="NewApi">?attr/colorSurfaceBright</item>
         <item name="sucFooterBarButtonFontWeight">@integer/sud_glif_expressive_footer_button_weight</item>
+        <item name="sudButtonCornerRadius">@dimen/sud_glif_expressive_footer_button_radius</item>
+        <item name="sucFooterBarButtonTextSize">@dimen/sud_glif_expressive_footer_button_text_size</item>
+        <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_expressive_footer_button_text_line_spacing_extra</item>
+        <item name="textAppearanceListItem">@style/TextAppearance.SudExpressiveItemTitle</item>
+        <item name="textAppearanceListItemSmall">@style/TextAppearance.SudExpressiveItemSummary</item>
+        <item name="materialAlertDialogTheme">@style/SudGlifExpressiveDialogTheme</item>
     </style>
 
     <style name="SudBaseThemeGlifExpressive.Light" parent="Theme.Material3.Light.NoActionBar">
@@ -751,7 +761,6 @@
         <item name="sucFooterBarMinHeight">@dimen/sud_glif_footer_bar_min_height_material_you</item>
         <item name="sucFooterBarButtonAlignEnd">@bool/suc_footer_bar_button_align_end</item>
         <item name="sucHeaderContainerMarginBottom">@dimen/sud_header_container_margin_bottom_material_you</item>
-        <item name="sudButtonCornerRadius">@dimen/sud_footer_bar_button_radius_material_you</item>
         <item name="sudButtonTertiaryGravity">center_horizontal</item>
         <item name="sudGlifIconSize">@dimen/sud_glif_icon_max_height_material_you</item>
         <item name="sudGlifAccountContainerStyle">@style/SudGlifAccountContainerMaterialYou</item>
@@ -778,6 +787,7 @@
         <item name="alertDialogTheme">@style/SudMaterialYouAlertDialogThemeCompat.Light</item>
         <item name="android:alertDialogTheme">@style/SudMaterialYouAlertDialogTheme.Light</item>
         <!-- new values for style SudBaseThemeGlifExpressive.Light -->
+        <item name="android:colorBackground" tools:ignore="NewApi">?attr/colorSurfaceContainer</item>
         <item name="sudMarginStart">@dimen/sud_glif_expressive_margin_start</item>
         <item name="sudMarginEnd">@dimen/sud_glif_expressive_margin_end</item>
         <item name="sucFooterButtonPaddingStart">@dimen/sud_glif_expressive_button_padding</item>
@@ -807,8 +817,14 @@
         <item name="sudItemBackgroundLast">@drawable/sud_item_background_last</item>
         <item name="sudItemBackgroundSingle">@drawable/sud_item_background_single</item>
         <item name="sudItemCornerRadius">@dimen/sud_glif_expressive_item_corner_radius</item>
-        <item name="sudItemBackgroundColor">@color/background_material_light</item>
+        <item name="sudItemBackgroundColor" tools:ignore="NewApi">?attr/colorSurfaceBright</item>
         <item name="sucFooterBarButtonFontWeight">@integer/sud_glif_expressive_footer_button_weight</item>
+        <item name="sudButtonCornerRadius">@dimen/sud_glif_expressive_footer_button_radius</item>
+        <item name="sucFooterBarButtonTextSize">@dimen/sud_glif_expressive_footer_button_text_size</item>
+        <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_expressive_footer_button_text_line_spacing_extra</item>
+        <item name="textAppearanceListItem">@style/TextAppearance.SudExpressiveItemTitle</item>
+        <item name="textAppearanceListItemSmall">@style/TextAppearance.SudExpressiveItemSummary</item>
+        <item name="materialAlertDialogTheme">@style/SudGlifExpressiveDialogTheme</item>
     </style>
 
     <style name="SudThemeGlifExpressive" parent="SudBaseThemeGlifExpressive" />
@@ -1373,6 +1389,11 @@
         <item name="android:layout_gravity">?attr/sudGlifIconGravity</item>
     </style>
 
+    <style name="SudGlifButtonContainer">
+        <item name="android:layout_marginStart" tools:ignore="NewApi">?attr/sudMarginStart</item>
+        <item name="android:layout_marginTop">@dimen/sud_glif_expressive_back_button_margin_top</item>
+    </style>
+
     <style name="TextAppearance.SudGlifBody" parent="android:TextAppearance">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
@@ -1394,8 +1415,20 @@
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
+    <style name="TextAppearance.SudExpressiveItemTitle" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/sud_items_title_text_size_expressive</item>
+        <item name="android:fontFamily">@string/sudFontSecondaryText</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
     <style name="TextAppearance.SudMaterialYouItemSummary" parent="android:TextAppearance">
         <item name="android:textSize">@dimen/sud_items_summary_text_size_material_you</item>
+        <item name="android:fontFamily">@string/sudFontSecondaryText</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="TextAppearance.SudExpressiveItemSummary" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/sud_items_summary_text_size_expressive</item>
         <item name="android:fontFamily">@string/sudFontSecondaryText</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
@@ -1475,6 +1508,10 @@
     <style name="SudMaterialYouAlertDialogTheme" parent="SudMaterialYouAlertDialogThemeCompat"/>
     <style name="SudMaterialYouAlertDialogTheme.Light" parent="SudMaterialYouAlertDialogThemeCompat.Light"/>
 
+    <style name="SudGlifExpressiveDialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="android:fontFamily">@string/sudGlifExpressiveDialogFontFamily</item>
+    </style>
+
     <style name="SudDateTimePickerDialogTheme" parent="Theme.AppCompat.Dialog">
         <item name="android:textAllCaps">false</item>
         <item name="colorAccent">@color/sud_color_accent_glif_v3_dark</item>
@@ -1508,6 +1545,10 @@
     <style name="SudShapeAppearanceOverlayExtended">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">45%</item>
+    </style>
+
+    <style name="SudLinearProgressIndicatorWavy">
+        <!-- TODO(b/379571805): Update after material library related attributes drop to main branch -->
     </style>
 
 </resources>
