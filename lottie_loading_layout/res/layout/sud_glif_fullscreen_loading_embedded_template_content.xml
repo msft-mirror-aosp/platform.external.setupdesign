@@ -14,10 +14,14 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
+
+<!-- Please keep filterTouchesWhenObscured=true; it's to prevent tapjacking.
+     See https://developer.android.com/privacy-and-security/risks/tapjacking -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:filterTouchesWhenObscured="true">
 
     <ViewStub
         android:id="@+id/sud_loading_layout_lottie_stub"

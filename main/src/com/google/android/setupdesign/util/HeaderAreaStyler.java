@@ -243,7 +243,8 @@ public final class HeaderAreaStyler {
     Context context = iconImage.getContext();
     int reducedIconHeight = 0;
     int gravity = PartnerStyleHelper.getLayoutGravity(context);
-    if (gravity != 0) {
+    // Skip the partner customization when isGlifExpressiveEnabled is true
+    if (gravity != 0 && !PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
       setGravity(iconImage, gravity);
     }
 
@@ -284,6 +285,57 @@ public final class HeaderAreaStyler {
       topMargin += reducedIconHeight;
       mlp.setMargins(mlp.leftMargin, topMargin, mlp.rightMargin, mlp.bottomMargin);
     }
+  }
+
+  /**
+   * Applies the partner style of back button to center align the icon. It needs to check if it
+   * should apply partner resource first, and then adjust the margin top according to the partner
+   * icon size.
+   *
+   * @param buttonContainer The container of the back button
+   */
+  public static void applyPartnerCustomizationBackButtonStyle(FrameLayout buttonContainer) {
+    if (buttonContainer == null) {
+      return;
+    }
+
+    Context context = buttonContainer.getContext();
+    int heightDifference = 0;
+
+    // Calculate the difference of icon height & button height
+    ViewGroup.LayoutParams lpButtonContainer = buttonContainer.getLayoutParams();
+    int backButtonHeight =
+        (int) context.getResources().getDimension(R.dimen.sud_glif_expressive_back_button_height);
+    int iconHeight = getPartnerConfigDimension(context, PartnerConfig.CONFIG_ICON_SIZE, 0);
+    if (iconHeight > backButtonHeight) {
+      heightDifference = iconHeight - backButtonHeight;
+    }
+
+    // Adjust margin top of button container to vertically center align the icon
+      ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) lpButtonContainer;
+      // The default topMargin should align with the icon margin top
+      int topMargin =
+          getPartnerConfigDimension(context, PartnerConfig.CONFIG_ICON_MARGIN_TOP, mlp.topMargin);
+    int adjustedTopMargin = topMargin;
+    if (heightDifference != 0) {
+      adjustedTopMargin = topMargin + heightDifference / 2;
+    }
+
+    if (adjustedTopMargin != mlp.topMargin) {
+      FrameLayout.LayoutParams params =
+          new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+      params.setMargins(mlp.leftMargin, adjustedTopMargin, mlp.rightMargin, mlp.bottomMargin);
+      buttonContainer.setLayoutParams(params);
+    }
+  }
+
+  private static int getPartnerConfigDimension(
+      Context context, PartnerConfig config, int defaultValue) {
+    if (PartnerConfigHelper.get(context).isPartnerConfigAvailable(config)) {
+      return (int) PartnerConfigHelper.get(context).getDimension(context, config);
+    }
+
+    return defaultValue;
   }
 
   private static void checkImageType(ImageView imageView) {

@@ -42,6 +42,21 @@
         <flag name="end" value="0x00800005" />
     </attr>
 
+    <attr name="sudGlifIconGravity">
+        <!-- Push object to the left of its container, not changing its size. -->
+        <flag name="left" value="0x03" />
+        <!-- Push object to the right of its container, not changing its size. -->
+        <flag name="right" value="0x05" />
+        <!-- Place object in the horizontal center of its container, not changing its size. -->
+        <flag name="center_horizontal" value="0x01" />
+        <!-- Grow the horizontal size of the object if needed so it completely fills its container. -->
+        <flag name="fill_horizontal" value="0x07" />
+        <!-- Push object to the beginning of its container, not changing its size. -->
+        <flag name="start" value="0x00800003" />
+        <!-- Push object to the end of its container, not changing its size. -->
+        <flag name="end" value="0x00800005" />
+    </attr>
+
     <attr name="sudGlifSubtitleGravity">
         <!-- Push object to the left of its container, not changing its size. -->
         <flag name="left" value="0x03" />
@@ -142,8 +157,27 @@
     <attr name="sudItemDescriptionTitleStyle" format="reference" />
     <attr name="sudItemDescriptionTitleTextAppearence" format="reference" />
     <attr name="sudItemVerboseTitleStyle" format="reference" />
+    <attr name="sudItemIconContainerWidth" format="dimension|reference" />
+    <attr name="sudItemPaddingTop" format="dimension|reference" />
+    <attr name="sudItemPaddingBottom" format="dimension|reference" />
+    <attr name="sudItemDividerWidth" format="dimension|reference" />
+    <attr name="sudItemBackgroundPaddingStart" format="dimension|reference" />
+    <attr name="sudItemBackgroundPaddingEnd" format="dimension|reference" />
+    <attr name="sudItemBackgroundColor" format="color|reference" />
+    <attr name="sudItemDescriptionPaddingTop" format="dimension|reference" />
+    <attr name="sudItemDescriptionPaddingBottom" format="dimension|reference" />
+    <attr name="sudItemSummaryPaddingTop" format="dimension|reference" />
+    <attr name="sudItemSummaryPaddingBottom" format="dimension|reference" />
+    <attr name="sudItemBackground" format="color|reference" />
+    <attr name="sudItemBackgroundFirst" format="color|reference" />
+    <attr name="sudItemBackgroundLast" format="color|reference" />
+    <attr name="sudItemBackgroundSingle" format="color|reference" />
+    <attr name="sudItemCornerRadius" format="dimension|reference" />
     <attr name="sudContentFramePaddingTop" format="dimension|reference" />
     <attr name="sudContentFramePaddingBottom" format="dimension|reference" />
+    <attr name="sudAccountAvatarMarginEnd" format="dimension|reference" />
+    <attr name="sudAccountAvatarMaxHeight" format="dimension|reference" />
+    <attr name="sudAccountNameTextSize" format="dimension|reference" />
 
     <!-- EditBox -->
     <attr name="sudEditBoxStyle" format="reference" />
@@ -308,4 +342,7 @@
     <attr name="sudSwitchBarTrackOnColor" format="color|reference" />
     <attr name="sudSwitchBarTrackOffColor" format="color|reference" />
     <attr name="sudSwitchBarTrackOffOutlineColor" format="color|reference" />
+
+    <!-- Footer bar style -->
+    <attr name="sudFooterBackgroundColor" format="color" />
 </resources>

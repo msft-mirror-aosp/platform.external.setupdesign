@@ -15,12 +15,15 @@
     limitations under the License.
 -->
 
+<!-- Please keep filterTouchesWhenObscured=true; it's to prevent tapjacking.
+     See https://developer.android.com/privacy-and-security/risks/tapjacking -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sud_layout_template_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:filterTouchesWhenObscured="true"
     android:orientation="vertical">
 
     <LinearLayout

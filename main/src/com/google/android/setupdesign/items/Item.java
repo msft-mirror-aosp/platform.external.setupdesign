@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
+import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.util.ItemStyler;
 import com.google.android.setupdesign.util.LayoutStyler;
@@ -228,7 +229,9 @@ public class Item extends AbstractItem {
     // If the item view is a header layout, it doesn't need to adjust the layout padding start/end
     // here. It will be adjusted by HeaderMixin.
     // TODO: Add partner resource enable check
-    if (!(this instanceof ExpandableSwitchItem) && view.getId() != R.id.sud_layout_header) {
+    if (!(this instanceof ExpandableSwitchItem)
+        && view.getId() != R.id.sud_layout_header
+        && !(PartnerConfigHelper.isGlifExpressiveEnabled(view.getContext()))) {
       LayoutStyler.applyPartnerCustomizationLayoutPaddingStyle(view);
     }
     ItemStyler.applyPartnerCustomizationItemStyle(view);
