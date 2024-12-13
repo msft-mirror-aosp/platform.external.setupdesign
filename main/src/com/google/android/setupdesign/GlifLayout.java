@@ -43,6 +43,7 @@ import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.template.StatusBarMixin;
 import com.google.android.setupcompat.util.ForceTwoPaneHelper;
+import com.google.android.setupcompat.util.Logger;
 import com.google.android.setupdesign.template.DescriptionMixin;
 import com.google.android.setupdesign.template.HeaderMixin;
 import com.google.android.setupdesign.template.IconMixin;
@@ -74,6 +75,8 @@ import com.google.android.setupdesign.util.LayoutStyler;
  * }</pre>
  */
 public class GlifLayout extends PartnerCustomizationLayout {
+
+  private static final Logger LOG = new Logger(GlifLayout.class);
 
   private ColorStateList primaryColor;
 
@@ -291,7 +294,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
       if (isEmbeddedActivityOnePaneEnabled(getContext())) {
         template = R.layout.sud_glif_embedded_template;
       } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
-        template = ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), template);
+        template = R.layout.sud_glif_template_two_pane;
       }
     }
 
@@ -495,9 +498,17 @@ public class GlifLayout extends PartnerCustomizationLayout {
 
   /** Check if the one pane layout is enabled in embedded activity */
   protected boolean isEmbeddedActivityOnePaneEnabled(Context context) {
-    return PartnerConfigHelper.isEmbeddedActivityOnePaneEnabled(context)
-        && ActivityEmbeddingController.getInstance(context)
+    boolean embeddedActivityOnePaneEnabled =
+        PartnerConfigHelper.isEmbeddedActivityOnePaneEnabled(context);
+    boolean activityEmbedded =
+        ActivityEmbeddingController.getInstance(context)
             .isActivityEmbedded(PartnerCustomizationLayout.lookupActivityFromContext(context));
+    LOG.atVerbose(
+        "isEmbeddedActivityOnePaneEnabled = "
+            + embeddedActivityOnePaneEnabled
+            + "; isActivityEmbedded = "
+            + activityEmbedded);
+    return embeddedActivityOnePaneEnabled && activityEmbedded;
   }
 
   /** Updates the background color of this layout with the partner-customizable background color. */
