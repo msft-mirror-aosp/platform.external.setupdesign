@@ -839,19 +839,19 @@ public class GlifLoadingLayout extends GlifLayout {
       this.darkThemeCustomization = darkThemeCustomization;
     }
 
-    PartnerConfig getIllustrationConfig() {
+    public PartnerConfig getIllustrationConfig() {
       return illustrationConfig;
     }
 
-    PartnerConfig getLottieConfig() {
+    public PartnerConfig getLottieConfig() {
       return lottieConfig;
     }
 
-    PartnerConfig getLightThemeCustomization() {
+    public PartnerConfig getLightThemeCustomization() {
       return lightThemeCustomization;
     }
 
-    PartnerConfig getDarkThemeCustomization() {
+    public PartnerConfig getDarkThemeCustomization() {
       return darkThemeCustomization;
     }
   }

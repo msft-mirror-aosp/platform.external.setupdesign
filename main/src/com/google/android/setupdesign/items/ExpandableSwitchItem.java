@@ -34,7 +34,9 @@ import androidx.core.view.AccessibilityDelegateCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat;
+import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
+import com.google.android.setupdesign.util.ItemStyler;
 import com.google.android.setupdesign.util.LayoutStyler;
 import com.google.android.setupdesign.view.CheckableLinearLayout;
 
@@ -54,6 +56,8 @@ public class ExpandableSwitchItem extends SwitchItem
   private CharSequence collapsedSummary;
   private CharSequence expandedSummary;
   private boolean isExpanded = false;
+  private boolean canExpanded = true;
+  private boolean isSwitchItem = true;
 
   private final AccessibilityDelegateCompat accessibilityDelegate =
       new AccessibilityDelegateCompat() {
@@ -89,13 +93,45 @@ public class ExpandableSwitchItem extends SwitchItem
     setIconGravity(Gravity.TOP);
   }
 
+  public ExpandableSwitchItem(Context context) {
+    super();
+    if (!PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
+      setIconGravity(Gravity.TOP);
+    } else {
+      setLayoutResource(R.layout.sud_items_expandable_switch_expressive);
+      setIconGravity(Gravity.CENTER_VERTICAL);
+    }
+  }
+
   public ExpandableSwitchItem(Context context, AttributeSet attrs) {
     super(context, attrs);
     final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SudExpandableSwitchItem);
     collapsedSummary = a.getText(R.styleable.SudExpandableSwitchItem_sudCollapsedSummary);
     expandedSummary = a.getText(R.styleable.SudExpandableSwitchItem_sudExpandedSummary);
-    setIconGravity(a.getInt(R.styleable.SudItem_sudIconGravity, Gravity.TOP));
+    if (!PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
+      setIconGravity(a.getInt(R.styleable.SudItem_sudIconGravity, Gravity.TOP));
+    } else {
+      setLayoutResource(R.layout.sud_items_expandable_switch_expressive);
+      setIconGravity(a.getInt(R.styleable.SudItem_sudIconGravity, Gravity.CENTER_VERTICAL));
+    }
     a.recycle();
+  }
+
+  public ExpandableSwitchItem(
+      Context context, AttributeSet attrs, boolean isSwitchItem, boolean canExpanded) {
+    super(context, attrs);
+    final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SudExpandableSwitchItem);
+    collapsedSummary = a.getText(R.styleable.SudExpandableSwitchItem_sudCollapsedSummary);
+    expandedSummary = a.getText(R.styleable.SudExpandableSwitchItem_sudExpandedSummary);
+    if (!PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
+      setIconGravity(a.getInt(R.styleable.SudItem_sudIconGravity, Gravity.TOP));
+    } else {
+      setLayoutResource(R.layout.sud_items_expandable_switch_expressive);
+      setIconGravity(a.getInt(R.styleable.SudItem_sudIconGravity, Gravity.CENTER_VERTICAL));
+    }
+    a.recycle();
+    this.isSwitchItem = isSwitchItem;
+    this.canExpanded = canExpanded;
   }
 
   @Override
@@ -163,35 +199,66 @@ public class ExpandableSwitchItem extends SwitchItem
     // accessibility issue, remove clickable event in this view.
     view.setClickable(false);
 
-    View content = view.findViewById(R.id.sud_items_expandable_switch_content);
-    content.setOnClickListener(this);
+    if (PartnerConfigHelper.isGlifExpressiveEnabled(view.getContext())) {
+      View moreInfo = view.findViewById(R.id.sud_items_more_info);
+      if (moreInfo != null) {
+        if (canExpanded) {
+          moreInfo.setOnClickListener(this);
+        } else {
+          moreInfo.setVisibility(View.GONE);
+        }
+      }
+      View switchItem = view.findViewById(R.id.sud_items_switch);
+      if (!isSwitchItem && switchItem != null) {
+        switchItem.setVisibility(View.GONE);
+      }
+      ItemStyler.applyPartnerCustomizationLayoutMarginStyle(view);
+    } else {
+      View content = view.findViewById(R.id.sud_items_expandable_switch_content);
+      content.setOnClickListener(this);
 
-    if (content instanceof CheckableLinearLayout) {
-      CheckableLinearLayout checkableLinearLayout = (CheckableLinearLayout) content;
-      checkableLinearLayout.setChecked(isExpanded());
+      if (content instanceof CheckableLinearLayout checkableLinearLayout) {
+        checkableLinearLayout.setChecked(isExpanded());
 
-      // On lower versions
-      ViewCompat.setAccessibilityLiveRegion(
-          checkableLinearLayout,
-          isExpanded()
-              ? ViewCompat.ACCESSIBILITY_LIVE_REGION_POLITE
-              : ViewCompat.ACCESSIBILITY_LIVE_REGION_NONE);
+        // On lower versions
+        checkableLinearLayout.setAccessibilityLiveRegion(
+            isExpanded()
+                ? ViewCompat.ACCESSIBILITY_LIVE_REGION_POLITE
+                : ViewCompat.ACCESSIBILITY_LIVE_REGION_NONE);
 
-      ViewCompat.setAccessibilityDelegate(checkableLinearLayout, accessibilityDelegate);
+        ViewCompat.setAccessibilityDelegate(checkableLinearLayout, accessibilityDelegate);
+      }
+      LayoutStyler.applyPartnerCustomizationLayoutPaddingStyle(content);
     }
-
     tintCompoundDrawables(view);
 
     // Expandable switch item has focusability on the expandable layout on the left, and the
     // switch on the right, but not the item itself.
     view.setFocusable(false);
+    updateShowMoreLinkText(view);
+  }
 
-    LayoutStyler.applyPartnerCustomizationLayoutPaddingStyle(content);
+  private void updateShowMoreLinkText(View view) {
+    TextView showMoreLink = view.findViewById(R.id.sud_items_more_info);
+    if (showMoreLink != null) {
+      if (isExpanded()) {
+        showMoreLink.setText(com.google.android.setupdesign.strings.R.string.sud_less_info);
+      } else {
+        showMoreLink.setText(com.google.android.setupdesign.strings.R.string.sud_more_info);
+      }
+    }
   }
 
   @Override
   public void onClick(View v) {
-    setExpanded(!isExpanded());
+    if (PartnerConfigHelper.isGlifExpressiveEnabled(v.getContext())) {
+      if (v.getId() == R.id.sud_items_more_info) {
+        setExpanded(!isExpanded());
+        updateShowMoreLinkText(v);
+      }
+    } else {
+      setExpanded(!isExpanded());
+    }
   }
 
   // Tint the expand arrow with the text color

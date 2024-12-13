@@ -347,10 +347,9 @@
     <dimen name="sud_glif_expreesive_description_margin_bottom">0dp</dimen>
     <dimen name="sud_glif_expressive_icon_margin_top">8dp</dimen>
     <dimen name="sud_glif_expressive_content_padding_top">8dp</dimen>
-    <dimen name="sud_glif_expressive_item_margin_start">16dp</dimen>
-    <dimen name="sud_glif_expressive_item_margin_end">16dp</dimen>
     <dimen name="sud_glif_expressive_item_corner_radius">2dp</dimen>
     <dimen name="sud_glif_expressive_item_icon_padding_end">12dp</dimen>
+    <dimen name="sud_glif_expressive_items_icon_padding">8dp</dimen>
     <dimen name="sud_items_summary_text_size_expressive">14sp</dimen>
     <dimen name="sud_items_title_text_size_expressive">16sp</dimen>
     <dimen name="sud_expressive_switch_padding_start">12dp</dimen>
@@ -358,6 +357,8 @@
 
     <!-- Header layout expressive -->
     <dimen name="sud_glif_expressive_header_title_line_spacing_extra">8sp</dimen>
+    <dimen name="sud_glif_expressive_description_text_size">16sp</dimen>
+    <dimen name="sud_glif_expressive_description_line_spacing_extra">8sp</dimen>
 
     <!-- Progress indicator-->
     <dimen name="sud_glif_expressive_progress_indicator_margin_vertical">16dp</dimen>
