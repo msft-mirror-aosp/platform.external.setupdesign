@@ -44,6 +44,15 @@ public class FloatingBackButtonMixin implements Mixin {
 
   @VisibleForTesting boolean tryInflatingBackButton = false;
 
+  private BackButtonListener backButtonListener;
+
+  /** Interface definition for a callback to be invoked. */
+  public interface BackButtonListener {
+
+    /** Called when the back button has been clicked. */
+    void onBackPressed();
+  }
+
   /**
    * A {@link Mixin} for setting and getting the back button.
    *
@@ -73,8 +82,21 @@ public class FloatingBackButtonMixin implements Mixin {
     final Button backbutton = getBackButton();
     if (backbutton != null) {
       this.listener = listener;
-      backbutton.setOnClickListener(listener);
+      backbutton.setOnClickListener(
+          v -> {
+            if (listener != null) {
+              listener.onClick(v);
+            }
+
+            if (backButtonListener != null) {
+              backButtonListener.onBackPressed();
+            }
+          });
     }
+  }
+
+  public void setOnBackPressedCallback(BackButtonListener buttonEventListener) {
+    this.backButtonListener = buttonEventListener;
   }
 
   /** Tries to apply the partner customization to the back button. */
@@ -144,5 +166,9 @@ public class FloatingBackButtonMixin implements Mixin {
   /** Gets the {@link OnClickListener} of the back button. */
   public OnClickListener getOnClickListener() {
     return this.listener;
+  }
+
+  public BackButtonListener getBackButtonListener() {
+    return this.backButtonListener;
   }
 }

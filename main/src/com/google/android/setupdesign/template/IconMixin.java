@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import com.google.android.setupcompat.internal.TemplateLayout;
+import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.template.Mixin;
 import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.util.HeaderAreaStyler;
@@ -73,7 +74,7 @@ public class IconMixin implements Mixin {
 
     @DrawableRes
     final int icon = a.getResourceId(R.styleable.SudIconMixin_android_icon, /* defValue= */ 0);
-    if (icon != 0) {
+    if (icon != 0 || PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
       setIcon(icon);
     }
 
@@ -112,7 +113,12 @@ public class IconMixin implements Mixin {
         }
       }
       iconView.setImageDrawable(icon);
-      iconView.setVisibility(icon != null ? View.VISIBLE : View.GONE);
+      if (PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
+        iconView.setVisibility(icon != null ? View.VISIBLE : View.INVISIBLE);
+      } else {
+        iconView.setVisibility(icon != null ? View.VISIBLE : View.GONE);
+      }
+
       setIconContainerVisibility(iconView.getVisibility());
       tryApplyPartnerCustomizationStyle();
     }
@@ -129,7 +135,11 @@ public class IconMixin implements Mixin {
       // Note: setImageResource on the ImageView is overridden in AppCompatImageView for
       // support lib users, which enables vector drawable compat to work on versions pre-L.
       iconView.setImageResource(icon);
-      iconView.setVisibility(icon != 0 ? View.VISIBLE : View.GONE);
+      if (PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
+        iconView.setVisibility(icon != 0 ? View.VISIBLE : View.INVISIBLE);
+      } else {
+        iconView.setVisibility(icon != 0 ? View.VISIBLE : View.GONE);
+      }
       setIconContainerVisibility(iconView.getVisibility());
     }
   }

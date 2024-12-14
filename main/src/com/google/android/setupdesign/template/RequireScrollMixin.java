@@ -352,7 +352,7 @@ public class RequireScrollMixin implements Mixin {
     CharSequence nextText = primaryButtonView.getText();
     primaryButtonView.setVisibility(View.INVISIBLE);
     primaryButtonView.setOnClickListener(createOnClickListener(onClickListener));
-    footerBarMixin.setButtonWidthForExpressiveStyle(/* isDownButton= */ false);
+    footerBarMixin.setButtonWidthForExpressiveStyle();
     LinearLayout footerContainer = footerBarMixin.getButtonContainer();
 
     setOnRequireScrollStateChangedListener(
@@ -366,7 +366,7 @@ public class RequireScrollMixin implements Mixin {
             if (primaryButtonView instanceof MaterialButton) {
               ((MaterialButton) primaryButtonView).setIcon(null);
               primaryButtonView.setText(nextText);
-              footerBarMixin.setButtonWidthForExpressiveStyle(/* isDownButton= */ false);
+              footerBarMixin.setButtonWidthForExpressiveStyle();
               // Screen no need to scroll, sets the secondary button as visible if it exists.
               if (secondaryButtonView != null) {
                 secondaryButtonView.setVisibility(View.VISIBLE);
@@ -390,7 +390,7 @@ public class RequireScrollMixin implements Mixin {
       ((MaterialButton) button).setIcon(icon);
       ((MaterialButton) button).setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
       ((MaterialButton) button).setIconPadding(0);
-      footerBarMixin.setButtonWidthForExpressiveStyle(/* isDownButton= */ true);
+      footerBarMixin.setDownButtonForExpressiveStyle();
     } else {
       Log.i(LOG_TAG, "Cannot set icon for the button. Skipping clean up text.");
     }
