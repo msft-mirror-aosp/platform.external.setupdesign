@@ -540,22 +540,22 @@
         <item name="android:alertDialogTheme">@style/SudMaterialYouAlertDialogTheme.Light</item>
     </style>
 
-    <style name="SudBaseThemeGlifExpressive" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="SudBaseThemeGlifExpressive" parent="Theme.Material3.DynamicColors.Dark.NoActionBar">
         <!-- Copied from values style SudThemeBaseGlif -->
         <item name="android:indeterminateTint" tools:ignore="NewApi">?attr/colorControlActivated</item>
         <!-- Specify the indeterminateTintMode to work around a bug in Lollipop -->
         <item name="android:indeterminateTintMode" tools:ignore="NewApi">src_in</item>
         <item name="android:listPreferredItemHeight">@dimen/sud_items_preferred_height</item>
-        <item name="android:listPreferredItemPaddingEnd" tools:ignore="NewApi">@dimen/sud_glif_expressive_item_margin_start</item>
-        <item name="android:listPreferredItemPaddingStart" tools:ignore="NewApi">@dimen/sud_glif_expressive_item_margin_start</item>
+        <item name="android:listPreferredItemPaddingEnd" tools:ignore="NewApi">?attr/sudMarginEnd</item>
+        <item name="android:listPreferredItemPaddingStart" tools:ignore="NewApi">?attr/sudMarginStart</item>
         <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@style/Animation.SudWindowAnimation</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
         <item name="android:colorError" tools:targetApi="26">@color/sud_color_error_text_dark</item>
         <item name="android:scrollbarThumbVertical">?attr/sudScrollBarThumb</item>
-        <item name="listPreferredItemPaddingLeft">@dimen/sud_glif_expressive_item_margin_start</item>
-        <item name="listPreferredItemPaddingRight">@dimen/sud_glif_expressive_item_margin_end</item>
+        <item name="listPreferredItemPaddingLeft">?attr/sudMarginStart</item>
+        <item name="listPreferredItemPaddingRight">?attr/sudMarginEnd</item>
         <item name="sudButtonHighlightAlpha">0.24</item>
         <item name="sudColorPrimary">?attr/colorPrimary</item>
         <item name="sudContentFramePaddingTop">@dimen/sud_content_frame_padding_top</item>
@@ -588,7 +588,6 @@
         <item name="sudSwitchBarTrackOffColor">@color/sud_switch_track_off_dark</item>
         <item name="sudSwitchBarTrackOffOutlineColor">@color/sud_switch_track_outline_off_dark</item>
         <item name="sudEditBoxStyle">@style/SudEditBoxTheme</item>
-        <item name="sudItemIconContainerStyle">@style/SudItemIconContainer</item>
         <item name="sudItemIconContainerWidth">@dimen/sud_items_icon_container_width</item>
         <item name="sudAccountAvatarMarginEnd">@dimen/sud_account_avatar_margin_end</item>
         <item name="sudAccountAvatarMaxHeight">@dimen/sud_account_avatar_max_height</item>
@@ -626,7 +625,7 @@
         <item name="sudGlifIconGravity">center_horizontal</item>
         <item name="sucGlifHeaderMarginTop">@dimen/sud_glif_header_title_margin_top_material_you</item>
         <item name="sucGlifHeaderMarginBottom">@dimen/sud_glif_header_title_margin_bottom_material_you</item>
-        <item name="sudGlifDescriptionStyle">@style/SudGlifDescriptionMaterialYou</item>
+        <item name="sudGlifDescriptionStyle">@style/SudGlifDescriptionExpressive</item>
         <item name="sudGlifDescriptionMarginBottom">@dimen/sud_glif_expreesive_description_margin_bottom</item>
         <item name="sudItemDescriptionTitleTextAppearence">@style/TextAppearance.SudMaterialYouDescription</item>
         <item name="sudDividerShown">false</item>
@@ -679,27 +678,28 @@
         <item name="sudButtonCornerRadius">@dimen/sud_glif_expressive_footer_button_radius</item>
         <item name="sucFooterBarButtonTextSize">@dimen/sud_glif_expressive_footer_button_text_size</item>
         <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_expressive_footer_button_text_line_spacing_extra</item>
+        <item name="sudItemIconContainerStyle">@style/SudExpressiveItemIconContainer</item>
         <item name="textAppearanceListItem">@style/TextAppearance.SudExpressiveItemTitle</item>
         <item name="textAppearanceListItemSmall">@style/TextAppearance.SudExpressiveItemSummary</item>
         <item name="materialAlertDialogTheme">@style/SudGlifExpressiveDialogTheme</item>
     </style>
 
-    <style name="SudBaseThemeGlifExpressive.Light" parent="Theme.Material3.Light.NoActionBar">
+    <style name="SudBaseThemeGlifExpressive.Light" parent="Theme.Material3.DynamicColors.Light.NoActionBar">
         <!-- Copied from values style SudThemeBaseGlif.Light -->
         <item name="android:indeterminateTint" tools:ignore="NewApi">?attr/colorControlActivated</item>
         <!-- Specify the indeterminateTintMode to work around a bug in Lollipop -->
         <item name="android:indeterminateTintMode" tools:ignore="NewApi">src_in</item>
         <item name="android:listPreferredItemHeight">@dimen/sud_items_preferred_height</item>
-        <item name="android:listPreferredItemPaddingEnd" tools:ignore="NewApi">@dimen/sud_glif_expressive_item_margin_start</item>
-        <item name="android:listPreferredItemPaddingStart" tools:ignore="NewApi">@dimen/sud_glif_expressive_item_margin_start</item>
+        <item name="android:listPreferredItemPaddingEnd" tools:ignore="NewApi">?attr/sudMarginEnd</item>
+        <item name="android:listPreferredItemPaddingStart" tools:ignore="NewApi">?attr/sudMarginStart</item>
         <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@style/Animation.SudWindowAnimation</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
         <item name="android:colorError" tools:targetApi="26">@color/sud_color_error_text_light</item>
         <item name="android:scrollbarThumbVertical">?attr/sudScrollBarThumb</item>
-        <item name="listPreferredItemPaddingLeft">@dimen/sud_glif_expressive_item_margin_start</item>
-        <item name="listPreferredItemPaddingRight">@dimen/sud_glif_expressive_item_margin_end</item>
+        <item name="listPreferredItemPaddingLeft">?attr/sudMarginStart</item>
+        <item name="listPreferredItemPaddingRight">?attr/sudMarginEnd</item>
         <item name="sudButtonHighlightAlpha">0.12</item>
         <item name="sudColorPrimary">?attr/colorPrimary</item>
         <item name="sudContentFramePaddingTop">@dimen/sud_content_frame_padding_top</item>
@@ -732,7 +732,6 @@
         <item name="sudSwitchBarTrackOffColor">@color/sud_switch_track_off_light</item>
         <item name="sudSwitchBarTrackOffOutlineColor">@color/sud_switch_track_outline_off_light</item>
         <item name="sudEditBoxStyle">@style/SudEditBoxTheme</item>
-        <item name="sudItemIconContainerStyle">@style/SudItemIconContainer</item>
         <item name="sudItemIconContainerWidth">@dimen/sud_items_icon_container_width</item>
         <item name="sudAccountAvatarMarginEnd">@dimen/sud_account_avatar_margin_end</item>
         <item name="sudAccountAvatarMaxHeight">@dimen/sud_account_avatar_max_height</item>
@@ -769,7 +768,7 @@
         <item name="sudGlifIconGravity">center_horizontal</item>
         <item name="sucGlifHeaderMarginTop">@dimen/sud_glif_header_title_margin_top_material_you</item>
         <item name="sucGlifHeaderMarginBottom">@dimen/sud_glif_header_title_margin_bottom_material_you</item>
-        <item name="sudGlifDescriptionStyle">@style/SudGlifDescriptionMaterialYou</item>
+        <item name="sudGlifDescriptionStyle">@style/SudGlifDescriptionExpressive</item>
         <item name="sudGlifDescriptionMarginBottom">@dimen/sud_glif_expreesive_description_margin_bottom</item>
         <item name="sudItemDescriptionTitleTextAppearence">@style/TextAppearance.SudMaterialYouDescription</item>
         <item name="sudDividerShown">false</item>
@@ -822,6 +821,7 @@
         <item name="sudButtonCornerRadius">@dimen/sud_glif_expressive_footer_button_radius</item>
         <item name="sucFooterBarButtonTextSize">@dimen/sud_glif_expressive_footer_button_text_size</item>
         <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_expressive_footer_button_text_line_spacing_extra</item>
+        <item name="sudItemIconContainerStyle">@style/SudExpressiveItemIconContainer</item>
         <item name="textAppearanceListItem">@style/TextAppearance.SudExpressiveItemTitle</item>
         <item name="textAppearanceListItemSmall">@style/TextAppearance.SudExpressiveItemSummary</item>
         <item name="materialAlertDialogTheme">@style/SudGlifExpressiveDialogTheme</item>
@@ -1161,10 +1161,10 @@
     </style>
 
     <style name="SudGlifExpressiveItemContainer">
-        <item name="android:layout_marginEnd" tools:ignore="NewApi">?attr/listPreferredItemPaddingRight</item>
+        <item name="android:layout_marginEnd" tools:ignore="NewApi">?android:attr/listPreferredItemPaddingEnd</item>
         <item name="android:layout_marginLeft">?attr/listPreferredItemPaddingLeft</item>
         <item name="android:layout_marginRight">?attr/listPreferredItemPaddingRight</item>
-        <item name="android:layout_marginStart" tools:ignore="NewApi">?attr/listPreferredItemPaddingLeft</item>
+        <item name="android:layout_marginStart" tools:ignore="NewApi">?android:attr/listPreferredItemPaddingStart</item>
         <item name="android:layout_marginBottom">?attr/sudItemDividerWidth</item>
         <item name="android:background">?attr/sudItemBackground</item>
         <item name="android:paddingBottom">@dimen/sud_items_padding_bottom_material_you</item>
@@ -1178,6 +1178,16 @@
 
     <style name="SudItemIconContainer">
         <item name="android:layout_width">?attr/sudItemIconContainerWidth</item>
+    </style>
+
+    <style name="SudExpressiveItemIconContainer">
+        <item name="android:layout_width">?attr/sudItemIconContainerWidth</item>
+        <item name="android:paddingBottom">@dimen/sud_glif_expressive_items_icon_padding</item>
+        <item name="android:paddingEnd" tools:ignore="NewApi">@dimen/sud_glif_expressive_items_icon_padding</item>
+        <item name="android:paddingLeft">@dimen/sud_glif_expressive_items_icon_padding</item>
+        <item name="android:paddingRight">@dimen/sud_glif_expressive_items_icon_padding</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">@dimen/sud_glif_expressive_items_icon_padding</item>
+        <item name="android:paddingTop">@dimen/sud_glif_expressive_items_icon_padding</item>
     </style>
 
     <style name="SudItemContainer.Description" parent="SudItemContainer">
@@ -1324,6 +1334,11 @@
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textDirection">locale</item>
         <item name="android:textSize">@dimen/sud_glif_description_text_size_material_you</item>
+    </style>
+
+    <style name="SudGlifDescriptionExpressive" parent="SudGlifDescriptionMaterialYou">
+        <item name="android:textSize">@dimen/sud_glif_expressive_description_text_size</item>
+        <item name="android:lineSpacingExtra">@dimen/sud_glif_expressive_description_line_spacing_extra</item>
     </style>
 
     <style name="SudGlifAccountContainerMaterialYou">
@@ -1534,6 +1549,16 @@
         <item name="android:switchMinWidth">@dimen/sud_switch_min_width</item>
     </style>
 
+    <style name="SudExpressiveSwitchBarStyle">
+        <item name="android:layout_gravity">center_vertical|end</item>
+        <item name="track">@drawable/sud_switch_track_selector</item>
+        <item name="android:track">@drawable/sud_switch_track_selector</item>
+        <item name="android:thumb">@drawable/sud_switch_thumb_selector</item>
+        <item name="android:switchMinWidth">@dimen/sud_switch_min_width</item>
+        <item name="android:paddingStart">@dimen/sud_expressive_switch_padding_start</item>
+        <item name="android:paddingLeft">@dimen/sud_expressive_switch_padding_start</item>
+    </style>
+
     <style name="SudLandContentContianerStyle">
       <item name="android:layout_width">0dp</item>
       <item name="android:layout_height">match_parent</item>
@@ -1548,7 +1573,10 @@
     </style>
 
     <style name="SudLinearProgressIndicatorWavy">
-        <!-- TODO(b/379571805): Update after material library related attributes drop to main branch -->
+        <item name="waveAmplitude">3dp</item>
+        <item name="wavelength">40dp</item>
+        <item name="wavelengthIndeterminate">30dp</item>
+        <item name="indeterminateAnimatorDurationScale">1.5</item>
     </style>
 
 </resources>

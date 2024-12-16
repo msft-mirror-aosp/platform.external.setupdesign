@@ -22,6 +22,7 @@ import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
@@ -123,6 +124,58 @@ public final class ItemStyler {
             PartnerConfig.CONFIG_ITEMS_SUMMARY_MARGIN_TOP,
             /* textMarginBottomConfig= */ null,
             PartnerStyleHelper.getLayoutGravity(summaryTextView.getContext())));
+  }
+
+  /**
+   * Applies the partner layout margin style to the given list item view {@code listItemView}. The
+   * theme should set partner heavy theme config first, and then the partner layout style would be
+   * applied.
+   *
+   * @param listItemView A view would be applied partner layout margin style
+   */
+  @TargetApi(VERSION_CODES.JELLY_BEAN_MR1)
+  public static void applyPartnerCustomizationLayoutMarginStyle(@Nullable View listItemView) {
+    if (listItemView == null) {
+      return;
+    }
+
+    Context context = listItemView.getContext();
+    boolean partnerMarginStartAvailable =
+        PartnerConfigHelper.get(context)
+            .isPartnerConfigAvailable(PartnerConfig.CONFIG_LAYOUT_MARGIN_START);
+    boolean partnerMarginEndAvailable =
+        PartnerConfigHelper.get(context)
+            .isPartnerConfigAvailable(PartnerConfig.CONFIG_LAYOUT_MARGIN_END);
+
+    // TODO: After all users added the check before calling the API, this check can be
+    // deleted.
+    if (PartnerStyleHelper.shouldApplyPartnerResource(listItemView)
+        && (partnerMarginStartAvailable || partnerMarginEndAvailable)) {
+      int marginStart;
+      int marginEnd;
+      if (listItemView.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+        ViewGroup.MarginLayoutParams layoutParams =
+            (ViewGroup.MarginLayoutParams) listItemView.getLayoutParams();
+        if (partnerMarginStartAvailable) {
+          marginStart =
+              (int)
+                  PartnerConfigHelper.get(context)
+                      .getDimension(context, PartnerConfig.CONFIG_LAYOUT_MARGIN_START);
+        } else {
+          marginStart = layoutParams.leftMargin;
+        }
+        if (partnerMarginEndAvailable) {
+          marginEnd =
+              (int)
+                  PartnerConfigHelper.get(context)
+                      .getDimension(context, PartnerConfig.CONFIG_LAYOUT_MARGIN_END);
+        } else {
+          marginEnd = layoutParams.rightMargin;
+        }
+        layoutParams.setMargins(
+            marginStart, layoutParams.topMargin, marginEnd, layoutParams.bottomMargin);
+      }
+    }
   }
 
   private static void applyPartnerCustomizationItemViewLayoutStyle(@Nullable View listItemView) {
