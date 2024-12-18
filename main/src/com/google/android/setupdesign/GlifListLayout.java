@@ -96,7 +96,7 @@ public class GlifListLayout extends GlifLayout {
       if (isEmbeddedActivityOnePaneEnabled(getContext())) {
         template = R.layout.sud_glif_list_embedded_template;
       } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
-        template = ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), template);
+        template = R.layout.sud_glif_list_template_two_pane;
       }
     }
     return super.onInflateTemplate(inflater, template);

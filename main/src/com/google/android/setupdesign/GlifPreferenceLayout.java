@@ -33,7 +33,7 @@ import com.google.android.setupdesign.template.RecyclerMixin;
  *
  * <p>Example:
  *
- * <pre>{@code
+ * <pre
  * &lt;style android:name="MyActivityTheme">
  *     &lt;item android:name="preferenceTheme">@style/MyPreferenceTheme&lt;/item>
  * &lt;/style>
@@ -45,20 +45,20 @@ import com.google.android.setupdesign.template.RecyclerMixin;
  * &lt;style android:name="MyPreferenceFragmentStyle">
  *     &lt;item android:name="android:layout">@layout/my_preference_layout&lt;/item>
  * &lt;/style>
- * }</pre>
+ * </pre>
  *
  * where {@code my_preference_layout} is a layout that contains {@link
  * com.google.android.setupdesign.GlifPreferenceLayout}.
  *
  * <p>Example:
  *
- * <pre>{@code
+ * <pre>
  * &lt;com.google.android.setupdesign.GlifPreferenceLayout
  *     xmlns:android="http://schemas.android.com/apk/res/android"
  *     android:id="@id/list_container"
  *     android:layout_width="match_parent"
  *     android:layout_height="match_parent" />
- * }</pre>
+ * </pre>
  *
  * <p>Fragments using this layout <em>must</em> delegate {@code onCreateRecyclerView} to the
  * implementation in this class: {@link #onCreateRecyclerView(android.view.LayoutInflater,
@@ -104,7 +104,7 @@ public class GlifPreferenceLayout extends GlifRecyclerLayout {
       if (isEmbeddedActivityOnePaneEnabled(getContext())) {
         template = R.layout.sud_glif_preference_embedded_template;
       } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
-        template = ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), template);
+        template = R.layout.sud_glif_preference_template_two_pane;
       }
     }
     return super.onInflateTemplate(inflater, template);
@@ -117,8 +117,9 @@ public class GlifPreferenceLayout extends GlifRecyclerLayout {
     final LayoutInflater inflater = LayoutInflater.from(getContext());
     int recyclerViewLayoutId = R.layout.sud_glif_preference_recycler_view;
     if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
-      recyclerViewLayoutId =
-          ForceTwoPaneHelper.getForceTwoPaneStyleLayout(getContext(), recyclerViewLayoutId);
+      // Use the compat two pane layout for the recycler view if the two pane is enabled. Since the
+      // sud_glif_preference_recycler_view layout is not compatible with original layout.
+      recyclerViewLayoutId = R.layout.sud_glif_preference_recycler_view_compat_two_pane;
     }
     RecyclerView recyclerView = (RecyclerView) inflater.inflate(recyclerViewLayoutId, this, false);
     recyclerMixin = new RecyclerMixin(this, recyclerView);
