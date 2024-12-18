@@ -30,8 +30,13 @@
     <string name="sudFontSecondary" translatable="false">google-sans</string>
     <string name="sudFontSecondaryText" translatable="false">google-sans-text</string>
     <string name="sudFontSecondaryMedium" translatable="false">google-sans-medium</string>
-    <!-- Material You button font family-->
+    <!-- Material You button font family -->
     <string name="sudFontSecondaryMediumMaterialYou" translatable="false">google-sans-text-medium</string>
     <item name="sud_layout_description" type="id" />
 
+    <!-- Glif expressive button styles -->
+    <string name="sudExpressiveButtonFontFamily" translatable="false">Roboto</string>
+
+    <!-- Glif expressive alert dialog styles -->
+    <string name="sudGlifExpressiveDialogFontFamily" translatable="false">google-sans-text</string>
 </resources>

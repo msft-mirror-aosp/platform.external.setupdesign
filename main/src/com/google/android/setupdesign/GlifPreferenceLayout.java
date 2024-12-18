@@ -100,9 +100,17 @@ public class GlifPreferenceLayout extends GlifRecyclerLayout {
   protected View onInflateTemplate(LayoutInflater inflater, int template) {
     if (template == 0) {
       template = R.layout.sud_glif_preference_template;
+
       // if the activity is embedded should apply an embedded layout.
       if (isEmbeddedActivityOnePaneEnabled(getContext())) {
-        template = R.layout.sud_glif_preference_embedded_template;
+        if (isGlifExpressiveEnabled()) {
+          template = R.layout.sud_glif_expressive_preference_embedded_template;
+        } else {
+          template = R.layout.sud_glif_preference_embedded_template;
+        }
+        // TODO add unit test for this case.
+      } else if (isGlifExpressiveEnabled()) {
+        template = R.layout.sud_glif_expressive_preference_template;
       } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
         template = R.layout.sud_glif_preference_template_two_pane;
       }
