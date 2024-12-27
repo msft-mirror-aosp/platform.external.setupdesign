@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="?attr/sudSectionItemContainerStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:minHeight="0dp"
+    android:orientation="horizontal"
+    android:filterTouchesWhenObscured="true">
+
+    <!-- unused icon container, which just make the adapter get work on this well-->
+    <FrameLayout
+        android:id="@+id/sud_items_icon_container"
+        android:layout_width="@dimen/sud_items_icon_container_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="start">
+
+        <ImageView
+            android:id="@+id/sud_items_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="ContentDescription" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <com.google.android.setupdesign.view.RichTextView
+            android:id="@+id/sud_items_title"
+            style="?attr/sudSectionItemTitleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            tools:ignore="UnusedAttribute" />
+
+        <!-- unused text view, which just make the adapter get work on this well-->
+        <com.google.android.setupdesign.view.RichTextView
+            android:id="@+id/sud_items_summary"
+            style="@style/SudItemSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/sud_items_padding_bottom_extra"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            android:visibility="gone"
+            tools:ignore="UnusedAttribute" />
+
+    </LinearLayout>
+
+</LinearLayout>

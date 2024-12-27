@@ -26,4 +26,5 @@
     android:filterTouchesWhenObscured="true"
     android:scrollIndicators="?attr/sudScrollIndicators"
     android:scrollbars="vertical"
-    app:sudHeader="@layout/sud_glif_header" />
+    app:sudHeader="@layout/sud_glif_header"
+    app:sudShouldApplyAdditionalMargin="true" />

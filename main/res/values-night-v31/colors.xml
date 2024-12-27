@@ -43,4 +43,5 @@
   <color name="sud_glif_expressive_footer_primary_button_disable_text_color">@color/sud_system_neutral2_200</color>
   <color name="sud_glif_expressive_footer_secondary_button_enable_text_color">@color/sud_system_accent2_100</color>
   <color name="sud_glif_expressive_footer_secondary_button_disable_text_color">@color/sud_system_neutral2_200</color>
+
 </resources>

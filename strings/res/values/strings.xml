@@ -36,4 +36,8 @@
 
     <!-- Expandable switch item text to collapse the information [CHAR LIMIT=30] -->
     <string name="sud_less_info">Less info</string>
+
+    <!-- Label for card view check mark icon [CHAR LIMIT=40] -->
+    <string name="sud_card_view_check_mark_icon_label">checked</string>
+
 </resources>

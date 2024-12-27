@@ -34,6 +34,7 @@
 
   <color name="sud_color_on_surface">@color/sud_neutral90</color>
   <color name="sud_color_surface_container_highest">@color/sud_neutral22</color>
+  <color name="sud_on_surface_variant">@color/sud_system_on_surface_variant_dark</color>
 
   <!-- Glif expressive style -->
   <!-- primary20 -->
@@ -44,4 +45,5 @@
   <color name="sud_glif_expressive_footer_secondary_button_enable_text_color">#ffe8def8</color>
   <!-- neutral_variant80 -->
   <color name="sud_glif_expressive_footer_secondary_button_disable_text_color">#ffcac4d0</color>
+
 </resources>

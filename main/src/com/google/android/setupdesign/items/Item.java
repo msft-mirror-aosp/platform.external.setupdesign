@@ -33,6 +33,8 @@ import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.util.ItemStyler;
 import com.google.android.setupdesign.util.LayoutStyler;
+import com.google.android.setupdesign.view.HeaderRecyclerView;
+import com.google.android.setupdesign.view.StickyHeaderListView;
 
 /**
  * Definition of an item in an {@link ItemHierarchy}. An item is usually defined in XML and inflated
@@ -242,7 +244,14 @@ public class Item extends AbstractItem {
     // TODO: Add partner resource enable check
     if (!(this instanceof ExpandableSwitchItem) && view.getId() != R.id.sud_layout_header) {
       if (PartnerConfigHelper.isGlifExpressiveEnabled(view.getContext())) {
-        ItemStyler.applyPartnerCustomizationLayoutMarginStyle(view);
+        // If the item view is inside a recycler layout or list layout with attribute
+        // shouldApplyAdditionalMargin, it needs to adjust the
+        // layout margin start/end here to align other component activit margin. If it is not
+        // inside a recycler layout or list layout with attribute shouldApplyAdditionalMargin, it
+        // will be adjusted by each activity themselves.
+        if (shouldApplyAdditionalMargin(view)) {
+          ItemStyler.applyPartnerCustomizationLayoutMarginStyle(view);
+        }
       } else {
         LayoutStyler.applyPartnerCustomizationLayoutPaddingStyle(view);
       }
@@ -258,5 +267,17 @@ public class Item extends AbstractItem {
   protected void onMergeIconStateAndLevels(ImageView iconView, Drawable icon) {
     iconView.setImageState(icon.getState(), false /* merge */);
     iconView.setImageLevel(icon.getLevel());
+  }
+
+  private boolean shouldApplyAdditionalMargin(View itemView) {
+    View recyclerView = itemView.getRootView().findViewById(R.id.sud_recycler_view);
+    View listView = itemView.getRootView().findViewById(android.R.id.list);
+    if (recyclerView != null && recyclerView instanceof HeaderRecyclerView) {
+      return ((HeaderRecyclerView) recyclerView).shouldApplyAdditionalMargin();
+    }
+    if (listView != null && listView instanceof StickyHeaderListView) {
+      return ((StickyHeaderListView) listView).shouldApplyAdditionalMargin();
+    }
+    return false;
   }
 }

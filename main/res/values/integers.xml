@@ -20,4 +20,7 @@
     <!-- Glif expressive button styles -->
     <integer name="sud_glif_expressive_footer_button_weight">500</integer>
 
+    <!-- Glif expressive account name font weight -->
+    <integer name="sud_glif_account_name_text_font_weight">600</integer>
+
 </resources>

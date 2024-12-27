@@ -41,4 +41,12 @@ public interface IItem {
 
   /** @return True if this item is enabled. */
   boolean isEnabled();
+
+  /**
+   * @return True if this item is a group divider. The divider will split the last item and next
+   *     item to a different group.
+   */
+  default boolean isGroupDivider() {
+    return false;
+  }
 }

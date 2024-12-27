@@ -15,7 +15,8 @@
     limitations under the License.
 -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@color/sud_system_*">
 
   <color name="sud_color_on_surface">@android:color/system_on_surface_dark</color>
   <color name="sud_color_surface_container_highest">@android:color/system_surface_container_highest_dark</color>
@@ -26,8 +27,6 @@
   <color name="sud_color_primary">@android:color/system_primary_dark</color>
   <!-- System on primary dark -->
   <color name="sud_system_on_primary">@android:color/system_on_primary_dark</color>
-  <!-- On surface variant dark -->
-  <color name="sud_on_surface_variant">@android:color/system_on_surface_variant_dark</color>
   <!-- On secondary container -->
   <color name="sud_on_secondary_container">@android:color/system_on_secondary_container_dark</color>
   <!-- Surface container high dark -->
@@ -41,4 +40,5 @@
   <color name="sud_glif_expressive_footer_primary_button_disable_text_color">@color/sud_on_surface_variant</color>
   <color name="sud_glif_expressive_footer_secondary_button_enable_text_color">@color/sud_on_secondary_container</color>
   <color name="sud_glif_expressive_footer_secondary_button_disable_text_color">@color/sud_on_surface_variant</color>
+
 </resources>

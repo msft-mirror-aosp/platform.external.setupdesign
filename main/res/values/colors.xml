@@ -16,7 +16,7 @@
 -->
 
 <resources xmlns:tools="http://schemas.android.com/tools"
-    tools:keep="@color/sud_system_accent*,@color/sud_system_neutral*">
+    tools:keep="@color/sud_system_*">
 
     <!-- General colors -->
     <color name="sud_color_accent_dark">#ff448aff</color>
@@ -206,6 +206,7 @@
 
     <color name="sud_color_on_surface">@color/sud_neutral10</color>
     <color name="sud_color_surface_container_highest">@color/sud_neutral90</color>
+    <color name="sud_on_surface_variant">@color/sud_system_on_surface_variant_light</color>
 
     <!-- Glif expressive style -->
     <!-- Default color for the footer bg (transparent) -->

@@ -127,7 +127,19 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
     return conerRadius;
   }
 
+  private boolean isFirstItemOfGroup(int position) {
+    return position == 0 || getItem(position - 1).isGroupDivider();
+  }
+
+  private boolean isLastItemOfGroup(int position) {
+    return position == getCount() - 1 || getItem(position + 1).isGroupDivider();
+  }
+
   public void updateBackground(View convertView, int position) {
+    if (getItem(position).isGroupDivider()) {
+      return;
+    }
+
     float groupCornerRadius =
         PartnerConfigHelper.get(convertView.getContext())
             .getDimension(convertView.getContext(), PartnerConfig.CONFIG_ITEMS_GROUP_CORNER_RADIUS);
@@ -137,11 +149,11 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
     Drawable backgroundDrawable = null;
     GradientDrawable background = null;
 
-    if (position == 0 && getCount() == 1) {
+    if (isFirstItemOfGroup(position) && isLastItemOfGroup(position)) {
       backgroundDrawable = getSingleBackground(convertView.getContext());
-    } else if (position == 0) {
+    } else if (isFirstItemOfGroup(position)) {
       backgroundDrawable = getFirstBackground(convertView.getContext());
-    } else if (position == getCount() - 1) {
+    } else if (isLastItemOfGroup(position)) {
       backgroundDrawable = getLastBackground(convertView.getContext());
     } else {
       backgroundDrawable = getMiddleBackground(convertView.getContext());
@@ -161,10 +173,10 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
     if (backgroundDrawable instanceof GradientDrawable) {
       float topCornerRadius = cornerRadius;
       float bottomCornerRadius = cornerRadius;
-      if (position == 0) {
+      if (isFirstItemOfGroup(position)) {
         topCornerRadius = groupCornerRadius;
       }
-      if (position == getCount() - 1) {
+      if (isLastItemOfGroup(position)) {
         bottomCornerRadius = groupCornerRadius;
       }
       background = (GradientDrawable) backgroundDrawable;
