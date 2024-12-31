@@ -15,7 +15,8 @@
     limitations under the License.
 -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@color/sud_system_*">
   <!-- Accent color -->
   <color name="sud_dynamic_color_accent_glif_v3_dark">@color/sud_system_accent1_300</color>
   <!-- Surface container color -->
@@ -24,8 +25,6 @@
   <color name="sud_system_sc_highest_light">@android:color/system_surface_container_highest_light</color>
   <!-- System on primary light -->
   <color name="sud_system_on_primary">@android:color/system_on_primary_light</color>
-  <!-- On surface variant light -->
-  <color name="sud_on_surface_variant">@android:color/system_on_surface_variant_light</color>
   <!-- On secondary container -->
   <color name="sud_on_secondary_container">@android:color/system_on_secondary_container_light</color>
   <!-- Primary light -->

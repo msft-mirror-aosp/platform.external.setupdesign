@@ -68,6 +68,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:scrollbars="vertical"
+                app:sudShouldApplyAdditionalMargin="true"
                 android:scrollIndicators="?attr/sudScrollIndicators" />
 
         </LinearLayout>

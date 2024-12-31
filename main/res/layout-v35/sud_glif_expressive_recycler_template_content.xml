@@ -47,6 +47,7 @@
             android:scrollbars="vertical"
             android:scrollIndicators="?attr/sudScrollIndicators"
             app:sudHeader="@layout/sud_glif_header"
+            app:sudShouldApplyAdditionalMargin="true"
             tools:ignore="UnusedAttribute" />
 
         <include layout="@layout/sud_glif_floating_back_button" />

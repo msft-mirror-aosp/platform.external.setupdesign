@@ -16,7 +16,7 @@
 -->
 
 <resources xmlns:tools="http://schemas.android.com/tools"
-    tools:keep="@color/sud_system_accent*,@color/sud_system_neutral*">
+    tools:keep="@color/sud_system_*">
   <!-- Default color for BC -->
 
   <color name="sud_color_accent_glif_v3_dark">#ff669df6</color>
@@ -249,5 +249,4 @@
   <color name="sud_system_surface_container_lowest_dark">@color/m3_ref_palette_dynamic_neutral_variant4</color>
   <color name="sud_system_surface_container_high_dark">@color/m3_ref_palette_dynamic_neutral_variant17</color>
   <color name="sud_system_surface_container_highest_dark">@color/m3_ref_palette_dynamic_neutral_variant22</color>
-
 </resources>

@@ -26,5 +26,7 @@
       android:contentDescription="@string/sud_back_button_label"
       android:filterTouchesWhenObscured="true"
       android:visibility="gone"
+      app:backgroundTint="?attr/colorSurfaceContainerHigh"
       app:icon="@drawable/sud_ic_arrow_back"
+      app:iconTint="?attr/colorOnSurface"
       tools:visibility="visible" />

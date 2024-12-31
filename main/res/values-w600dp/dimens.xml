@@ -18,8 +18,8 @@
 
   <!-- Glif expressive footer bar padding -->
   <!-- Calculated by (Spec = 12dp - 4dp internal padding of button) -->
-  <dimen name="sud_glif_expressive_footer_padding_start">8dp</dimen>
+  <dimen name="sud_glif_expressive_footer_bar_padding_start">8dp</dimen>
   <!-- Calculated by (Spec = 24dp - 4dp internal padding of button) -->
-  <dimen name="sud_glif_expressive_footer_padding_end">20dp</dimen>
+  <dimen name="sud_glif_expressive_footer_bar_padding_end">20dp</dimen>
 
 </resources>

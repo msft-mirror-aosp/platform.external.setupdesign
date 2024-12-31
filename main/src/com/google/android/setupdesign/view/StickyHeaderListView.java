@@ -55,6 +55,7 @@ public class StickyHeaderListView extends ListView {
   private View sticky;
   private View stickyContainer;
   private int statusBarInset = 0;
+  private boolean shouldApplyAdditionalMargin;
   private final RectF stickyRect = new RectF();
 
   public StickyHeaderListView(Context context) {
@@ -81,6 +82,9 @@ public class StickyHeaderListView extends ListView {
         getContext()
             .obtainStyledAttributes(attrs, R.styleable.SudStickyHeaderListView, defStyleAttr, 0);
     int headerResId = a.getResourceId(R.styleable.SudStickyHeaderListView_sudHeader, 0);
+
+    shouldApplyAdditionalMargin =
+        a.getBoolean(R.styleable.SudStickyHeaderListView_sudShouldApplyAdditionalMargin, false);
     if (headerResId != 0) {
       LayoutInflater inflater = LayoutInflater.from(getContext());
       View header = inflater.inflate(headerResId, this, false);
@@ -95,6 +99,10 @@ public class StickyHeaderListView extends ListView {
     if (sticky == null) {
       updateStickyView();
     }
+  }
+
+  public boolean shouldApplyAdditionalMargin() {
+    return shouldApplyAdditionalMargin;
   }
 
   public void updateStickyView() {

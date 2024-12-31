@@ -200,6 +200,7 @@ public class HeaderRecyclerView extends RecyclerView {
   }
 
   private View header;
+  private boolean shouldApplyAdditionalMargin;
   private int headerRes;
 
   public HeaderRecyclerView(Context context) {
@@ -226,7 +227,13 @@ public class HeaderRecyclerView extends RecyclerView {
         getContext()
             .obtainStyledAttributes(attrs, R.styleable.SudHeaderRecyclerView, defStyleAttr, 0);
     headerRes = a.getResourceId(R.styleable.SudHeaderRecyclerView_sudHeader, 0);
+    shouldApplyAdditionalMargin =
+        a.getBoolean(R.styleable.SudHeaderRecyclerView_sudShouldApplyAdditionalMargin, false);
     a.recycle();
+  }
+
+  public boolean shouldApplyAdditionalMargin() {
+    return shouldApplyAdditionalMargin;
   }
 
   @Override

@@ -217,8 +217,19 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     return conerRadius;
   }
 
+  private boolean isFirstItemOfGroup(int position) {
+    return position == 0 || getItem(position - 1).isGroupDivider();
+  }
+
+  private boolean isLastItemOfGroup(int position) {
+    return position == getItemCount() - 1 || getItem(position + 1).isGroupDivider();
+  }
+
   public void updateBackground(View view, int position) {
     if (TAG_NO_BACKGROUND.equals(view.getTag())) {
+      return;
+    }
+    if (getItem(position).isGroupDivider()) {
       return;
     }
     float groupCornerRadius =
@@ -232,11 +243,11 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
       Drawable backgroundDrawable = null;
       GradientDrawable background = null;
 
-      if (position == 0 && getItemCount() == 1) {
+      if (isFirstItemOfGroup(position) && isLastItemOfGroup(position)) {
         backgroundDrawable = getSingleBackground(view.getContext());
-      } else if (position == 0) {
+      } else if (isFirstItemOfGroup(position)) {
         backgroundDrawable = getFirstBackground(view.getContext());
-      } else if (position == getItemCount() - 1) {
+      } else if (isLastItemOfGroup(position)) {
         backgroundDrawable = getLastBackground(view.getContext());
       } else {
         backgroundDrawable = getMiddleBackground(view.getContext());
@@ -245,10 +256,10 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
       if (backgroundDrawable instanceof GradientDrawable) {
         float topCornerRadius = cornerRadius;
         float bottomCornerRadius = cornerRadius;
-        if (position == 0) {
+        if (isFirstItemOfGroup(position)) {
           topCornerRadius = groupCornerRadius;
         }
-        if (position == getItemCount() - 1) {
+        if (isLastItemOfGroup(position)) {
           bottomCornerRadius = groupCornerRadius;
         }
         background = (GradientDrawable) backgroundDrawable;
