@@ -46,6 +46,7 @@
             android:layout_height="match_parent"
             android:scrollIndicators="?attr/sudScrollIndicators"
             app:sudHeader="@layout/sud_glif_header"
+            app:sudShouldApplyAdditionalMargin="true"
             tools:ignore="UnusedAttribute" />
 
         <include layout="@layout/sud_glif_floating_back_button" />

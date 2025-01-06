@@ -178,37 +178,58 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
   private Drawable getFirstBackground(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundFirst});
-    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+    Drawable firstBackground = a.getDrawable(0);
+    a.recycle();
+    return firstBackground;
   }
 
   @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getLastBackground(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundLast});
-    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+    Drawable lastBackground = a.getDrawable(0);
+    a.recycle();
+    return lastBackground;
   }
 
   @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getMiddleBackground(Context context) {
     TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackground});
-    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+    Drawable middleBackground = a.getDrawable(0);
+    a.recycle();
+    return middleBackground;
   }
 
   @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getSingleBackground(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundSingle});
-    return context.getResources().getDrawable(a.getResourceId(0, 0), context.getTheme());
+    Drawable singleBackground = a.getDrawable(0);
+    a.recycle();
+    return singleBackground;
   }
 
   private float getCornerRadius(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemCornerRadius});
-    return context.getResources().getDimension(a.getResourceId(0, 0));
+    float conerRadius = a.getDimension(0, 0);
+    a.recycle();
+    return conerRadius;
+  }
+
+  private boolean isFirstItemOfGroup(int position) {
+    return position == 0 || getItem(position - 1).isGroupDivider();
+  }
+
+  private boolean isLastItemOfGroup(int position) {
+    return position == getItemCount() - 1 || getItem(position + 1).isGroupDivider();
   }
 
   public void updateBackground(View view, int position) {
     if (TAG_NO_BACKGROUND.equals(view.getTag())) {
+      return;
+    }
+    if (getItem(position).isGroupDivider()) {
       return;
     }
     float groupCornerRadius =
@@ -222,11 +243,11 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
       Drawable backgroundDrawable = null;
       GradientDrawable background = null;
 
-      if (position == 0 && getItemCount() == 1) {
+      if (isFirstItemOfGroup(position) && isLastItemOfGroup(position)) {
         backgroundDrawable = getSingleBackground(view.getContext());
-      } else if (position == 0) {
+      } else if (isFirstItemOfGroup(position)) {
         backgroundDrawable = getFirstBackground(view.getContext());
-      } else if (position == getItemCount() - 1) {
+      } else if (isLastItemOfGroup(position)) {
         backgroundDrawable = getLastBackground(view.getContext());
       } else {
         backgroundDrawable = getMiddleBackground(view.getContext());
@@ -235,10 +256,10 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
       if (backgroundDrawable instanceof GradientDrawable) {
         float topCornerRadius = cornerRadius;
         float bottomCornerRadius = cornerRadius;
-        if (position == 0) {
+        if (isFirstItemOfGroup(position)) {
           topCornerRadius = groupCornerRadius;
         }
-        if (position == getItemCount() - 1) {
+        if (isLastItemOfGroup(position)) {
           bottomCornerRadius = groupCornerRadius;
         }
         background = (GradientDrawable) backgroundDrawable;

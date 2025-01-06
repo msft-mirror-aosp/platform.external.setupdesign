@@ -18,8 +18,11 @@ package com.google.android.setupdesign.template;
 
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.InflateException;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import androidx.annotation.Nullable;
@@ -27,6 +30,7 @@ import androidx.annotation.VisibleForTesting;
 import com.google.android.setupcompat.internal.TemplateLayout;
 import com.google.android.setupcompat.template.Mixin;
 import com.google.android.setupdesign.R;
+import com.google.android.setupdesign.util.HeaderAreaStyler;
 import com.google.android.setupdesign.util.LayoutStyler;
 import com.google.android.setupdesign.util.PartnerStyleHelper;
 
@@ -37,6 +41,17 @@ public class FloatingBackButtonMixin implements Mixin {
   private static final String TAG = "FloatingBackButtonMixin";
 
   @Nullable private OnClickListener listener;
+
+  @VisibleForTesting boolean tryInflatingBackButton = false;
+
+  private BackButtonListener backButtonListener;
+
+  /** Interface definition for a callback to be invoked. */
+  public interface BackButtonListener {
+
+    /** Called when the back button has been clicked. */
+    void onBackPressed();
+  }
 
   /**
    * A {@link Mixin} for setting and getting the back button.
@@ -57,7 +72,7 @@ public class FloatingBackButtonMixin implements Mixin {
   public void setVisibility(int visibility) {
     final Button backbutton = getBackButton();
     if (backbutton != null) {
-      getBackButton().setVisibility(visibility);
+      backbutton.setVisibility(visibility);
       getContainerView().setVisibility(visibility);
     }
   }
@@ -67,8 +82,21 @@ public class FloatingBackButtonMixin implements Mixin {
     final Button backbutton = getBackButton();
     if (backbutton != null) {
       this.listener = listener;
-      getBackButton().setOnClickListener(listener);
+      backbutton.setOnClickListener(
+          v -> {
+            if (listener != null) {
+              listener.onClick(v);
+            }
+
+            if (backButtonListener != null) {
+              backButtonListener.onBackPressed();
+            }
+          });
     }
+  }
+
+  public void setOnBackPressedCallback(BackButtonListener buttonEventListener) {
+    this.backButtonListener = buttonEventListener;
   }
 
   /** Tries to apply the partner customization to the back button. */
@@ -76,17 +104,53 @@ public class FloatingBackButtonMixin implements Mixin {
     if (PartnerStyleHelper.shouldApplyPartnerResource(templateLayout)
         && getContainerView() != null) {
       LayoutStyler.applyPartnerCustomizationExtraPaddingStyle(getContainerView());
+      HeaderAreaStyler.applyPartnerCustomizationBackButtonStyle(getContainerView());
     }
   }
 
-  /** Returns the current back button. */
+  /**
+   * Check the back button exist or not. If exists, return the button. Otherwise try to inflate it
+   * and check again.
+   */
+  @Nullable
   @VisibleForTesting
   Button getBackButton() {
+    final Button button = findBackButton();
+    if (button != null) {
+      return button;
+    }
+
+    // Try to inflate the back button if it's not inflated before.
+    if (!tryInflatingBackButton) {
+      tryInflatingBackButton = true;
+      final ViewStub buttonViewStub =
+          (ViewStub) templateLayout.findManagedViewById(R.id.sud_floating_back_button_stub);
+      if (buttonViewStub != null) {
+        try {
+          inflateButton(buttonViewStub);
+        } catch (InflateException e) {
+          Log.w(TAG, "Incorrect theme:" + e.toString());
+          return null;
+        }
+      }
+    }
+    return findBackButton();
+  }
+
+  private Button findBackButton() {
     Button backbutton = templateLayout.findManagedViewById(R.id.sud_floating_back_button);
     if (backbutton == null) {
       Log.w(TAG, "Can't find the back button.");
     }
     return backbutton;
+  }
+
+  @VisibleForTesting
+  void inflateButton(ViewStub viewStub) {
+    LayoutInflater inflater = LayoutInflater.from(templateLayout.getContext());
+
+    viewStub.setLayoutInflater(inflater);
+    viewStub.inflate();
   }
 
   protected FrameLayout getContainerView() {
@@ -102,5 +166,9 @@ public class FloatingBackButtonMixin implements Mixin {
   /** Gets the {@link OnClickListener} of the back button. */
   public OnClickListener getOnClickListener() {
     return this.listener;
+  }
+
+  public BackButtonListener getBackButtonListener() {
+    return this.backButtonListener;
   }
 }

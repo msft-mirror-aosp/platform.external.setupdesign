@@ -143,6 +143,7 @@
     <!-- Custom view attributes -->
     <attr name="sudColorPrimary" format="color" />
     <attr name="sudHeader" format="reference" />
+    <attr name="sudShouldApplyAdditionalMargin" format="boolean" />
     <!-- Deprecated. Use sudDividerInsetStart and sudDividerInsetEnd instead -->
     <attr name="sudDividerInset" format="dimension|reference" />
     <attr name="sudDividerInsetEnd" format="dimension|reference" />
@@ -153,7 +154,11 @@
     <attr name="sudItemIconContainerStyle" format="reference"/>
     <attr name="sudItemTitleStyle" format="reference"/>
     <attr name="sudItemSummaryStyle" format="reference"/>
+    <attr name="sudBulletPointTitleStyle" format="reference"/>
+    <attr name="sudBulletPointSummaryStyle" format="reference"/>
     <attr name="sudItemDescriptionStyle" format="reference" />
+    <attr name="sudSectionItemContainerStyle" format="reference" />
+    <attr name="sudSectionItemTitleStyle" format="reference" />
     <attr name="sudItemDescriptionTitleStyle" format="reference" />
     <attr name="sudItemDescriptionTitleTextAppearence" format="reference" />
     <attr name="sudItemVerboseTitleStyle" format="reference" />
@@ -173,11 +178,18 @@
     <attr name="sudItemBackgroundLast" format="color|reference" />
     <attr name="sudItemBackgroundSingle" format="color|reference" />
     <attr name="sudItemCornerRadius" format="dimension|reference" />
+    <attr name="sudBulletPointContainerStyle" format="reference" />
+    <attr name="sudBulletPointIconContainerStyle" format="reference" />
+    <attr name="sudInfoFooterContainerStyle" format="reference" />
+    <attr name="sudInfoFooterIconContainerStyle" format="reference" />
+    <attr name="sudInfoFooterIconStyle" format="reference" />
+    <attr name="sudInfoFooterTitleStyle" format="reference" />
     <attr name="sudContentFramePaddingTop" format="dimension|reference" />
     <attr name="sudContentFramePaddingBottom" format="dimension|reference" />
     <attr name="sudAccountAvatarMarginEnd" format="dimension|reference" />
     <attr name="sudAccountAvatarMaxHeight" format="dimension|reference" />
     <attr name="sudAccountNameTextSize" format="dimension|reference" />
+    <attr name="sudAccountNameTextColor" format="color" />
 
     <!-- EditBox -->
     <attr name="sudEditBoxStyle" format="reference" />
@@ -199,10 +211,16 @@
 
     <declare-styleable name="SudStickyHeaderListView">
         <attr name="sudHeader" />
+        <attr name="sudShouldApplyAdditionalMargin" />
     </declare-styleable>
 
     <declare-styleable name="SudHeaderRecyclerView">
         <attr name="sudHeader" />
+        <attr name="sudShouldApplyAdditionalMargin" />
+    </declare-styleable>
+
+    <declare-styleable name="SudSectionItem">
+        <attr name="android:title" />
     </declare-styleable>
 
     <declare-styleable name="SudIllustrationVideoView">
@@ -311,9 +329,28 @@
         <attr name="android:checked" />
     </declare-styleable>
 
+    <declare-styleable name="SudRadioButtonItem">
+        <attr name="android:checked" />
+    </declare-styleable>
+
+    <declare-styleable name="SudCheckBoxItem">
+        <attr name="android:checked" />
+    </declare-styleable>
+
     <declare-styleable name="SudExpandableSwitchItem">
         <attr name="sudCollapsedSummary" format="string" localization="suggested" />
         <attr name="sudExpandedSummary" format="string" localization="suggested" />
+    </declare-styleable>
+
+    <declare-styleable name="SudBulletPointView">
+        <attr name="android:icon" />
+        <attr name="android:summary" />
+        <attr name="android:title" />
+    </declare-styleable>
+
+    <declare-styleable name="SudInfoFooterView">
+        <attr name="android:icon" />
+        <attr name="android:title" />
     </declare-styleable>
 
     <declare-styleable name="SudDescriptionMixin">
@@ -345,4 +382,14 @@
 
     <!-- Footer bar style -->
     <attr name="sudFooterBackgroundColor" format="color" />
+
+    <!-- Card view style -->
+    <declare-styleable name="SudCardView">
+        <attr name="sudIcon" format="reference" />
+        <attr name="sudTitleText" format="string|reference" />
+    </declare-styleable>
+
+    <attr name="sudCardContainerStyle" format="reference" />
+    <attr name="sudCardTitleStyle" format="reference" />
+    <attr name="sudCardIconStyle" format="reference" />
 </resources>

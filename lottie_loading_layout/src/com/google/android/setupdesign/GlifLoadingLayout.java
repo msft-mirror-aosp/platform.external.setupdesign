@@ -402,7 +402,20 @@ public class GlifLoadingLayout extends GlifLayout {
   }
 
   private void showTopLinearProgress() {
-    View view = findViewById(com.google.android.setupdesign.R.id.sud_glif_top_progress_bar);
+    View view;
+    if (isGlifExpressiveEnabled()) {
+      view = peekProgressBar();
+      if (view == null) {
+        final ViewStub progressIndicatorStub =
+            findViewById(com.google.android.setupdesign.R.id.sud_glif_top_progress_indicator_stub);
+        if (progressIndicatorStub != null) {
+          progressIndicatorStub.inflate();
+        }
+        view = peekProgressBar();
+      }
+    } else {
+      view = findViewById(com.google.android.setupdesign.R.id.sud_glif_top_progress_bar);
+    }
     if (view == null) {
       return;
     }
@@ -826,19 +839,19 @@ public class GlifLoadingLayout extends GlifLayout {
       this.darkThemeCustomization = darkThemeCustomization;
     }
 
-    PartnerConfig getIllustrationConfig() {
+    public PartnerConfig getIllustrationConfig() {
       return illustrationConfig;
     }
 
-    PartnerConfig getLottieConfig() {
+    public PartnerConfig getLottieConfig() {
       return lottieConfig;
     }
 
-    PartnerConfig getLightThemeCustomization() {
+    public PartnerConfig getLightThemeCustomization() {
       return lightThemeCustomization;
     }
 
-    PartnerConfig getDarkThemeCustomization() {
+    public PartnerConfig getDarkThemeCustomization() {
       return darkThemeCustomization;
     }
   }
