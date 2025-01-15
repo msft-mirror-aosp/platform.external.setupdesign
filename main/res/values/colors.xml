@@ -209,8 +209,6 @@
     <color name="sud_on_surface_variant">@color/sud_system_on_surface_variant_light</color>
 
     <!-- Glif expressive style -->
-    <!-- Default color for the footer bg (transparent) -->
-    <color name="sud_glif_expressive_footer_bar_bg_color">#00000000</color>
     <!-- Default color for the footer button bg (primary40) -->
     <color name="sud_glif_expressive_footer_button_bg_color">#ff6750a4</color>
 

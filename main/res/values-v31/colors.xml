@@ -140,7 +140,6 @@
   <color name="sud_color_surface_container_highest">@color/sud_system_neutral2_100</color>
 
   <!-- Glif expressive colors -->
-  <color name="sud_glif_expressive_footer_bar_bg_color">@color/sud_system_neutral2_100</color>
   <color name="sud_glif_expressive_footer_button_bg_color">@color/sud_system_accent1_600</color>
   <color name="sud_glif_expressive_footer_primary_button_enable_text_color">@color/sud_system_accent1_0</color>
   <color name="sud_glif_expressive_footer_primary_button_disable_text_color">@color/sud_system_neutral2_700</color>

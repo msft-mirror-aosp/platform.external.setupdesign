@@ -344,6 +344,11 @@
     <dimen name="sud_glif_expressive_margin_end">24dp</dimen>
     <dimen name="sud_glif_expressive_land_middle_horizontal_spacing">24dp</dimen>
 
+    <!-- Items Expressive -->
+    <dimen name="sud_items_summary_margin_top_expressive">0dp</dimen>
+    <dimen name="sud_items_icon_container_width_expressive">52dp</dimen>
+    <dimen name="sud_items_min_height_expressive">56dp</dimen>
+
     <dimen name="sud_glif_expressive_button_padding">16dp</dimen>
     <!-- Calculated by (sud_glif_expressive_margin_start - 4dp internal padding of button) -->
     <dimen name="sud_glif_expressive_button_margin_end">20dp</dimen>
@@ -354,6 +359,9 @@
     <dimen name="sud_glif_expressive_icon_margin_top">8dp</dimen>
     <dimen name="sud_glif_expressive_content_padding_top">8dp</dimen>
     <dimen name="sud_glif_expressive_item_corner_radius">2dp</dimen>
+    <dimen name="sud_glif_expressive_promo_card_icon_corner_radius">20dp</dimen>
+    <dimen name="sud_glif_expressive_promo_card_icon_padding">18dp</dimen>
+    <dimen name="sud_glif_expressive_promo_card_icon_margin_end">16dp</dimen>
     <dimen name="sud_glif_expressive_item_icon_padding_end">12dp</dimen>
     <dimen name="sud_glif_expressive_items_icon_padding">8dp</dimen>
     <dimen name="sud_items_section_header_padding_top">20dp</dimen>
@@ -364,6 +372,7 @@
     <dimen name="sud_expressive_switch_padding_start">12dp</dimen>
 
     <!-- Header layout expressive -->
+    <dimen name="sud_glif_expressive_header_title_size">32sp</dimen>
     <dimen name="sud_glif_expressive_header_title_line_spacing_extra">8sp</dimen>
     <dimen name="sud_glif_expressive_description_text_size">16sp</dimen>
     <dimen name="sud_glif_expressive_description_line_spacing_extra">8sp</dimen>
@@ -382,9 +391,7 @@
     <!-- Glif expressive footer bar -->
     <!-- footer bar padding -->
     <!-- TODO: b/365906034 - Add padding attributes and values to the SUW side. -->
-    <dimen name="sud_glif_expressive_footer_padding_vertical">8dp</dimen>
     <dimen name="sud_glif_expressive_footer_bar_min_height">72dp</dimen>
-    <dimen name="sud_glif_expressive_footer_bar_padding_vertical">6dp</dimen>
     <!-- Calculated by (Spec = 24dp - 4dp internal padding of button) -->
     <dimen name="sud_glif_expressive_footer_bar_padding_start">20dp</dimen>
     <!-- Calculated by (Spec = 24dp - 4dp internal padding of button) -->
@@ -401,17 +408,17 @@
 
     <!-- GLif card view styles -->
     <!-- Card view container -->
-    <dimen name="sud_card_view_container_padding_top">16dp</dimen>
-    <dimen name="sud_card_view_container_padding_bottom">16dp</dimen>
     <dimen name="sud_card_view_container_padding_start">16dp</dimen>
     <dimen name="sud_card_view_container_padding_end">16dp</dimen>
     <dimen name="sud_card_view_container_min_height">100dp</dimen>
     <dimen name="sud_card_view_container_radius">12dp</dimen>
     <!-- Card view icon -->
     <dimen name="sud_card_view_icon_size">24dp</dimen>
+    <dimen name="sud_card_view_icon_container_margin_top">16dp</dimen>
     <!-- Card view title -->
     <dimen name="sud_card_view_title_text_size">14sp</dimen>
     <dimen name="sud_card_view_title_line_spacing_extra">6sp</dimen>
     <dimen name="sud_card_view_title_spacing_top">4dp</dimen>
+    <dimen name="sud_card_view_title_margin_bottom">16dp</dimen>
 
 </resources>

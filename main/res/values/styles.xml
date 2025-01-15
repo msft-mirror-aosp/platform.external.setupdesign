@@ -56,6 +56,12 @@
         <item name="sudItemDescriptionStyle">@style/SudItemContainer.Description</item>
         <item name="sudItemDescriptionTitleStyle">@style/SudItemTitle</item>
         <item name="sudItemBackground">@null</item>
+        <item name="sudItemBackgroundPaddingStart">@dimen/sud_items_background_padding_start</item>
+        <item name="sudItemBackgroundPaddingEnd">@dimen/sud_items_background_padding_end</item>
+        <item name="sudItemDividerWidth">@dimen/sud_items_divder_width</item>
+        <item name="sudItemBackgroundFirst">@null</item>
+        <item name="sudItemBackgroundLast">@null</item>
+        <item name="sudItemBackgroundSingle">@null</item>
         <item name="sudListItemIconColor">@color/sud_list_item_icon_color_dark</item>
         <item name="sudMarginStart">@dimen/sud_layout_margin_sides</item>
         <item name="sudMarginEnd">@dimen/sud_layout_margin_sides</item>
@@ -91,7 +97,14 @@
         <item name="sudSectionItemTitleStyle">@style/SudItemTitle.SectionHeader</item>
         <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
+        <item name="sudPromoItemBackground">@drawable/sud_item_background</item>
+        <item name="sudPromoItemContainerStyle">@style/SudPromoItemContainer</item>
+        <item name="sudPromoCardIconBackgroundColor">@color/sud_system_secondary_fixed_dim_light</item>
+        <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
+        <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
+        <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
         <item name="sudCardContainerStyle">@style/SudCardContainerStyle</item>
+        <item name="sudCardIconContainerStyle">@style/SudCardIconContainerStyle</item>
         <item name="sudCardIconStyle">@style/SudCardIconStyle</item>
         <item name="sudCardTitleStyle">@style/SudCardTitleStyle</item>
     </style>
@@ -133,6 +146,12 @@
         <item name="sudItemDescriptionStyle">@style/SudItemContainer.Description</item>
         <item name="sudItemDescriptionTitleStyle">@style/SudItemTitle</item>
         <item name="sudItemBackground">@null</item>
+        <item name="sudItemBackgroundPaddingStart">@dimen/sud_items_background_padding_start</item>
+        <item name="sudItemBackgroundPaddingEnd">@dimen/sud_items_background_padding_end</item>
+        <item name="sudItemDividerWidth">@dimen/sud_items_divder_width</item>
+        <item name="sudItemBackgroundFirst">@null</item>
+        <item name="sudItemBackgroundLast">@null</item>
+        <item name="sudItemBackgroundSingle">@null</item>
         <item name="sudListItemIconColor">@color/sud_list_item_icon_color_light</item>
         <item name="sudMarginStart">@dimen/sud_layout_margin_sides</item>
         <item name="sudMarginEnd">@dimen/sud_layout_margin_sides</item>
@@ -168,7 +187,14 @@
         <item name="sudSectionItemTitleStyle">@style/SudItemTitle.SectionHeader</item>
         <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
+        <item name="sudPromoItemBackground">@drawable/sud_item_background</item>
+        <item name="sudPromoItemContainerStyle">@style/SudPromoItemContainer</item>
+        <item name="sudPromoCardIconBackgroundColor">@color/sud_system_secondary_fixed_dim_light</item>
+        <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
+        <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
+        <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
         <item name="sudCardContainerStyle">@style/SudCardContainerStyle</item>
+        <item name="sudCardIconContainerStyle">@style/SudCardIconContainerStyle</item>
         <item name="sudCardIconStyle">@style/SudCardIconStyle</item>
         <item name="sudCardTitleStyle">@style/SudCardTitleStyle</item>
     </style>
@@ -287,6 +313,9 @@
         <item name="sudItemSummaryPaddingBottom">@dimen/sud_items_padding_bottom_extra</item>
         <item name="sudItemDescriptionTitleTextAppearence">@style/TextAppearance.SudDescription</item>
         <item name="sudItemVerboseTitleStyle">@style/SudItemTitle.Verbose</item>
+        <item name="sudItemBackgroundPaddingStart">@dimen/sud_items_background_padding_start</item>
+        <item name="sudItemBackgroundPaddingEnd">@dimen/sud_items_background_padding_end</item>
+        <item name="sudItemDividerWidth">@dimen/sud_items_divder_width</item>
         <item name="sudItemBackground">@null</item>
         <item name="sudItemBackgroundFirst">@null</item>
         <item name="sudItemBackgroundLast">@null</item>
@@ -303,8 +332,15 @@
         <item name="sudInfoFooterIconStyle">@style/sudInfoFooterIcon</item>
         <item name="sudInfoFooterTitleStyle">@style/sudInfoFooterTitle</item>
         <item name="sudCardContainerStyle">@style/SudCardContainerStyle</item>
+        <item name="sudCardIconContainerStyle">@style/SudCardIconContainerStyle</item>
         <item name="sudCardIconStyle">@style/SudCardIconStyle</item>
         <item name="sudCardTitleStyle">@style/SudCardTitleStyle</item>
+        <item name="sudPromoItemBackground">@drawable/sud_item_background</item>
+        <item name="sudPromoItemContainerStyle">@style/SudPromoItemContainer</item>
+        <item name="sudPromoCardIconBackgroundColor">@color/sud_system_secondary_fixed_dim_light</item>
+        <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
+        <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
+        <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
     </style>
     <style name="SudThemeGlif" parent="SudBaseThemeGlif"/>
 
@@ -422,6 +458,9 @@
         <item name="sudItemSummaryPaddingBottom">@dimen/sud_items_padding_bottom_extra</item>
         <item name="sudItemDescriptionTitleTextAppearence">@style/TextAppearance.SudDescription</item>
         <item name="sudItemVerboseTitleStyle">@style/SudItemTitle.Verbose</item>
+        <item name="sudItemBackgroundPaddingStart">@dimen/sud_items_background_padding_start</item>
+        <item name="sudItemBackgroundPaddingEnd">@dimen/sud_items_background_padding_end</item>
+        <item name="sudItemDividerWidth">@dimen/sud_items_divder_width</item>
         <item name="sudItemBackground">@null</item>
         <item name="sudItemBackgroundFirst">@null</item>
         <item name="sudItemBackgroundLast">@null</item>
@@ -438,8 +477,15 @@
         <item name="sudInfoFooterIconStyle">@style/sudInfoFooterIcon</item>
         <item name="sudInfoFooterTitleStyle">@style/sudInfoFooterTitle</item>
         <item name="sudCardContainerStyle">@style/SudCardContainerStyle</item>
+        <item name="sudCardIconContainerStyle">@style/SudCardIconContainerStyle</item>
         <item name="sudCardIconStyle">@style/SudCardIconStyle</item>
         <item name="sudCardTitleStyle">@style/SudCardTitleStyle</item>
+        <item name="sudPromoItemBackground">@drawable/sud_item_background</item>
+        <item name="sudPromoItemContainerStyle">@style/SudPromoItemContainer</item>
+        <item name="sudPromoCardIconBackgroundColor">@color/sud_system_secondary_fixed_dim_light</item>
+        <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
+        <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
+        <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
     </style>
     <style name="SudThemeGlif.Light" parent="SudBaseThemeGlif.Light"/>
 
@@ -645,7 +691,6 @@
         <item name="sudSwitchBarTrackOffColor">@color/sud_switch_track_off_dark</item>
         <item name="sudSwitchBarTrackOffOutlineColor">@color/sud_switch_track_outline_off_dark</item>
         <item name="sudEditBoxStyle">@style/SudEditBoxTheme</item>
-        <item name="sudItemIconContainerWidth">@dimen/sud_items_icon_container_width</item>
         <item name="sudAccountAvatarMarginEnd">@dimen/sud_account_avatar_margin_end</item>
         <item name="sudAccountAvatarMaxHeight">@dimen/sud_account_avatar_max_height</item>
 
@@ -694,7 +739,6 @@
         <item name="sudItemDescriptionPaddingBottom">@dimen/sud_description_glif_margin_bottom_lists</item>
         <item name="sudItemVerboseTitleStyle">@style/SudMaterialYouItemTitle.Verbose</item>
         <item name="sudItemSummaryPaddingBottom">@dimen/sud_items_padding_bottom_extra</item>
-        <item name="sudItemSummaryPaddingTop">@dimen/sud_items_summary_margin_top_material_you</item>
         <item name="alertDialogTheme">@style/SudMaterialYouAlertDialogThemeCompat</item>
         <item name="android:alertDialogTheme">@style/SudMaterialYouAlertDialogTheme</item>
         <!-- new values for style SudBaseThemeGlifExpressive -->
@@ -707,7 +751,7 @@
         <item name="sucGlifIconMarginTop">@dimen/sud_glif_expressive_icon_margin_top</item>
         <item name="sudGlifDescriptionMarginTop">@dimen/sud_glif_expressive_description_margin_top</item>
         <item name="sucFooterBarButtonFontFamily">@string/sudExpressiveButtonFontFamily</item>
-        <item name="sudFooterBackgroundColor">@color/sud_glif_expressive_footer_bar_bg_color</item>
+        <item name="sudFooterBackgroundColor">@color/sud_system_surface_container_high_dark</item>
         <item name="sucFooterBarPrimaryFooterBackground">@color/sud_glif_expressive_footer_button_bg_color</item>
         <item name="sucFooterBarButtonMiddleSpacing">@dimen/sud_glif_expressive_footer_button_middle_spacing</item>
         <item name="sudItemDividerWidth">@dimen/sud_items_divder_width</item>
@@ -731,6 +775,8 @@
         <item name="sudItemBackgroundColor" tools:ignore="NewApi">?attr/colorSurfaceBright</item>
         <item name="sudItemTitleStyle">@style/SudItemTitleExpressive</item>
         <item name="sudItemSummaryStyle">@style/SudItemSummaryExpressive</item>
+        <item name="sudItemSummaryPaddingTop">@dimen/sud_items_summary_margin_top_expressive</item>
+        <item name="sudItemIconContainerWidth">@dimen/sud_items_icon_container_width_expressive</item>
         <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
         <item name="sudBulletPointContainerStyle">@style/sudBulletPointContainer</item>
         <item name="sudInfoFooterContainerStyle">@style/sudInfoFooterContainerExpressive</item>
@@ -751,8 +797,15 @@
         <item name="sudSectionItemContainerStyle">@style/SudGlifExpressiveItemContainer.SectionItem</item>
         <item name="sudSectionItemTitleStyle">@style/SudExpressiveItemTitle.SectionHeader</item>
         <item name="sudCardContainerStyle">@style/SudCardContainerStyle</item>
+        <item name="sudCardIconContainerStyle">@style/SudCardIconContainerStyle</item>
         <item name="sudCardIconStyle">@style/SudCardIconStyle</item>
         <item name="sudCardTitleStyle">@style/SudCardTitleStyle</item>
+        <item name="sudPromoItemContainerStyle">@style/SudPromoItemContainer</item>
+        <item name="sudPromoItemBackground">@drawable/sud_item_background</item>
+        <item name="sudPromoCardIconBackgroundColor">@color/sud_system_secondary_fixed_dim_dark</item>
+        <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
+        <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
+        <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
     </style>
 
     <style name="SudBaseThemeGlifExpressive.Light" parent="Theme.Material3.DynamicColors.Light.NoActionBar">
@@ -804,7 +857,6 @@
         <item name="sudSwitchBarTrackOffColor">@color/sud_switch_track_off_light</item>
         <item name="sudSwitchBarTrackOffOutlineColor">@color/sud_switch_track_outline_off_light</item>
         <item name="sudEditBoxStyle">@style/SudEditBoxTheme</item>
-        <item name="sudItemIconContainerWidth">@dimen/sud_items_icon_container_width</item>
         <item name="sudAccountAvatarMarginEnd">@dimen/sud_account_avatar_margin_end</item>
         <item name="sudAccountAvatarMaxHeight">@dimen/sud_account_avatar_max_height</item>
 
@@ -847,7 +899,6 @@
         <item name="sudItemPaddingTop">@dimen/sud_items_padding_top_material_you</item>
         <item name="sudItemPaddingBottom">@dimen/sud_items_padding_bottom_material_you</item>
         <item name="sudItemSummaryPaddingBottom">@dimen/sud_items_padding_bottom_extra</item>
-        <item name="sudItemSummaryPaddingTop">@dimen/sud_items_summary_margin_top_material_you</item>
         <item name="sudItemDescriptionTitleStyle">@style/SudItemTitleMaterialYou</item>
         <item name="sudItemDescriptionStyle">@style/SudItemContainerMaterialYou.Description</item>
         <item name="sudItemDescriptionPaddingTop">@dimen/sud_description_glif_margin_top</item>
@@ -865,7 +916,7 @@
         <item name="sudGlifContentPaddingTop">@dimen/sud_glif_expressive_content_padding_top</item>
         <item name="sudGlifDescriptionMarginTop">@dimen/sud_glif_expressive_description_margin_top</item>
         <item name="sucFooterBarButtonFontFamily">@string/sudExpressiveButtonFontFamily</item>
-        <item name="sudFooterBackgroundColor">@color/sud_glif_expressive_footer_bar_bg_color</item>
+        <item name="sudFooterBackgroundColor">@color/sud_system_surface_container_high_light</item>
         <item name="sucFooterBarPrimaryFooterBackground">@color/sud_glif_expressive_footer_button_bg_color</item>
         <item name="sucFooterBarButtonMiddleSpacing">@dimen/sud_glif_expressive_footer_button_middle_spacing</item>
         <item name="sudItemDividerWidth">@dimen/sud_items_divder_width</item>
@@ -889,6 +940,8 @@
         <item name="sudItemBackgroundColor" tools:ignore="NewApi">?attr/colorSurfaceBright</item>
         <item name="sudItemTitleStyle">@style/SudItemTitleExpressive</item>
         <item name="sudItemSummaryStyle">@style/SudItemSummaryExpressive</item>
+        <item name="sudItemSummaryPaddingTop">@dimen/sud_items_summary_margin_top_expressive</item>
+        <item name="sudItemIconContainerWidth">@dimen/sud_items_icon_container_width_expressive</item>
         <item name="sucFooterBarButtonFontWeight">@integer/sud_glif_expressive_footer_button_weight</item>
         <item name="sudButtonCornerRadius">@dimen/sud_glif_expressive_footer_button_radius</item>
         <item name="sucFooterBarButtonTextSize">@dimen/sud_glif_expressive_footer_button_text_size</item>
@@ -909,8 +962,15 @@
         <item name="sudSectionItemContainerStyle">@style/SudGlifExpressiveItemContainer.SectionItem</item>
         <item name="sudSectionItemTitleStyle">@style/SudExpressiveItemTitle.SectionHeader</item>
         <item name="sudCardContainerStyle">@style/SudCardContainerStyle</item>
+        <item name="sudCardIconContainerStyle">@style/SudCardIconContainerStyle</item>
         <item name="sudCardIconStyle">@style/SudCardIconStyle</item>
         <item name="sudCardTitleStyle">@style/SudCardTitleStyle</item>
+        <item name="sudPromoItemBackground">@drawable/sud_item_background</item>
+        <item name="sudPromoItemContainerStyle">@style/SudPromoItemContainer</item>
+        <item name="sudPromoCardIconBackgroundColor">@color/sud_system_secondary_fixed_dim_light</item>
+        <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
+        <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
+        <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
     </style>
 
     <style name="SudThemeGlifExpressive" parent="SudBaseThemeGlifExpressive" />
@@ -1259,7 +1319,7 @@
         <item name="android:paddingRight">?attr/sudItemBackgroundPaddingEnd</item>
         <item name="android:paddingStart" tools:ignore="NewApi">?attr/sudItemBackgroundPaddingStart</item>
         <item name="android:paddingTop">@dimen/sud_items_padding_top_material_you</item>
-        <item name="android:minHeight">@dimen/sud_items_min_height_material_you</item>
+        <item name="android:minHeight">@dimen/sud_items_min_height_expressive</item>
     </style>
 
     <style name="SudItemIconContainer">
@@ -1310,6 +1370,36 @@
         <item name="android:layout_marginLeft">0dp</item>
         <item name="android:layout_marginRight">0dp</item>
         <item name="android:background">@null</item>
+    </style>
+
+    <style name="SudPromoItemContainer">
+        <item name="android:layout_marginBottom">?attr/sudItemDividerWidth</item>
+        <item name="android:background">?attr/sudPromoItemBackground</item>
+        <item name="android:paddingBottom">@dimen/sud_items_padding_bottom_material_you</item>
+        <item name="android:paddingEnd" tools:ignore="NewApi">?attr/sudItemBackgroundPaddingEnd</item>
+        <item name="android:paddingLeft">?attr/sudItemBackgroundPaddingStart</item>
+        <item name="android:paddingRight">?attr/sudItemBackgroundPaddingEnd</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">?attr/sudItemBackgroundPaddingStart</item>
+        <item name="android:paddingTop">@dimen/sud_items_padding_top_material_you</item>
+        <item name="android:minHeight">@dimen/sud_items_min_height_material_you</item>
+    </style>
+    <style name="SudPromoItemIconContainer">
+        <item name="android:background">@drawable/sud_promo_card_icon_background</item>
+        <item name="android:paddingBottom">@dimen/sud_glif_expressive_promo_card_icon_padding</item>
+        <item name="android:paddingEnd" tools:ignore="NewApi">@dimen/sud_glif_expressive_promo_card_icon_padding</item>
+        <item name="android:paddingLeft">@dimen/sud_glif_expressive_promo_card_icon_padding</item>
+        <item name="android:paddingRight">@dimen/sud_glif_expressive_promo_card_icon_padding</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">@dimen/sud_glif_expressive_promo_card_icon_padding</item>
+        <item name="android:paddingTop">@dimen/sud_glif_expressive_promo_card_icon_padding</item>
+        <item name="android:layout_marginRight">@dimen/sud_glif_expressive_promo_card_icon_margin_end</item>
+        <item name="android:layout_marginEnd" tools:ignore="NewApi">@dimen/sud_glif_expressive_promo_card_icon_margin_end</item>
+    </style>
+    <style name="SudPromoItemTitle">
+        <item name="android:textAppearance">?attr/textAppearanceListItem</item>
+        <item name="android:layout_marginBottom">@dimen/sud_items_summary_margin_top</item>
+    </style>
+    <style name="SudPromoItemSummary">
+        <item name="android:textAppearance">?attr/textAppearanceListItemSmall</item>
     </style>
 
     <style name="SudItemSummary">
@@ -1427,6 +1517,7 @@
 
     <style name="SudGlifHeaderTitleExpressive" parent="SudGlifHeaderTitleMaterialYou">
         <item name="android:lineSpacingExtra">@dimen/sud_glif_expressive_header_title_line_spacing_extra</item>
+        <item name="android:textSize">@dimen/sud_glif_expressive_header_title_size</item>
     </style>
 
     <style name="SudGlifDescription" parent="SudDescription.Glif">
@@ -1562,7 +1653,7 @@
 
     <style name="TextAppearance.SudExpressiveItemTitle" parent="android:TextAppearance">
         <item name="android:textSize">@dimen/sud_items_title_text_size_expressive</item>
-        <item name="android:fontFamily">@string/sudFontSecondaryText</item>
+        <item name="android:fontFamily">@string/sudFontSecondaryMediumMaterialYou</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
@@ -1748,11 +1839,13 @@
 
     <style name="SudCardContainerStyle">
         <item name="android:background">@drawable/sud_card_view_container_background</item>
-        <item name="android:paddingBottom">@dimen/sud_card_view_container_padding_bottom</item>
         <item name="android:paddingStart">@dimen/sud_card_view_container_padding_start</item>
         <item name="android:paddingEnd">@dimen/sud_card_view_container_padding_end</item>
-        <item name="android:paddingTop">@dimen/sud_card_view_container_padding_top</item>
         <item name="android:minHeight">@dimen/sud_card_view_container_min_height</item>
+    </style>
+
+    <style name="SudCardIconContainerStyle">
+        <item name="android:layout_marginTop">@dimen/sud_card_view_icon_container_margin_top</item>
     </style>
 
     <style name="SudCardIconStyle">
@@ -1767,6 +1860,7 @@
         <item name="android:lineSpacingExtra">@dimen/sud_card_view_title_line_spacing_extra</item>
         <item name="android:textColor">@color/sud_card_view_text_color</item>
         <item name="android:paddingTop">@dimen/sud_card_view_title_spacing_top</item>
+        <item name="android:layout_marginBottom">@dimen/sud_card_view_title_margin_bottom</item>
     </style>
 
 </resources>

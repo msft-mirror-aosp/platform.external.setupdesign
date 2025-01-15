@@ -150,7 +150,15 @@
     <attr name="sudDividerInsetStart" format="dimension|reference" />
     <attr name="sudDividerInsetStartNoIcon" format="dimension|reference" />
     <attr name="sudDividerShown" format="boolean"/>
+    <attr name="sudTopRoundedCorner" format="boolean" />
+    <attr name="sudBottomRoundedCorner" format="boolean" />
     <attr name="sudItemContainerStyle" format="reference"/>
+    <attr name="sudPromoItemContainerStyle" format="reference"/>
+    <attr name="sudPromoItemIconContainerStyle" format="reference"/>
+    <attr name="sudPromoItemTitleStyle" format="reference"/>
+    <attr name="sudPromoItemSummaryStyle" format="reference"/>
+    <attr name="sudPromoCardIconBackgroundColor" format="color|reference"/>
+    <attr name="sudPromoItemBackground" format="color|reference"/>
     <attr name="sudItemIconContainerStyle" format="reference"/>
     <attr name="sudItemTitleStyle" format="reference"/>
     <attr name="sudItemSummaryStyle" format="reference"/>
@@ -348,6 +356,14 @@
         <attr name="android:title" />
     </declare-styleable>
 
+    <declare-styleable name="SudPromoCardView">
+        <attr name="android:icon" />
+        <attr name="android:summary" />
+        <attr name="android:title" />
+        <attr name="sudTopRoundedCorner" />
+        <attr name="sudBottomRoundedCorner" />
+    </declare-styleable>
+
     <declare-styleable name="SudInfoFooterView">
         <attr name="android:icon" />
         <attr name="android:title" />
@@ -391,5 +407,6 @@
 
     <attr name="sudCardContainerStyle" format="reference" />
     <attr name="sudCardTitleStyle" format="reference" />
+    <attr name="sudCardIconContainerStyle" format="reference" />
     <attr name="sudCardIconStyle" format="reference" />
 </resources>
