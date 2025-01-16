@@ -15,13 +15,9 @@
     limitations under the License.
 -->
 
-<resources>
-    <!-- General -->
-    <dimen name="sud_glif_expressive_footer_bar_min_height">52dp</dimen>
-    <!-- Calculated by (Spec = 12dp - 4dp internal padding of button) -->
-    <dimen name="sud_glif_expressive_footer_bar_padding_start">8dp</dimen>
-    <!-- Calculated by (Spec = 24dp - 4dp internal padding of button) -->
-    <dimen name="sud_glif_expressive_footer_bar_padding_end">20dp</dimen>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <dimen name="sud_glif_expressive_content_padding_top">8dp</dimen>
+    <!-- Header layout expressive -->
+    <dimen name="sud_glif_expressive_header_title_size">36sp</dimen>
+
 </resources>

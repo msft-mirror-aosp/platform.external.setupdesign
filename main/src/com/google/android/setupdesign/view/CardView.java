@@ -64,8 +64,8 @@ public class CardView extends LinearLayout implements View.OnClickListener {
     View.inflate(getContext(), R.layout.sud_card_view_default, this);
     // set on click listener to this view to handle the internal click event.
     super.setOnClickListener(this);
-    iconView = findViewById(R.id.sud_card_view_icon);
-    titleView = findViewById(R.id.sud_card_view_title);
+    iconView = findViewById(R.id.sud_items_icon);
+    titleView = findViewById(R.id.sud_items_title);
     if (iconView != null && icon != null) {
       iconView.setImageDrawable(icon);
     }

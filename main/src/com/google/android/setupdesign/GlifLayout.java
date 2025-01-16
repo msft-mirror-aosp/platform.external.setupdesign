@@ -26,7 +26,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+import android.os.PersistableBundle;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -44,6 +46,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.window.embedding.ActivityEmbeddingController;
 import com.google.android.setupcompat.PartnerCustomizationLayout;
+import com.google.android.setupcompat.logging.CustomEvent;
+import com.google.android.setupcompat.logging.MetricKey;
+import com.google.android.setupcompat.logging.SetupMetricsLogger;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.template.FooterBarMixin;
@@ -51,6 +56,7 @@ import com.google.android.setupcompat.template.StatusBarMixin;
 import com.google.android.setupcompat.util.ForceTwoPaneHelper;
 import com.google.android.setupcompat.util.KeyboardHelper;
 import com.google.android.setupcompat.util.Logger;
+import com.google.android.setupcompat.util.WizardManagerHelper;
 import com.google.android.setupdesign.template.DescriptionMixin;
 import com.google.android.setupdesign.template.FloatingBackButtonMixin;
 import com.google.android.setupdesign.template.HeaderMixin;
@@ -350,6 +356,28 @@ public class GlifLayout extends PartnerCustomizationLayout {
       containerId = R.id.sud_layout_content;
     }
     return super.findContainer(containerId);
+  }
+
+  @Override
+  protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    // Log metrics of UI component
+    if (VERSION.SDK_INT >= Build.VERSION_CODES.Q
+        && WizardManagerHelper.isAnySetupWizard(activity.getIntent())
+        && PartnerConfigHelper.isGlifExpressiveEnabled(getContext())) {
+
+      FloatingBackButtonMixin floatingBackButtonMixin = getMixin(FloatingBackButtonMixin.class);
+      PersistableBundle backButtonMetrics =
+          floatingBackButtonMixin != null
+              ? floatingBackButtonMixin.getMetrics()
+              : PersistableBundle.EMPTY;
+
+      CustomEvent customEvent =
+          CustomEvent.create(MetricKey.get("SetupDesignMetrics", activity), backButtonMetrics);
+      SetupMetricsLogger.logCustomEvent(getContext(), customEvent);
+
+      LOG.atVerbose("SetupDesignMetrics=" + CustomEvent.toBundle(customEvent));
+    }
   }
 
   /**
