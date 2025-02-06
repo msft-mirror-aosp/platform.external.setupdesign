@@ -31,16 +31,36 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
+import com.google.android.setupdesign.span.LinkSpan;
 import com.google.android.setupdesign.util.ItemStyler;
 import com.google.android.setupdesign.util.LayoutStyler;
 import com.google.android.setupdesign.view.HeaderRecyclerView;
+import com.google.android.setupdesign.view.RichTextView;
 import com.google.android.setupdesign.view.StickyHeaderListView;
 
 /**
  * Definition of an item in an {@link ItemHierarchy}. An item is usually defined in XML and inflated
  * using {@link ItemInflater}.
  */
-public class Item extends AbstractItem {
+public class Item extends AbstractItem implements LinkSpan.OnLinkClickListener {
+
+  /**
+   * Listener that is invoked when a link span is clicked in summary RichTextView.
+   * If the containing view of this span implements this interface, this will be invoked when the
+   * link is clicked.
+   * @apiNote Make sure to use RichTextView for the textViews wherever Linking of text is expected.
+   * This OnLinkClickListener can be extended to Title TextViews based on use case.
+   */
+  public interface OnItemTextLinkClickListener {
+
+    /**
+     * Called when a link has been clicked.
+     *
+     * @param span The span that was clicked.
+     * @return True if the click was handled, stopping further propagation of the click event.
+     */
+    boolean onItemTextLinkClicked(LinkSpan span);
+  }
 
   private boolean enabled = true;
   @Nullable private Drawable icon;
@@ -49,6 +69,7 @@ public class Item extends AbstractItem {
   @Nullable private CharSequence title;
   @Nullable private CharSequence contentDescription;
   @Nullable private Boolean isClickable;
+  @Nullable private OnItemTextLinkClickListener itemTextLinkClickListener;
   private boolean visible = true;
   @ColorInt private int iconTint = Color.TRANSPARENT;
   private int iconGravity = Gravity.CENTER_VERTICAL;
@@ -148,6 +169,10 @@ public class Item extends AbstractItem {
     return summary;
   }
 
+  public void setOnItemTextLinkClickListener(@Nullable OnItemTextLinkClickListener itemTextLinkClickListener) {
+    this.itemTextLinkClickListener = itemTextLinkClickListener;
+  }
+
   public void setTitle(@Nullable CharSequence title) {
     this.title = title;
     notifyItemChanged();
@@ -204,6 +229,9 @@ public class Item extends AbstractItem {
     CharSequence summary = getSummary();
     if (hasSummary(summary)) {
       summaryView.setText(summary);
+      if (summaryView instanceof RichTextView tv) {
+        tv.setOnLinkClickListener(this);
+      }
       summaryView.setVisibility(View.VISIBLE);
     } else {
       summaryView.setVisibility(View.GONE);
@@ -280,4 +308,13 @@ public class Item extends AbstractItem {
     }
     return false;
   }
+
+  @Override
+  public boolean onLinkClick(LinkSpan span) {
+    if (itemTextLinkClickListener != null) {
+      return itemTextLinkClickListener.onItemTextLinkClicked(span);
+    }
+    return false;
+  }
+
 }

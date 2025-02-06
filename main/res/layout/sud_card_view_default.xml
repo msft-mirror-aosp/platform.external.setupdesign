@@ -25,13 +25,14 @@
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/sud_card_view_icon_container"
+        android:id="@+id/sud_items_icon_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="?attr/sudCardIconContainerStyle"
         android:duplicateParentState="true">
 
         <ImageView
-            android:id="@+id/sud_card_view_icon"
+            android:id="@+id/sud_items_icon"
             style="?attr/sudCardIconStyle"
             android:layout_gravity="center"
             android:duplicateParentState="true"
@@ -40,7 +41,7 @@
     </FrameLayout>
 
     <com.google.android.setupdesign.view.WrapTextView
-        android:id="@+id/sud_card_view_title"
+        android:id="@+id/sud_items_title"
         style="?attr/sudCardTitleStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,5 +52,11 @@
         android:minLines="2"
         android:textAlignment="center"
         tools:ignore="UnusedAttribute" />
+
+    <TextView
+        android:id="@+id/sud_items_summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
 </LinearLayout>

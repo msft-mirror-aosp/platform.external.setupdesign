@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
     Copyright (C) 2024 The Android Open Source Project
 
@@ -14,14 +14,11 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-
-<resources>
-    <!-- General -->
-    <dimen name="sud_glif_expressive_footer_bar_min_height">52dp</dimen>
-    <!-- Calculated by (Spec = 12dp - 4dp internal padding of button) -->
-    <dimen name="sud_glif_expressive_footer_bar_padding_start">8dp</dimen>
-    <!-- Calculated by (Spec = 24dp - 4dp internal padding of button) -->
-    <dimen name="sud_glif_expressive_footer_bar_padding_end">20dp</dimen>
-
-    <dimen name="sud_glif_expressive_content_padding_top">8dp</dimen>
-</resources>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="?attr/sudPromoCardIconBackgroundColor"/>
+    <corners
+            android:bottomLeftRadius="@dimen/sud_glif_expressive_promo_card_icon_corner_radius"
+            android:bottomRightRadius="@dimen/sud_glif_expressive_promo_card_icon_corner_radius"
+            android:topLeftRadius="@dimen/sud_glif_expressive_promo_card_icon_corner_radius"
+            android:topRightRadius="@dimen/sud_glif_expressive_promo_card_icon_corner_radius" />
+</shape>

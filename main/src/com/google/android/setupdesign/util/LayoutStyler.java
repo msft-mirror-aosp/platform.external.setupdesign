@@ -163,7 +163,10 @@ public final class LayoutStyler {
             marginLayoutParams = new ViewGroup.MarginLayoutParams(params);
           }
           marginLayoutParams.setMargins(
-              extraPaddingStart, view.getPaddingTop(), extraPaddingEnd, view.getPaddingBottom());
+              extraPaddingStart,
+              marginLayoutParams.topMargin,
+              extraPaddingEnd,
+              marginLayoutParams.bottomMargin);
         } else {
           view.setPadding(
               extraPaddingStart, view.getPaddingTop(), extraPaddingEnd, view.getPaddingBottom());
