@@ -198,4 +198,30 @@
 
 
     <color name="sud_autofilled_highlight_bg_color">#4dffeb3b</color>
+
+    <color name="sud_neutral10">#ff1f1f1f</color>
+    <color name="sud_neutral22">#ff343535</color>
+    <color name="sud_neutral90">#ffe3e3e3</color>
+
+
+    <color name="sud_color_on_surface">@color/sud_neutral10</color>
+    <color name="sud_color_surface_container_highest">@color/sud_neutral90</color>
+
+    <!-- Glif expressive style -->
+    <!-- Default color for the footer bg (transparent) -->
+    <color name="sud_glif_expressive_footer_bar_bg_color">#00000000</color>
+    <!-- Default color for the footer button bg (primary40) -->
+    <color name="sud_glif_expressive_footer_button_bg_color">#ff6750a4</color>
+
+    <!-- Default color for the floating back button-->
+    <color name="sud_glif_expressive_back_button_bg_color">@color/sud_color_surface_container_highest</color>
+    <color name="sud_glif_expressive_ic_back_arrow_color">@color/sud_color_on_surface</color>
+    <!-- white -->
+    <color name="sud_glif_expressive_footer_primary_button_enable_text_color">@android:color/white</color>
+    <!-- neutral_variant30 -->
+    <color name="sud_glif_expressive_footer_primary_button_disable_text_color">#ff49454f</color>
+    <!-- secondary10 -->
+    <color name="sud_glif_expressive_footer_secondary_button_enable_text_color">#ff1d192b</color>
+    <!-- neutral_variant30 -->
+    <color name="sud_glif_expressive_footer_secondary_button_disable_text_color">#ff49454f</color>
 </resources>
