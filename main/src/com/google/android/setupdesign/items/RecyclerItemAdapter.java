@@ -16,7 +16,6 @@
 
 package com.google.android.setupdesign.items;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
@@ -24,8 +23,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
-import android.os.Build;
-import android.os.Build.VERSION_CODES;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +32,8 @@ import androidx.annotation.VisibleForTesting;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
+import com.google.android.setupdesign.util.ItemStyler;
+import com.google.android.setupdesign.view.HeaderRecyclerView;
 
 /**
  * An adapter used with RecyclerView to display an {@link ItemHierarchy}. The item hierarchy used to
@@ -68,6 +67,7 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
   @VisibleForTesting public final boolean applyPartnerHeavyThemeResource;
   @VisibleForTesting public final boolean useFullDynamicColor;
   private OnItemSelectedListener listener;
+  private RecyclerView recyclerView = null;
 
   public RecyclerItemAdapter(ItemHierarchy hierarchy) {
     this(hierarchy, false);
@@ -85,6 +85,10 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     this.useFullDynamicColor = useFullDynamicColor;
     itemHierarchy = hierarchy;
     itemHierarchy.registerObserver(this);
+  }
+
+  public void setRecyclerView(RecyclerView recyclerView) {
+    this.recyclerView = recyclerView;
   }
 
   /**
@@ -174,7 +178,6 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     return viewHolder;
   }
 
-  @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getFirstBackground(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundFirst});
@@ -183,7 +186,6 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     return firstBackground;
   }
 
-  @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getLastBackground(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundLast});
@@ -192,7 +194,6 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     return lastBackground;
   }
 
-  @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getMiddleBackground(Context context) {
     TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackground});
     Drawable middleBackground = a.getDrawable(0);
@@ -200,7 +201,6 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     return middleBackground;
   }
 
-  @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getSingleBackground(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundSingle});
@@ -286,11 +286,39 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     holder.setEnabled(item.isEnabled());
     holder.setItem(item);
     // TODO  when getContext is not activity context then fallback to out suw behavior
-    if (PartnerConfigHelper.isGlifExpressiveEnabled(holder.itemView.getContext())
-        && Build.VERSION.SDK_INT >= VERSION_CODES.VANILLA_ICE_CREAM) {
+    if (PartnerConfigHelper.isGlifExpressiveEnabled(holder.itemView.getContext())) {
       updateBackground(holder.itemView, position);
+      updateMargin(holder.itemView);
     }
     item.onBindView(holder.itemView);
+  }
+
+  private void updateMargin(View view) {
+    // If the item view is inside a recycler layout or list layout with attribute
+    // shouldApplyAdditionalMargin, it needs to adjust the
+    // layout margin start/end here to align other component activity margin. If it is not
+    // inside a recycler layout or list layout with attribute shouldApplyAdditionalMargin, it
+    // will be adjusted by each activity themselves.
+    if (shouldApplyAdditionalMargin()) {
+      ItemStyler.applyPartnerCustomizationLayoutMarginStyle(view);
+    } else {
+      resetMarginStartEnd(view);
+    }
+  }
+
+  private boolean shouldApplyAdditionalMargin() {
+    if (recyclerView instanceof HeaderRecyclerView headerRecyclerView) {
+      return headerRecyclerView.shouldApplyAdditionalMargin();
+    }
+    return false;
+  }
+
+  private void resetMarginStartEnd(View itemView) {
+    ViewGroup.MarginLayoutParams layoutParams =
+        (ViewGroup.MarginLayoutParams) itemView.getLayoutParams();
+    layoutParams.setMarginStart(0);
+    layoutParams.setMarginEnd(0);
+    itemView.setLayoutParams(layoutParams);
   }
 
   @Override

@@ -36,7 +36,6 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
-import com.google.android.setupdesign.util.ItemStyler;
 import com.google.android.setupdesign.util.LayoutStyler;
 import com.google.android.setupdesign.view.CheckableLinearLayout;
 
@@ -212,7 +211,6 @@ public class ExpandableSwitchItem extends SwitchItem
       if (!isSwitchItem && switchItem != null) {
         switchItem.setVisibility(View.GONE);
       }
-      ItemStyler.applyPartnerCustomizationLayoutMarginStyle(view);
     } else {
       View content = view.findViewById(R.id.sud_items_expandable_switch_content);
       content.setOnClickListener(this);

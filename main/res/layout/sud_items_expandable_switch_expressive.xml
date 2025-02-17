@@ -34,11 +34,12 @@
         <FrameLayout
             android:id="@+id/sud_items_icon_container"
             style="?attr/sudItemIconContainerStyle"
+            android:layout_centerVertical="true"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/sud_items_icon"
-                android:layout_width="wrap_content"
+                style="?attr/sudItemIconStyle"
                 android:layout_height="wrap_content"
                 tools:ignore="ContentDescription" />
         </FrameLayout>

@@ -116,3 +116,58 @@ third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupd
 third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/RichTextView.java: NewApi: text = getRichText(getContext(), text);
 third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/StickyHeaderListView.java: CustomViewStyleable: .obtainStyledAttributes(attrs, R.styleable.SudStickyHeaderListView, defStyleAttr, 0);
 third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/StickyHeaderScrollView.java: ObsoleteSdkInt: if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+third_party/java_src/android_libs/setupdesign/AndroidManifest.xml: ExpiredTargetSdkVersion: <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="30" />
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/GlifLayout.java: CustomViewStyleable: getContext().obtainStyledAttributes(attrs, R.styleable.SudGlifLayout, defStyleAttr, 0);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/GlifLayout.java: NewApi: LayoutStyler.applyPartnerCustomizationExtraPaddingStyle(view);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/GlifLayout.java: NewApi: tryApplyPartnerCustomizationContentPaddingTopStyle(view);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/GlifLayout.java: UseRequiresApi: @TargetApi(Build.VERSION_CODES.S)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/GlifLayout.java: UseRequiresApi: @TargetApi(VERSION_CODES.HONEYCOMB)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/GlifLayout.java: UseRequiresApi: @TargetApi(VERSION_CODES.JELLY_BEAN_MR1)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/GlifListLayout.java: NewApi: tryApplyPartnerCustomizationContentPaddingTopStyle(view);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/GlifListLayout.java: UseRequiresApi: @TargetApi(VERSION_CODES.HONEYCOMB)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/GlifRecyclerLayout.java: NewApi: tryApplyPartnerCustomizationContentPaddingTopStyle(view);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/GlifRecyclerLayout.java: UseRequiresApi: @TargetApi(VERSION_CODES.HONEYCOMB)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/SetupWizardLayout.java: CustomViewStyleable: .obtainStyledAttributes(attrs, R.styleable.SudSetupWizardLayout, defStyleAttr, 0);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/SetupWizardLayout.java: UseRequiresApi: @TargetApi(VERSION_CODES.HONEYCOMB)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/SetupWizardListLayout.java: UseRequiresApi: @TargetApi(VERSION_CODES.HONEYCOMB)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/items/ExpandableSwitchItem.java: NewApi: LayoutStyler.applyPartnerCustomizationLayoutPaddingStyle(content);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/items/Item.java: NewApi: ItemStyler.applyPartnerCustomizationItemStyle(view);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/items/Item.java: NewApi: LayoutStyler.applyPartnerCustomizationLayoutPaddingStyle(view);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/items/ItemAdapter.java: UseRequiresApi: @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/items/RecyclerItemAdapter.java: NotifyDataSetChanged: notifyDataSetChanged();
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/items/RecyclerItemAdapter.java: UseRequiresApi: @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/template/FloatingBackButtonMixin.java: UseRequiresApi: @TargetApi(VERSION_CODES.Q)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/template/HeaderMixin.java: NewApi: LayoutStyler.applyPartnerCustomizationExtraPaddingStyle(headerAreaView);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/template/IllustrationProgressMixin.java: UseRequiresApi: @TargetApi(VERSION_CODES.ICE_CREAM_SANDWICH)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/transition/TransitionHelper.java: UseRequiresApi: @TargetApi(VERSION_CODES.LOLLIPOP)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/transition/TransitionHelper.java: UseRequiresApi: @TargetApi(VERSION_CODES.M)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/transition/support/TransitionHelper.java: UseRequiresApi: @TargetApi(VERSION_CODES.M)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/util/ItemStyler.java: UseRequiresApi: @TargetApi(VERSION_CODES.JELLY_BEAN_MR1)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/util/LayoutStyler.java: UseRequiresApi: @TargetApi(VERSION_CODES.JELLY_BEAN_MR1)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/util/Partner.java: DiscouragedApi: return resources.getIdentifier(name, defType, packageName);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/util/TextViewPartnerStyler.java: NewApi: ((RichTextView) textView).setSpanTypeface(linkFont);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/CheckableLinearLayout.java: UseRequiresApi: @TargetApi(VERSION_CODES.HONEYCOMB)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/CheckableLinearLayout.java: UseRequiresApi: @TargetApi(VERSION_CODES.LOLLIPOP)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/FillContentLayout.java: CustomViewStyleable: context.obtainStyledAttributes(attrs, R.styleable.SudFillContentLayout, defStyleAttr, 0);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/HeaderRecyclerView.java: CustomViewStyleable: .obtainStyledAttributes(attrs, R.styleable.SudHeaderRecyclerView, defStyleAttr, 0);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/HeaderRecyclerView.java: NotifyDataSetChanged: notifyDataSetChanged();
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/IconUniformityAppImageView.java: AnnotateVersionCheck: private static final boolean ON_L_PLUS = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/IconUniformityAppImageView.java: UseRequiresApi: @TargetApi(23)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/Illustration.java: CustomViewStyleable: getContext().obtainStyledAttributes(attrs, R.styleable.SudIllustration, defStyleAttr, 0);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/Illustration.java: UseRequiresApi: @TargetApi(VERSION_CODES.HONEYCOMB)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/IllustrationVideoView.java: CustomViewStyleable: context.obtainStyledAttributes(attrs, R.styleable.SudIllustrationVideoView);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/IllustrationVideoView.java: UseRequiresApi: @TargetApi(VERSION_CODES.ICE_CREAM_SANDWICH)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/IntrinsicSizeFrameLayout.java: CustomViewStyleable: attrs, R.styleable.SudIntrinsicSizeFrameLayout, defStyleAttr, 0);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/IntrinsicSizeFrameLayout.java: UseRequiresApi: @TargetApi(VERSION_CODES.HONEYCOMB)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/NavigationBar.java: ResourceType: @StyleableRes int colorBackground = 2;
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/NavigationBar.java: ResourceType: @StyleableRes int colorForeground = 1;
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/NavigationBar.java: UseRequiresApi: @TargetApi(VERSION_CODES.HONEYCOMB)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/RichTextView.java: DiscouragedApi: .getIdentifier(textAppearance, "style", context.getPackageName());
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/RichTextView.java: NewApi: text = getRichText(getContext(), text);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/RichTextView.java: UseRequiresApi: @TargetApi(28)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/RichTextView.java: UseRequiresApi: @TargetApi(VERSION_CODES.P)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/StickyHeaderListView.java: CustomViewStyleable: .obtainStyledAttributes(attrs, R.styleable.SudStickyHeaderListView, defStyleAttr, 0);
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/StickyHeaderListView.java: UseRequiresApi: @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/StickyHeaderRecyclerView.java: UseRequiresApi: @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/StickyHeaderScrollView.java: ObsoleteSdkInt: if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+third_party/java_src/android_libs/setupdesign/main/src/com/google/android/setupdesign/view/StickyHeaderScrollView.java: UseRequiresApi: @TargetApi(Build.VERSION_CODES.LOLLIPOP)

@@ -30,7 +30,7 @@
         android:layout_height="match_parent"
         android:importantForAccessibility="no"
         android:layout_gravity="start|bottom"
-        android:scaleType="fitStart"
+        android:scaleType="centerCrop"
         app:lottie_autoPlay="false"
         app:lottie_loop="true" />
 
