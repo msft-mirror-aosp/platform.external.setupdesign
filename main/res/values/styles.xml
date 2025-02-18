@@ -71,13 +71,14 @@
         <item name="sudContentIllustrationMaxHeight">@dimen/sud_content_illustration_max_height</item>
         <item name="sudContentIllustrationPaddingTop">@dimen/sud_content_illustration_padding_vertical</item>
         <item name="sudContentIllustrationPaddingBottom">@dimen/sud_content_illustration_padding_vertical</item>
+        <item name="sudContentIllustrationStyle">@style/SudContentIllustration</item>
         <item name="sudLoadingHeaderHeight">@dimen/sud_loading_header_height</item>
         <item name="sudEditBoxStyle">@style/SudEditBoxTheme</item>
         <item name="sudEditBoxColor">@color/sud_color_accent_dark</item>
         <item name="sudItemContainerStyle">@style/SudItemContainer</item>
-        <item name="sudBulletPointIconContainerStyle">@null</item>
-        <item name="sudBulletPointContainerStyle">@null</item>
-
+        <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
+        <item name="sudBulletPointContainerStyle">@style/sudBulletPointContainer</item>
+        <item name="sudAdditionalBodyTextStyle">@style/SudAdditionalBodyText</item>
         <item name="sudInfoFooterContainerStyle">@style/sudInfoFooterContainer</item>
         <item name="sudInfoFooterIconContainerStyle">@style/sudInfoFooterIconContainer</item>
         <item name="sudInfoFooterIconStyle">@style/sudInfoFooterIcon</item>
@@ -94,6 +95,8 @@
         <item name="sudItemSummaryStyle">@style/SudItemSummaryGlif</item>
         <item name="sudItemDescriptionTitleTextAppearence">@style/TextAppearance.SudDescription</item>
         <item name="sudSectionItemContainerStyle">@style/SudItemContainer</item>
+        <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
+        <item name="sudIllustrationItemStyle">@style/SudItemSummary.IllustrationStyle</item>
         <item name="sudSectionItemTitleStyle">@style/SudItemTitle.SectionHeader</item>
         <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
@@ -107,6 +110,9 @@
         <item name="sudCardIconContainerStyle">@style/SudCardIconContainerStyle</item>
         <item name="sudCardIconStyle">@style/SudCardIconStyle</item>
         <item name="sudCardTitleStyle">@style/SudCardTitleStyle</item>
+        <item name="sudCameraPreviewStyle">@null</item>
+        <item name="sudItemIconStyle">@style/SudItemIcon</item>
+        <item name="sudQrFinishStyle">@null</item>
     </style>
 
     <style name="SudThemeMaterial.Light" parent="Theme.AppCompat.Light.NoActionBar">
@@ -161,13 +167,14 @@
         <item name="sudContentIllustrationMaxHeight">@dimen/sud_content_illustration_max_height</item>
         <item name="sudContentIllustrationPaddingTop">@dimen/sud_content_illustration_padding_vertical</item>
         <item name="sudContentIllustrationPaddingBottom">@dimen/sud_content_illustration_padding_vertical</item>
+        <item name="sudContentIllustrationStyle">@style/SudContentIllustration</item>
         <item name="sudLoadingHeaderHeight">@dimen/sud_loading_header_height</item>
         <item name="sudEditBoxStyle">@style/SudEditBoxTheme</item>
         <item name="sudEditBoxColor">@color/sud_color_accent_light</item>
         <item name="sudItemContainerStyle">@style/SudItemContainer</item>
-        <item name="sudBulletPointIconContainerStyle">@null</item>
-        <item name="sudBulletPointContainerStyle">@null</item>
-
+        <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
+        <item name="sudBulletPointContainerStyle">@style/sudBulletPointContainer</item>
+        <item name="sudAdditionalBodyTextStyle">@style/SudAdditionalBodyText</item>
         <item name="sudInfoFooterContainerStyle">@style/sudInfoFooterContainer</item>
         <item name="sudInfoFooterIconContainerStyle">@style/sudInfoFooterIconContainer</item>
         <item name="sudInfoFooterIconStyle">@style/sudInfoFooterIcon</item>
@@ -184,6 +191,8 @@
         <item name="sudItemSummaryStyle">@style/SudItemSummaryGlif</item>
         <item name="sudItemDescriptionTitleTextAppearence">@style/TextAppearance.SudDescription</item>
         <item name="sudSectionItemContainerStyle">@style/SudItemContainer</item>
+        <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
+        <item name="sudIllustrationItemStyle">@style/SudItemSummary.IllustrationStyle</item>
         <item name="sudSectionItemTitleStyle">@style/SudItemTitle.SectionHeader</item>
         <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
@@ -197,6 +206,9 @@
         <item name="sudCardIconContainerStyle">@style/SudCardIconContainerStyle</item>
         <item name="sudCardIconStyle">@style/SudCardIconStyle</item>
         <item name="sudCardTitleStyle">@style/SudCardTitleStyle</item>
+        <item name="sudItemIconStyle">@style/SudItemIcon</item>
+        <item name="sudCameraPreviewStyle">@null</item>
+        <item name="sudQrFinishStyle">@null</item>
     </style>
 
     <style name="SudBaseThemeGlif" parent="Theme.AppCompat.NoActionBar">
@@ -292,6 +304,7 @@
         <item name="sudContentIllustrationMaxHeight">@dimen/sud_content_illustration_max_height</item>
         <item name="sudContentIllustrationPaddingTop">@dimen/sud_content_illustration_padding_vertical</item>
         <item name="sudContentIllustrationPaddingBottom">@dimen/sud_content_illustration_padding_vertical</item>
+        <item name="sudContentIllustrationStyle">@style/SudContentIllustration</item>
         <item name="sudLoadingHeaderHeight">@dimen/sud_loading_header_height</item>
         <item name="sudSwitchBarThumbOnColor">@color/sud_switch_thumb_on_dark</item>
         <item name="sudSwitchBarTrackOnColor">@color/sud_switch_track_on_dark</item>
@@ -321,12 +334,15 @@
         <item name="sudItemBackgroundLast">@null</item>
         <item name="sudItemBackgroundSingle">@null</item>
         <item name="sudItemCornerRadius">0dp</item>
-        <item name="sudBulletPointIconContainerStyle">@null</item>
-        <item name="sudBulletPointContainerStyle">@null</item>
+        <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
+        <item name="sudBulletPointContainerStyle">@style/sudBulletPointContainer</item>
         <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudSectionItemContainerStyle">@style/SudItemContainer</item>
+        <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
+        <item name="sudIllustrationItemStyle">@style/SudItemSummary.IllustrationStyle</item>
         <item name="sudSectionItemTitleStyle">@style/SudItemTitle.SectionHeader</item>
+        <item name="sudAdditionalBodyTextStyle">@style/SudAdditionalBodyText</item>
         <item name="sudInfoFooterContainerStyle">@style/sudInfoFooterContainer</item>
         <item name="sudInfoFooterIconContainerStyle">@style/sudInfoFooterIconContainer</item>
         <item name="sudInfoFooterIconStyle">@style/sudInfoFooterIcon</item>
@@ -341,6 +357,9 @@
         <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
         <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
         <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
+        <item name="sudItemIconStyle">@style/SudItemIcon</item>
+        <item name="sudCameraPreviewStyle">@null</item>
+        <item name="sudQrFinishStyle">@null</item>
     </style>
     <style name="SudThemeGlif" parent="SudBaseThemeGlif"/>
 
@@ -437,6 +456,7 @@
         <item name="sudContentIllustrationMaxHeight">@dimen/sud_content_illustration_max_height</item>
         <item name="sudContentIllustrationPaddingTop">@dimen/sud_content_illustration_padding_vertical</item>
         <item name="sudContentIllustrationPaddingBottom">@dimen/sud_content_illustration_padding_vertical</item>
+        <item name="sudContentIllustrationStyle">@style/SudContentIllustration</item>
         <item name="sudLoadingHeaderHeight">@dimen/sud_loading_header_height</item>
         <item name="sudSwitchBarThumbOnColor">@color/sud_switch_thumb_on_light</item>
         <item name="sudSwitchBarTrackOnColor">@color/sud_switch_track_on_light</item>
@@ -466,12 +486,15 @@
         <item name="sudItemBackgroundLast">@null</item>
         <item name="sudItemBackgroundSingle">@null</item>
         <item name="sudItemCornerRadius">0dp</item>
-        <item name="sudBulletPointIconContainerStyle">@null</item>
-        <item name="sudBulletPointContainerStyle">@null</item>
+        <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
+        <item name="sudBulletPointContainerStyle">@style/sudBulletPointContainer</item>
         <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudSectionItemContainerStyle">@style/SudItemContainer</item>
+        <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
+        <item name="sudIllustrationItemStyle">@style/SudItemSummary.IllustrationStyle</item>
         <item name="sudSectionItemTitleStyle">@style/SudItemTitle.SectionHeader</item>
+        <item name="sudAdditionalBodyTextStyle">@style/SudAdditionalBodyText</item>
         <item name="sudInfoFooterContainerStyle">@style/sudInfoFooterContainer</item>
         <item name="sudInfoFooterIconContainerStyle">@style/sudInfoFooterIconContainer</item>
         <item name="sudInfoFooterIconStyle">@style/sudInfoFooterIcon</item>
@@ -486,6 +509,9 @@
         <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
         <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
         <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
+        <item name="sudItemIconStyle">@style/SudItemIcon</item>
+        <item name="sudCameraPreviewStyle">@null</item>
+        <item name="sudQrFinishStyle">@null</item>
     </style>
     <style name="SudThemeGlif.Light" parent="SudBaseThemeGlif.Light"/>
 
@@ -684,6 +710,7 @@
         <item name="sudContentIllustrationMaxHeight">@dimen/sud_content_illustration_max_height</item>
         <item name="sudContentIllustrationPaddingTop">@dimen/sud_content_illustration_padding_vertical</item>
         <item name="sudContentIllustrationPaddingBottom">@dimen/sud_content_illustration_padding_vertical</item>
+        <item name="sudContentIllustrationStyle">@style/SudContentIllustration.GlifExpressive</item>
         <item name="sudLoadingHeaderHeight">@dimen/sud_loading_header_height</item>
         <item name="sudSwitchBarThumbOnColor">@color/sud_switch_thumb_on_dark</item>
         <item name="sudSwitchBarTrackOnColor">@color/sud_switch_track_on_dark</item>
@@ -738,7 +765,7 @@
         <item name="sudItemDescriptionPaddingTop">@dimen/sud_description_glif_margin_top</item>
         <item name="sudItemDescriptionPaddingBottom">@dimen/sud_description_glif_margin_bottom_lists</item>
         <item name="sudItemVerboseTitleStyle">@style/SudMaterialYouItemTitle.Verbose</item>
-        <item name="sudItemSummaryPaddingBottom">@dimen/sud_items_padding_bottom_extra</item>
+        <item name="sudItemSummaryPaddingBottom">@dimen/sud_items_padding_bottom_extra_expressive</item>
         <item name="alertDialogTheme">@style/SudMaterialYouAlertDialogThemeCompat</item>
         <item name="android:alertDialogTheme">@style/SudMaterialYouAlertDialogTheme</item>
         <!-- new values for style SudBaseThemeGlifExpressive -->
@@ -779,6 +806,7 @@
         <item name="sudItemIconContainerWidth">@dimen/sud_items_icon_container_width_expressive</item>
         <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
         <item name="sudBulletPointContainerStyle">@style/sudBulletPointContainer</item>
+        <item name="sudAdditionalBodyTextStyle">@style/SudAdditionalBodyTextExpressive</item>
         <item name="sudInfoFooterContainerStyle">@style/sudInfoFooterContainerExpressive</item>
         <item name="sudInfoFooterIconContainerStyle">@style/sudInfoFooterIconContainer</item>
         <item name="sudInfoFooterIconStyle">@style/sudInfoFooterIconExpressive</item>
@@ -795,6 +823,8 @@
         <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudSectionItemContainerStyle">@style/SudGlifExpressiveItemContainer.SectionItem</item>
+        <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
+        <item name="sudIllustrationItemStyle">@style/SudItemSummary.IllustrationStyle</item>
         <item name="sudSectionItemTitleStyle">@style/SudExpressiveItemTitle.SectionHeader</item>
         <item name="sudCardContainerStyle">@style/SudCardContainerStyle</item>
         <item name="sudCardIconContainerStyle">@style/SudCardIconContainerStyle</item>
@@ -806,6 +836,9 @@
         <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
         <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
         <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
+        <item name="sudItemIconStyle">@style/SudExpressiveItemIcon</item>
+        <item name="sudCameraPreviewStyle">@style/SudExpressiveCameraPreview</item>
+        <item name="sudQrFinishStyle">@style/SudExpressiveQrFinish</item>
     </style>
 
     <style name="SudBaseThemeGlifExpressive.Light" parent="Theme.Material3.DynamicColors.Light.NoActionBar">
@@ -850,6 +883,7 @@
         <item name="sudContentIllustrationMaxHeight">@dimen/sud_content_illustration_max_height</item>
         <item name="sudContentIllustrationPaddingTop">@dimen/sud_content_illustration_padding_vertical</item>
         <item name="sudContentIllustrationPaddingBottom">@dimen/sud_content_illustration_padding_vertical</item>
+        <item name="sudContentIllustrationStyle">@style/SudContentIllustration.GlifExpressive</item>
         <item name="sudLoadingHeaderHeight">@dimen/sud_loading_header_height</item>
         <item name="sudSwitchBarThumbOnColor">@color/sud_switch_thumb_on_light</item>
         <item name="sudSwitchBarTrackOnColor">@color/sud_switch_track_on_light</item>
@@ -898,7 +932,7 @@
         <item name="sudDividerShown">false</item>
         <item name="sudItemPaddingTop">@dimen/sud_items_padding_top_material_you</item>
         <item name="sudItemPaddingBottom">@dimen/sud_items_padding_bottom_material_you</item>
-        <item name="sudItemSummaryPaddingBottom">@dimen/sud_items_padding_bottom_extra</item>
+        <item name="sudItemSummaryPaddingBottom">@dimen/sud_items_padding_bottom_extra_expressive</item>
         <item name="sudItemDescriptionTitleStyle">@style/SudItemTitleMaterialYou</item>
         <item name="sudItemDescriptionStyle">@style/SudItemContainerMaterialYou.Description</item>
         <item name="sudItemDescriptionPaddingTop">@dimen/sud_description_glif_margin_top</item>
@@ -948,6 +982,7 @@
         <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_expressive_footer_button_text_line_spacing_extra</item>
         <item name="sucFooterBarButtonOutlinedColor">@color/sud_system_outline_variant_light</item>
         <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
+        <item name="sudAdditionalBodyTextStyle">@style/SudAdditionalBodyTextExpressive</item>
         <item name="sudBulletPointContainerStyle">@style/sudBulletPointContainer</item>
         <item name="sudInfoFooterContainerStyle">@style/sudInfoFooterContainerExpressive</item>
         <item name="sudInfoFooterIconContainerStyle">@style/sudInfoFooterIconContainer</item>
@@ -960,6 +995,8 @@
         <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudSectionItemContainerStyle">@style/SudGlifExpressiveItemContainer.SectionItem</item>
+        <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
+        <item name="sudIllustrationItemStyle">@style/SudItemSummary.IllustrationStyle</item>
         <item name="sudSectionItemTitleStyle">@style/SudExpressiveItemTitle.SectionHeader</item>
         <item name="sudCardContainerStyle">@style/SudCardContainerStyle</item>
         <item name="sudCardIconContainerStyle">@style/SudCardIconContainerStyle</item>
@@ -971,6 +1008,9 @@
         <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
         <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
         <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
+        <item name="sudItemIconStyle">@style/SudExpressiveItemIcon</item>
+        <item name="sudCameraPreviewStyle">@style/SudExpressiveCameraPreview</item>
+        <item name="sudQrFinishStyle">@style/SudExpressiveQrFinish</item>
     </style>
 
     <style name="SudThemeGlifExpressive" parent="SudBaseThemeGlifExpressive" />
@@ -1114,9 +1154,13 @@
         <item name="android:paddingBottom">?attr/sudContentIllustrationPaddingBottom</item>
     </style>
 
-    <!-- Ignore UnusedResources: used by clients -->
-    <style name="SudContentIllustration" tools:ignore="UnusedResources">
+    <style name="SudContentIllustration">
         <item name="android:layout_gravity">center</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <style name="SudContentIllustration.GlifExpressive">
+        <item name="android:layout_gravity">top</item>
         <item name="android:scaleType">fitCenter</item>
     </style>
 
@@ -1313,12 +1357,12 @@
         <item name="android:layout_marginStart" tools:ignore="NewApi">?android:attr/listPreferredItemPaddingStart</item>
         <item name="android:layout_marginBottom">?attr/sudItemDividerWidth</item>
         <item name="android:background">?attr/sudItemBackground</item>
-        <item name="android:paddingBottom">@dimen/sud_items_padding_bottom_material_you</item>
+        <item name="android:paddingBottom">@dimen/sud_items_padding_bottom_expressive</item>
         <item name="android:paddingEnd" tools:ignore="NewApi">?attr/sudItemBackgroundPaddingEnd</item>
         <item name="android:paddingLeft">?attr/sudItemBackgroundPaddingStart</item>
         <item name="android:paddingRight">?attr/sudItemBackgroundPaddingEnd</item>
         <item name="android:paddingStart" tools:ignore="NewApi">?attr/sudItemBackgroundPaddingStart</item>
-        <item name="android:paddingTop">@dimen/sud_items_padding_top_material_you</item>
+        <item name="android:paddingTop">@dimen/sud_items_padding_top_expressive</item>
         <item name="android:minHeight">@dimen/sud_items_min_height_expressive</item>
     </style>
 
@@ -1326,14 +1370,25 @@
         <item name="android:layout_width">?attr/sudItemIconContainerWidth</item>
     </style>
 
+    <style name="SudItemIcon">
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="SudExpressiveItemIcon">
+        <item name="android:layout_width">@dimen/sud_glif_expressive_items_icon_width</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="SudExpressiveItemIconContainer">
         <item name="android:layout_width">?attr/sudItemIconContainerWidth</item>
-        <item name="android:paddingBottom">@dimen/sud_glif_expressive_items_icon_padding</item>
-        <item name="android:paddingEnd" tools:ignore="NewApi">@dimen/sud_glif_expressive_items_icon_padding</item>
-        <item name="android:paddingLeft">@dimen/sud_glif_expressive_items_icon_padding</item>
-        <item name="android:paddingRight">@dimen/sud_glif_expressive_items_icon_padding</item>
-        <item name="android:paddingStart" tools:ignore="NewApi">@dimen/sud_glif_expressive_items_icon_padding</item>
-        <item name="android:paddingTop">@dimen/sud_glif_expressive_items_icon_padding</item>
+        <item name="android:paddingBottom">@dimen/sud_glif_expressive_items_icon_padding_bottom</item>
+        <item name="android:paddingEnd" tools:ignore="NewApi">@dimen/sud_glif_expressive_items_icon_padding_end</item>
+        <item name="android:paddingLeft">@dimen/sud_glif_expressive_items_icon_padding_start</item>
+        <item name="android:paddingRight">@dimen/sud_glif_expressive_items_icon_padding_end</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">@dimen/sud_glif_expressive_items_icon_padding_start</item>
+        <item name="android:paddingTop">@dimen/sud_glif_expressive_items_icon_padding_top</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">start</item>
     </style>
 
     <style name="sudBulletPointContainer">
@@ -1367,8 +1422,8 @@
         <item name="android:paddingBottom">@dimen/sud_items_section_header_padding_bottom</item>
         <item name="android:paddingLeft">0dp</item>
         <item name="android:paddingRight">0dp</item>
-        <item name="android:layout_marginLeft">0dp</item>
-        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
         <item name="android:background">@null</item>
     </style>
 
@@ -1400,6 +1455,20 @@
     </style>
     <style name="SudPromoItemSummary">
         <item name="android:textAppearance">?attr/textAppearanceListItemSmall</item>
+    </style>
+
+    <style name="SudItemContainer.IllustrationItem" parent="SudItemContainer">
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">@dimen/sud_items_illustration_item_padding_bottom</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="SudItemSummary.IllustrationStyle" parent="SudItemSummary">
+        <item name="android:maxWidth">@dimen/sud_items_illustration_item_max_width</item>
+        <item name="android:adjustViewBounds">true</item>
     </style>
 
     <style name="SudItemSummary">
@@ -1461,7 +1530,8 @@
 
     <style name="SudExpressiveItemTitle.SectionHeader" parent="SudItemTitle">
         <item name="android:textSize">@dimen/sud_items_section_header_text_size</item>
-        <item name="android:fontFamily">@string/sudFontSecondaryText</item>
+        <item name="android:fontFamily">@string/sudFontSecondaryMedium</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
     </style>
 
     <style name="SudSwitchStyle">
@@ -1479,6 +1549,17 @@
     <style name="TextAppearance.SudItemSummary" parent="android:TextAppearance">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="SudExpressiveCameraPreview">
+        <item name="android:padding">@dimen/sud_expressive_camera_preview_padding</item>
+        <item name="android:background">@drawable/sud_camera_preview_background</item>
+    </style>
+
+    <style name="SudExpressiveQrFinish">
+        <item name="android:src">@drawable/sud_qr_finish_icon</item>
+        <item name="android:background">@color/sud_qr_finish_bg_color</item>
+        <item name="android:scaleType">center</item>
     </style>
 
     <!-- GLIF layout -->
@@ -1518,6 +1599,9 @@
     <style name="SudGlifHeaderTitleExpressive" parent="SudGlifHeaderTitleMaterialYou">
         <item name="android:lineSpacingExtra">@dimen/sud_glif_expressive_header_title_line_spacing_extra</item>
         <item name="android:textSize">@dimen/sud_glif_expressive_header_title_size</item>
+        <item name="android:textFontWeight" tools:targetApi="28">500</item>
+        <item name="fontFamily">google-sans-flex</item>
+        <item name="android:fontFamily">google-sans-flex</item>
     </style>
 
     <style name="SudGlifDescription" parent="SudDescription.Glif">
@@ -1673,6 +1757,20 @@
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textSize">@dimen/sud_items_title_text_size_material_you</item>
         <item name="android:fontFamily">@string/sudFontSecondary</item>
+    </style>
+
+    <!-- Additional body text styles -->
+
+    <style name="SudAdditionalBodyTextExpressive">
+        <item name="android:fontFamily">@string/sudFontSecondaryText</item>
+        <item name="android:textSize">@dimen/sud_glif_expressive_additional_body_text_size</item>
+        <item name="android:lineSpacingExtra">@dimen/sud_glif_expressive_additional_body_text_line_spacing_extra</item>
+        <item name="android:textColor">@color/sud_color_on_surface</item>
+        <item name="android:paddingBottom">@dimen/sud_additional_body_text_padding_bottom</item>
+    </style>
+
+    <style name="SudAdditionalBodyText" parent="@style/TextAppearance.SudDescription.Secondary">
+        <item name="android:paddingBottom">@dimen/sud_additional_body_text_padding_bottom</item>
     </style>
 
     <!-- Info footer styles -->
@@ -1831,10 +1929,10 @@
     </style>
 
     <style name="SudLinearProgressIndicatorWavy">
-        <item name="waveAmplitude">3dp</item>
-        <item name="wavelength">40dp</item>
-        <item name="wavelengthIndeterminate">30dp</item>
-        <item name="indeterminateAnimatorDurationScale">1.5</item>
+        <item name="waveAmplitude">@dimen/sud_glif_expressive_progress_indicator_waveAmplitude</item>
+        <item name="wavelength">@dimen/sud_glif_expressive_progress_indicator_wavelength</item>
+        <item name="wavelengthIndeterminate">@dimen/sud_glif_expressive_progress_indicator_wavelength_indeterminate</item>
+        <item name="indeterminateAnimatorDurationScale">@dimen/sud_glif_expressive_progress_indicator_indeterminate_animator_duration_scale</item>
     </style>
 
     <style name="SudCardContainerStyle">

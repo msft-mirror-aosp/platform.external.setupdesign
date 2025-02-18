@@ -348,6 +348,11 @@
     <dimen name="sud_items_summary_margin_top_expressive">0dp</dimen>
     <dimen name="sud_items_icon_container_width_expressive">52dp</dimen>
     <dimen name="sud_items_min_height_expressive">56dp</dimen>
+    <dimen name="sud_items_summary_text_size_expressive">14sp</dimen>
+    <dimen name="sud_items_title_text_size_expressive">16sp</dimen>
+    <dimen name="sud_items_padding_top_expressive">12dp</dimen>
+    <dimen name="sud_items_padding_bottom_expressive">12dp</dimen>
+    <dimen name="sud_items_padding_bottom_extra_expressive">0dp</dimen>
 
     <dimen name="sud_glif_expressive_button_padding">16dp</dimen>
     <!-- Calculated by (sud_glif_expressive_margin_start - 4dp internal padding of button) -->
@@ -358,17 +363,21 @@
     <dimen name="sud_glif_expreesive_description_margin_bottom">0dp</dimen>
     <dimen name="sud_glif_expressive_icon_margin_top">8dp</dimen>
     <dimen name="sud_glif_expressive_content_padding_top">8dp</dimen>
-    <dimen name="sud_glif_expressive_item_corner_radius">2dp</dimen>
+    <dimen name="sud_glif_expressive_item_corner_radius">4dp</dimen>
     <dimen name="sud_glif_expressive_promo_card_icon_corner_radius">20dp</dimen>
     <dimen name="sud_glif_expressive_promo_card_icon_padding">18dp</dimen>
     <dimen name="sud_glif_expressive_promo_card_icon_margin_end">16dp</dimen>
     <dimen name="sud_glif_expressive_item_icon_padding_end">12dp</dimen>
-    <dimen name="sud_glif_expressive_items_icon_padding">8dp</dimen>
+    <dimen name="sud_glif_expressive_items_icon_padding_top">-4dp</dimen>
+    <dimen name="sud_glif_expressive_items_icon_padding_bottom">-4dp</dimen>
+    <dimen name="sud_glif_expressive_items_icon_padding_start">0dp</dimen>
+    <dimen name="sud_glif_expressive_items_icon_padding_end">0dp</dimen>
+    <dimen name="sud_glif_expressive_items_icon_width">40dp</dimen>
     <dimen name="sud_items_section_header_padding_top">20dp</dimen>
     <dimen name="sud_items_section_header_padding_bottom">8dp</dimen>
     <dimen name="sud_items_section_header_text_size">14sp</dimen>
-    <dimen name="sud_items_summary_text_size_expressive">14sp</dimen>
-    <dimen name="sud_items_title_text_size_expressive">16sp</dimen>
+    <dimen name="sud_items_illustration_item_padding_bottom">32dp</dimen>
+    <dimen name="sud_items_illustration_item_max_width">494dp</dimen>
     <dimen name="sud_expressive_switch_padding_start">12dp</dimen>
 
     <!-- Header layout expressive -->
@@ -377,15 +386,20 @@
     <dimen name="sud_glif_expressive_description_text_size">16sp</dimen>
     <dimen name="sud_glif_expressive_description_line_spacing_extra">8sp</dimen>
 
-    <!-- Progress indicator-->
+    <!-- Progress indicator -->
     <dimen name="sud_glif_expressive_progress_indicator_margin_vertical">16dp</dimen>
     <dimen name="sud_glif_expressive_progress_indicator_padding_bottom">7dp</dimen>
 
-    <!-- Material floating back button-->
+    <!-- Material floating back button -->
     <dimen name="sud_glif_expressive_back_button_margin_top">8dp</dimen>
     <dimen name="sud_glif_expressive_back_button_height">48dp</dimen>
 
-    <!-- Glif expressive Info footer-->
+    <!-- Glif expressive Additional body text -->
+    <dimen name="sud_glif_expressive_additional_body_text_size">16sp</dimen>
+    <dimen name="sud_glif_expressive_additional_body_text_line_spacing_extra">8sp</dimen>
+    <dimen name="sud_additional_body_text_padding_bottom">32dp</dimen>
+
+    <!-- Glif expressive Info footer -->
     <dimen name="sud_glif_expressive_info_footer_icon_size">24dp</dimen>
 
     <!-- Glif expressive footer bar -->
@@ -402,7 +416,7 @@
     <dimen name="sud_glif_expressive_footer_button_text_line_spacing_extra">8dp</dimen>
     <dimen name="sud_glif_expressive_footer_button_middle_spacing">8dp</dimen>
     <dimen name="sud_glif_expressive_footer_padding_top">16dp</dimen>
-    <dimen name="sud_glif_expressive_footer_padding_bottom">8dp</dimen>
+    <dimen name="sud_glif_expressive_footer_padding_bottom">18dp</dimen>
     <!-- Glif expressive alert dialog -->
     <dimen name="sud_glif_expressive_alert_dialog_title_font_size">24sp</dimen>
 
@@ -411,7 +425,10 @@
     <dimen name="sud_card_view_container_padding_start">16dp</dimen>
     <dimen name="sud_card_view_container_padding_end">16dp</dimen>
     <dimen name="sud_card_view_container_min_height">100dp</dimen>
-    <dimen name="sud_card_view_container_radius">12dp</dimen>
+    <dimen name="sud_card_view_container_default_radius">12dp</dimen>
+    <!-- TODO: b/390040419 - Update card view's corner radius to 12dp for AOSP. -->
+    <!-- Set 999dp to make radius to be full radius -->
+    <dimen name="sud_card_view_container_selected_radius">999dp</dimen>
     <!-- Card view icon -->
     <dimen name="sud_card_view_icon_size">24dp</dimen>
     <dimen name="sud_card_view_icon_container_margin_top">16dp</dimen>
@@ -420,5 +437,15 @@
     <dimen name="sud_card_view_title_line_spacing_extra">6sp</dimen>
     <dimen name="sud_card_view_title_spacing_top">4dp</dimen>
     <dimen name="sud_card_view_title_margin_bottom">16dp</dimen>
+
+    <!-- Camera preview -->
+    <dimen name="sud_expressive_camera_preview_corner_radius">28dp</dimen>
+    <dimen name="sud_expressive_camera_preview_padding">8dp</dimen>
+
+    <!-- Glif expressive progress indicator -->
+    <dimen name="sud_glif_expressive_progress_indicator_waveAmplitude">3dp</dimen>
+    <dimen name="sud_glif_expressive_progress_indicator_wavelength">40dp</dimen>
+    <dimen name="sud_glif_expressive_progress_indicator_wavelength_indeterminate">30dp</dimen>
+    <item name="sud_glif_expressive_progress_indicator_indeterminate_animator_duration_scale" format="float" type="dimen">1.5</item>
 
 </resources>

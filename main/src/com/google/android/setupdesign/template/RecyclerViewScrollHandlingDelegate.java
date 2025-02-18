@@ -18,6 +18,7 @@ package com.google.android.setupdesign.template;
 
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
+import android.view.ViewTreeObserver;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.android.setupdesign.template.RequireScrollMixin.ScrollHandlingDelegate;
@@ -53,8 +54,8 @@ public class RecyclerViewScrollHandlingDelegate implements ScrollHandlingDelegat
 
   @Override
   public void startListening() {
-    if (this.recyclerView != null) {
-      this.recyclerView.addOnScrollListener(
+    if (recyclerView != null) {
+      recyclerView.addOnScrollListener(
           new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -62,6 +63,17 @@ public class RecyclerViewScrollHandlingDelegate implements ScrollHandlingDelegat
             }
           });
 
+      // Because the view hierarchy could be changed for any reasons(e.g. view is added), we need
+      // to check the scrollability again after the layout is changed.
+      recyclerView
+          .getViewTreeObserver()
+          .addOnGlobalLayoutListener(
+              new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                  requireScrollMixin.notifyScrollabilityChange(canScrollDown());
+                }
+              });
       if (canScrollDown()) {
         requireScrollMixin.notifyScrollabilityChange(true);
       }
