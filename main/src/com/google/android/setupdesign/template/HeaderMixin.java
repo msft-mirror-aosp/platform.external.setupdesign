@@ -180,8 +180,12 @@ public class HeaderMixin implements Mixin {
           String fontVariationSettings =
               PartnerConfigHelper.get(context)
                   .getString(context, PartnerConfig.CONFIG_HEADER_FONT_VARIATION_SETTINGS);
-          if (fontVariationSettings != null && !fontVariationSettings.isEmpty()) {
-            header.setFontVariationSettings(fontVariationSettings);
+          if (header != null && fontVariationSettings != null && !fontVariationSettings.isEmpty()) {
+            try {
+              header.setFontVariationSettings(fontVariationSettings);
+            } catch (Exception ex) {
+              Log.e("HeaderMixin", "Failed to set font variation settings: " + ex.getMessage());
+            }
           }
         }
       }

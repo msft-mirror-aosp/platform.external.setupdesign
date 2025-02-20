@@ -204,6 +204,7 @@
     <attr name="sudAccountNameTextColor" format="color" />
     <attr name="sudCameraPreviewStyle" format="reference" />
     <attr name="sudQrFinishStyle" format="reference" />
+    <attr name="sudExpandedContent" format="reference" />
 
     <!-- EditBox -->
     <attr name="sudEditBoxStyle" format="reference" />
@@ -345,6 +346,10 @@
 
     <declare-styleable name="SudSwitchItem">
         <attr name="android:checked" />
+    </declare-styleable>
+
+    <declare-styleable name="SudExpandableItem">
+        <attr name="sudExpandedContent" />
     </declare-styleable>
 
     <declare-styleable name="SudRadioButtonItem">
