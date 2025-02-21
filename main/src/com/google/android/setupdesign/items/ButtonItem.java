@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import androidx.annotation.Nullable;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
 
 /**

@@ -49,4 +49,15 @@ public interface IItem {
   default boolean isGroupDivider() {
     return false;
   }
+
+  /**
+   * Check if the item is recycler able when in recycler view.
+   *
+   * @return True if this item is recycler able which is the default behavior of recycler view.
+   * @return False if this item is not recycler able, so that {@link ViewHolder} will not be
+   *     recycled for this item, but it may have the performance impact.
+   */
+  default boolean isRecyclable() {
+    return true;
+  }
 }

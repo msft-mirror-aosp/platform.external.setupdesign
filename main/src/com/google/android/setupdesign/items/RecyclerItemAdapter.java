@@ -23,11 +23,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import androidx.annotation.VisibleForTesting;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
@@ -276,6 +279,10 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
             });
         final Drawable[] layers = {background, clickDrawable};
         view.setBackgroundDrawable(new PatchedLayerDrawable(layers));
+        if (Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
+          view.setClipToOutline(true);
+          view.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
+        }
       }
     }
   }
@@ -285,6 +292,9 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     final IItem item = getItem(position);
     holder.setEnabled(item.isEnabled());
     holder.setItem(item);
+    if (holder.isRecyclable() != item.isRecyclable()) {
+      holder.setIsRecyclable(item.isRecyclable());
+    }
     // TODO  when getContext is not activity context then fallback to out suw behavior
     if (PartnerConfigHelper.isGlifExpressiveEnabled(holder.itemView.getContext())) {
       updateBackground(holder.itemView, position);
