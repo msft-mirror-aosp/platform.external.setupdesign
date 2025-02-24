@@ -56,6 +56,7 @@ import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.template.FooterBarMixin;
 import com.google.android.setupcompat.template.StatusBarMixin;
+import com.google.android.setupcompat.template.SystemNavBarMixin;
 import com.google.android.setupcompat.util.ForceTwoPaneHelper;
 import com.google.android.setupcompat.util.KeyboardHelper;
 import com.google.android.setupcompat.util.Logger;
@@ -666,13 +667,20 @@ public class GlifLayout extends PartnerCustomizationLayout {
 
   protected void onScrolling(boolean isBottom) {
     FooterBarMixin footerBarMixin = getMixin(FooterBarMixin.class);
+    SystemNavBarMixin systemNavBarMixin = getMixin(SystemNavBarMixin.class);
     if (footerBarMixin != null) {
       LinearLayout footerContainer = footerBarMixin.getButtonContainer();
       if (footerContainer != null) {
         if (isBottom) {
           footerContainer.setBackgroundColor(Color.TRANSPARENT);
+          if (systemNavBarMixin != null) {
+            systemNavBarMixin.setSystemNavBarBackground(Color.TRANSPARENT);
+          }
         } else {
           footerContainer.setBackgroundColor(getFooterBackgroundColorFromStyle());
+          if (systemNavBarMixin != null) {
+            systemNavBarMixin.setSystemNavBarBackground(getFooterBackgroundColorFromStyle());
+          }
         }
       }
     }

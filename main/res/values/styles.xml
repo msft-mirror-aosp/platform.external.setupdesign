@@ -671,6 +671,10 @@
     <style name="SudBaseThemeGlifExpressive" parent="Theme.Material3.DynamicColors.Dark.NoActionBar">
         <!-- Copied from values style SudThemeBaseGlif -->
         <item name="android:indeterminateTint" tools:ignore="NewApi">?attr/colorControlActivated</item>
+        <!-- Ensure that the navigation bar has enough contrast when a fully transparent background
+             is requested. This is disabled for 3-button mode navigation bar color. -->
+        <item name="android:enforceNavigationBarContrast" tools:ignore="NewApi">false</item>
+        <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">false</item>
         <!-- Specify the indeterminateTintMode to work around a bug in Lollipop -->
         <item name="android:indeterminateTintMode" tools:ignore="NewApi">src_in</item>
         <item name="android:listPreferredItemHeight">@dimen/sud_items_preferred_height</item>
@@ -844,6 +848,10 @@
     <style name="SudBaseThemeGlifExpressive.Light" parent="Theme.Material3.DynamicColors.Light.NoActionBar">
         <!-- Copied from values style SudThemeBaseGlif.Light -->
         <item name="android:indeterminateTint" tools:ignore="NewApi">?attr/colorControlActivated</item>
+        <!-- Ensure that the navigation bar has enough contrast when a fully transparent background
+             is requested. This is disabled for 3-button mode navigation bar color. -->
+        <item name="android:enforceNavigationBarContrast" tools:ignore="NewApi">false</item>
+        <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">false</item>
         <!-- Specify the indeterminateTintMode to work around a bug in Lollipop -->
         <item name="android:indeterminateTintMode" tools:ignore="NewApi">src_in</item>
         <item name="android:listPreferredItemHeight">@dimen/sud_items_preferred_height</item>
@@ -1597,7 +1605,7 @@
     </style>
 
     <style name="SudGlifHeaderTitleExpressive" parent="SudGlifHeaderTitleMaterialYou">
-        <item name="android:lineSpacingExtra">@dimen/sud_glif_expressive_header_title_line_spacing_extra</item>
+        <item name="android:lineHeight" tools:targetApi="28">@dimen/sud_glif_expressive_header_title_line_height</item>
         <item name="android:textSize">@dimen/sud_glif_expressive_header_title_size</item>
         <item name="android:textFontWeight" tools:targetApi="28">500</item>
         <item name="fontFamily">google-sans-flex</item>

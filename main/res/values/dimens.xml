@@ -383,7 +383,7 @@
 
     <!-- Header layout expressive -->
     <dimen name="sud_glif_expressive_header_title_size">32sp</dimen>
-    <dimen name="sud_glif_expressive_header_title_line_spacing_extra">8sp</dimen>
+    <dimen name="sud_glif_expressive_header_title_line_height">40sp</dimen>
     <dimen name="sud_glif_expressive_description_text_size">16sp</dimen>
     <dimen name="sud_glif_expressive_description_line_spacing_extra">8sp</dimen>
 
