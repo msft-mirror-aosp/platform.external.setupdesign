@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.google.android.setupcompat.util.ForceTwoPaneHelper;
 import com.google.android.setupdesign.template.RecyclerMixin;
+import com.google.android.setupdesign.util.ThemeHelper;
 
 /**
  * A layout to be used with {@code PreferenceFragment} in v14 support library. This can be specified
@@ -128,6 +129,9 @@ public class GlifPreferenceLayout extends GlifRecyclerLayout {
       // Use the compat two pane layout for the recycler view if the two pane is enabled. Since the
       // sud_glif_preference_recycler_view layout is not compatible with original layout.
       recyclerViewLayoutId = R.layout.sud_glif_preference_recycler_view_compat_two_pane;
+    }
+    if (ThemeHelper.shouldApplyGlifExpressiveStyle(getContext())) {
+      recyclerViewLayoutId = R.layout.sud_glif_expressive_preference_recycler_view;
     }
     RecyclerView recyclerView = (RecyclerView) inflater.inflate(recyclerViewLayoutId, this, false);
     recyclerMixin = new RecyclerMixin(this, recyclerView);

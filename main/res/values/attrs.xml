@@ -422,6 +422,7 @@
     <declare-styleable name="SudCardView">
         <attr name="sudIcon" format="reference" />
         <attr name="sudTitleText" format="string|reference" />
+        <attr name="sudCardViewSkipClickSelection" format="boolean" />
     </declare-styleable>
 
     <attr name="sudCardContainerStyle" format="reference" />
