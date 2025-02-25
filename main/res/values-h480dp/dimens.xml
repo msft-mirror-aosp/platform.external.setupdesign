@@ -19,5 +19,6 @@
 
     <!-- Header layout expressive -->
     <dimen name="sud_glif_expressive_header_title_size">36sp</dimen>
+    <dimen name="sud_glif_expressive_header_title_line_height">44sp</dimen>
 
 </resources>
