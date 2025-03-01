@@ -16,14 +16,11 @@
 
 package com.google.android.setupdesign.items;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
-import android.os.Build;
-import android.os.Build.VERSION_CODES;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +30,8 @@ import android.widget.LinearLayout;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
+import com.google.android.setupdesign.util.ItemStyler;
+import com.google.android.setupdesign.view.StickyHeaderListView;
 
 /**
  * An adapter typically used with ListView to display an {@link
@@ -44,10 +43,16 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
   private final ItemHierarchy itemHierarchy;
   private final ViewTypes viewTypes = new ViewTypes();
 
+  private View listView = null;
+
   public ItemAdapter(ItemHierarchy hierarchy) {
     itemHierarchy = hierarchy;
     itemHierarchy.registerObserver(this);
     refreshViewTypes();
+  }
+
+  public void setListView(View listView) {
+    this.listView = listView;
   }
 
   @Override
@@ -84,7 +89,6 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
     }
   }
 
-  @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getFirstBackground(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundFirst});
@@ -93,7 +97,6 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
     return firstBackground;
   }
 
-  @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getLastBackground(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundLast});
@@ -102,7 +105,6 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
     return lastBackground;
   }
 
-  @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getMiddleBackground(Context context) {
     TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackground});
     Drawable middleBackground = a.getDrawable(0);
@@ -110,7 +112,6 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
     return middleBackground;
   }
 
-  @TargetApi(VERSION_CODES.VANILLA_ICE_CREAM)
   private Drawable getSingleBackground(Context context) {
     TypedArray a =
         context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundSingle});
@@ -200,8 +201,7 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
   public View getView(int position, View convertView, ViewGroup parent) {
 
     // TODO  when getContext is not activity context then fallback to out suw behavior
-    if (PartnerConfigHelper.isGlifExpressiveEnabled(parent.getContext())
-        && Build.VERSION.SDK_INT >= VERSION_CODES.VANILLA_ICE_CREAM) {
+    if (PartnerConfigHelper.isGlifExpressiveEnabled(parent.getContext())) {
       IItem item = getItem(position);
       LinearLayout linearLayout = null;
       // The ListView can not handle the margin for the child view. So we need to use the
@@ -223,6 +223,7 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
       }
       updateBackground(convertView, position);
       item.onBindView(convertView);
+      updateMargin(convertView);
       return linearLayout;
     } else {
       IItem item = getItem(position);
@@ -233,6 +234,34 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
       item.onBindView(convertView);
       return convertView;
     }
+  }
+
+  private void updateMargin(View view) {
+    // If the item view is inside a recycler layout or list layout with attribute
+    // shouldApplyAdditionalMargin, it needs to adjust the
+    // layout margin start/end here to align other component activity margin. If it is not
+    // inside a recycler layout or list layout with attribute shouldApplyAdditionalMargin, it
+    // will be adjusted by each activity themselves.
+    if (shouldApplyAdditionalMargin()) {
+      ItemStyler.applyPartnerCustomizationLayoutMarginStyle(view);
+    } else {
+      resetMarginStartEnd(view);
+    }
+  }
+
+  private boolean shouldApplyAdditionalMargin() {
+    if (listView instanceof StickyHeaderListView stickyHeaderListView) {
+      return stickyHeaderListView.shouldApplyAdditionalMargin();
+    }
+    return false;
+  }
+
+  private void resetMarginStartEnd(View itemView) {
+    ViewGroup.MarginLayoutParams layoutParams =
+        (ViewGroup.MarginLayoutParams) itemView.getLayoutParams();
+    layoutParams.setMarginStart(0);
+    layoutParams.setMarginEnd(0);
+    itemView.setLayoutParams(layoutParams);
   }
 
   @Override

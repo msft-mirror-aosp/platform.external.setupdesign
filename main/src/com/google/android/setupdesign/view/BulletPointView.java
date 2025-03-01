@@ -27,9 +27,10 @@ import androidx.annotation.Nullable;
 import com.google.android.setupdesign.R;
 
 /**
- * An extension of ScrollView that will invoke a listener callback when the ScrollView needs
- * scrolling, and when the ScrollView is being scrolled to the bottom. This is often used in Setup
- * Wizard as a way to ensure that users see all the content before proceeding.
+ * Bullet points are a versatile design element used in screen layouts to present information in a
+ * concise, organized, and visually appealing manner. They break down complex information or lists
+ * into easily digestible chunks, improving readability and scannability. Bullet points can be used
+ * to highlight key features, list steps in a process, or summarize benefits.
  */
 public class BulletPointView extends LinearLayout {
 

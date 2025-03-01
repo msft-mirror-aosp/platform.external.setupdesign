@@ -160,12 +160,15 @@
     <attr name="sudPromoCardIconBackgroundColor" format="color|reference"/>
     <attr name="sudPromoItemBackground" format="color|reference"/>
     <attr name="sudItemIconContainerStyle" format="reference"/>
+    <attr name="sudItemIconStyle" format="reference"/>
     <attr name="sudItemTitleStyle" format="reference"/>
     <attr name="sudItemSummaryStyle" format="reference"/>
     <attr name="sudBulletPointTitleStyle" format="reference"/>
     <attr name="sudBulletPointSummaryStyle" format="reference"/>
     <attr name="sudItemDescriptionStyle" format="reference" />
     <attr name="sudSectionItemContainerStyle" format="reference" />
+    <attr name="sudIllustrationItemContainerStyle" format="reference" />
+    <attr name="sudIllustrationItemStyle" format="reference" />
     <attr name="sudSectionItemTitleStyle" format="reference" />
     <attr name="sudItemDescriptionTitleStyle" format="reference" />
     <attr name="sudItemDescriptionTitleTextAppearence" format="reference" />
@@ -188,6 +191,7 @@
     <attr name="sudItemCornerRadius" format="dimension|reference" />
     <attr name="sudBulletPointContainerStyle" format="reference" />
     <attr name="sudBulletPointIconContainerStyle" format="reference" />
+    <attr name="sudAdditionalBodyTextStyle" format="reference" />
     <attr name="sudInfoFooterContainerStyle" format="reference" />
     <attr name="sudInfoFooterIconContainerStyle" format="reference" />
     <attr name="sudInfoFooterIconStyle" format="reference" />
@@ -198,6 +202,9 @@
     <attr name="sudAccountAvatarMaxHeight" format="dimension|reference" />
     <attr name="sudAccountNameTextSize" format="dimension|reference" />
     <attr name="sudAccountNameTextColor" format="color" />
+    <attr name="sudCameraPreviewStyle" format="reference" />
+    <attr name="sudQrFinishStyle" format="reference" />
+    <attr name="sudExpandedContent" format="reference" />
 
     <!-- EditBox -->
     <attr name="sudEditBoxStyle" format="reference" />
@@ -256,6 +263,9 @@
     <attr name="sudContentIllustrationMaxHeight" format="dimension" />
     <attr name="sudContentIllustrationPaddingTop" format="dimension" />
     <attr name="sudContentIllustrationPaddingBottom" format="dimension" />
+
+    <attr name="sudContentIllustrationStyle" format="reference" />
+
     <declare-styleable name="SudFillContentLayout">
         <attr name="android:maxHeight" />
         <attr name="android:maxWidth" />
@@ -303,6 +313,7 @@
         <attr name="android:enabled" />
         <attr name="android:text" />
         <attr name="android:theme" />
+        <attr name="android:icon" />
     </declare-styleable>
 
     <declare-styleable name="SudIconMixin">
@@ -337,12 +348,20 @@
         <attr name="android:checked" />
     </declare-styleable>
 
+    <declare-styleable name="SudExpandableItem">
+        <attr name="sudExpandedContent" />
+    </declare-styleable>
+
     <declare-styleable name="SudRadioButtonItem">
         <attr name="android:checked" />
     </declare-styleable>
 
     <declare-styleable name="SudCheckBoxItem">
         <attr name="android:checked" />
+    </declare-styleable>
+
+    <declare-styleable name="SudIllustrationItem">
+        <attr name="android:drawable" />
     </declare-styleable>
 
     <declare-styleable name="SudExpandableSwitchItem">
@@ -403,6 +422,7 @@
     <declare-styleable name="SudCardView">
         <attr name="sudIcon" format="reference" />
         <attr name="sudTitleText" format="string|reference" />
+        <attr name="sudCardViewSkipClickSelection" format="boolean" />
     </declare-styleable>
 
     <attr name="sudCardContainerStyle" format="reference" />

@@ -75,6 +75,14 @@ public class CheckBoxItem extends Item implements CompoundButton.OnCheckedChange
     }
   }
 
+  /** Sets whether this item should be checked and does not notify the listener. */
+  public void setCheckedWithoutNotify(boolean checked) {
+    if (this.checked != checked) {
+      this.checked = checked;
+      notifyItemChanged();
+    }
+  }
+
   /** Returns true if this check box item is currently checked. */
   public boolean isChecked() {
     return checked;

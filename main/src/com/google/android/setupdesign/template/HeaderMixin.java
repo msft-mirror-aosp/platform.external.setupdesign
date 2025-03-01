@@ -166,10 +166,29 @@ public class HeaderMixin implements Mixin {
   public void tryApplyPartnerCustomizationStyle() {
     TextView header = templateLayout.findManagedViewById(R.id.suc_layout_title);
     if (PartnerStyleHelper.shouldApplyPartnerResource(templateLayout)) {
+      Context context = templateLayout.getContext();
       View headerAreaView = templateLayout.findManagedViewById(R.id.sud_layout_header);
       LayoutStyler.applyPartnerCustomizationExtraPaddingStyle(headerAreaView);
       HeaderAreaStyler.applyPartnerCustomizationHeaderStyle(header);
       HeaderAreaStyler.applyPartnerCustomizationHeaderAreaStyle((ViewGroup) headerAreaView);
+
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        if (PartnerConfigHelper.isGlifExpressiveEnabled(context)
+            && PartnerConfigHelper.get(context)
+                .isPartnerConfigAvailable(PartnerConfig.CONFIG_HEADER_FONT_VARIATION_SETTINGS)) {
+          // TODO: add unit test for this case.
+          String fontVariationSettings =
+              PartnerConfigHelper.get(context)
+                  .getString(context, PartnerConfig.CONFIG_HEADER_FONT_VARIATION_SETTINGS);
+          if (header != null && fontVariationSettings != null && !fontVariationSettings.isEmpty()) {
+            try {
+              header.setFontVariationSettings(fontVariationSettings);
+            } catch (Exception ex) {
+              Log.e("HeaderMixin", "Failed to set font variation settings: " + ex.getMessage());
+            }
+          }
+        }
+      }
     }
     // Try to update the flag of the uto size config settings
     tryUpdateAutoTextSizeFlagWithPartnerConfig();

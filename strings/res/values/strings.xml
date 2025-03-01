@@ -40,4 +40,21 @@
     <!-- Label for card view check mark icon [CHAR LIMIT=40] -->
     <string name="sud_card_view_check_mark_icon_label">checked</string>
 
+    <!-- Label for SudLottieAnimationView animation playing status [CHAR LIMIT=NONE] -->
+    <string name="sud_lottie_animation_view_accessibility_animation_playing_status">animation playing</string>
+
+    <!-- Label for SudLottieAnimationView animation paused status  [CHAR LIMIT=NONE] -->
+    <string name="sud_lottie_animation_view_accessibility_animation_paused_status">animation paused</string>
+
+    <!-- Label for SudLottieAnimationView role description [CHAR LIMIT=NONE] -->
+    <string name="sud_lottie_animation_view_role_description">Stoppable animation</string>
+
+    <!-- Label for triggering pause animation action on SudLottieAnimationView [CHAR LIMIT=NONE] -->
+    <string name="sud_lottie_animation_view_accessibility_action_pause">pause</string>
+
+    <!-- Label for triggering resume animation action on SudLottieAnimationView [CHAR LIMIT=NONE] -->
+    <string name="sud_lottie_animation_view_accessibility_action_resume">resume</string>
+
+    <!-- Label for SuwLottieAnimationView description [CHAR LIMIT=NONE] -->
+    <string name="sud_lottie_animation_view_accessibility_description">Animation</string>
 </resources>

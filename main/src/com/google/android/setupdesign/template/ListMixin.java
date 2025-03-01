@@ -64,7 +64,9 @@ public class ListMixin implements Mixin {
     final int entries = a.getResourceId(R.styleable.SudListMixin_android_entries, 0);
     if (entries != 0) {
       final ItemGroup inflated = (ItemGroup) new ItemInflater(context).inflate(entries);
-      setAdapter(new ItemAdapter(inflated));
+      ItemAdapter adapter = new ItemAdapter(inflated);
+      adapter.setListView(getListView());
+      setAdapter(adapter);
     }
 
     boolean isDividerDisplay = a.getBoolean(R.styleable.SudListMixin_sudDividerShown, true);
