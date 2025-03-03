@@ -35,7 +35,7 @@
     <item name="sud_layout_description" type="id" />
 
     <!-- Glif expressive button styles -->
-    <string name="sudExpressiveButtonFontFamily" translatable="false">Roboto</string>
+    <string name="sudExpressiveButtonFontFamily" translatable="false">google-sans-text-medium</string>
 
     <!-- Glif expressive alert dialog styles -->
     <string name="sudGlifExpressiveDialogFontFamily" translatable="false">google-sans-text</string>

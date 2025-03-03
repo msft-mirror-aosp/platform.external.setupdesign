@@ -25,6 +25,8 @@
     <style name="SudThemeGlifV4.DayNight" parent="SudThemeGlifV4" />
     <style name="SudThemeGlifExpressive.DayNight" parent="SudThemeGlifExpressive" />
 
+    <style name="SudMaterialYouAlertDialogTheme.DayNight" parent="SudMaterialYouAlertDialogTheme"/>
+
     <!-- DynamicColor DayNight themes -->
     <style name="SudDynamicColorThemeGlifV3.DayNight" parent="SudDynamicColorThemeGlifV3" />
     <style name="SudFullDynamicColorThemeGlifV3.DayNight" parent="SudFullDynamicColorThemeGlifV3" />
