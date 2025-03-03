@@ -19,12 +19,16 @@ package com.google.android.setupdesign.items;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import androidx.annotation.Nullable;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
 
 /**
@@ -41,6 +45,7 @@ public class ButtonItem extends AbstractItem implements View.OnClickListener {
   private CharSequence text;
   private int theme = R.style.SudButtonItem;
   private OnClickListener listener;
+  @Nullable private Drawable icon;
 
   private Button button;
 
@@ -54,6 +59,7 @@ public class ButtonItem extends AbstractItem implements View.OnClickListener {
     enabled = a.getBoolean(R.styleable.SudButtonItem_android_enabled, true);
     text = a.getText(R.styleable.SudButtonItem_android_text);
     theme = a.getResourceId(R.styleable.SudButtonItem_android_theme, R.style.SudButtonItem);
+    icon = a.getDrawable(R.styleable.SudButtonItem_android_icon);
     a.recycle();
   }
 
@@ -84,6 +90,17 @@ public class ButtonItem extends AbstractItem implements View.OnClickListener {
   /** @return Resource ID of the theme used by this button. */
   public int getTheme() {
     return theme;
+  }
+
+  /** The icon to set to this button. */
+  public void setIcon(@Nullable Drawable icon) {
+    this.icon = icon;
+  }
+
+  /** The icon can be get from this button. */
+  @Nullable
+  public Drawable getIcon() {
+    return icon;
   }
 
   public void setEnabled(boolean enabled) {
@@ -135,6 +152,11 @@ public class ButtonItem extends AbstractItem implements View.OnClickListener {
     button.setEnabled(enabled);
     button.setText(text);
     button.setId(getViewId());
+    if (button instanceof MaterialButton materialButton) {
+      materialButton.setIcon(icon);
+    } else {
+      button.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
+    }
     return button;
   }
 

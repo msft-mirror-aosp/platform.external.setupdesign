@@ -237,6 +237,9 @@ public class RecyclerMixin implements Mixin {
 
   /** Sets the adapter on the recycler view in this layout. */
   public void setAdapter(Adapter<? extends ViewHolder> adapter) {
+    if (adapter instanceof RecyclerItemAdapter) {
+      ((RecyclerItemAdapter) adapter).setRecyclerView(recyclerView);
+    }
     recyclerView.setAdapter(adapter);
   }
 

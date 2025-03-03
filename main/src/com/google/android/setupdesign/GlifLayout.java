@@ -28,6 +28,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.PersistableBundle;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -35,6 +37,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -53,6 +56,7 @@ import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.template.FooterBarMixin;
 import com.google.android.setupcompat.template.StatusBarMixin;
+import com.google.android.setupcompat.template.SystemNavBarMixin;
 import com.google.android.setupcompat.util.ForceTwoPaneHelper;
 import com.google.android.setupcompat.util.KeyboardHelper;
 import com.google.android.setupcompat.util.Logger;
@@ -68,8 +72,6 @@ import com.google.android.setupdesign.template.RequireScrollMixin;
 import com.google.android.setupdesign.template.ScrollViewScrollHandlingDelegate;
 import com.google.android.setupdesign.util.DescriptionStyler;
 import com.google.android.setupdesign.util.LayoutStyler;
-import com.google.android.setupdesign.view.BottomScrollView;
-import com.google.android.setupdesign.view.BottomScrollView.BottomScrollListener;
 
 /**
  * Layout for the GLIF theme used in Setup Wizard for N.
@@ -99,6 +101,20 @@ public class GlifLayout extends PartnerCustomizationLayout {
   private boolean backgroundPatterned = true;
 
   private boolean applyPartnerHeavyThemeResource = false;
+
+  private ViewTreeObserver.OnScrollChangedListener onScrollChangedListener =
+      new ViewTreeObserver.OnScrollChangedListener() {
+        @Override
+        public void onScrollChanged() {
+          ScrollView scrollView = getScrollView();
+          if (scrollView != null) {
+            // direction > 0 means view can scroll down, direction < 0 means view can scroll
+            // up. Here we use direction > 0 to detect whether the view can be scrolling down
+            // or not.
+            onScrolling(!scrollView.canScrollVertically(/* direction= */ 1));
+          }
+        }
+      };
 
   /** The color of the background. If null, the color will inherit from primaryColor. */
   @Nullable private ColorStateList backgroundBaseColor;
@@ -378,6 +394,10 @@ public class GlifLayout extends PartnerCustomizationLayout {
 
       LOG.atVerbose("SetupDesignMetrics=" + CustomEvent.toBundle(customEvent));
     }
+    ScrollView scrollView = getScrollView();
+    if (scrollView != null) {
+      scrollView.getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
+    }
   }
 
   /**
@@ -617,35 +637,50 @@ public class GlifLayout extends PartnerCustomizationLayout {
     }
   }
 
+  // TODO: b/397835857 - Add unit test for initScrollingListener.
   protected void initScrollingListener() {
     ScrollView scrollView = getScrollView();
 
-    if (scrollView instanceof BottomScrollView) {
-      ((BottomScrollView) scrollView)
-          .setBottomScrollListener(
-              new BottomScrollListener() {
-                @Override
-                public void onScrolledToBottom() {
-                  onScrolling(true);
-                }
+    if (scrollView != null) {
+      scrollView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
 
-                @Override
-                public void onRequiresScroll() {
-                  onScrolling(false);
+      // This is for the case that the view has been first visited to handle the initial state of
+      // the footer bar.
+      new Handler(Looper.getMainLooper())
+          .postDelayed(
+              () -> {
+                if (isContentScrollable(scrollView)) {
+                  onScrolling(/* isBottom= */ false);
                 }
-              });
+              },
+              100L);
     }
+  }
+
+  private boolean isContentScrollable(ScrollView scrollView) {
+    View child = scrollView.getChildAt(0);
+    if (child != null) {
+      return child.getHeight() > scrollView.getHeight();
+    }
+    return false;
   }
 
   protected void onScrolling(boolean isBottom) {
     FooterBarMixin footerBarMixin = getMixin(FooterBarMixin.class);
+    SystemNavBarMixin systemNavBarMixin = getMixin(SystemNavBarMixin.class);
     if (footerBarMixin != null) {
       LinearLayout footerContainer = footerBarMixin.getButtonContainer();
       if (footerContainer != null) {
         if (isBottom) {
           footerContainer.setBackgroundColor(Color.TRANSPARENT);
+          if (systemNavBarMixin != null) {
+            systemNavBarMixin.setSystemNavBarBackground(Color.TRANSPARENT);
+          }
         } else {
           footerContainer.setBackgroundColor(getFooterBackgroundColorFromStyle());
+          if (systemNavBarMixin != null) {
+            systemNavBarMixin.setSystemNavBarBackground(getFooterBackgroundColorFromStyle());
+          }
         }
       }
     }

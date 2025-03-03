@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2025 The Android Open Source Project
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+  <path
+      android:pathData="M352.33,569.33 L480,441.67l127.67,127.66 47.66,-46.66L480,347.33 304.67,522.67l47.66,46.66ZM480,880q-83,0 -156,-31.5T197,763q-54,-54 -85.5,-127T80,480q0,-83 31.5,-155.67 31.5,-72.66 85.5,-127Q251,143 324,111.5T480,80q83,0 155.67,31.5 72.66,31.5 127,85.83 54.33,54.34 85.83,127Q880,397 880,480q0,83 -31.5,156t-85.83,127q-54.34,54 -127,85.5Q563,880 480,880ZM480,813.33q138.67,0 236,-97 97.33,-97 97.33,-236.33 0,-138.67 -97.33,-236 -97.33,-97.33 -236,-97.33 -139.33,0 -236.33,97.33t-97,236q0,139.33 97,236.33t236.33,97ZM480,480Z"
+      android:fillColor="@color/sud_on_surface_variant"/>
+</vector>

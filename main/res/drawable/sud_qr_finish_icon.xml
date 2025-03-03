@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2024 The Android Open Source Project
+    Copyright (C) 2025 The Android Open Source Project
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -14,12 +14,13 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="160dp"
+    android:height="160dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+  <path
+      android:pathData="m378,628 l363,-363q9.27,-9 21.64,-9 12.36,0 21.36,9.05 9,9.06 9,21.5 0,12.45 -9,21.45L399,693q-9,9 -21,9t-21,-9L175,511q-9,-9.07 -8.5,-21.53 0.5,-12.47 9.55,-21.47 9.06,-9 21.5,-9 12.45,0 21.45,9l159,160Z"
+      android:fillColor="?attr/colorSecondary"/>
+</vector>
 
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:keep="@color/sud_system_*">
-
-  <color name="sud_color_on_surface">@android:color/system_on_surface_dark</color>
-  <color name="sud_color_surface_container_highest">@android:color/system_surface_container_highest_dark</color>
-
-
-</resources>

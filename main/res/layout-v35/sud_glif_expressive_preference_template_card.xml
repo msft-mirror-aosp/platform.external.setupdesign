@@ -17,7 +17,7 @@
 
 <!-- Please keep filterTouchesWhenObscured=true; it's to prevent tapjacking.
      See https://developer.android.com/privacy-and-security/risks/tapjacking -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.setupdesign.view.InsetAdjustmentLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/suc_layout_status"
     style="@style/SudGlifCardBackground"
     android:layout_width="match_parent"
@@ -50,4 +50,4 @@
         android:layout_weight="1"
         android:visibility="invisible" />
 
-</LinearLayout>
+</com.google.android.setupdesign.view.InsetAdjustmentLayout>
