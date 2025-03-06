@@ -22,4 +22,12 @@
   <style name="SudDynamicColorTheme.Light" parent="SudDynamicColorBaseTheme.Light">
     <item name="colorSurface">@color/sud_system_surface</item>
   </style>
+  <style name="SudMaterialYouAlertDialogTheme" parent="SudAlertDialogTheme">
+      <item name="android:textAllCaps">false</item>
+      <item name="android:windowTitleStyle">@style/SudMaterialYouWindowTitleStyle</item>
+  </style>
+  <style name="SudMaterialYouAlertDialogTheme.Light" parent="SudAlertDialogTheme.Light">
+      <item name="android:textAllCaps">false</item>
+      <item name="android:windowTitleStyle">@style/SudMaterialYouWindowTitleStyle</item>
+  </style>
 </resources>

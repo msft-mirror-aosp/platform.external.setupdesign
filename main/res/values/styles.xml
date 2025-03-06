@@ -721,7 +721,7 @@
         <item name="sudSwitchBarThumbOffColor">@color/sud_switch_thumb_off_dark</item>
         <item name="sudSwitchBarTrackOffColor">@color/sud_switch_track_off_dark</item>
         <item name="sudSwitchBarTrackOffOutlineColor">@color/sud_switch_track_outline_off_dark</item>
-        <item name="sudEditBoxStyle">@style/SudEditBoxTheme</item>
+        <item name="sudEditBoxStyle">@style/SudGlifExpressiveEditBoxTheme</item>
         <item name="sudAccountAvatarMarginEnd">@dimen/sud_account_avatar_margin_end</item>
         <item name="sudAccountAvatarMaxHeight">@dimen/sud_account_avatar_max_height</item>
 
@@ -898,7 +898,7 @@
         <item name="sudSwitchBarThumbOffColor">@color/sud_switch_thumb_off_light</item>
         <item name="sudSwitchBarTrackOffColor">@color/sud_switch_track_off_light</item>
         <item name="sudSwitchBarTrackOffOutlineColor">@color/sud_switch_track_outline_off_light</item>
-        <item name="sudEditBoxStyle">@style/SudEditBoxTheme</item>
+        <item name="sudEditBoxStyle">@style/SudGlifExpressiveEditBoxTheme</item>
         <item name="sudAccountAvatarMarginEnd">@dimen/sud_account_avatar_margin_end</item>
         <item name="sudAccountAvatarMaxHeight">@dimen/sud_account_avatar_max_height</item>
 
@@ -1334,6 +1334,10 @@
         <item name="boxCornerRadiusTopEnd">@dimen/sud_edit_text_corner_radius</item>
         <item name="boxCornerRadiusBottomStart">@dimen/sud_edit_text_corner_radius</item>
         <item name="boxCornerRadiusBottomEnd">@dimen/sud_edit_text_corner_radius</item>
+    </style>
+
+    <style name="SudGlifExpressiveEditBoxTheme">
+        <item name="colorPrimary">?attr/sudEditBoxColor</item>
     </style>
 
     <!-- Items styles -->
@@ -1890,6 +1894,8 @@
     <style name="SudGlifExpressiveDialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="android:fontFamily">@string/sudGlifExpressiveDialogFontFamily</item>
     </style>
+
+    <style name="SudMaterialYouAlertDialogTheme.DayNight" parent="SudMaterialYouAlertDialogTheme.Light"/>
 
     <style name="SudDateTimePickerDialogTheme" parent="Theme.AppCompat.Dialog">
         <item name="android:textAllCaps">false</item>
