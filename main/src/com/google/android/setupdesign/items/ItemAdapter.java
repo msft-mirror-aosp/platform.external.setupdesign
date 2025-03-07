@@ -89,32 +89,53 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
     }
   }
 
-  private Drawable getFirstBackground(Context context) {
-    TypedArray a =
-        context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundFirst});
+  private Drawable getFirstBackground(Context context, int position) {
+    IItem item = getItem(position);
+    TypedArray a = context
+            .getTheme()
+            .obtainStyledAttributes(
+                item.isActionable()
+                    ? new int[] {R.attr.sudItemBackgroundFirst}
+                    : new int[] {R.attr.sudNonActionableItemBackgroundFirst});
     Drawable firstBackground = a.getDrawable(0);
     a.recycle();
     return firstBackground;
   }
 
-  private Drawable getLastBackground(Context context) {
-    TypedArray a =
-        context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundLast});
+  private Drawable getLastBackground(Context context, int position) {
+    IItem item = getItem(position);
+    TypedArray a = context
+            .getTheme()
+            .obtainStyledAttributes(
+                item.isActionable()
+                    ? new int[] {R.attr.sudItemBackgroundLast}
+                    : new int[] {R.attr.sudNonActionableItemBackgroundLast});
     Drawable lastBackground = a.getDrawable(0);
     a.recycle();
     return lastBackground;
   }
 
-  private Drawable getMiddleBackground(Context context) {
-    TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackground});
+  private Drawable getMiddleBackground(Context context, int position) {
+    IItem item = getItem(position);
+    TypedArray a = context
+            .getTheme()
+            .obtainStyledAttributes(
+                item.isActionable()
+                    ? new int[] {R.attr.sudItemBackground}
+                    : new int[] {R.attr.sudNonActionableItemBackground});
     Drawable middleBackground = a.getDrawable(0);
     a.recycle();
     return middleBackground;
   }
 
-  private Drawable getSingleBackground(Context context) {
-    TypedArray a =
-        context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundSingle});
+  private Drawable getSingleBackground(Context context, int position) {
+    IItem item = getItem(position);
+    TypedArray a = context
+            .getTheme()
+            .obtainStyledAttributes(
+                item.isActionable()
+                    ? new int[] {R.attr.sudItemBackgroundSingle}
+                    : new int[] {R.attr.sudNonActionableItemBackgroundSingle});
     Drawable singleBackground = a.getDrawable(0);
     a.recycle();
     return singleBackground;
@@ -150,14 +171,15 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
     Drawable backgroundDrawable = null;
     GradientDrawable background = null;
 
+    // TODO add test case in updateBackground for list item to get background for Item
     if (isFirstItemOfGroup(position) && isLastItemOfGroup(position)) {
-      backgroundDrawable = getSingleBackground(convertView.getContext());
+      backgroundDrawable = getSingleBackground(convertView.getContext(), position);
     } else if (isFirstItemOfGroup(position)) {
-      backgroundDrawable = getFirstBackground(convertView.getContext());
+      backgroundDrawable = getFirstBackground(convertView.getContext(), position);
     } else if (isLastItemOfGroup(position)) {
-      backgroundDrawable = getLastBackground(convertView.getContext());
+      backgroundDrawable = getLastBackground(convertView.getContext(), position);
     } else {
-      backgroundDrawable = getMiddleBackground(convertView.getContext());
+      backgroundDrawable = getMiddleBackground(convertView.getContext(), position);
     }
     // TODO add test case for list item group corner partner config
     if (drawable instanceof LayerDrawable && ((LayerDrawable) drawable).getNumberOfLayers() >= 2) {

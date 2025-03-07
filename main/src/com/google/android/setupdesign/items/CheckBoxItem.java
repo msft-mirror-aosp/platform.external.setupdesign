@@ -20,8 +20,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.setupdesign.R;
 
 /**
@@ -100,15 +100,14 @@ public class CheckBoxItem extends Item implements CompoundButton.OnCheckedChange
    */
   public void toggle(View view) {
     checked = !checked;
-    final MaterialCheckBox checkBoxView = (MaterialCheckBox) view.findViewById(R.id.sud_items_check_box);
+    final CheckBox checkBoxView = (CheckBox) view.findViewById(R.id.sud_items_check_box);
     checkBoxView.setChecked(checked);
   }
 
   @Override
   public void onBindView(View view) {
     super.onBindView(view);
-    final MaterialCheckBox checkBoxView =
-        (MaterialCheckBox) view.findViewById(R.id.sud_items_check_box);
+    final CheckBox checkBoxView = (CheckBox) view.findViewById(R.id.sud_items_check_box);
     checkBoxView.setOnCheckedChangeListener(null);
     checkBoxView.setChecked(checked);
     checkBoxView.setOnCheckedChangeListener(this);

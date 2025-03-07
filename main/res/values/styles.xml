@@ -62,6 +62,11 @@
         <item name="sudItemBackgroundFirst">@null</item>
         <item name="sudItemBackgroundLast">@null</item>
         <item name="sudItemBackgroundSingle">@null</item>
+        <item name="sudNonActionableItemBackground">@null</item>
+        <item name="sudNonActionableItemBackgroundFirst">@null</item>
+        <item name="sudNonActionableItemBackgroundLast">@null</item>
+        <item name="sudNonActionableItemBackgroundSingle">@null</item>
+        <item name="sudListDividerHeight">0dp</item>
         <item name="sudListItemIconColor">@color/sud_list_item_icon_color_dark</item>
         <item name="sudMarginStart">@dimen/sud_layout_margin_sides</item>
         <item name="sudMarginEnd">@dimen/sud_layout_margin_sides</item>
@@ -76,6 +81,7 @@
         <item name="sudEditBoxStyle">@style/SudEditBoxTheme</item>
         <item name="sudEditBoxColor">@color/sud_color_accent_dark</item>
         <item name="sudItemContainerStyle">@style/SudItemContainer</item>
+        <item name="sudNonActionableItemContainerStyle">@style/SudItemContainer</item>
         <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
         <item name="sudBulletPointContainerStyle">@style/sudBulletPointContainer</item>
         <item name="sudAdditionalBodyTextStyle">@style/SudAdditionalBodyText</item>
@@ -158,6 +164,11 @@
         <item name="sudItemBackgroundFirst">@null</item>
         <item name="sudItemBackgroundLast">@null</item>
         <item name="sudItemBackgroundSingle">@null</item>
+        <item name="sudNonActionableItemBackground">@null</item>
+        <item name="sudNonActionableItemBackgroundFirst">@null</item>
+        <item name="sudNonActionableItemBackgroundLast">@null</item>
+        <item name="sudNonActionableItemBackgroundSingle">@null</item>
+        <item name="sudListDividerHeight">0dp</item>
         <item name="sudListItemIconColor">@color/sud_list_item_icon_color_light</item>
         <item name="sudMarginStart">@dimen/sud_layout_margin_sides</item>
         <item name="sudMarginEnd">@dimen/sud_layout_margin_sides</item>
@@ -172,6 +183,7 @@
         <item name="sudEditBoxStyle">@style/SudEditBoxTheme</item>
         <item name="sudEditBoxColor">@color/sud_color_accent_light</item>
         <item name="sudItemContainerStyle">@style/SudItemContainer</item>
+        <item name="sudNonActionableItemContainerStyle">@style/SudItemContainer</item>
         <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
         <item name="sudBulletPointContainerStyle">@style/sudBulletPointContainer</item>
         <item name="sudAdditionalBodyTextStyle">@style/SudAdditionalBodyText</item>
@@ -314,6 +326,7 @@
         <item name="sudEditBoxStyle">@style/SudEditBoxTheme</item>
         <item name="sudEditBoxColor">@color/sud_color_accent_glif_dark</item>
         <item name="sudItemContainerStyle">@style/SudItemContainer</item>
+        <item name="sudNonActionableItemContainerStyle">@style/SudItemContainer</item>
         <item name="sudItemIconContainerWidth">@dimen/sud_items_icon_container_width</item>
         <item name="sudItemIconContainerStyle">@style/SudItemIconContainer</item>
         <item name="sudItemPaddingTop">@dimen/sud_items_padding_top</item>
@@ -333,7 +346,12 @@
         <item name="sudItemBackgroundFirst">@null</item>
         <item name="sudItemBackgroundLast">@null</item>
         <item name="sudItemBackgroundSingle">@null</item>
+        <item name="sudNonActionableItemBackground">@null</item>
+        <item name="sudNonActionableItemBackgroundFirst">@null</item>
+        <item name="sudNonActionableItemBackgroundLast">@null</item>
+        <item name="sudNonActionableItemBackgroundSingle">@null</item>
         <item name="sudItemCornerRadius">0dp</item>
+        <item name="sudListDividerHeight">0dp</item>
         <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
         <item name="sudBulletPointContainerStyle">@style/sudBulletPointContainer</item>
         <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
@@ -466,6 +484,7 @@
         <item name="sudEditBoxStyle">@style/SudEditBoxTheme</item>
         <item name="sudEditBoxColor">@color/sud_color_accent_glif_light</item>
         <item name="sudItemContainerStyle">@style/SudItemContainer</item>
+        <item name="sudNonActionableItemContainerStyle">@style/SudItemContainer</item>
         <item name="sudItemIconContainerWidth">@dimen/sud_items_icon_container_width</item>
         <item name="sudItemIconContainerStyle">@style/SudItemIconContainer</item>
         <item name="sudItemPaddingTop">@dimen/sud_items_padding_top</item>
@@ -485,7 +504,12 @@
         <item name="sudItemBackgroundFirst">@null</item>
         <item name="sudItemBackgroundLast">@null</item>
         <item name="sudItemBackgroundSingle">@null</item>
+        <item name="sudNonActionableItemBackground">@null</item>
+        <item name="sudNonActionableItemBackgroundFirst">@null</item>
+        <item name="sudNonActionableItemBackgroundLast">@null</item>
+        <item name="sudNonActionableItemBackgroundSingle">@null</item>
         <item name="sudItemCornerRadius">0dp</item>
+        <item name="sudListDividerHeight">0dp</item>
         <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
         <item name="sudBulletPointContainerStyle">@style/sudBulletPointContainer</item>
         <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
@@ -613,6 +637,7 @@
         <item name="sudItemDescriptionTitleTextAppearence">@style/TextAppearance.SudMaterialYouDescription</item>
         <item name="sudDividerShown">false</item>
         <item name="sudItemContainerStyle">@style/SudItemContainerMaterialYou</item>
+        <item name="sudNonActionableItemContainerStyle">@style/SudItemContainerMaterialYou</item>
         <item name="sudItemPaddingTop">@dimen/sud_items_padding_top_material_you</item>
         <item name="sudItemPaddingBottom">@dimen/sud_items_padding_bottom_material_you</item>
         <item name="sudItemTitleStyle">@style/SudItemTitleMaterialYou</item>
@@ -655,6 +680,7 @@
         <item name="sudItemDescriptionTitleTextAppearence">@style/TextAppearance.SudMaterialYouDescription</item>
         <item name="sudDividerShown">false</item>
         <item name="sudItemContainerStyle">@style/SudItemContainerMaterialYou</item>
+        <item name="sudNonActionableItemContainerStyle">@style/SudItemContainerMaterialYou</item>
         <item name="sudItemPaddingTop">@dimen/sud_items_padding_top_material_you</item>
         <item name="sudItemPaddingBottom">@dimen/sud_items_padding_bottom_material_you</item>
         <item name="sudItemTitleStyle">@style/SudItemTitleMaterialYou</item>
@@ -789,6 +815,7 @@
         <item name="sudItemBackgroundPaddingStart">@dimen/sud_items_background_padding_start</item>
         <item name="sudItemBackgroundPaddingEnd">@dimen/sud_items_background_padding_end</item>
         <item name="sudItemContainerStyle">@style/SudGlifExpressiveItemContainer</item>
+        <item name="sudNonActionableItemContainerStyle">@style/SudGlifExpressiveItemContainer.NonActionable</item>
         <item name="sucFooterBarPrimaryFooterButtonEnabledTextColor">@color/sud_glif_expressive_footer_primary_button_enable_text_color</item>
         <item name="sucFooterBarPrimaryFooterButtonDisabledTextColor">@color/sud_glif_expressive_footer_primary_button_disable_text_color</item>
         <item name="sucFooterBarSecondaryFooterButtonEnabledTextColor">@color/sud_glif_expressive_footer_secondary_button_enable_text_color</item>
@@ -803,7 +830,13 @@
         <item name="sudItemBackgroundLast">@drawable/sud_item_background_last</item>
         <item name="sudItemBackgroundSingle">@drawable/sud_item_background_single</item>
         <item name="sudItemCornerRadius">@dimen/sud_glif_expressive_item_corner_radius</item>
+        <item name="sudListDividerHeight">@dimen/sud_glif_expressive_list_divider_height</item>
         <item name="sudItemBackgroundColor" tools:ignore="NewApi">?attr/colorSurfaceBright</item>
+        <item name="sudNonActionableItemBackground">@drawable/sud_non_actionable_item_background</item>
+        <item name="sudNonActionableItemBackgroundFirst">@drawable/sud_non_actionable_item_background_first</item>
+        <item name="sudNonActionableItemBackgroundLast">@drawable/sud_non_actionable_item_background_last</item>
+        <item name="sudNonActionableItemBackgroundSingle">@drawable/sud_non_actionable_item_background_single</item>
+        <item name="sudNonActionableItemBackgroundColor" tools:ignore="NewApi">?attr/colorSurfaceContainerHigh</item>
         <item name="sudItemTitleStyle">@style/SudItemTitleExpressive</item>
         <item name="sudItemSummaryStyle">@style/SudItemSummaryExpressive</item>
         <item name="sudItemSummaryPaddingTop">@dimen/sud_items_summary_margin_top_expressive</item>
@@ -965,6 +998,7 @@
         <item name="sudItemBackgroundPaddingStart">@dimen/sud_items_background_padding_start</item>
         <item name="sudItemBackgroundPaddingEnd">@dimen/sud_items_background_padding_end</item>
         <item name="sudItemContainerStyle">@style/SudGlifExpressiveItemContainer</item>
+        <item name="sudNonActionableItemContainerStyle">@style/SudGlifExpressiveItemContainer.NonActionable</item>
         <item name="sucFooterBarPrimaryFooterButtonEnabledTextColor">@color/sud_glif_expressive_footer_primary_button_enable_text_color</item>
         <item name="sucFooterBarPrimaryFooterButtonDisabledTextColor">@color/sud_glif_expressive_footer_primary_button_disable_text_color</item>
         <item name="sucFooterBarSecondaryFooterButtonEnabledTextColor">@color/sud_glif_expressive_footer_secondary_button_enable_text_color</item>
@@ -979,7 +1013,13 @@
         <item name="sudItemBackgroundLast">@drawable/sud_item_background_last</item>
         <item name="sudItemBackgroundSingle">@drawable/sud_item_background_single</item>
         <item name="sudItemCornerRadius">@dimen/sud_glif_expressive_item_corner_radius</item>
+        <item name="sudListDividerHeight">@dimen/sud_glif_expressive_list_divider_height</item>
         <item name="sudItemBackgroundColor" tools:ignore="NewApi">?attr/colorSurfaceBright</item>
+        <item name="sudNonActionableItemBackground">@drawable/sud_non_actionable_item_background</item>
+        <item name="sudNonActionableItemBackgroundFirst">@drawable/sud_non_actionable_item_background_first</item>
+        <item name="sudNonActionableItemBackgroundLast">@drawable/sud_non_actionable_item_background_last</item>
+        <item name="sudNonActionableItemBackgroundSingle">@drawable/sud_non_actionable_item_background_single</item>
+        <item name="sudNonActionableItemBackgroundColor" tools:ignore="NewApi">?attr/colorSurfaceContainerHigh</item>
         <item name="sudItemTitleStyle">@style/SudItemTitleExpressive</item>
         <item name="sudItemSummaryStyle">@style/SudItemSummaryExpressive</item>
         <item name="sudItemSummaryPaddingTop">@dimen/sud_items_summary_margin_top_expressive</item>
@@ -1376,6 +1416,10 @@
         <item name="android:paddingStart" tools:ignore="NewApi">?attr/sudItemBackgroundPaddingStart</item>
         <item name="android:paddingTop">@dimen/sud_items_padding_top_expressive</item>
         <item name="android:minHeight">@dimen/sud_items_min_height_expressive</item>
+    </style>
+
+    <style name="SudGlifExpressiveItemContainer.NonActionable" parent="SudGlifExpressiveItemContainer">
+        <item name="android:background">?attr/sudNonActionableItemBackground</item>
     </style>
 
     <style name="SudItemIconContainer">
