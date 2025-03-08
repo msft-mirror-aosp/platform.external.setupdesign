@@ -386,6 +386,7 @@
     <declare-styleable name="SudInfoFooterView">
         <attr name="android:icon" />
         <attr name="android:title" />
+        <attr name="sudAlignParentBottom" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="SudDescriptionMixin">
@@ -423,6 +424,7 @@
         <attr name="sudIcon" format="reference" />
         <attr name="sudTitleText" format="string|reference" />
         <attr name="sudCardViewSkipClickSelection" format="boolean" />
+        <attr name="android:lineHeight" />
     </declare-styleable>
 
     <attr name="sudCardContainerStyle" format="reference" />

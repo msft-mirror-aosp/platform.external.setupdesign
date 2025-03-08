@@ -21,6 +21,8 @@ import static com.google.android.setupcompat.partnerconfig.PartnerConfigHelper.i
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -33,6 +35,8 @@ import com.google.android.setupdesign.view.RichTextView;
 
 /** Helper class to apply partner configurations to a textView. */
 final class TextViewPartnerStyler {
+
+  private static final String TAG = "TextViewPartnerStyler";
 
   /** Normal font weight. */
   private static final int FONT_WEIGHT_NORMAL = 400;
@@ -81,10 +85,26 @@ final class TextViewPartnerStyler {
       }
     }
 
+    String fontVariationSettings = null;
+    boolean isFontVariationSettingsEnabled = false;
+    if (textPartnerConfigs.getTextFontVariationSettingsConfig() != null
+        && PartnerConfigHelper.get(context)
+            .isPartnerConfigAvailable(textPartnerConfigs.getTextFontVariationSettingsConfig())) {
+      fontVariationSettings =
+          PartnerConfigHelper.get(context)
+              .getString(context, textPartnerConfigs.getTextFontVariationSettingsConfig());
+      if (isFontVariationSupported(fontVariationSettings)) {
+        isFontVariationSettingsEnabled = true;
+      }
+    }
+
     Typeface fontFamily = null;
+    // If the font variation settings is enabled, we will skip the font family from the partner
+    // config to avoid font variation settings can't be applied.
     if (textPartnerConfigs.getTextFontFamilyConfig() != null
         && PartnerConfigHelper.get(context)
-            .isPartnerConfigAvailable(textPartnerConfigs.getTextFontFamilyConfig())) {
+            .isPartnerConfigAvailable(textPartnerConfigs.getTextFontFamilyConfig())
+        && !isFontVariationSettingsEnabled) {
       String fontFamilyName =
           PartnerConfigHelper.get(context)
               .getString(context, textPartnerConfigs.getTextFontFamilyConfig());
@@ -92,10 +112,13 @@ final class TextViewPartnerStyler {
     }
 
     Typeface font;
+    // If the font variation settings is enabled, we will skip the font weight from the partner
+    // config to avoid font variation settings can't be applied.
     if (isFontWeightEnabled(context)
         && textPartnerConfigs.getTextFontWeightConfig() != null
         && PartnerConfigHelper.get(context)
-            .isPartnerConfigAvailable(textPartnerConfigs.getTextFontWeightConfig())) {
+            .isPartnerConfigAvailable(textPartnerConfigs.getTextFontWeightConfig())
+        && !isFontVariationSettingsEnabled) {
       int weight =
           PartnerConfigHelper.get(context)
               .getInteger(
@@ -112,6 +135,14 @@ final class TextViewPartnerStyler {
       textView.setTypeface(font);
     }
 
+    if (textView != null && isFontVariationSupported(fontVariationSettings)) {
+      try {
+        textView.setFontVariationSettings(fontVariationSettings);
+      } catch (Exception ex) {
+        Log.e(TAG, "Failed to set font variation settings: " + ex.getMessage());
+      }
+    }
+
     if (textView instanceof RichTextView && textPartnerConfigs.getLinkTextFontFamilyConfig() != null
         && PartnerConfigHelper.get(context)
         .isPartnerConfigAvailable(textPartnerConfigs.getLinkTextFontFamilyConfig())) {
@@ -126,6 +157,10 @@ final class TextViewPartnerStyler {
 
     applyPartnerCustomizationVerticalMargins(textView, textPartnerConfigs);
     textView.setGravity(textPartnerConfigs.getTextGravity());
+  }
+
+  private static boolean isFontVariationSupported(String fontVariationSettings) {
+    return fontVariationSettings != null && !TextUtils.isEmpty(fontVariationSettings);
   }
 
   /**
@@ -192,6 +227,7 @@ final class TextViewPartnerStyler {
     private final PartnerConfig textLinkFontFamilyConfig;
     private final PartnerConfig textMarginTopConfig;
     private final PartnerConfig textMarginBottomConfig;
+    private PartnerConfig textFontVariationSettingsConfig = null;
     private final int textGravity;
 
     public TextPartnerConfigs(
@@ -212,6 +248,29 @@ final class TextViewPartnerStyler {
       this.textLinkFontFamilyConfig = textLinkFontFamilyConfig;
       this.textMarginTopConfig = textMarginTopConfig;
       this.textMarginBottomConfig = textMarginBottomConfig;
+      this.textGravity = textGravity;
+    }
+
+    public TextPartnerConfigs(
+        @Nullable PartnerConfig textColorConfig,
+        @Nullable PartnerConfig textLinkedColorConfig,
+        @Nullable PartnerConfig textSizeConfig,
+        @Nullable PartnerConfig textFontFamilyConfig,
+        @Nullable PartnerConfig textFontWeightConfig,
+        @Nullable PartnerConfig textLinkFontFamilyConfig,
+        @Nullable PartnerConfig textMarginTopConfig,
+        @Nullable PartnerConfig textMarginBottomConfig,
+        @Nullable PartnerConfig textFontVariationSettingsConfig,
+        int textGravity) {
+      this.textColorConfig = textColorConfig;
+      this.textLinkedColorConfig = textLinkedColorConfig;
+      this.textSizeConfig = textSizeConfig;
+      this.textFontFamilyConfig = textFontFamilyConfig;
+      this.textFontWeightConfig = textFontWeightConfig;
+      this.textLinkFontFamilyConfig = textLinkFontFamilyConfig;
+      this.textMarginTopConfig = textMarginTopConfig;
+      this.textMarginBottomConfig = textMarginBottomConfig;
+      this.textFontVariationSettingsConfig = textFontVariationSettingsConfig;
       this.textGravity = textGravity;
     }
 
@@ -245,6 +304,10 @@ final class TextViewPartnerStyler {
 
     public PartnerConfig getTextMarginBottom() {
       return textMarginBottomConfig;
+    }
+
+    public PartnerConfig getTextFontVariationSettingsConfig() {
+      return textFontVariationSettingsConfig;
     }
 
     public int getTextGravity() {
