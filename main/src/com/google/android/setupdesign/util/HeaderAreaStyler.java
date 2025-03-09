@@ -77,6 +77,7 @@ public final class HeaderAreaStyler {
             /* textLinkFontFamilyConfig= */ null,
             PartnerConfig.CONFIG_HEADER_TEXT_MARGIN_TOP,
             PartnerConfig.CONFIG_HEADER_TEXT_MARGIN_BOTTOM,
+            PartnerConfig.CONFIG_HEADER_FONT_VARIATION_SETTINGS,
             PartnerStyleHelper.getLayoutGravity(header.getContext())));
   }
 

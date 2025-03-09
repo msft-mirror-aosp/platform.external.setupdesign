@@ -23,6 +23,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 import com.google.android.setupdesign.R;
 
@@ -35,6 +36,7 @@ public class InfoFooterView extends LinearLayout {
 
   @Nullable private Drawable icon;
   @Nullable private CharSequence title;
+  private Boolean alignParentBottom = true;
 
   private RichTextView titleView;
   private ImageView iconView;
@@ -49,6 +51,7 @@ public class InfoFooterView extends LinearLayout {
     TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SudInfoFooterView);
     icon = a.getDrawable(R.styleable.SudInfoFooterView_android_icon);
     title = a.getText(R.styleable.SudInfoFooterView_android_title);
+    alignParentBottom = a.getBoolean(R.styleable.SudInfoFooterView_sudAlignParentBottom, true);
     a.recycle();
     init();
   }
@@ -73,6 +76,14 @@ public class InfoFooterView extends LinearLayout {
     if (iconView != null && icon != null) {
       iconView.setImageDrawable(icon);
       iconView.setVisibility(View.VISIBLE);
+    }
+    if (!alignParentBottom) {
+      View infoFooterContainer = findViewById(R.id.sud_info_footer_container);
+      RelativeLayout.LayoutParams layoutParams =
+          (RelativeLayout.LayoutParams) infoFooterContainer.getLayoutParams();
+      // By default, ALIGN_PARENT_BOTTOM is set. Setting it to 0 removes the rule.
+      layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+      infoFooterContainer.setLayoutParams(layoutParams);
     }
   }
 
