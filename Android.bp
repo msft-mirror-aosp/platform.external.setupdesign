@@ -36,6 +36,7 @@ android_library {
         "androidx.window_window",
         "com.google.android.material_material",
         "error_prone_annotations",
+        "lottie",
         "setupcompat",
         "setupdesign-strings",
     ],

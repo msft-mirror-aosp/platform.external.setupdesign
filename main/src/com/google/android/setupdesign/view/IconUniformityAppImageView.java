@@ -143,6 +143,16 @@ public class IconUniformityAppImageView extends ImageView
     super.onDraw(canvas);
   }
 
+  /**
+   * Sets the color of backdrop drawable.
+   *
+   * @param backdropColorResId the resource id of the backdrop color
+   */
+  public void setBackdropDrawableColor(int backdropColorResId) {
+    this.backdropColorResId = backdropColorResId;
+    backdropDrawable.setColor(ContextCompat.getColor(getContext(), backdropColorResId));
+  }
+
   private void setLegacyTransformationMatrix(
       float drawableWidth, float drawableHeight, float imageViewWidth, float imageViewHeight) {
     Matrix scaleMatrix = new Matrix();

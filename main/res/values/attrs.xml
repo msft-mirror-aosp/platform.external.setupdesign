@@ -212,6 +212,7 @@
     <attr name="sudCameraPreviewStyle" format="reference" />
     <attr name="sudQrFinishStyle" format="reference" />
     <attr name="sudExpandedContent" format="reference" />
+    <attr name="sudAnimationId" format="reference" />
 
     <!-- EditBox -->
     <attr name="sudEditBoxStyle" format="reference" />
@@ -368,6 +369,7 @@
     </declare-styleable>
 
     <declare-styleable name="SudIllustrationItem">
+        <attr name="sudAnimationId" />
         <attr name="android:drawable" />
     </declare-styleable>
 
