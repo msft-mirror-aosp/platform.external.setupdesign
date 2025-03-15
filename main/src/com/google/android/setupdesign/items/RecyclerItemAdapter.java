@@ -181,32 +181,53 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     return viewHolder;
   }
 
-  private Drawable getFirstBackground(Context context) {
-    TypedArray a =
-        context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundFirst});
+  private Drawable getFirstBackground(Context context, int position) {
+    IItem item = getItem(position);
+    TypedArray a = context
+        .getTheme()
+        .obtainStyledAttributes(
+            item.isActionable()
+                ? new int[] {R.attr.sudItemBackgroundFirst}
+                : new int[] {R.attr.sudNonActionableItemBackgroundFirst});
     Drawable firstBackground = a.getDrawable(0);
     a.recycle();
     return firstBackground;
   }
 
-  private Drawable getLastBackground(Context context) {
-    TypedArray a =
-        context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundLast});
+  private Drawable getLastBackground(Context context, int position) {
+    IItem item = getItem(position);
+    TypedArray a = context
+        .getTheme()
+        .obtainStyledAttributes(
+            item.isActionable()
+                ? new int[] {R.attr.sudItemBackgroundLast}
+                : new int[] {R.attr.sudNonActionableItemBackgroundLast});
     Drawable lastBackground = a.getDrawable(0);
     a.recycle();
     return lastBackground;
   }
 
-  private Drawable getMiddleBackground(Context context) {
-    TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackground});
+  private Drawable getMiddleBackground(Context context, int position) {
+    IItem item = getItem(position);
+    TypedArray a = context
+        .getTheme()
+        .obtainStyledAttributes(
+            item.isActionable()
+                ? new int[] {R.attr.sudItemBackground}
+                : new int[] {R.attr.sudNonActionableItemBackground});
     Drawable middleBackground = a.getDrawable(0);
     a.recycle();
     return middleBackground;
   }
 
-  private Drawable getSingleBackground(Context context) {
-    TypedArray a =
-        context.getTheme().obtainStyledAttributes(new int[] {R.attr.sudItemBackgroundSingle});
+  private Drawable getSingleBackground(Context context, int position) {
+    IItem item = getItem(position);
+    TypedArray a = context
+        .getTheme()
+        .obtainStyledAttributes(
+            item.isActionable()
+                ? new int[] {R.attr.sudItemBackgroundSingle}
+                : new int[] {R.attr.sudNonActionableItemBackgroundSingle});
     Drawable singleBackground = a.getDrawable(0);
     a.recycle();
     return singleBackground;
@@ -246,14 +267,15 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
       Drawable backgroundDrawable = null;
       GradientDrawable background = null;
 
+      // TODO add test case in updateBackground for list item to get background for Item
       if (isFirstItemOfGroup(position) && isLastItemOfGroup(position)) {
-        backgroundDrawable = getSingleBackground(view.getContext());
+        backgroundDrawable = getSingleBackground(view.getContext(), position);
       } else if (isFirstItemOfGroup(position)) {
-        backgroundDrawable = getFirstBackground(view.getContext());
+        backgroundDrawable = getFirstBackground(view.getContext(), position);
       } else if (isLastItemOfGroup(position)) {
-        backgroundDrawable = getLastBackground(view.getContext());
+        backgroundDrawable = getLastBackground(view.getContext(), position);
       } else {
-        backgroundDrawable = getMiddleBackground(view.getContext());
+        backgroundDrawable = getMiddleBackground(view.getContext(), position);
       }
 
       if (backgroundDrawable instanceof GradientDrawable) {
