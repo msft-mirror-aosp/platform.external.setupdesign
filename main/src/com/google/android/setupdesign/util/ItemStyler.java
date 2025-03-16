@@ -178,7 +178,7 @@ public final class ItemStyler {
     }
   }
 
-  private static void applyPartnerCustomizationItemViewLayoutStyle(@Nullable View listItemView) {
+  public static void applyPartnerCustomizationItemViewLayoutStyle(@Nullable View listItemView) {
     Context context = listItemView.getContext();
     float paddingTop;
     if (PartnerConfigHelper.get(context)

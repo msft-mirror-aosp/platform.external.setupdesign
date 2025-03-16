@@ -60,4 +60,13 @@ public interface IItem {
   default boolean isRecyclable() {
     return true;
   }
+
+  /**
+   * Check if the item is Actionable in the list view to update the actionable background.
+   *
+   * @return True if this item is actionable.
+   */
+  default boolean isActionable() {
+    return true;
+  }
 }

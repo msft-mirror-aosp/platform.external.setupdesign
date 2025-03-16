@@ -153,6 +153,7 @@
     <attr name="sudTopRoundedCorner" format="boolean" />
     <attr name="sudBottomRoundedCorner" format="boolean" />
     <attr name="sudItemContainerStyle" format="reference"/>
+    <attr name="sudNonActionableItemContainerStyle" format="reference"/>
     <attr name="sudPromoItemContainerStyle" format="reference"/>
     <attr name="sudPromoItemIconContainerStyle" format="reference"/>
     <attr name="sudPromoItemTitleStyle" format="reference"/>
@@ -180,6 +181,7 @@
     <attr name="sudItemBackgroundPaddingStart" format="dimension|reference" />
     <attr name="sudItemBackgroundPaddingEnd" format="dimension|reference" />
     <attr name="sudItemBackgroundColor" format="color|reference" />
+    <attr name="sudNonActionableItemBackgroundColor" format="color|reference" />
     <attr name="sudItemDescriptionPaddingTop" format="dimension|reference" />
     <attr name="sudItemDescriptionPaddingBottom" format="dimension|reference" />
     <attr name="sudItemSummaryPaddingTop" format="dimension|reference" />
@@ -188,7 +190,12 @@
     <attr name="sudItemBackgroundFirst" format="color|reference" />
     <attr name="sudItemBackgroundLast" format="color|reference" />
     <attr name="sudItemBackgroundSingle" format="color|reference" />
+    <attr name="sudNonActionableItemBackground" format="color|reference" />
+    <attr name="sudNonActionableItemBackgroundFirst" format="color|reference" />
+    <attr name="sudNonActionableItemBackgroundLast" format="color|reference" />
+    <attr name="sudNonActionableItemBackgroundSingle" format="color|reference" />
     <attr name="sudItemCornerRadius" format="dimension|reference" />
+    <attr name="sudListDividerHeight" format="dimension|reference" />
     <attr name="sudBulletPointContainerStyle" format="reference" />
     <attr name="sudBulletPointIconContainerStyle" format="reference" />
     <attr name="sudAdditionalBodyTextStyle" format="reference" />
@@ -205,6 +212,7 @@
     <attr name="sudCameraPreviewStyle" format="reference" />
     <attr name="sudQrFinishStyle" format="reference" />
     <attr name="sudExpandedContent" format="reference" />
+    <attr name="sudAnimationId" format="reference" />
 
     <!-- EditBox -->
     <attr name="sudEditBoxStyle" format="reference" />
@@ -361,6 +369,7 @@
     </declare-styleable>
 
     <declare-styleable name="SudIllustrationItem">
+        <attr name="sudAnimationId" />
         <attr name="android:drawable" />
     </declare-styleable>
 
