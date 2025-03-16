@@ -22,11 +22,14 @@ import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION_CODES;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.util.ForceTwoPaneHelper;
 import com.google.android.setupdesign.template.RecyclerMixin;
 import com.google.android.setupdesign.template.RecyclerViewScrollHandlingDelegate;
@@ -81,6 +84,12 @@ public class GlifRecyclerLayout extends GlifLayout {
       tryApplyPartnerCustomizationContentPaddingTopStyle(view);
     }
     updateLandscapeMiddleHorizontalSpacing();
+
+    if (PartnerConfigHelper.isGlifExpressiveEnabled(getContext())) {
+      initScrollingListener();
+    }
+
+    initBackButton();
   }
 
   @Override
@@ -93,9 +102,17 @@ public class GlifRecyclerLayout extends GlifLayout {
   protected View onInflateTemplate(LayoutInflater inflater, int template) {
     if (template == 0) {
       template = R.layout.sud_glif_recycler_template;
+
       // if the activity is embedded should apply an embedded layout.
       if (isEmbeddedActivityOnePaneEnabled(getContext())) {
+        if (isGlifExpressiveEnabled()) {
+          template = R.layout.sud_glif_expressive_recycler_embedded_template;
+        } else {
         template = R.layout.sud_glif_recycler_embedded_template;
+        }
+        // TODO add unit test for this case.
+      } else if (isGlifExpressiveEnabled()) {
+        template = R.layout.sud_glif_expressive_recycler_template;
       } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
         template = R.layout.sud_glif_recycler_template_two_pane;
       }
@@ -134,6 +151,24 @@ public class GlifRecyclerLayout extends GlifLayout {
       }
     }
     return super.findViewById(id);
+  }
+
+  @Override
+  protected void initScrollingListener() {
+    RecyclerView recyclerView = getRecyclerView();
+    if (recyclerView != null) {
+      recyclerView.addOnScrollListener(
+          new OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+              super.onScrolled(recyclerView, dx, dy);
+              // direction > 0 means view can scroll down, direction < 0 means view can scroll up.
+              // Here we use direction > 0 to detect whether the view can be scrolling down or not.
+              boolean isAtBottom = !recyclerView.canScrollVertically(/* direction= */ 1);
+              onScrolling(isAtBottom);
+            }
+          });
+    }
   }
 
   /** @see RecyclerMixin#setDividerItemDecoration(DividerItemDecoration) */
