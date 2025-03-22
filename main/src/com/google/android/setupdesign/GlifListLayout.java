@@ -84,10 +84,6 @@ public class GlifListLayout extends GlifLayout {
     }
     updateLandscapeMiddleHorizontalSpacing();
 
-    if (PartnerConfigHelper.isGlifExpressiveEnabled(getContext())) {
-      initScrollingListener();
-    }
-
     initBackButton();
   }
 
@@ -95,6 +91,9 @@ public class GlifListLayout extends GlifLayout {
   protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
     super.onLayout(changed, left, top, right, bottom);
     listMixin.onLayout();
+    if (PartnerConfigHelper.isGlifExpressiveEnabled(getContext())) {
+      initScrollingListener();
+    }
   }
 
   @Override
@@ -132,9 +131,6 @@ public class GlifListLayout extends GlifLayout {
     ListView listView = null;
     if (listMixin != null) {
       listView = listMixin.getListView();
-    }
-
-    if (listView != null) {
       listView.setOnScrollListener(
           new OnScrollListener() {
             @Override
