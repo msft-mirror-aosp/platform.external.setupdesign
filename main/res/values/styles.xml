@@ -119,6 +119,8 @@
         <item name="sudCameraPreviewStyle">@null</item>
         <item name="sudItemIconStyle">@style/SudItemIcon</item>
         <item name="sudQrFinishStyle">@null</item>
+        <item name="sudItemIconDefaultTint">@android:color/transparent</item>
+        <item name="sudItemRadioButtonStyle">@style/SudItemRadioButton</item>
     </style>
 
     <style name="SudThemeMaterial.Light" parent="Theme.AppCompat.Light.NoActionBar">
@@ -221,6 +223,8 @@
         <item name="sudItemIconStyle">@style/SudItemIcon</item>
         <item name="sudCameraPreviewStyle">@null</item>
         <item name="sudQrFinishStyle">@null</item>
+        <item name="sudItemIconDefaultTint">@android:color/transparent</item>
+        <item name="sudItemRadioButtonStyle">@style/SudItemRadioButton</item>
     </style>
 
     <style name="SudBaseThemeGlif" parent="Theme.AppCompat.NoActionBar">
@@ -288,6 +292,7 @@
         <item name="sudListItemIconColor">@color/sud_list_item_icon_color_dark</item>
         <item name="sudMarginStart">@dimen/sud_glif_margin_start</item>
         <item name="sudMarginEnd">@dimen/sud_glif_margin_end</item>
+        <item name="sudBackButtonMarginStart">?attr/sudMarginStart</item>
         <item name="sudScrollIndicators">bottom</item>
         <item name="sudScrollBarThumb">@drawable/sud_scroll_bar_dark</item>
         <item name="textAppearanceListItem">@style/TextAppearance.SudGlifItemTitle</item>
@@ -378,6 +383,8 @@
         <item name="sudItemIconStyle">@style/SudItemIcon</item>
         <item name="sudCameraPreviewStyle">@null</item>
         <item name="sudQrFinishStyle">@null</item>
+        <item name="sudItemIconDefaultTint">@android:color/transparent</item>
+        <item name="sudItemRadioButtonStyle">@style/SudItemRadioButton</item>
     </style>
     <style name="SudThemeGlif" parent="SudBaseThemeGlif"/>
 
@@ -446,6 +453,7 @@
         <item name="sudListItemIconColor">@color/sud_list_item_icon_color_light</item>
         <item name="sudMarginStart">@dimen/sud_glif_margin_start</item>
         <item name="sudMarginEnd">@dimen/sud_glif_margin_end</item>
+        <item name="sudBackButtonMarginStart">?attr/sudMarginStart</item>
         <item name="sudScrollIndicators">bottom</item>
         <item name="sudScrollBarThumb">@drawable/sud_scroll_bar_light</item>
         <item name="textAppearanceListItem">@style/TextAppearance.SudGlifItemTitle</item>
@@ -536,6 +544,8 @@
         <item name="sudItemIconStyle">@style/SudItemIcon</item>
         <item name="sudCameraPreviewStyle">@null</item>
         <item name="sudQrFinishStyle">@null</item>
+        <item name="sudItemIconDefaultTint">@android:color/transparent</item>
+        <item name="sudItemRadioButtonStyle">@style/SudItemRadioButton</item>
     </style>
     <style name="SudThemeGlif.Light" parent="SudBaseThemeGlif.Light"/>
 
@@ -695,6 +705,7 @@
     </style>
 
     <style name="SudBaseThemeGlifExpressive" parent="Theme.Material3.DynamicColors.Dark.NoActionBar">
+        <item name="android:overScrollMode">never</item>
         <!-- Copied from values style SudThemeBaseGlif -->
         <item name="android:indeterminateTint" tools:ignore="NewApi">?attr/colorControlActivated</item>
         <!-- Ensure that the navigation bar has enough contrast when a fully transparent background
@@ -802,6 +813,7 @@
         <item name="android:colorBackground" tools:ignore="NewApi">?attr/colorSurfaceContainer</item>
         <item name="sudMarginStart">@dimen/sud_glif_expressive_margin_start</item>
         <item name="sudMarginEnd">@dimen/sud_glif_expressive_margin_end</item>
+        <item name="sudBackButtonMarginStart">@dimen/sud_glif_expressive_back_button_margin_start</item>
         <item name="sudGlifContentPaddingTop">@dimen/sud_glif_expressive_content_padding_top</item>
         <item name="sucFooterButtonPaddingStart">@dimen/sud_glif_expressive_button_padding</item>
         <item name="sucFooterButtonPaddingEnd">@dimen/sud_glif_expressive_button_padding</item>
@@ -847,7 +859,7 @@
         <item name="sudInfoFooterContainerStyle">@style/sudInfoFooterContainerExpressive</item>
         <item name="sudInfoFooterIconContainerStyle">@style/sudInfoFooterIconContainer</item>
         <item name="sudInfoFooterIconStyle">@style/sudInfoFooterIconExpressive</item>
-        <item name="sudInfoFooterTitleStyle">@style/sudInfoFooterTitle</item>
+        <item name="sudInfoFooterTitleStyle">@style/sudInfoFooterTitleExpressive</item>
         <item name="sucFooterBarButtonFontWeight">@integer/sud_glif_expressive_footer_button_weight</item>
         <item name="sudButtonCornerRadius">@dimen/sud_glif_expressive_footer_button_radius</item>
         <item name="sucFooterBarButtonTextSize">@dimen/sud_glif_expressive_footer_button_text_size</item>
@@ -876,9 +888,12 @@
         <item name="sudItemIconStyle">@style/SudExpressiveItemIcon</item>
         <item name="sudCameraPreviewStyle">@style/SudExpressiveCameraPreview</item>
         <item name="sudQrFinishStyle">@style/SudExpressiveQrFinish</item>
+        <item name="sudItemIconDefaultTint">@color/sud_system_on_surface_variant_dark</item>
+        <item name="sudItemRadioButtonStyle">@style/SudExpressiveItemRadioButton</item>
     </style>
 
     <style name="SudBaseThemeGlifExpressive.Light" parent="Theme.Material3.DynamicColors.Light.NoActionBar">
+        <item name="android:overScrollMode">never</item>
         <!-- Copied from values style SudThemeBaseGlif.Light -->
         <item name="android:indeterminateTint" tools:ignore="NewApi">?attr/colorControlActivated</item>
         <!-- Ensure that the navigation bar has enough contrast when a fully transparent background
@@ -985,6 +1000,7 @@
         <item name="android:colorBackground" tools:ignore="NewApi">?attr/colorSurfaceContainer</item>
         <item name="sudMarginStart">@dimen/sud_glif_expressive_margin_start</item>
         <item name="sudMarginEnd">@dimen/sud_glif_expressive_margin_end</item>
+        <item name="sudBackButtonMarginStart">@dimen/sud_glif_expressive_back_button_margin_start</item>
         <item name="sucFooterButtonPaddingStart">@dimen/sud_glif_expressive_button_padding</item>
         <item name="sucFooterButtonPaddingEnd">@dimen/sud_glif_expressive_button_padding</item>
         <item name="sucGlifIconMarginTop">@dimen/sud_glif_expressive_icon_margin_top</item>
@@ -1035,7 +1051,7 @@
         <item name="sudInfoFooterContainerStyle">@style/sudInfoFooterContainerExpressive</item>
         <item name="sudInfoFooterIconContainerStyle">@style/sudInfoFooterIconContainer</item>
         <item name="sudInfoFooterIconStyle">@style/sudInfoFooterIconExpressive</item>
-        <item name="sudInfoFooterTitleStyle">@style/sudInfoFooterTitle</item>
+        <item name="sudInfoFooterTitleStyle">@style/sudInfoFooterTitleExpressive</item>
         <item name="sudItemIconContainerStyle">@style/SudExpressiveItemIconContainer</item>
         <item name="textAppearanceListItem">@style/TextAppearance.SudExpressiveItemTitle</item>
         <item name="textAppearanceListItemSmall">@style/TextAppearance.SudExpressiveItemSummary</item>
@@ -1059,6 +1075,8 @@
         <item name="sudItemIconStyle">@style/SudExpressiveItemIcon</item>
         <item name="sudCameraPreviewStyle">@style/SudExpressiveCameraPreview</item>
         <item name="sudQrFinishStyle">@style/SudExpressiveQrFinish</item>
+        <item name="sudItemIconDefaultTint">@color/sud_system_on_surface_variant_light</item>
+        <item name="sudItemRadioButtonStyle">@style/SudExpressiveItemRadioButton</item>
     </style>
 
     <style name="SudThemeGlifExpressive" parent="SudBaseThemeGlifExpressive" />
@@ -1508,9 +1526,11 @@
     <style name="SudPromoItemTitle">
         <item name="android:textAppearance">?attr/textAppearanceListItem</item>
         <item name="android:layout_marginBottom">@dimen/sud_items_summary_margin_top</item>
+        <item name="android:lineHeight" tools:targetApi="28">@dimen/sud_glif_promo_card_title_line_height</item>
     </style>
     <style name="SudPromoItemSummary">
         <item name="android:textAppearance">?attr/textAppearanceListItemSmall</item>
+        <item name="android:lineHeight" tools:targetApi="28">@dimen/sud_glif_promo_card_summary_line_height</item>
     </style>
 
     <style name="SudItemContainer.IllustrationItem" parent="SudItemContainer">
@@ -1544,6 +1564,7 @@
 
     <style name="SudItemSummaryExpressive">
         <item name="android:textAppearance">?attr/textAppearanceListItemSmall</item>
+        <item name="android:lineHeight" tools:targetApi="28">@dimen/sud_glif_expressive_item_summary_line_height</item>
         <item name="android:layout_marginBottom">?attr/sudItemSummaryPaddingBottom</item>
     </style>
 
@@ -1552,6 +1573,14 @@
         <item name="android:paddingTop">?attr/sudItemPaddingTop</item>
         <item name="android:paddingBottom">?attr/sudItemPaddingBottom</item>
     </style>
+
+    <style name="SudItemRadioButton">
+        <item name="android:paddingEnd">@dimen/sud_items_radio_button_padding_end</item>
+        <item name="android:paddingRight">@dimen/sud_items_radio_button_padding_end</item>
+    </style>
+
+    <!-- the expressive style for Item Radio button wiil provided by the material theme-->
+    <style name="SudExpressiveItemRadioButton" />
 
     <style name="SudItemTitle">
         <item name="android:textAppearance">?attr/textAppearanceListItem</item>
@@ -1563,7 +1592,11 @@
 
     <style name="SudItemTitleExpressive">
         <item name="android:textAppearance">?attr/textAppearanceListItem</item>
+        <item name="android:lineHeight" tools:targetApi="28">@dimen/sud_glif_expressive_item_title_line_height</item>
         <item name="android:layout_marginBottom">?attr/sudItemSummaryPaddingTop</item>
+        <item name="android:textFontWeight" tools:targetApi="28">500</item>
+        <item name="fontFamily">google-sans-flex</item>
+        <item name="android:fontFamily">google-sans-flex</item>
     </style>
 
     <style name="SudItemTitle.GlifDescription" parent="SudItemTitle">
@@ -1586,8 +1619,10 @@
 
     <style name="SudExpressiveItemTitle.SectionHeader" parent="SudItemTitle">
         <item name="android:textSize">@dimen/sud_items_section_header_text_size</item>
-        <item name="android:fontFamily">@string/sudFontSecondaryMedium</item>
         <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:textFontWeight" tools:targetApi="28">500</item>
+        <item name="fontFamily">google-sans-flex</item>
+        <item name="android:fontFamily">google-sans-flex</item>
     </style>
 
     <style name="SudSwitchStyle">
@@ -1658,6 +1693,8 @@
         <item name="android:textFontWeight" tools:targetApi="28">500</item>
         <item name="fontFamily">google-sans-flex</item>
         <item name="android:fontFamily">google-sans-flex</item>
+        <item name="fontVariationSettings">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 500.0</item>
+        <item name="android:fontVariationSettings" tools:targetApi="28">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 500.0</item>
     </style>
 
     <style name="SudGlifDescription" parent="SudDescription.Glif">
@@ -1690,7 +1727,6 @@
 
     <style name="SudGlifDescriptionExpressive" parent="SudGlifDescriptionMaterialYou">
         <item name="android:textSize">@dimen/sud_glif_expressive_description_text_size</item>
-        <item name="android:lineSpacingExtra">@dimen/sud_glif_expressive_description_line_spacing_extra</item>
     </style>
 
     <style name="SudGlifAccountContainerMaterialYou">
@@ -1766,7 +1802,7 @@
     </style>
 
     <style name="SudGlifButtonContainer">
-        <item name="android:layout_marginStart" tools:ignore="NewApi">?attr/sudMarginStart</item>
+        <item name="android:layout_marginStart" tools:ignore="NewApi">?attr/sudBackButtonMarginStart</item>
         <item name="android:layout_marginTop">@dimen/sud_glif_expressive_back_button_margin_top</item>
     </style>
 
@@ -1859,10 +1895,14 @@
     </style>
 
     <style name="sudInfoFooterTitle">
-        <item name="android:textAppearance">?attr/textAppearanceListItem</item>
+        <item name="android:fontFamily">google-sans-text-regular</item>
         <item name="android:textSize">@dimen/sud_info_footer_text_size</item>
         <item name="android:textColor">@color/sud_color_on_surface</item>
-        <item name="android:lineSpacingExtra">@dimen/sud_info_footer_text_line_spacing_extra</item>
+        <item name="android:lineHeight" tools:targetApi="28">@dimen/sud_info_footer_text_line_height</item>
+    </style>
+
+   <style name="sudInfoFooterTitleExpressive" parent="sudInfoFooterTitle">
+        <item name="android:fontFamily">@string/sudFontSecondaryText</item>
     </style>
 
     <!-- Navigation bar styles -->
@@ -1965,9 +2005,7 @@
 
     <style name="SudExpressiveSwitchBarStyle">
         <item name="android:layout_gravity">center_vertical|end</item>
-        <item name="track">@drawable/sud_switch_track_selector</item>
-        <item name="android:track">@drawable/sud_switch_track_selector</item>
-        <item name="android:thumb">@drawable/sud_switch_thumb_selector</item>
+        <item name="thumbIcon">@drawable/sud_ic_switch_selector_expressive</item>
         <item name="android:switchMinWidth">@dimen/sud_switch_min_width</item>
         <item name="android:paddingStart">@dimen/sud_expressive_switch_padding_start</item>
         <item name="android:paddingLeft">@dimen/sud_expressive_switch_padding_start</item>
@@ -2013,6 +2051,7 @@
     <style name="SudCardTitleStyle">
         <item name="android:textSize">@dimen/sud_card_view_title_text_size</item>
         <item name="android:fontFamily">@string/sudCardViewFontFamily</item>
+        <item name="android:fontWeight" tools:targetApi="p">@dimen/sud_card_view_title_font_weight</item>
         <item name="android:lineSpacingExtra">@dimen/sud_card_view_title_line_spacing_extra</item>
         <item name="android:textColor">@color/sud_card_view_text_color</item>
         <item name="android:paddingTop">@dimen/sud_card_view_title_spacing_top</item>

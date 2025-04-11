@@ -22,6 +22,7 @@ import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
 import android.view.WindowInsets;
 import android.widget.LinearLayout;
+import com.google.android.setupcompat.R;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.util.Logger;
 
@@ -65,7 +66,7 @@ public class InsetAdjustmentLayout extends LinearLayout {
                 insets.getSystemWindowInsetLeft(),
                 insets.getSystemWindowInsetTop(),
                 insets.getSystemWindowInsetRight(),
-                /* bottom= */ 0);
+                findViewById(R.id.suc_layout_status).getPaddingBottom());
       }
     }
     return super.onApplyWindowInsets(insets);

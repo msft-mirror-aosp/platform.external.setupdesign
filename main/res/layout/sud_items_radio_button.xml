@@ -26,6 +26,7 @@
 
     <com.google.android.material.radiobutton.MaterialRadioButton
         android:id="@+id/sud_items_radio_button"
+        style="?attr/sudItemRadioButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical" />

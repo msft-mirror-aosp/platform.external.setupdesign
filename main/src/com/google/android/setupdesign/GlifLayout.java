@@ -107,11 +107,14 @@ public class GlifLayout extends PartnerCustomizationLayout {
         @Override
         public void onScrollChanged() {
           ScrollView scrollView = getScrollView();
-          if (scrollView != null) {
-            // direction > 0 means view can scroll down, direction < 0 means view can scroll
-            // up. Here we use direction > 0 to detect whether the view can be scrolling down
-            // or not.
-            onScrolling(!scrollView.canScrollVertically(/* direction= */ 1));
+          ScrollView headerScrollView = getHeaderScrollView();
+
+          if (scrollView != null || headerScrollView != null) {
+            boolean canHeaderViewScrollDown = canViewScrollDown(headerScrollView);
+            boolean canViewScrollDown = canViewScrollDown(scrollView);
+            boolean canWholeViewsScrollDown = canHeaderViewScrollDown || canViewScrollDown;
+
+            onScrolling(!canWholeViewsScrollDown);
           }
         }
       };
@@ -265,6 +268,18 @@ public class GlifLayout extends PartnerCustomizationLayout {
     }
   }
 
+  protected boolean canViewScrollDown(ScrollView scrollView) {
+    if (scrollView == null) {
+      // If the scroll view is null, it means the view is not scrollable. So we should return true
+      // to indicate that the view is at the bottom.
+      return false;
+    }
+    // direction > 0 means view can scroll down, direction < 0 means view can scroll
+    // up. Here we use direction > 0 to detect whether the view can be scrolling down
+    // or not.
+    return scrollView != null && scrollView.canScrollVertically(/* direction= */ 1);
+  }
+
   protected void updateLandscapeMiddleHorizontalSpacing() {
     int horizontalSpacing =
         getResources().getDimensionPixelSize(R.dimen.sud_glif_land_middle_horizontal_spacing);
@@ -398,6 +413,11 @@ public class GlifLayout extends PartnerCustomizationLayout {
     if (scrollView != null) {
       scrollView.getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
     }
+
+    ScrollView headerScrollView = getHeaderScrollView();
+    if (headerScrollView != null) {
+      headerScrollView.getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
+    }
   }
 
   /**
@@ -414,9 +434,20 @@ public class GlifLayout extends PartnerCustomizationLayout {
     return stickyHeaderStub.inflate();
   }
 
+  /** Returns the scroll view of the header. */
+  @Nullable
+  public ScrollView getHeaderScrollView() {
+    final View view = findManagedViewById(R.id.sud_header_scroll_view);
+    return view instanceof ScrollView scrollView ? scrollView : null;
+  }
+
+  /**
+   * Returns the scroll view of the layout. In the two pane mode, the view is the content area.
+   * Otherwsie, it's the whole layout.
+   */
   public ScrollView getScrollView() {
     final View view = findManagedViewById(R.id.sud_scroll_view);
-    return view instanceof ScrollView ? (ScrollView) view : null;
+    return view instanceof ScrollView scrollView ? scrollView : null;
   }
 
   public TextView getHeaderTextView() {
@@ -640,16 +671,22 @@ public class GlifLayout extends PartnerCustomizationLayout {
   // TODO: b/397835857 - Add unit test for initScrollingListener.
   protected void initScrollingListener() {
     ScrollView scrollView = getScrollView();
-
     if (scrollView != null) {
       scrollView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
+    }
 
+    ScrollView headerScrollView = getHeaderScrollView();
+    if (headerScrollView != null) {
+      headerScrollView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
+    }
+
+    if (scrollView != null || headerScrollView != null) {
       // This is for the case that the view has been first visited to handle the initial state of
       // the footer bar.
       new Handler(Looper.getMainLooper())
           .postDelayed(
               () -> {
-                if (isContentScrollable(scrollView)) {
+                if (isContentScrollable(scrollView) || isContentScrollable(headerScrollView)) {
                   onScrolling(/* isBottom= */ false);
                 }
               },
@@ -658,6 +695,10 @@ public class GlifLayout extends PartnerCustomizationLayout {
   }
 
   private boolean isContentScrollable(ScrollView scrollView) {
+    // No scroll view, so we can't scroll.
+    if (scrollView == null) {
+      return false;
+    }
     View child = scrollView.getChildAt(0);
     if (child != null) {
       return child.getHeight() > scrollView.getHeight();

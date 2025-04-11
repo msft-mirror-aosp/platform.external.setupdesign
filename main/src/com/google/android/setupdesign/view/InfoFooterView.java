@@ -77,13 +77,28 @@ public class InfoFooterView extends LinearLayout {
       iconView.setImageDrawable(icon);
       iconView.setVisibility(View.VISIBLE);
     }
-    if (!alignParentBottom) {
-      View infoFooterContainer = findViewById(R.id.sud_info_footer_container);
-      RelativeLayout.LayoutParams layoutParams =
-          (RelativeLayout.LayoutParams) infoFooterContainer.getLayoutParams();
-      // By default, ALIGN_PARENT_BOTTOM is set. Setting it to 0 removes the rule.
-      layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
-      infoFooterContainer.setLayoutParams(layoutParams);
+    alignView();
+  }
+
+  private void alignView() {
+    View infoFooterContainer = findViewById(R.id.sud_info_footer_container);
+    RelativeLayout.LayoutParams layoutParams =
+        (RelativeLayout.LayoutParams) infoFooterContainer.getLayoutParams();
+    // sets the rule to update ALIGN_PARENT_BOTTOM to 1 if alignParentBottom is true and 0 if False.
+    layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, alignParentBottom ? 1 : 0);
+    infoFooterContainer.setLayoutParams(layoutParams);
+  }
+
+  /**
+   * Sets whether the footer should align to the bottom of the parent layout.
+   *
+   * @param alignParentBottom True if the footer should align to the bottom of the parent layout,
+   *     false otherwise.
+   */
+  public void setAlignParentBottom(boolean alignParentBottom) {
+    if (this.alignParentBottom != alignParentBottom) {
+      this.alignParentBottom = alignParentBottom;
+      alignView();
     }
   }
 

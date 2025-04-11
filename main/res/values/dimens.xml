@@ -187,6 +187,7 @@
     <dimen name="sud_items_divder_width">2dp</dimen>
     <dimen name="sud_items_background_padding_start">16dp</dimen>
     <dimen name="sud_items_background_padding_end">16dp</dimen>
+    <dimen name="sud_items_radio_button_padding_end">16dp</dimen>
 
     <!-- General Material You -->
     <dimen name="sud_glif_land_middle_horizontal_spacing_material_you">48dp</dimen>
@@ -257,7 +258,7 @@
     <dimen name="sud_info_footer_icon_padding_bottom">8dp</dimen>
     <dimen name="sud_info_footer_icon_size">18dp</dimen>
     <dimen name="sud_info_footer_text_size">14sp</dimen>
-    <dimen name="sud_info_footer_text_line_spacing_extra">6sp</dimen>
+    <dimen name="sud_info_footer_text_line_height">20sp</dimen>
 
     <!-- Progress bar -->
     <dimen name="sud_progress_bar_margin_top_material_you">16dp</dimen>
@@ -374,6 +375,13 @@
     <dimen name="sud_glif_expressive_items_icon_padding_start">0dp</dimen>
     <dimen name="sud_glif_expressive_items_icon_padding_end">0dp</dimen>
     <dimen name="sud_glif_expressive_items_icon_width">40dp</dimen>
+    <dimen name="sud_glif_expressive_item_summary_line_height">20sp</dimen>
+    <dimen name="sud_glif_expressive_item_title_line_height">24sp</dimen>
+    <!-- the switch toggle has 4dp for touch area top and bottom, should remove the item bound padding-->
+    <dimen name="sud_glif_expressive_expandable_items_content_margin_top">-4dp</dimen>
+    <dimen name="sud_glif_expressive_expandable_items_summary_padding_top">4dp</dimen>
+    <dimen name="sud_glif_expressive_expandable_items_more_info_padding_top">16dp</dimen>
+    <dimen name="sud_glif_expressive_expandable_items_more_info_padding_bottom">4dp</dimen>
     <dimen name="sud_glif_expressive_list_divider_height">24dp</dimen>
     <dimen name="sud_items_section_header_padding_top">20dp</dimen>
     <dimen name="sud_items_section_header_padding_bottom">8dp</dimen>
@@ -382,11 +390,15 @@
     <dimen name="sud_items_illustration_item_max_width">494dp</dimen>
     <dimen name="sud_expressive_switch_padding_start">12dp</dimen>
 
+    <!-- Promo card -->
+    <dimen name="sud_glif_promo_card_title_line_height">24sp</dimen>
+    <dimen name="sud_glif_promo_card_summary_line_height">20sp</dimen>
+
     <!-- Header layout expressive -->
     <dimen name="sud_glif_expressive_header_title_size">32sp</dimen>
     <dimen name="sud_glif_expressive_header_title_line_height">40sp</dimen>
     <dimen name="sud_glif_expressive_description_text_size">16sp</dimen>
-    <dimen name="sud_glif_expressive_description_line_spacing_extra">8sp</dimen>
+    <dimen name="sud_glif_expressive_back_button_padding_start">4dp</dimen>
 
     <!-- Progress indicator -->
     <dimen name="sud_glif_expressive_progress_indicator_margin_vertical">16dp</dimen>
@@ -395,6 +407,8 @@
     <!-- Material floating back button -->
     <dimen name="sud_glif_expressive_back_button_margin_top">8dp</dimen>
     <dimen name="sud_glif_expressive_back_button_height">48dp</dimen>
+    <!-- Calculated by (sud_glif_expressive_margin_start - 4dp internal padding of button) -->
+    <dimen name="sud_glif_expressive_back_button_margin_start">20dp</dimen>
 
     <!-- Glif expressive Additional body text -->
     <dimen name="sud_glif_expressive_additional_body_text_size">16sp</dimen>
@@ -419,6 +433,8 @@
     <dimen name="sud_glif_expressive_footer_button_middle_spacing">8dp</dimen>
     <dimen name="sud_glif_expressive_footer_padding_top">16dp</dimen>
     <dimen name="sud_glif_expressive_footer_padding_bottom">8dp</dimen>
+    <dimen name="sud_glif_expressive_down_button_icon_size">24dp</dimen>
+
     <!-- Glif expressive alert dialog -->
     <dimen name="sud_glif_expressive_alert_dialog_title_font_size">24sp</dimen>
 
@@ -439,6 +455,7 @@
     <dimen name="sud_card_view_title_line_spacing_extra">6sp</dimen>
     <dimen name="sud_card_view_title_spacing_top">4dp</dimen>
     <dimen name="sud_card_view_title_margin_bottom">16dp</dimen>
+    <dimen name="sud_card_view_title_font_weight">400</dimen>
 
     <!-- Camera preview -->
     <dimen name="sud_expressive_camera_preview_corner_radius">28dp</dimen>

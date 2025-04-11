@@ -41,5 +41,5 @@
     <string name="sudGlifExpressiveDialogFontFamily" translatable="false">google-sans-text</string>
 
     <!-- Glif card view styles -->
-    <string name="sudCardViewFontFamily" translatable="false">google-sans-text</string>
+    <string name="sudCardViewFontFamily" translatable="false">google-sans-flex</string>
 </resources>

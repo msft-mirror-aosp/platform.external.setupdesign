@@ -34,7 +34,6 @@ import com.google.android.setupcompat.internal.TemplateLayout;
 import com.google.android.setupcompat.template.Mixin;
 import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.util.HeaderAreaStyler;
-import com.google.android.setupdesign.util.LayoutStyler;
 import com.google.android.setupdesign.util.PartnerStyleHelper;
 
 /** A {@link Mixin} for controlling back button on the template layout. */
@@ -111,7 +110,6 @@ public class FloatingBackButtonMixin implements Mixin {
   public void tryApplyPartnerCustomizationStyle() {
     if (PartnerStyleHelper.shouldApplyPartnerResource(templateLayout)
         && getContainerView() != null) {
-      LayoutStyler.applyPartnerCustomizationExtraPaddingStyle(getContainerView());
       HeaderAreaStyler.applyPartnerCustomizationBackButtonStyle(getContainerView());
     }
   }

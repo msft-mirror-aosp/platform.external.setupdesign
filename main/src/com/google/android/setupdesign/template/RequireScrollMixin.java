@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.annotation.VisibleForTesting;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.setupcompat.internal.TemplateLayout;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
@@ -354,6 +355,7 @@ public class RequireScrollMixin implements Mixin {
     primaryButtonView.setOnClickListener(createOnClickListener(onClickListener));
     footerBarMixin.setButtonWidthForExpressiveStyle();
     LinearLayout footerContainer = footerBarMixin.getButtonContainer();
+    CharSequence contentDescription = primaryButtonView.getContentDescription();
 
     setOnRequireScrollStateChangedListener(
         scrollNeeded -> {
@@ -371,6 +373,7 @@ public class RequireScrollMixin implements Mixin {
               if (secondaryButtonView != null) {
                 secondaryButtonView.setVisibility(View.VISIBLE);
               }
+              primaryButtonView.setContentDescription(contentDescription);
               footerContainer.setBackgroundColor(Color.TRANSPARENT);
             } else {
               Log.i(LOG_TAG, "Cannot clean up icon for the button. Skipping set text.");
@@ -381,15 +384,24 @@ public class RequireScrollMixin implements Mixin {
     requireScroll();
   }
 
-  private void generateGlifExpressiveDownButton(
+  @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+  public void generateGlifExpressiveDownButton(
       Context context, Button button, FooterBarMixin footerBarMixin) {
     Drawable icon = context.getResources().getDrawable(R.drawable.sud_ic_down_arrow);
-    if (button instanceof MaterialButton) {
+    if (button instanceof MaterialButton materialButton) {
       // Remove the text and set down arrow icon to the button.
       button.setText("");
-      ((MaterialButton) button).setIcon(icon);
-      ((MaterialButton) button).setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
-      ((MaterialButton) button).setIconPadding(0);
+      materialButton.setIcon(icon);
+      materialButton.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
+      materialButton.setIconPadding(0);
+      materialButton.setIconSize(
+          context
+              .getResources()
+              .getDimensionPixelSize(R.dimen.sud_glif_expressive_down_button_icon_size));
+      materialButton.setContentDescription(
+          context.getText(
+              com.google.android.setupdesign.strings.R.string
+                  .sud_expressive_accessibility_more_button_label));
       footerBarMixin.setDownButtonForExpressiveStyle();
     } else {
       Log.i(LOG_TAG, "Cannot set icon for the button. Skipping clean up text.");
