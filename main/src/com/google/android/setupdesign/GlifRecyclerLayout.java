@@ -28,6 +28,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.ScrollView;
 import androidx.annotation.NonNull;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.util.ForceTwoPaneHelper;
@@ -42,6 +44,8 @@ import com.google.android.setupdesign.template.RequireScrollMixin;
 public class GlifRecyclerLayout extends GlifLayout {
 
   protected RecyclerMixin recyclerMixin;
+  private RecyclerView.OnScrollListener onRecyclerViewScrollListener;
+  private ViewTreeObserver.OnScrollChangedListener onScrollChangedListener;
 
   public GlifRecyclerLayout(Context context) {
     this(context, 0, 0);
@@ -90,6 +94,18 @@ public class GlifRecyclerLayout extends GlifLayout {
     }
 
     initBackButton();
+  }
+
+  private boolean canWholeViewsScrollDown(ScrollView headerScrollView, RecyclerView recyclerView) {
+    if (headerScrollView == null && recyclerView == null) {
+      // No views to scroll down.
+      return false;
+    }
+
+    boolean canHeaderViewScrollDown = canViewScrollDown(headerScrollView);
+    boolean canRecyclerViewScrollDown = recyclerView.canScrollVertically(/* direction= */ 1);
+
+    return canHeaderViewScrollDown || canRecyclerViewScrollDown;
   }
 
   @Override
@@ -157,21 +173,50 @@ public class GlifRecyclerLayout extends GlifLayout {
   protected void initScrollingListener() {
     RecyclerView recyclerView = getRecyclerView();
     if (recyclerView != null) {
-      recyclerView.addOnScrollListener(
+      // We only can initialize the listener here for some unknown reason instead of in global
+      // variable. Othersie, we will see a runtime error.
+      onRecyclerViewScrollListener =
           new OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
               super.onScrolled(recyclerView, dx, dy);
-              // direction > 0 means view can scroll down, direction < 0 means view can scroll up.
-              // Here we use direction > 0 to detect whether the view can be scrolling down or not.
-              boolean isAtBottom = !recyclerView.canScrollVertically(/* direction= */ 1);
-              onScrolling(isAtBottom);
+              onScrolling(!canWholeViewsScrollDown(getHeaderScrollView(), recyclerView));
             }
-          });
+          };
+      recyclerView.addOnScrollListener(onRecyclerViewScrollListener);
+    }
+
+    ScrollView headerScrollView = getHeaderScrollView();
+    if (headerScrollView != null) {
+      // We only can initialize the listener here for some unknown reason instead of in global
+      // variable. Othersie, we will see a runtime error.
+      onScrollChangedListener =
+          new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+              onScrolling(!canWholeViewsScrollDown(getHeaderScrollView(), getRecyclerView()));
+            }
+          };
+      headerScrollView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
     }
   }
 
-  /** @see RecyclerMixin#setDividerItemDecoration(DividerItemDecoration) */
+  @Override
+  protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+
+    ScrollView headerScrollView = getHeaderScrollView();
+    if (headerScrollView != null && headerScrollView.getViewTreeObserver() != null) {
+      headerScrollView.getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
+    }
+
+    RecyclerView recyclerView = getRecyclerView();
+    if (recyclerView != null && onRecyclerViewScrollListener != null) {
+      recyclerView.removeOnScrollListener(onRecyclerViewScrollListener);
+    }
+  }
+
+  /** See {@link RecyclerMixin#setDividerItemDecoration(DividerItemDecoration)}. */
   public void setDividerItemDecoration(DividerItemDecoration decoration) {
     recyclerMixin.setDividerItemDecoration(decoration);
   }

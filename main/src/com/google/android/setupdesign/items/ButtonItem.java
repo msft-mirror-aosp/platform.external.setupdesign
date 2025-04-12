@@ -169,6 +169,11 @@ public class ButtonItem extends AbstractItem implements View.OnClickListener {
   }
 
   @Override
+  public boolean isGroupDivider() {
+    return true;
+  }
+
+  @Override
   public void onClick(View v) {
     if (listener != null) {
       listener.onClick(this);

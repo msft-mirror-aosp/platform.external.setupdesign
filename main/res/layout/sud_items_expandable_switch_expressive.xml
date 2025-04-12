@@ -27,6 +27,7 @@
         android:id="@+id/sud_items_expandable_switch_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sud_glif_expressive_expandable_items_content_margin_top"
         android:baselineAligned="false"
         android:duplicateParentState="true"
         android:orientation="horizontal">
@@ -58,9 +59,10 @@
             android:textAlignment="viewStart"
             tools:ignore="UnusedAttribute" />
 
-        <androidx.appcompat.widget.SwitchCompat
+        <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/sud_items_switch"
             style="@style/SudExpressiveSwitchBarStyle"
+            android:theme="@style/Theme.Material3.DynamicColors.DayNight.NoActionBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -69,33 +71,40 @@
             android:paddingEnd="0dp" />
 
     </RelativeLayout>
-
-    <com.google.android.setupdesign.view.RichTextView
-        android:id="@+id/sud_items_summary"
-        style="?attr/sudItemSummaryStyle"
+    <LinearLayout
+        android:id="@+id/sud_items_summary_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:duplicateParentState="true"
-        android:gravity="start"
-        android:layout_weight="1"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="0dp"
-        android:textAlignment="viewStart"
-        android:visibility="gone"
-        android:textColor="?android:attr/textColorPrimary"
-        tools:ignore="UnusedAttribute" />
+        android:orientation="vertical">
 
-    <com.google.android.setupdesign.view.RichTextView
-        android:id="@+id/sud_items_more_info"
-        style="?attr/sudItemSummaryStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:layout_weight="1"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="0dp"
-        android:text="@string/sud_more_info"
-        android:textColor="?attr/colorPrimary"
-        android:textAlignment="viewStart" />
+        <com.google.android.setupdesign.view.RichTextView
+            android:id="@+id/sud_items_summary"
+            style="?attr/sudItemSummaryStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:duplicateParentState="true"
+            android:gravity="start"
+            android:layout_weight="1"
+            android:paddingTop="@dimen/sud_glif_expressive_expandable_items_summary_padding_top"
+            android:layout_marginBottom="0dp"
+            android:textAlignment="viewStart"
+            android:visibility="gone"
+            android:textColor="?android:attr/textColorPrimary"
+            tools:ignore="UnusedAttribute" />
+
+        <com.google.android.setupdesign.view.RichTextView
+            android:id="@+id/sud_items_more_info"
+            style="?attr/sudItemSummaryStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_weight="1"
+            android:paddingTop="@dimen/sud_glif_expressive_expandable_items_more_info_padding_top"
+            android:paddingBottom="@dimen/sud_glif_expressive_expandable_items_more_info_padding_bottom"
+            android:text="@string/sud_more_info"
+            android:textColor="?attr/colorPrimary"
+            android:textAlignment="viewStart" />
+    </LinearLayout>
+
 
 </LinearLayout>

@@ -22,7 +22,6 @@
       style="?attr/materialIconButtonFilledStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:checkable="true"
       android:contentDescription="@string/sud_back_button_label"
       android:filterTouchesWhenObscured="true"
       android:visibility="gone"
