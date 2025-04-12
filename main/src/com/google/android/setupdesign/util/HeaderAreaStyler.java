@@ -322,10 +322,24 @@ public final class HeaderAreaStyler {
       adjustedTopMargin = topMargin + heightDifference / 2;
     }
 
-    if (adjustedTopMargin != mlp.topMargin) {
+    int leftMargin = mlp.leftMargin;
+    if (PartnerConfigHelper.get(context)
+        .isPartnerConfigAvailable(PartnerConfig.CONFIG_LAYOUT_MARGIN_START)) {
+      // TODO: Create a new partner config for the back button margin start.
+      leftMargin =
+          getPartnerConfigDimension(
+              context, PartnerConfig.CONFIG_LAYOUT_MARGIN_START, mlp.leftMargin);
+      leftMargin -=
+          (int)
+              context
+                  .getResources()
+                  .getDimension(R.dimen.sud_glif_expressive_back_button_padding_start);
+    }
+
+    if (adjustedTopMargin != mlp.topMargin || leftMargin != mlp.leftMargin) {
       FrameLayout.LayoutParams params =
           new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-      params.setMargins(mlp.leftMargin, adjustedTopMargin, mlp.rightMargin, mlp.bottomMargin);
+      params.setMargins(leftMargin, adjustedTopMargin, mlp.rightMargin, mlp.bottomMargin);
       buttonContainer.setLayoutParams(params);
     }
   }

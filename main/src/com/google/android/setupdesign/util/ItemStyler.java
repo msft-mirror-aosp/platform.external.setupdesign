@@ -87,6 +87,8 @@ public final class ItemStyler {
     if (!PartnerStyleHelper.shouldApplyPartnerHeavyThemeResource(titleTextView)) {
       return;
     }
+    Context context = titleTextView.getContext();
+
     TextViewPartnerStyler.applyPartnerCustomizationStyle(
         titleTextView,
         new TextPartnerConfigs(
@@ -99,6 +101,19 @@ public final class ItemStyler {
             /* textMarginTopConfig= */ null,
             /* textMarginBottomConfig= */ null,
             PartnerStyleHelper.getLayoutGravity(titleTextView.getContext())));
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+      if (PartnerConfigHelper.isGlifExpressiveEnabled(context)
+          && PartnerConfigHelper.get(context)
+              .isPartnerConfigAvailable(PartnerConfig.CONFIG_ITEMS_TITLE_FONT_VARIATION_SETTINGS)) {
+        // TODO: add unit test for this case.
+        String fontVariationSettings =
+            PartnerConfigHelper.get(context)
+                .getString(context, PartnerConfig.CONFIG_ITEMS_TITLE_FONT_VARIATION_SETTINGS);
+        if (fontVariationSettings != null && !fontVariationSettings.isEmpty()) {
+          titleTextView.setFontVariationSettings(fontVariationSettings);
+        }
+      }
+    }
   }
 
   /**

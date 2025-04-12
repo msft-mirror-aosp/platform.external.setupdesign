@@ -31,6 +31,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
@@ -71,6 +72,7 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
   @VisibleForTesting public final boolean useFullDynamicColor;
   private OnItemSelectedListener listener;
   private RecyclerView recyclerView = null;
+  @Nullable private Float groupCornerRadiusExternal;
 
   public RecyclerItemAdapter(ItemHierarchy hierarchy) {
     this(hierarchy, false);
@@ -209,12 +211,13 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
 
   private Drawable getMiddleBackground(Context context, int position) {
     IItem item = getItem(position);
-    TypedArray a = context
-        .getTheme()
-        .obtainStyledAttributes(
-            item.isActionable()
-                ? new int[] {R.attr.sudItemBackground}
-                : new int[] {R.attr.sudNonActionableItemBackground});
+    TypedArray a =
+        context
+            .getTheme()
+            .obtainStyledAttributes(
+                item.isActionable()
+                    ? new int[] {R.attr.sudItemBackground}
+                    : new int[] {R.attr.sudNonActionableItemBackground});
     Drawable middleBackground = a.getDrawable(0);
     a.recycle();
     return middleBackground;
@@ -222,12 +225,13 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
 
   private Drawable getSingleBackground(Context context, int position) {
     IItem item = getItem(position);
-    TypedArray a = context
-        .getTheme()
-        .obtainStyledAttributes(
-            item.isActionable()
-                ? new int[] {R.attr.sudItemBackgroundSingle}
-                : new int[] {R.attr.sudNonActionableItemBackgroundSingle});
+    TypedArray a =
+        context
+            .getTheme()
+            .obtainStyledAttributes(
+                item.isActionable()
+                    ? new int[] {R.attr.sudItemBackgroundSingle}
+                    : new int[] {R.attr.sudNonActionableItemBackgroundSingle});
     Drawable singleBackground = a.getDrawable(0);
     a.recycle();
     return singleBackground;
@@ -249,6 +253,14 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     return position == getItemCount() - 1 || getItem(position + 1).isGroupDivider();
   }
 
+  /**
+   * Sets the group corner radius for the list item group by an externally defined value. Used by
+   * clients which cannot access the partner config.
+   */
+  public void setGroupCornerRadiusExternal(float groupCornerRadius) {
+    groupCornerRadiusExternal = groupCornerRadius;
+  }
+
   public void updateBackground(View view, int position) {
     if (TAG_NO_BACKGROUND.equals(view.getTag())) {
       return;
@@ -257,8 +269,10 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
       return;
     }
     float groupCornerRadius =
-        PartnerConfigHelper.get(view.getContext())
-            .getDimension(view.getContext(), PartnerConfig.CONFIG_ITEMS_GROUP_CORNER_RADIUS);
+        groupCornerRadiusExternal != null
+            ? groupCornerRadiusExternal
+            : PartnerConfigHelper.get(view.getContext())
+                .getDimension(view.getContext(), PartnerConfig.CONFIG_ITEMS_GROUP_CORNER_RADIUS);
     float cornerRadius = getCornerRadius(view.getContext());
     Drawable drawable = view.getBackground();
     // TODO add test case for list item group corner partner config

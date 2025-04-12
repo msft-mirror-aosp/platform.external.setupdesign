@@ -24,10 +24,12 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.util.ForceTwoPaneHelper;
 import com.google.android.setupdesign.template.ListMixin;
@@ -41,6 +43,8 @@ import com.google.android.setupdesign.template.RequireScrollMixin;
 public class GlifListLayout extends GlifLayout {
 
   private ListMixin listMixin;
+  private ViewTreeObserver.OnScrollChangedListener onScrollChangedListener;
+  private OnScrollListener onListViewScrollListener;
 
   public GlifListLayout(Context context) {
     this(context, 0, 0);
@@ -87,6 +91,18 @@ public class GlifListLayout extends GlifLayout {
     initBackButton();
   }
 
+  private boolean canWholeViewsScrollDown(ScrollView headerScrollView, ListView listView) {
+    if (headerScrollView == null && listView == null) {
+      // No views to scroll down.
+      return false;
+    }
+
+    boolean canHeaderViewScrollDown = canViewScrollDown(headerScrollView);
+    boolean canListViewScrollDown = listView.canScrollVertically(/* direction= */ 1);
+
+    return canHeaderViewScrollDown || canListViewScrollDown;
+  }
+
   @Override
   protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
     super.onLayout(changed, left, top, right, bottom);
@@ -131,7 +147,7 @@ public class GlifListLayout extends GlifLayout {
     ListView listView = null;
     if (listMixin != null) {
       listView = listMixin.getListView();
-      listView.setOnScrollListener(
+      onListViewScrollListener =
           new OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {}
@@ -139,10 +155,37 @@ public class GlifListLayout extends GlifLayout {
             @Override
             public void onScroll(
                 AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-              onScrolling(
-                  firstVisibleItem + visibleItemCount >= totalItemCount && totalItemCount > 0);
+              onScrolling(!canWholeViewsScrollDown(getHeaderScrollView(), listMixin.getListView()));
             }
-          });
+          };
+      listView.setOnScrollListener(onListViewScrollListener);
+    }
+
+    ScrollView headerScrollView = getHeaderScrollView();
+    if (headerScrollView != null) {
+      onScrollChangedListener =
+          new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+              onScrolling(!canWholeViewsScrollDown(getHeaderScrollView(), listMixin.getListView()));
+            }
+          };
+      headerScrollView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
+    }
+  }
+
+  @Override
+  protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+
+    ScrollView headerScrollView = getHeaderScrollView();
+    if (headerScrollView != null && headerScrollView.getViewTreeObserver() != null) {
+      headerScrollView.getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
+    }
+
+    ListView listView = listMixin.getListView();
+    if (listView != null) {
+      listView.setOnScrollListener(null);
     }
   }
 

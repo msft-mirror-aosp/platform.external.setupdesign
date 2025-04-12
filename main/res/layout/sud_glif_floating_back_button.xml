@@ -28,8 +28,6 @@
       android:id="@+id/sud_floating_back_button_stub"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:checkable="true"
-      android:contentDescription="@string/sud_back_button_label"
       android:filterTouchesWhenObscured="true"
       android:visibility="gone"
       android:inflatedId="@+id/sud_floating_back_button"

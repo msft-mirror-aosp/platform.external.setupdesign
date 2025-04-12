@@ -20,17 +20,20 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.setupdesign.R;
+import com.google.android.setupdesign.util.ThemeHelper;
 
 /**
- * An item that is displayed with a radio button, with methods to manipulate and listen to the checked
- * state of the radio button. Note that by default, only click on the radio button will change the on-off
- * state. To change the radio button state when tapping on the text, use the click handlers of list
- * view or RecyclerItemAdapter with {@link #toggle(View)}.
+ * An item that is displayed with a radio button, with methods to manipulate and listen to the
+ * checked state of the radio button. Note that by default, only click on the radio button will
+ * change the on-off state. To change the radio button state when tapping on the text, use the click
+ * handlers of list view or RecyclerItemAdapter with {@link #toggle(View)}.
  */
-public class RadioButtonItem extends Item implements CompoundButton.OnCheckedChangeListener {
+public class RadioButtonItem extends Item
+    implements CompoundButton.OnCheckedChangeListener, OnClickListener {
 
   /** Listener for check state changes of this radio button item. */
   public interface OnCheckedChangeListener {
@@ -99,8 +102,12 @@ public class RadioButtonItem extends Item implements CompoundButton.OnCheckedCha
   @Override
   public void onBindView(View view) {
     super.onBindView(view);
+    view.setOnClickListener(this);
     final MaterialRadioButton radioButtonView =
         (MaterialRadioButton) view.findViewById(R.id.sud_items_radio_button);
+    if (ThemeHelper.shouldApplyGlifExpressiveStyle(view.getContext())) {
+      radioButtonView.setClickable(false);
+    }
     radioButtonView.setOnCheckedChangeListener(null);
     radioButtonView.setChecked(checked);
     radioButtonView.setOnCheckedChangeListener(this);
@@ -113,6 +120,11 @@ public class RadioButtonItem extends Item implements CompoundButton.OnCheckedCha
    */
   public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
     this.listener = listener;
+  }
+
+  @Override
+  public void onClick(View v) {
+    setChecked(true);
   }
 
   @Override

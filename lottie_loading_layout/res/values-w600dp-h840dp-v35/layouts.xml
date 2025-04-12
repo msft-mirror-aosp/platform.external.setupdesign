@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Copyright (C) 2024 The Android Open Source Project
+    Copyright (C) 2025 The Android Open Source Project
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -20,6 +20,4 @@
   <item name="sud_glif_expressive_loading_embedded_template" type="layout"  tools:ignore="UnusedResources">@layout/sud_glif_loading_embedded_template_card</item>
   <item name="sud_glif_expressive_fullscreen_loading_template" type="layout"  tools:ignore="UnusedResources">@layout/sud_glif_expressive_fullscreen_loading_template_card</item>
   <item name="sud_glif_expressive_fullscreen_loading_embedded_template" type="layout"  tools:ignore="UnusedResources">@layout/sud_glif_fullscreen_loading_embedded_template_card</item>
-  <item name="sud_glif_expressive_loading_template_content_layout" type="layout" tools:ignore="UnusedResources">@layout/sud_glif_expressive_loading_template_content</item>
-  <item name="sud_glif_expressive_fullscreen_loading_template_content_layout" type="layout" tools:ignore="UnusedResources">@layout/sud_glif_expressive_fullscreen_loading_template_content</item>
 </resources>

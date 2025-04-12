@@ -200,16 +200,20 @@ public class ExpandableSwitchItem extends SwitchItem
 
     if (PartnerConfigHelper.isGlifExpressiveEnabled(view.getContext())) {
       View moreInfo = view.findViewById(R.id.sud_items_more_info);
+      View contentContainer = view.findViewById(R.id.sud_items_summary_container);
+      if (canExpanded) {
+        if (contentContainer != null) {
+          contentContainer.setOnClickListener(this);
+        }
+      }
       if (moreInfo != null) {
-        if (canExpanded) {
-          moreInfo.setOnClickListener(this);
-        } else {
+        if (!canExpanded) {
           moreInfo.setVisibility(View.GONE);
         }
       }
       View switchItem = view.findViewById(R.id.sud_items_switch);
       if (!isSwitchItem && switchItem != null) {
-        switchItem.setVisibility(View.GONE);
+        switchItem.setVisibility(View.INVISIBLE);
       }
     } else {
       View content = view.findViewById(R.id.sud_items_expandable_switch_content);
@@ -250,7 +254,7 @@ public class ExpandableSwitchItem extends SwitchItem
   @Override
   public void onClick(View v) {
     if (PartnerConfigHelper.isGlifExpressiveEnabled(v.getContext())) {
-      if (v.getId() == R.id.sud_items_more_info) {
+      if (v.getId() == R.id.sud_items_summary_container) {
         setExpanded(!isExpanded());
         updateShowMoreLinkText(v);
       }

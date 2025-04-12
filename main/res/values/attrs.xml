@@ -81,6 +81,8 @@
     <attr name="sudGlifAccountContainerStyle" format="reference" />
     <attr name="sudGlifAccountAvatarSize" format="dimension" />
 
+    <attr name="sudBackButtonMarginStart" format="dimension" />
+
     <attr name="sudButtonAllCaps" format="boolean" />
     <attr name="sudButtonCornerRadius" format="dimension" />
     <attr name="sudButtonFontFamily" format="string|reference" />
@@ -213,6 +215,8 @@
     <attr name="sudQrFinishStyle" format="reference" />
     <attr name="sudExpandedContent" format="reference" />
     <attr name="sudAnimationId" format="reference" />
+    <attr name="sudItemRadioButtonStyle" format="reference" />
+    <attr name="sudItemIconDefaultTint" format="color" />
 
     <!-- EditBox -->
     <attr name="sudEditBoxStyle" format="reference" />
