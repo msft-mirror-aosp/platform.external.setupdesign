@@ -349,7 +349,6 @@ public class RequireScrollMixin implements Mixin {
       @NonNull Context context, @Nullable OnClickListener onClickListener) {
     FooterBarMixin footerBarMixin = templateLayout.getMixin(FooterBarMixin.class);
     Button primaryButtonView = footerBarMixin.getPrimaryButtonView();
-    Button secondaryButtonView = footerBarMixin.getSecondaryButtonView();
     CharSequence nextText = primaryButtonView.getText();
     primaryButtonView.setVisibility(View.INVISIBLE);
     primaryButtonView.setOnClickListener(createOnClickListener(onClickListener));
@@ -365,13 +364,16 @@ public class RequireScrollMixin implements Mixin {
                 ((GlifLayout) templateLayout).getFooterBackgroundColorFromStyle());
           } else {
             // Switch style to glif expressive common button.
-            if (primaryButtonView instanceof MaterialButton) {
-              ((MaterialButton) primaryButtonView).setIcon(null);
-              primaryButtonView.setText(nextText);
-              footerBarMixin.setButtonWidthForExpressiveStyle();
+            if (primaryButtonView instanceof MaterialButton materialButton) {
+              // Set the primary button as invisible to avoid the button flicker and set to visible
+              // after button style is set up completely.
+              footerBarMixin.getPrimaryButton().setVisibility(View.INVISIBLE);
+              materialButton.setIcon(null);
+              footerBarMixin.getPrimaryButton().setText(nextText);
+              footerBarMixin.getPrimaryButton().setVisibility(View.VISIBLE);
               // Screen no need to scroll, sets the secondary button as visible if it exists.
-              if (secondaryButtonView != null) {
-                secondaryButtonView.setVisibility(View.VISIBLE);
+              if (footerBarMixin.getSecondaryButton() != null) {
+                footerBarMixin.getSecondaryButton().setVisibility(View.VISIBLE);
               }
               primaryButtonView.setContentDescription(contentDescription);
               footerContainer.setBackgroundColor(Color.TRANSPARENT);
@@ -390,7 +392,7 @@ public class RequireScrollMixin implements Mixin {
     Drawable icon = context.getResources().getDrawable(R.drawable.sud_ic_down_arrow);
     if (button instanceof MaterialButton materialButton) {
       // Remove the text and set down arrow icon to the button.
-      button.setText("");
+      materialButton.setText("");
       materialButton.setIcon(icon);
       materialButton.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
       materialButton.setIconPadding(0);
