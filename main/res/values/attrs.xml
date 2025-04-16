@@ -175,6 +175,7 @@
     <attr name="sudSectionItemTitleStyle" format="reference" />
     <attr name="sudItemDescriptionTitleStyle" format="reference" />
     <attr name="sudItemDescriptionTitleTextAppearence" format="reference" />
+    <attr name="sudTextAppearanceBulletPoint" format="reference" />
     <attr name="sudItemVerboseTitleStyle" format="reference" />
     <attr name="sudItemIconContainerWidth" format="dimension|reference" />
     <attr name="sudItemPaddingTop" format="dimension|reference" />
