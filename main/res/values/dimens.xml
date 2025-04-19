@@ -250,6 +250,7 @@
     <dimen name="sud_bullet_point_padding_top">16dp</dimen>
     <dimen name="sud_bullet_point_padding_bottom">16dp</dimen>
     <dimen name="sud_bullet_point_icon_padding_end">16dp</dimen>
+    <dimen name="sud_bullet_point_title_text_size">16sp</dimen>
 
     <!-- Info footer-->
     <dimen name="sud_info_footer_padding_top">16dp</dimen>
@@ -412,7 +413,7 @@
 
     <!-- Glif expressive Additional body text -->
     <dimen name="sud_glif_expressive_additional_body_text_size">16sp</dimen>
-    <dimen name="sud_glif_expressive_additional_body_text_line_spacing_extra">8sp</dimen>
+    <dimen name="sud_glif_expressive_additional_body_text_line_height">24sp</dimen>
     <dimen name="sud_additional_body_text_padding_bottom">32dp</dimen>
 
     <!-- Glif expressive Info footer -->
@@ -466,5 +467,8 @@
     <dimen name="sud_glif_expressive_progress_indicator_wavelength">40dp</dimen>
     <dimen name="sud_glif_expressive_progress_indicator_wavelength_indeterminate">30dp</dimen>
     <item name="sud_glif_expressive_progress_indicator_indeterminate_animator_duration_scale" format="float" type="dimen">1.5</item>
+
+    <!-- Glif expressive account container -->
+    <dimen name="sud_glif_expressive_account_container_margin_top">16dp</dimen>
 
 </resources>

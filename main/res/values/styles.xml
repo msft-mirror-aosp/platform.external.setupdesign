@@ -104,7 +104,7 @@
         <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
         <item name="sudIllustrationItemStyle">@style/SudItemSummary.IllustrationStyle</item>
         <item name="sudSectionItemTitleStyle">@style/SudItemTitle.SectionHeader</item>
-        <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
+        <item name="sudBulletPointTitleStyle">@style/SudBulletPointTitle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudPromoItemBackground">@drawable/sud_item_background</item>
         <item name="sudPromoItemContainerStyle">@style/SudPromoItemContainer</item>
@@ -121,6 +121,7 @@
         <item name="sudQrFinishStyle">@null</item>
         <item name="sudItemIconDefaultTint">@android:color/transparent</item>
         <item name="sudItemRadioButtonStyle">@style/SudItemRadioButton</item>
+        <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
     </style>
 
     <style name="SudThemeMaterial.Light" parent="Theme.AppCompat.Light.NoActionBar">
@@ -208,7 +209,7 @@
         <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
         <item name="sudIllustrationItemStyle">@style/SudItemSummary.IllustrationStyle</item>
         <item name="sudSectionItemTitleStyle">@style/SudItemTitle.SectionHeader</item>
-        <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
+        <item name="sudBulletPointTitleStyle">@style/SudBulletPointTitle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudPromoItemBackground">@drawable/sud_item_background</item>
         <item name="sudPromoItemContainerStyle">@style/SudPromoItemContainer</item>
@@ -225,6 +226,7 @@
         <item name="sudQrFinishStyle">@null</item>
         <item name="sudItemIconDefaultTint">@android:color/transparent</item>
         <item name="sudItemRadioButtonStyle">@style/SudItemRadioButton</item>
+        <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
     </style>
 
     <style name="SudBaseThemeGlif" parent="Theme.AppCompat.NoActionBar">
@@ -359,7 +361,7 @@
         <item name="sudListDividerHeight">0dp</item>
         <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
         <item name="sudBulletPointContainerStyle">@style/sudBulletPointContainer</item>
-        <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
+        <item name="sudBulletPointTitleStyle">@style/SudBulletPointTitle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudSectionItemContainerStyle">@style/SudItemContainer</item>
         <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
@@ -385,6 +387,7 @@
         <item name="sudQrFinishStyle">@null</item>
         <item name="sudItemIconDefaultTint">@android:color/transparent</item>
         <item name="sudItemRadioButtonStyle">@style/SudItemRadioButton</item>
+        <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
     </style>
     <style name="SudThemeGlif" parent="SudBaseThemeGlif"/>
 
@@ -520,7 +523,7 @@
         <item name="sudListDividerHeight">0dp</item>
         <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
         <item name="sudBulletPointContainerStyle">@style/sudBulletPointContainer</item>
-        <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
+        <item name="sudBulletPointTitleStyle">@style/SudBulletPointTitle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudSectionItemContainerStyle">@style/SudItemContainer</item>
         <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
@@ -546,6 +549,7 @@
         <item name="sudQrFinishStyle">@null</item>
         <item name="sudItemIconDefaultTint">@android:color/transparent</item>
         <item name="sudItemRadioButtonStyle">@style/SudItemRadioButton</item>
+        <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
     </style>
     <style name="SudThemeGlif.Light" parent="SudBaseThemeGlif.Light"/>
 
@@ -789,7 +793,7 @@
         <item name="sucFooterBarButtonAlignEnd">@bool/suc_footer_bar_button_align_end</item>
         <item name="sudButtonTertiaryGravity">center_horizontal</item>
         <item name="sudGlifIconSize">@dimen/sud_glif_icon_max_height_material_you</item>
-        <item name="sudGlifAccountContainerStyle">@style/SudGlifAccountContainerMaterialYou</item>
+        <item name="sudGlifAccountContainerStyle">@style/SudGlifAccountContainerExpressive</item>
         <item name="sudGlifHeaderTitleStyle">@style/SudGlifHeaderTitleExpressive</item>
         <item name="sudGlifHeaderGravity">start</item>
         <item name="sudGlifIconGravity">center_horizontal</item>
@@ -869,7 +873,7 @@
         <item name="textAppearanceListItem">@style/TextAppearance.SudExpressiveItemTitle</item>
         <item name="textAppearanceListItemSmall">@style/TextAppearance.SudExpressiveItemSummary</item>
         <item name="materialAlertDialogTheme">@style/SudGlifExpressiveDialogTheme</item>
-        <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
+        <item name="sudBulletPointTitleStyle">@style/SudBulletPointTitle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudSectionItemContainerStyle">@style/SudGlifExpressiveItemContainer.SectionItem</item>
         <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
@@ -890,6 +894,7 @@
         <item name="sudQrFinishStyle">@style/SudExpressiveQrFinish</item>
         <item name="sudItemIconDefaultTint">@color/sud_system_on_surface_variant_dark</item>
         <item name="sudItemRadioButtonStyle">@style/SudExpressiveItemRadioButton</item>
+        <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
     </style>
 
     <style name="SudBaseThemeGlifExpressive.Light" parent="Theme.Material3.DynamicColors.Light.NoActionBar">
@@ -976,7 +981,7 @@
         <item name="sucHeaderContainerMarginBottom">@dimen/sud_header_container_margin_bottom_material_you</item>
         <item name="sudButtonTertiaryGravity">center_horizontal</item>
         <item name="sudGlifIconSize">@dimen/sud_glif_icon_max_height_material_you</item>
-        <item name="sudGlifAccountContainerStyle">@style/SudGlifAccountContainerMaterialYou</item>
+        <item name="sudGlifAccountContainerStyle">@style/SudGlifAccountContainerExpressive</item>
         <item name="sudGlifHeaderTitleStyle">@style/SudGlifHeaderTitleExpressive</item>
         <item name="sudGlifHeaderGravity">start</item>
         <item name="sudGlifIconGravity">center_horizontal</item>
@@ -1056,7 +1061,7 @@
         <item name="textAppearanceListItem">@style/TextAppearance.SudExpressiveItemTitle</item>
         <item name="textAppearanceListItemSmall">@style/TextAppearance.SudExpressiveItemSummary</item>
         <item name="materialAlertDialogTheme">@style/SudGlifExpressiveDialogTheme</item>
-        <item name="sudBulletPointTitleStyle">?attr/sudItemTitleStyle</item>
+        <item name="sudBulletPointTitleStyle">@style/SudBulletPointTitle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudSectionItemContainerStyle">@style/SudGlifExpressiveItemContainer.SectionItem</item>
         <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
@@ -1077,6 +1082,7 @@
         <item name="sudQrFinishStyle">@style/SudExpressiveQrFinish</item>
         <item name="sudItemIconDefaultTint">@color/sud_system_on_surface_variant_light</item>
         <item name="sudItemRadioButtonStyle">@style/SudExpressiveItemRadioButton</item>
+        <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
     </style>
 
     <style name="SudThemeGlifExpressive" parent="SudBaseThemeGlifExpressive" />
@@ -1527,7 +1533,11 @@
         <item name="android:textAppearance">?attr/textAppearanceListItem</item>
         <item name="android:layout_marginBottom">@dimen/sud_items_summary_margin_top</item>
         <item name="android:lineHeight" tools:targetApi="28">@dimen/sud_glif_promo_card_title_line_height</item>
+        <item name="android:textFontWeight" tools:targetApi="28">500</item>
+        <item name="fontFamily">google-sans-flex</item>
+        <item name="android:fontFamily">google-sans-flex</item>
     </style>
+
     <style name="SudPromoItemSummary">
         <item name="android:textAppearance">?attr/textAppearanceListItemSmall</item>
         <item name="android:lineHeight" tools:targetApi="28">@dimen/sud_glif_promo_card_summary_line_height</item>
@@ -1581,6 +1591,16 @@
 
     <!-- the expressive style for Item Radio button wiil provided by the material theme-->
     <style name="SudExpressiveItemRadioButton" />
+
+    <style name="TextAppearance.SudBulletPoint" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/sud_bullet_point_title_text_size</item>
+        <item name="android:fontFamily">@string/sudFontSecondaryText</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="SudBulletPointTitle">
+        <item name="android:textAppearance">?attr/sudTextAppearanceBulletPoint</item>
+    </style>
 
     <style name="SudItemTitle">
         <item name="android:textAppearance">?attr/textAppearanceListItem</item>
@@ -1693,8 +1713,6 @@
         <item name="android:textFontWeight" tools:targetApi="28">500</item>
         <item name="fontFamily">google-sans-flex</item>
         <item name="android:fontFamily">google-sans-flex</item>
-        <item name="fontVariationSettings">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 500.0</item>
-        <item name="android:fontVariationSettings" tools:targetApi="28">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 500.0</item>
     </style>
 
     <style name="SudGlifDescription" parent="SudDescription.Glif">
@@ -1737,6 +1755,10 @@
         <item name="android:layout_marginRight">?attr/sudMarginEnd</item>
         <item name="android:layout_marginEnd" tools:ignore="NewApi">?attr/sudMarginEnd</item>
         <item name="android:gravity">?attr/sudGlifHeaderGravity</item>
+    </style>
+
+    <style name="SudGlifAccountContainerExpressive" parent="SudGlifAccountContainerMaterialYou">
+        <item name="android:layout_marginTop">@dimen/sud_glif_expressive_account_container_margin_top</item>
     </style>
 
     <style name="SudGlifAccountAvatar">
@@ -1856,7 +1878,7 @@
     <style name="SudAdditionalBodyTextExpressive">
         <item name="android:fontFamily">@string/sudFontSecondaryText</item>
         <item name="android:textSize">@dimen/sud_glif_expressive_additional_body_text_size</item>
-        <item name="android:lineSpacingExtra">@dimen/sud_glif_expressive_additional_body_text_line_spacing_extra</item>
+        <item name="android:lineHeight" tools:targetApi="28">@dimen/sud_glif_expressive_additional_body_text_line_height</item>
         <item name="android:textColor">@color/sud_color_on_surface</item>
         <item name="android:paddingBottom">@dimen/sud_additional_body_text_padding_bottom</item>
     </style>
