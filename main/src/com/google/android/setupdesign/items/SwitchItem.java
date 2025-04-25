@@ -18,11 +18,16 @@ package com.google.android.setupdesign.items;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build.VERSION_CODES;
+import android.os.Build.VERSION;
 import androidx.appcompat.widget.SwitchCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CompoundButton;
+import androidx.annotation.RequiresApi;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.setupdesign.R;
+import com.google.android.setupdesign.util.ThemeHelper;
 
 /**
  * An item that is displayed with a switch, with methods to manipulate and listen to the checked
@@ -94,6 +99,10 @@ public class SwitchItem extends Item implements CompoundButton.OnCheckedChangeLi
     checked = !checked;
     final SwitchCompat switchView = (SwitchCompat) view.findViewById(R.id.sud_items_switch);
     switchView.setChecked(checked);
+    if (ThemeHelper.shouldApplyGlifExpressiveStyle(view.getContext())
+        && VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
+      updateThumbIconDrawable(switchView, checked);
+    }
   }
 
   @Override
@@ -102,6 +111,11 @@ public class SwitchItem extends Item implements CompoundButton.OnCheckedChangeLi
     final SwitchCompat switchView = (SwitchCompat) view.findViewById(R.id.sud_items_switch);
     switchView.setOnCheckedChangeListener(null);
     switchView.setChecked(checked);
+
+    if (ThemeHelper.shouldApplyGlifExpressiveStyle(view.getContext())
+        && VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
+      updateThumbIconDrawable(switchView, checked);
+    }
     switchView.setOnCheckedChangeListener(this);
     switchView.setEnabled(isEnabled());
   }
@@ -117,8 +131,24 @@ public class SwitchItem extends Item implements CompoundButton.OnCheckedChangeLi
   @Override
   public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
     checked = isChecked;
+    if (ThemeHelper.shouldApplyGlifExpressiveStyle(buttonView.getContext())
+        && VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
+      updateThumbIconDrawable(buttonView, isChecked);
+    }
     if (listener != null) {
       listener.onCheckedChange(this, isChecked);
+    }
+  }
+
+  @RequiresApi(VERSION_CODES.LOLLIPOP)
+  private void updateThumbIconDrawable(View view, boolean checked) {
+    if (view instanceof MaterialSwitch materialSwitch) {
+      if (checked) {
+        materialSwitch.setThumbIconDrawable(
+            view.getContext().getDrawable(R.drawable.sud_ic_switch_selector_expressive));
+      } else {
+        materialSwitch.setThumbIconDrawable(null);
+      }
     }
   }
 }

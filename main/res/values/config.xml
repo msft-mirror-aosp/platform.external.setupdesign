@@ -32,6 +32,7 @@
     <string name="sudFontSecondaryMedium" translatable="false">google-sans-medium</string>
     <!-- Material You button font family -->
     <string name="sudFontSecondaryMediumMaterialYou" translatable="false">google-sans-text-medium</string>
+    <string name="sudFontExpressive" translatable="false">google-sans-flex</string>
     <item name="sud_layout_description" type="id" />
 
     <!-- Glif expressive button styles -->

@@ -25,8 +25,19 @@ public interface IconUniformityAppImageViewBindable {
   class IconUniformityAppImageViewData {
     public Drawable icon;
 
+    /**
+     * True if the image uses a circular icon and API level is 21+. android.graphics.Outline#setOval
+     * requires API level 21.
+     */
+    public boolean useCircleIcon;
+
     public IconUniformityAppImageViewData(Drawable icon) {
+      this(icon, /* useCircleIcon= */ false);
+    }
+
+    public IconUniformityAppImageViewData(Drawable icon, boolean useCircleIcon) {
       this.icon = icon;
+      this.useCircleIcon = useCircleIcon;
     }
   }
 

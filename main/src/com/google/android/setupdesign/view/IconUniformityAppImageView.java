@@ -31,6 +31,7 @@ import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 import androidx.annotation.ColorRes;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.widget.CardBackgroundDrawable;
@@ -46,6 +47,7 @@ public class IconUniformityAppImageView extends ImageView
   // Apps & games radius is 20% of icon height.
   private static final Float APPS_ICON_RADIUS_MULTIPLIER = 0.20f;
 
+  private boolean useCircleIcon;
   @ColorRes private int backdropColorResId = 0;
 
   private static final boolean ON_L_PLUS = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
@@ -82,6 +84,9 @@ public class IconUniformityAppImageView extends ImageView
 
   @Override
   public void bindView(IconUniformityAppImageViewData viewData) {
+    useCircleIcon = viewData.useCircleIcon;
+    float radius = getLayoutParams().height * APPS_ICON_RADIUS_MULTIPLIER;
+
     if (Build.VERSION.SDK_INT <= 17) {
       // clipPath is not supported on hardware accelerated canvas so won't take effect unless we
       // manually set to software.
@@ -94,23 +99,26 @@ public class IconUniformityAppImageView extends ImageView
         getLayoutParams().width,
         getLayoutParams().height);
 
-    float radius = getLayoutParams().height * APPS_ICON_RADIUS_MULTIPLIER;
-
     if (ON_L_PLUS) {
       setBackgroundColor(ContextCompat.getColor(getContext(), backdropColorResId));
-      backdropDrawable.setCornerRadius(radius);
       setElevation(getContext().getResources().getDimension(R.dimen.sud_icon_uniformity_elevation));
       setClipToOutline(true);
       setOutlineProvider(
           new ViewOutlineProvider() {
             @Override
             public void getOutline(View view, Outline outline) {
-              outline.setRoundRect(
-                  /* left= */ 0,
-                  /* top= */ 0,
-                  /* right= */ getLayoutParams().width,
-                  /* bottom= */ getLayoutParams().height,
-                  /* radius= */ radius);
+              if (useCircleIcon) {
+                setCircleIconTransformation(viewData, outline);
+
+              } else {
+                backdropDrawable.setCornerRadius(radius);
+                outline.setRoundRect(
+                    /* left= */ 0,
+                    /* top= */ 0,
+                    /* right= */ getLayoutParams().width,
+                    /* bottom= */ getLayoutParams().height,
+                    /* radius= */ radius);
+              }
             }
           });
     } else {
@@ -151,6 +159,49 @@ public class IconUniformityAppImageView extends ImageView
   public void setBackdropDrawableColor(int backdropColorResId) {
     this.backdropColorResId = backdropColorResId;
     backdropDrawable.setColor(ContextCompat.getColor(getContext(), backdropColorResId));
+  }
+
+  @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+  private void setCircleIconTransformation(
+      IconUniformityAppImageViewData viewData, Outline outline) {
+    float drawableWidth = viewData.icon.getMinimumWidth();
+    float drawableHeight = viewData.icon.getMinimumHeight();
+    float imageViewHeight = getLayoutParams().height;
+    float imageViewWidth = getLayoutParams().width;
+    float outlineWidth;
+    float outlineHeight;
+    float widthInset;
+    float heightInset;
+
+    final float drawableAspectRatio = drawableHeight / drawableWidth;
+    final float imageViewAspectRatio = imageViewHeight / imageViewWidth;
+    if (drawableAspectRatio > imageViewAspectRatio) {
+      // Fill height first
+      outlineHeight = imageViewHeight;
+      outlineWidth = outlineHeight / drawableAspectRatio;
+      widthInset = (imageViewWidth - outlineWidth) / 2;
+      heightInset = 0;
+    } else if (drawableAspectRatio < imageViewAspectRatio) {
+      // Fill width first
+      outlineWidth = imageViewWidth;
+      outlineHeight = outlineWidth * drawableAspectRatio;
+      widthInset = 0;
+      heightInset =
+          getScaleType() == ScaleType.FIT_START ? 0 : (imageViewHeight - outlineHeight) / 2;
+    } else {
+      // Equal aspect ratio
+      outlineHeight = imageViewHeight;
+      outlineWidth = imageViewWidth;
+      widthInset = 0;
+      heightInset = 0;
+    }
+    setScaleType(ScaleType.FIT_CENTER);
+
+    outline.setOval(
+        Math.round(widthInset),
+        Math.round(heightInset),
+        Math.round(widthInset + outlineWidth),
+        Math.round(heightInset + outlineHeight));
   }
 
   private void setLegacyTransformationMatrix(
