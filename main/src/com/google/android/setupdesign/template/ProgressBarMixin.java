@@ -127,7 +127,11 @@ public class ProgressBarMixin implements Mixin {
     } else {
       View progressBar = peekProgressBar();
       if (progressBar != null) {
+        if (isGlifExpressiveEnabled) {
+          progressBar.setVisibility(View.GONE);
+        } else {
         progressBar.setVisibility(useBottomProgressBar ? View.INVISIBLE : View.GONE);
+        }
       }
     }
   }

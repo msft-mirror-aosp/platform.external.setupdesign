@@ -709,7 +709,6 @@
     </style>
 
     <style name="SudBaseThemeGlifExpressive" parent="Theme.Material3.DynamicColors.Dark.NoActionBar">
-        <item name="android:overScrollMode">never</item>
         <!-- Copied from values style SudThemeBaseGlif -->
         <item name="android:indeterminateTint" tools:ignore="NewApi">?attr/colorControlActivated</item>
         <!-- Ensure that the navigation bar has enough contrast when a fully transparent background
@@ -774,7 +773,7 @@
         <item name="sudDividerInsetStart">?attr/sudMarginStart</item>
         <item name="sudDividerInsetStartNoIcon">?attr/sudMarginStart</item>
         <item name="sudGlifSubtitleGravity">center_horizontal</item>
-        <item name="sudScrollIndicators">top|bottom</item>
+        <item name="sudScrollIndicators">none</item>
         <item name="sudEditTextBackgroundColor">@color/sud_glif_edit_text_bg_dark_color</item>
         <item name="android:editTextStyle">@style/SudEditText</item>
         <item name="sucLightStatusBar" tools:targetApi="m">?android:attr/windowLightStatusBar</item>
@@ -789,7 +788,7 @@
         <!-- Copied from values style SudThemeGlifV4 -->
         <item name="sucFooterBarPaddingVertical">@dimen/sud_glif_footer_bar_padding_vertical_material_you</item>
         <item name="sucFooterBarMinHeight">@dimen/sud_glif_footer_bar_min_height_material_you</item>
-        <item name="sucHeaderContainerMarginBottom">@dimen/sud_header_container_margin_bottom_material_you</item>
+        <item name="sucHeaderContainerMarginBottom">@dimen/sud_glif_expressive_header_container_margin_bottom</item>
         <item name="sucFooterBarButtonAlignEnd">@bool/suc_footer_bar_button_align_end</item>
         <item name="sudButtonTertiaryGravity">center_horizontal</item>
         <item name="sudGlifIconSize">@dimen/sud_glif_icon_max_height_material_you</item>
@@ -798,7 +797,7 @@
         <item name="sudGlifHeaderGravity">start</item>
         <item name="sudGlifIconGravity">center_horizontal</item>
         <item name="sucGlifHeaderMarginTop">@dimen/sud_glif_header_title_margin_top_material_you</item>
-        <item name="sucGlifHeaderMarginBottom">@dimen/sud_glif_header_title_margin_bottom_material_you</item>
+        <item name="sucGlifHeaderMarginBottom">@dimen/sud_glif_expressive_header_title_margin_bottom</item>
         <item name="sudGlifDescriptionStyle">@style/SudGlifDescriptionExpressive</item>
         <item name="sudGlifDescriptionMarginBottom">@dimen/sud_glif_expreesive_description_margin_bottom</item>
         <item name="sudItemDescriptionTitleTextAppearence">@style/TextAppearance.SudMaterialYouDescription</item>
@@ -898,7 +897,6 @@
     </style>
 
     <style name="SudBaseThemeGlifExpressive.Light" parent="Theme.Material3.DynamicColors.Light.NoActionBar">
-        <item name="android:overScrollMode">never</item>
         <!-- Copied from values style SudThemeBaseGlif.Light -->
         <item name="android:indeterminateTint" tools:ignore="NewApi">?attr/colorControlActivated</item>
         <!-- Ensure that the navigation bar has enough contrast when a fully transparent background
@@ -963,7 +961,7 @@
         <item name="sudDividerInsetStart">?attr/sudMarginStart</item>
         <item name="sudDividerInsetStartNoIcon">?attr/sudMarginStart</item>
         <item name="sudGlifSubtitleGravity">center_horizontal</item>
-        <item name="sudScrollIndicators">top|bottom</item>
+        <item name="sudScrollIndicators">none</item>
         <item name="sudEditTextBackgroundColor">@color/sud_glif_edit_text_bg_light_color</item>
         <item name="android:editTextStyle">@style/SudEditText</item>
         <item name="sucLightStatusBar" tools:targetApi="m">?android:attr/windowLightStatusBar</item>
@@ -978,7 +976,7 @@
         <item name="sucFooterBarPaddingVertical">@dimen/sud_glif_footer_bar_padding_vertical_material_you</item>
         <item name="sucFooterBarMinHeight">@dimen/sud_glif_footer_bar_min_height_material_you</item>
         <item name="sucFooterBarButtonAlignEnd">@bool/suc_footer_bar_button_align_end</item>
-        <item name="sucHeaderContainerMarginBottom">@dimen/sud_header_container_margin_bottom_material_you</item>
+        <item name="sucHeaderContainerMarginBottom">@dimen/sud_glif_expressive_header_container_margin_bottom</item>
         <item name="sudButtonTertiaryGravity">center_horizontal</item>
         <item name="sudGlifIconSize">@dimen/sud_glif_icon_max_height_material_you</item>
         <item name="sudGlifAccountContainerStyle">@style/SudGlifAccountContainerExpressive</item>
@@ -986,7 +984,7 @@
         <item name="sudGlifHeaderGravity">start</item>
         <item name="sudGlifIconGravity">center_horizontal</item>
         <item name="sucGlifHeaderMarginTop">@dimen/sud_glif_header_title_margin_top_material_you</item>
-        <item name="sucGlifHeaderMarginBottom">@dimen/sud_glif_header_title_margin_bottom_material_you</item>
+        <item name="sucGlifHeaderMarginBottom">@dimen/sud_glif_expressive_header_title_margin_bottom</item>
         <item name="sudGlifDescriptionStyle">@style/SudGlifDescriptionExpressive</item>
         <item name="sudGlifDescriptionMarginBottom">@dimen/sud_glif_expreesive_description_margin_bottom</item>
         <item name="sudItemDescriptionTitleTextAppearence">@style/TextAppearance.SudMaterialYouDescription</item>
@@ -1594,7 +1592,7 @@
 
     <style name="TextAppearance.SudBulletPoint" parent="android:TextAppearance">
         <item name="android:textSize">@dimen/sud_bullet_point_title_text_size</item>
-        <item name="android:fontFamily">@string/sudFontSecondaryText</item>
+        <item name="android:fontFamily">@string/sudFontExpressive</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
@@ -1743,7 +1741,19 @@
         <item name="android:textSize">@dimen/sud_glif_description_text_size_material_you</item>
     </style>
 
-    <style name="SudGlifDescriptionExpressive" parent="SudGlifDescriptionMaterialYou">
+    <style name="SudGlifDescriptionExpressive">
+        <item name="fontFamily">google-sans-flex</item>
+        <item name="android:lineHeight" tools:targetApi="28">@dimen/sud_glif_expressive_description_line_height</item>
+        <item name="android:gravity">?attr/sudGlifHeaderGravity</item>
+        <item name="android:textAlignment">gravity</item>
+        <item name="android:layout_marginTop">?attr/sudGlifDescriptionMarginTop</item>
+        <item name="android:layout_marginBottom">?attr/sudGlifDescriptionMarginBottom</item>
+        <item name="android:layout_marginLeft">?attr/sudMarginStart</item>
+        <item name="android:layout_marginStart">?attr/sudMarginStart</item>
+        <item name="android:layout_marginRight">?attr/sudMarginEnd</item>
+        <item name="android:layout_marginEnd">?attr/sudMarginEnd</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textDirection">locale</item>
         <item name="android:textSize">@dimen/sud_glif_expressive_description_text_size</item>
     </style>
 
@@ -1778,7 +1788,7 @@
     </style>
 
     <style name="SudGlifExpressiveAccountName">
-        <item name="android:fontFamily">@string/sudFontSecondaryText</item>
+        <item name="android:fontFamily">@string/sudFontExpressive</item>
         <item name="android:textSize">?attr/sudAccountNameTextSize</item>
         <item name="android:textColor">?attr/sudAccountNameTextColor</item>
         <item name="android:textFontWeight" tools:ignore="NewApi">@integer/sud_glif_account_name_text_font_weight</item>
@@ -1863,7 +1873,7 @@
 
     <style name="TextAppearance.SudExpressiveItemSummary" parent="android:TextAppearance">
         <item name="android:textSize">@dimen/sud_items_summary_text_size_expressive</item>
-        <item name="android:fontFamily">@string/sudFontSecondaryText</item>
+        <item name="android:fontFamily">@string/sudFontExpressive</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
@@ -1876,7 +1886,7 @@
     <!-- Additional body text styles -->
 
     <style name="SudAdditionalBodyTextExpressive">
-        <item name="android:fontFamily">@string/sudFontSecondaryText</item>
+        <item name="android:fontFamily">@string/sudFontExpressive</item>
         <item name="android:textSize">@dimen/sud_glif_expressive_additional_body_text_size</item>
         <item name="android:lineHeight" tools:targetApi="28">@dimen/sud_glif_expressive_additional_body_text_line_height</item>
         <item name="android:textColor">@color/sud_color_on_surface</item>
@@ -1924,7 +1934,7 @@
     </style>
 
    <style name="sudInfoFooterTitleExpressive" parent="sudInfoFooterTitle">
-        <item name="android:fontFamily">@string/sudFontSecondaryText</item>
+        <item name="android:fontFamily">@string/sudFontExpressive</item>
     </style>
 
     <!-- Navigation bar styles -->
