@@ -105,6 +105,9 @@ public class CheckBoxItem extends Item
     checked = !checked;
     final CheckBox checkBoxView = (CheckBox) view.findViewById(R.id.sud_items_check_box);
     checkBoxView.setChecked(checked);
+    if (listener != null) {
+      listener.onCheckedChange(this, checked);
+    }
   }
 
   @Override
@@ -131,7 +134,7 @@ public class CheckBoxItem extends Item
 
   @Override
   public void onClick(View v) {
-    setChecked(!checked);
+    toggle(v);
   }
 
   @Override

@@ -212,8 +212,9 @@ public class ExpandableSwitchItem extends SwitchItem
         }
       }
       View switchItem = view.findViewById(R.id.sud_items_switch);
-      if (!isSwitchItem && switchItem != null) {
-        switchItem.setVisibility(View.INVISIBLE);
+
+      if (switchItem != null) {
+        switchItem.setVisibility(isSwitchItem ? View.VISIBLE : View.INVISIBLE);
       }
     } else {
       View content = view.findViewById(R.id.sud_items_expandable_switch_content);

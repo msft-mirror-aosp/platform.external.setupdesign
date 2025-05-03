@@ -73,6 +73,10 @@
         android:id="@+id/sud_items_check_box"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center"
+        android:minHeight="@dimen/sud_items_check_box_min_size"
+        android:minWidth="@dimen/sud_items_check_box_min_size"
+        android:layout_marginTop="@dimen/sud_items_check_box_margin_top"
+        android:layout_marginBottom="@dimen/sud_items_check_box_margin_bottom" />
 
 </LinearLayout>
