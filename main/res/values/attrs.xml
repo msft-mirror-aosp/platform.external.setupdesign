@@ -166,6 +166,7 @@
     <attr name="sudItemIconStyle" format="reference"/>
     <attr name="sudItemTitleStyle" format="reference"/>
     <attr name="sudItemSummaryStyle" format="reference"/>
+    <attr name="sudItemMoreInfoStyle" format="reference"/>
     <attr name="sudBulletPointTitleStyle" format="reference"/>
     <attr name="sudBulletPointSummaryStyle" format="reference"/>
     <attr name="sudItemDescriptionStyle" format="reference" />

@@ -18,7 +18,9 @@ package com.google.android.setupdesign.items;
 
 import android.view.View;
 import android.widget.TextView;
+import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
+import com.google.android.setupdesign.util.LayoutStyler;
 
 /** A section header item that represents a default style or bluechip styles. */
 public class SectionHeaderItem extends Item implements Dividable {
@@ -43,6 +45,9 @@ public class SectionHeaderItem extends Item implements Dividable {
     view.findViewById(R.id.sud_items_icon_container).setVisibility(View.GONE);
     view.setContentDescription(getContentDescription());
     view.setClickable(/* clickable= */ false);
+    if (!PartnerConfigHelper.isGlifExpressiveEnabled(view.getContext())) {
+      LayoutStyler.applyPartnerCustomizationLayoutPaddingStyle(view);
+    }
   }
 
   private boolean hasSummary(CharSequence summary) {

@@ -94,7 +94,7 @@
 
         <com.google.android.setupdesign.view.RichTextView
             android:id="@+id/sud_items_more_info"
-            style="?attr/sudItemSummaryStyle"
+            style="?attr/sudItemMoreInfoStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="start"
