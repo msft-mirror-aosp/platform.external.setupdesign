@@ -16,6 +16,7 @@
 
 package com.google.android.setupdesign.items;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
@@ -32,6 +33,9 @@ public class SectionHeaderItem extends Item implements Dividable {
   @Override
   public void onBindView(View view) {
     TextView label = (TextView) view.findViewById(R.id.sud_items_title);
+    if (getTitleColor() != Color.TRANSPARENT) {
+      label.setTextColor(getTitleColor());
+    }
     label.setText(getTitle());
     TextView summaryView = (TextView) view.findViewById(R.id.sud_items_summary);
     CharSequence summary = getSummary();

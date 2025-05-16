@@ -18,7 +18,9 @@ package com.google.android.setupdesign.items;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
+import androidx.annotation.ColorInt;
 import com.google.android.setupdesign.R;
 
 /**
@@ -40,10 +42,14 @@ public class SectionItem extends ItemGroup {
     super(context, attrs);
     TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SudSectionItem);
     CharSequence headerText = a.getText(R.styleable.SudSectionItem_android_title);
+    @ColorInt
+    int titleColor =
+        a.getColor(R.styleable.SudSectionItem_sudSectionHeaderColor, Color.TRANSPARENT);
     a.recycle();
     header = new SectionHeaderItem();
     header.setTitle(headerText);
     header.setVisible(false);
+    header.setTitleColor(titleColor);
     addChild(header);
   }
 
@@ -71,6 +77,13 @@ public class SectionItem extends ItemGroup {
   @Override
   public void onItemRangeInserted(ItemHierarchy itemHierarchy, int positionStart, int itemCount) {
     super.onItemRangeInserted(itemHierarchy, positionStart, itemCount);
+    refreshHeader();
+  }
+
+  @Override
+  public void clear() {
+    super.clear();
+    addChild(header);
     refreshHeader();
   }
 
