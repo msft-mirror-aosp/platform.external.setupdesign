@@ -99,6 +99,7 @@
         <item name="sudItemSummaryPaddingBottom">@dimen/sud_items_padding_bottom_extra</item>
         <item name="sudItemTitleStyle">@style/SudItemTitle</item>
         <item name="sudItemSummaryStyle">@style/SudItemSummaryGlif</item>
+        <item name="sudItemMoreInfoStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudItemDescriptionTitleTextAppearence">@style/TextAppearance.SudDescription</item>
         <item name="sudSectionItemContainerStyle">@style/SudItemContainer</item>
         <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
@@ -204,6 +205,7 @@
         <item name="sudItemSummaryPaddingBottom">@dimen/sud_items_padding_bottom_extra</item>
         <item name="sudItemTitleStyle">@style/SudItemTitle</item>
         <item name="sudItemSummaryStyle">@style/SudItemSummaryGlif</item>
+        <item name="sudItemMoreInfoStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudItemDescriptionTitleTextAppearence">@style/TextAppearance.SudDescription</item>
         <item name="sudSectionItemContainerStyle">@style/SudItemContainer</item>
         <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
@@ -342,6 +344,7 @@
         <item name="sudItemDescriptionPaddingBottom">@dimen/sud_description_glif_margin_bottom_lists</item>
         <item name="sudItemTitleStyle">@style/SudItemTitle</item>
         <item name="sudItemSummaryStyle">@style/SudItemSummaryGlif</item>
+        <item name="sudItemMoreInfoStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudItemSummaryPaddingTop">0dp</item>
         <item name="sudItemSummaryPaddingBottom">@dimen/sud_items_padding_bottom_extra</item>
         <item name="sudItemDescriptionTitleTextAppearence">@style/TextAppearance.SudDescription</item>
@@ -504,6 +507,7 @@
         <item name="sudItemDescriptionPaddingBottom">@dimen/sud_description_glif_margin_bottom_lists</item>
         <item name="sudItemTitleStyle">@style/SudItemTitle</item>
         <item name="sudItemSummaryStyle">@style/SudItemSummaryGlif</item>
+        <item name="sudItemMoreInfoStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudItemSummaryPaddingTop">0dp</item>
         <item name="sudItemSummaryPaddingBottom">@dimen/sud_items_padding_bottom_extra</item>
         <item name="sudItemDescriptionTitleTextAppearence">@style/TextAppearance.SudDescription</item>
@@ -854,6 +858,7 @@
         <item name="sudNonActionableItemBackgroundColor" tools:ignore="NewApi">?attr/colorSurfaceContainerHigh</item>
         <item name="sudItemTitleStyle">@style/SudItemTitleExpressive</item>
         <item name="sudItemSummaryStyle">@style/SudItemSummaryExpressive</item>
+        <item name="sudItemMoreInfoStyle">@style/SudItemMoreInfoExpressive</item>
         <item name="sudItemSummaryPaddingTop">@dimen/sud_items_summary_margin_top_expressive</item>
         <item name="sudItemIconContainerWidth">@dimen/sud_items_icon_container_width_expressive</item>
         <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
@@ -1041,6 +1046,7 @@
         <item name="sudNonActionableItemBackgroundColor" tools:ignore="NewApi">?attr/colorSurfaceContainerHigh</item>
         <item name="sudItemTitleStyle">@style/SudItemTitleExpressive</item>
         <item name="sudItemSummaryStyle">@style/SudItemSummaryExpressive</item>
+        <item name="sudItemMoreInfoStyle">@style/SudItemMoreInfoExpressive</item>
         <item name="sudItemSummaryPaddingTop">@dimen/sud_items_summary_margin_top_expressive</item>
         <item name="sudItemIconContainerWidth">@dimen/sud_items_icon_container_width_expressive</item>
         <item name="sucFooterBarButtonFontWeight">@integer/sud_glif_expressive_footer_button_weight</item>
@@ -1534,6 +1540,8 @@
         <item name="android:textFontWeight" tools:targetApi="28">500</item>
         <item name="fontFamily">google-sans-flex</item>
         <item name="android:fontFamily">google-sans-flex</item>
+        <item name="fontVariationSettings">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 600.0</item>
+        <item name="android:fontVariationSettings" tools:targetApi="28">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 600.0</item>
     </style>
 
     <style name="SudPromoItemSummary">
@@ -1576,6 +1584,16 @@
         <item name="android:layout_marginBottom">?attr/sudItemSummaryPaddingBottom</item>
     </style>
 
+    <style name="SudItemMoreInfoExpressive">
+        <item name="android:textAppearance">?attr/textAppearanceListItemSmall</item>
+        <item name="android:lineHeight" tools:targetApi="28">@dimen/sud_glif_expressive_item_summary_line_height</item>
+        <item name="android:layout_marginBottom">?attr/sudItemSummaryPaddingBottom</item>
+        <item name="fontFamily">google-sans-flex</item>
+        <item name="android:fontFamily">google-sans-flex</item>
+        <item name="fontVariationSettings">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 500.0</item>
+        <item name="android:fontVariationSettings" tools:targetApi="28">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 500.0</item>
+    </style>
+
     <style name="SudItemContainerMaterialYou.Description" parent="SudItemContainerMaterialYou">
         <item name="android:minHeight">0dp</item>
         <item name="android:paddingTop">?attr/sudItemPaddingTop</item>
@@ -1615,6 +1633,8 @@
         <item name="android:textFontWeight" tools:targetApi="28">500</item>
         <item name="fontFamily">google-sans-flex</item>
         <item name="android:fontFamily">google-sans-flex</item>
+        <item name="fontVariationSettings">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 500.0</item>
+        <item name="android:fontVariationSettings" tools:targetApi="28">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 500.0</item>
     </style>
 
     <style name="SudItemTitle.GlifDescription" parent="SudItemTitle">
@@ -1641,6 +1661,8 @@
         <item name="android:textFontWeight" tools:targetApi="28">500</item>
         <item name="fontFamily">google-sans-flex</item>
         <item name="android:fontFamily">google-sans-flex</item>
+        <item name="fontVariationSettings">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 500.0</item>
+        <item name="android:fontVariationSettings" tools:targetApi="28">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 500.0</item>
     </style>
 
     <style name="SudSwitchStyle">
@@ -1711,6 +1733,8 @@
         <item name="android:textFontWeight" tools:targetApi="28">500</item>
         <item name="fontFamily">google-sans-flex</item>
         <item name="android:fontFamily">google-sans-flex</item>
+        <item name="fontVariationSettings">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 500.0</item>
+        <item name="android:fontVariationSettings" tools:targetApi="28">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 500.0</item>
     </style>
 
     <style name="SudGlifDescription" parent="SudDescription.Glif">

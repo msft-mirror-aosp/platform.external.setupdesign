@@ -166,6 +166,7 @@
     <attr name="sudItemIconStyle" format="reference"/>
     <attr name="sudItemTitleStyle" format="reference"/>
     <attr name="sudItemSummaryStyle" format="reference"/>
+    <attr name="sudItemMoreInfoStyle" format="reference"/>
     <attr name="sudBulletPointTitleStyle" format="reference"/>
     <attr name="sudBulletPointSummaryStyle" format="reference"/>
     <attr name="sudItemDescriptionStyle" format="reference" />
@@ -193,6 +194,7 @@
     <attr name="sudItemBackgroundFirst" format="color|reference" />
     <attr name="sudItemBackgroundLast" format="color|reference" />
     <attr name="sudItemBackgroundSingle" format="color|reference" />
+    <attr name="sudSectionHeaderColor" format="color|reference" />
     <attr name="sudNonActionableItemBackground" format="color|reference" />
     <attr name="sudNonActionableItemBackgroundFirst" format="color|reference" />
     <attr name="sudNonActionableItemBackgroundLast" format="color|reference" />
@@ -249,6 +251,7 @@
 
     <declare-styleable name="SudSectionItem">
         <attr name="android:title" />
+        <attr name="sudSectionHeaderColor" />
     </declare-styleable>
 
     <declare-styleable name="SudIllustrationVideoView">

@@ -16,9 +16,12 @@
 
 package com.google.android.setupdesign.items;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
+import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
+import com.google.android.setupdesign.util.LayoutStyler;
 
 /** A section header item that represents a default style or bluechip styles. */
 public class SectionHeaderItem extends Item implements Dividable {
@@ -30,6 +33,9 @@ public class SectionHeaderItem extends Item implements Dividable {
   @Override
   public void onBindView(View view) {
     TextView label = (TextView) view.findViewById(R.id.sud_items_title);
+    if (getTitleColor() != Color.TRANSPARENT) {
+      label.setTextColor(getTitleColor());
+    }
     label.setText(getTitle());
     TextView summaryView = (TextView) view.findViewById(R.id.sud_items_summary);
     CharSequence summary = getSummary();
@@ -43,6 +49,9 @@ public class SectionHeaderItem extends Item implements Dividable {
     view.findViewById(R.id.sud_items_icon_container).setVisibility(View.GONE);
     view.setContentDescription(getContentDescription());
     view.setClickable(/* clickable= */ false);
+    if (!PartnerConfigHelper.isGlifExpressiveEnabled(view.getContext())) {
+      LayoutStyler.applyPartnerCustomizationLayoutPaddingStyle(view);
+    }
   }
 
   private boolean hasSummary(CharSequence summary) {

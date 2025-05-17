@@ -70,6 +70,7 @@ public class Item extends AbstractItem implements LinkSpan.OnLinkClickListener {
   @Nullable private OnItemTextLinkClickListener itemTextLinkClickListener;
   private boolean visible = true;
   @ColorInt private int iconTint = Color.TRANSPARENT;
+  @ColorInt private int titleColor = Color.TRANSPARENT;
   private int iconGravity = Gravity.CENTER_VERTICAL;
 
   public Item() {
@@ -123,6 +124,15 @@ public class Item extends AbstractItem implements LinkSpan.OnLinkClickListener {
   @Nullable
   public Drawable getIcon() {
     return icon;
+  }
+
+  public void setTitleColor(@ColorInt int titleColor) {
+    this.titleColor = titleColor;
+  }
+
+  @ColorInt
+  public int getTitleColor() {
+    return titleColor;
   }
 
   public void setIconTint(@ColorInt int iconTint) {
@@ -261,6 +271,10 @@ public class Item extends AbstractItem implements LinkSpan.OnLinkClickListener {
       iconContainer.setVisibility(View.VISIBLE);
     } else {
       iconContainer.setVisibility(View.GONE);
+    }
+
+    if (titleColor != Color.TRANSPARENT) {
+      label.setTextColor(titleColor);
     }
 
     view.setId(getViewId());

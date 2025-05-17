@@ -283,7 +283,12 @@ public final class HeaderAreaStyler {
           (int)
               PartnerConfigHelper.get(context)
                   .getDimension(context, PartnerConfig.CONFIG_ICON_MARGIN_TOP);
-      topMargin += reducedIconHeight;
+      if (PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
+        // when glif expressive is enabled, adjust the icon margin top to align with the back button
+        topMargin += reducedIconHeight / 2;
+      } else {
+        topMargin += reducedIconHeight;
+      }
       mlp.setMargins(mlp.leftMargin, topMargin, mlp.rightMargin, mlp.bottomMargin);
     }
   }

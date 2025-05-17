@@ -41,6 +41,7 @@ public class BulletPointView extends LinearLayout {
   private RichTextView titleView;
   private RichTextView summaryView;
   private ImageView iconView;
+  private View iconContainer;
 
   public BulletPointView(Context context) {
     super(context);
@@ -72,6 +73,7 @@ public class BulletPointView extends LinearLayout {
     titleView = findViewById(R.id.sud_items_title);
     summaryView = findViewById(R.id.sud_items_summary);
     iconView = findViewById(R.id.sud_items_icon);
+    iconContainer = findViewById(R.id.sud_items_icon_container);
     if (titleView != null && title != null) {
       titleView.setText(title);
       titleView.setVisibility(View.VISIBLE);
@@ -83,6 +85,9 @@ public class BulletPointView extends LinearLayout {
     if (iconView != null && icon != null) {
       iconView.setImageDrawable(icon);
       iconView.setVisibility(View.VISIBLE);
+      iconContainer.setVisibility(View.VISIBLE);
+    } else {
+      iconContainer.setVisibility(View.GONE);
     }
   }
 
@@ -107,6 +112,7 @@ public class BulletPointView extends LinearLayout {
     if (iconView != null) {
       iconView.setImageDrawable(icon);
       iconView.setVisibility(View.VISIBLE);
+      iconContainer.setVisibility(View.VISIBLE);
     }
   }
 
