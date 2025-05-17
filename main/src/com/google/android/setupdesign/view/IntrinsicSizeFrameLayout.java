@@ -18,7 +18,6 @@ package com.google.android.setupdesign.view;
 
 import static java.lang.Math.min;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
@@ -32,10 +31,12 @@ import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.view.WindowMetrics;
 import android.widget.FrameLayout;
+import androidx.annotation.RequiresApi;
 import androidx.annotation.VisibleForTesting;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.util.BuildCompatUtils;
+import com.google.android.setupcompat.util.Logger;
 import com.google.android.setupdesign.R;
 
 /**
@@ -47,6 +48,8 @@ import com.google.android.setupdesign.R;
  * android:layout_height} will need to be {@code wrap_content}.
  */
 public class IntrinsicSizeFrameLayout extends FrameLayout {
+
+  private static final Logger LOG = new Logger(IntrinsicSizeFrameLayout.class);
 
   private int intrinsicHeight = 0;
   private int intrinsicWidth = 0;
@@ -65,7 +68,7 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
     init(context, attrs, 0);
   }
 
-  @TargetApi(VERSION_CODES.HONEYCOMB)
+  @RequiresApi(VERSION_CODES.HONEYCOMB)
   public IntrinsicSizeFrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
     init(context, attrs, defStyleAttr);
@@ -85,6 +88,8 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
         a.getDimensionPixelSize(R.styleable.SudIntrinsicSizeFrameLayout_android_width, 0);
     a.recycle();
 
+    LOG.atInfo("CardViewIntrinsicAttribute(" + intrinsicWidth + ", " + intrinsicHeight + ")");
+
     if (BuildCompatUtils.isAtLeastS()) {
       if (PartnerConfigHelper.get(context)
           .isPartnerConfigAvailable(PartnerConfig.CONFIG_CARD_VIEW_INTRINSIC_HEIGHT)) {
@@ -92,14 +97,21 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
             (int)
                 PartnerConfigHelper.get(context)
                     .getDimension(context, PartnerConfig.CONFIG_CARD_VIEW_INTRINSIC_HEIGHT);
+      } else {
+        LOG.atInfo("PartnerConfig.CONFIG_CARD_VIEW_INTRINSIC_HEIGHT not found");
       }
+
       if (PartnerConfigHelper.get(context)
           .isPartnerConfigAvailable(PartnerConfig.CONFIG_CARD_VIEW_INTRINSIC_WIDTH)) {
         intrinsicWidth =
             (int)
                 PartnerConfigHelper.get(context)
                     .getDimension(context, PartnerConfig.CONFIG_CARD_VIEW_INTRINSIC_WIDTH);
+      } else {
+        LOG.atInfo("PartnerConfig.CONFIG_CARD_VIEW_INTRINSIC_WIDTH not found");
       }
+
+      LOG.atInfo("CardViewIntrinsicPartnerConfig(" + intrinsicWidth + ", " + intrinsicHeight + ")");
     }
   }
 

@@ -30,6 +30,8 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -240,6 +242,60 @@ public class GlifLayout extends PartnerCustomizationLayout {
     getMixin(ProfileMixin.class).tryApplyPartnerCustomizationStyle();
     getMixin(FloatingBackButtonMixin.class).tryApplyPartnerCustomizationStyle();
     tryApplyPartnerCustomizationStyleToShortDescription();
+  }
+
+  @Override
+  protected Parcelable onSaveInstanceState() {
+    Parcelable superState = super.onSaveInstanceState();
+    GlifSavedState savedState = new GlifSavedState(superState);
+    // save the state of the scroll to bottom for expressive.
+    savedState.everScrolledToBottomForExpressive =
+        getMixin(RequireScrollMixin.class).getEverScrolledToBottomForExpressive();
+    return savedState;
+  }
+
+  @Override
+  protected void onRestoreInstanceState(Parcelable state) {
+    if (!(state instanceof GlifSavedState savedState)) {
+      super.onRestoreInstanceState(state);
+      return;
+    }
+    super.onRestoreInstanceState(savedState.getSuperState());
+    // assign the state of the scroll to bottom for expressive.
+    getMixin(RequireScrollMixin.class)
+        .onRestoreEverScrolledToBottomForExpressive(savedState.everScrolledToBottomForExpressive);
+  }
+
+  static class GlifSavedState extends BaseSavedState {
+    boolean everScrolledToBottomForExpressive = false;
+
+    GlifSavedState(Parcelable superState) {
+      super(superState);
+    }
+
+    private GlifSavedState(Parcel in) {
+      super(in);
+      this.everScrolledToBottomForExpressive = (in.readInt() == 1);
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+      super.writeToParcel(out, flags);
+      out.writeInt(this.everScrolledToBottomForExpressive ? 1 : 0);
+    }
+
+    public static final Parcelable.Creator<GlifSavedState> CREATOR =
+        new Parcelable.Creator<GlifSavedState>() {
+          @Override
+          public GlifSavedState createFromParcel(Parcel in) {
+            return new GlifSavedState(in);
+          }
+
+          @Override
+          public GlifSavedState[] newArray(int size) {
+            return new GlifSavedState[size];
+          }
+        };
   }
 
   private void updateViewFocusable() {
@@ -505,6 +561,10 @@ public class GlifLayout extends PartnerCustomizationLayout {
 
   public void setIcon(Drawable icon) {
     getMixin(IconMixin.class).setIcon(icon);
+  }
+
+  public void setIconVisible(boolean visible) {
+    getMixin(IconMixin.class).setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
   }
 
   public Drawable getIcon() {

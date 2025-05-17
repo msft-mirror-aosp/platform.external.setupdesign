@@ -26,8 +26,8 @@
 
   <ViewStub
       android:id="@+id/sud_floating_back_button_stub"
-      android:layout_width="@dimen/sud_glif_expressive_back_button_size"
-      android:layout_height="@dimen/sud_glif_expressive_back_button_size"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:filterTouchesWhenObscured="true"
       android:visibility="gone"
       android:inflatedId="@+id/sud_floating_back_button"
