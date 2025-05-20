@@ -16,7 +16,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.google.android.setupdesign.lottieloadinglayout">
+    package="com.google.android.setupdesign.lottieanimationview">
 
   <uses-sdk
       android:minSdkVersion="23"
