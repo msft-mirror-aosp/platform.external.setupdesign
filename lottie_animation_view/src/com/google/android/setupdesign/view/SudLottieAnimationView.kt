@@ -28,6 +28,7 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.setupcompat.util.Logger
+import com.google.android.setupdesign.strings.R
 
 /** A [LottieAnimationView] that take response to pause and resume animation when user clicks. */
 class SudLottieAnimationView
