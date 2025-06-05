@@ -22,10 +22,13 @@
       style="?attr/materialIconButtonFilledStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:minWidth="@dimen/sud_glif_expressive_back_button_min_size"
+      android:minHeight="@dimen/sud_glif_expressive_back_button_min_size"
       android:contentDescription="@string/sud_back_button_label"
       android:filterTouchesWhenObscured="true"
       android:visibility="gone"
       app:backgroundTint="?attr/colorSurfaceContainerHigh"
+      app:rippleColor="@color/sud_back_button_ripple_color"
       app:icon="@drawable/sud_ic_arrow_back"
       app:iconTint="?attr/colorOnSurface"
       tools:visibility="visible" />
