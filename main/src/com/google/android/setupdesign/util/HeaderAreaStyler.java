@@ -118,11 +118,45 @@ public final class HeaderAreaStyler {
     if (lpIcon instanceof ViewGroup.MarginLayoutParams) {
       ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) lpIcon;
 
-      int rightMargin =
-          (int)
-              PartnerConfigHelper.get(context)
-                  .getDimension(context, PartnerConfig.CONFIG_ACCOUNT_AVATAR_MARGIN_END);
+      int rightMargin;
+      if (PartnerConfigHelper.get(context)
+          .isPartnerConfigAvailable(PartnerConfig.CONFIG_ACCOUNT_AVATAR_MARGIN_END)) {
+        rightMargin =
+            (int)
+                PartnerConfigHelper.get(context)
+                    .getDimension(context, PartnerConfig.CONFIG_ACCOUNT_AVATAR_MARGIN_END);
+      } else {
+        rightMargin = mlp.rightMargin;
+      }
       mlp.setMargins(mlp.leftMargin, mlp.topMargin, rightMargin, mlp.bottomMargin);
+    }
+
+    ViewGroup.LayoutParams lpContainer = container.getLayoutParams();
+    if (lpIcon instanceof ViewGroup.MarginLayoutParams) {
+      ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) lpContainer;
+      int topMargin;
+      if (PartnerConfigHelper.get(context)
+          .isPartnerConfigAvailable(PartnerConfig.CONFIG_ACCOUNT_CONTAINER_MARGIN_TOP)) {
+        topMargin =
+            (int)
+                PartnerConfigHelper.get(context)
+                    .getDimension(context, PartnerConfig.CONFIG_ACCOUNT_CONTAINER_MARGIN_TOP);
+      } else {
+        topMargin = mlp.topMargin;
+      }
+
+      int bottomMargin;
+      if (PartnerConfigHelper.get(context)
+          .isPartnerConfigAvailable(PartnerConfig.CONFIG_ACCOUNT_CONTAINER_MARGIN_BOTTOM)) {
+        bottomMargin =
+            (int)
+                PartnerConfigHelper.get(context)
+                    .getDimension(context, PartnerConfig.CONFIG_ACCOUNT_CONTAINER_MARGIN_BOTTOM);
+      } else {
+        bottomMargin = mlp.bottomMargin;
+      }
+
+      mlp.setMargins(mlp.leftMargin, topMargin, mlp.rightMargin, bottomMargin);
     }
 
     int maxHeight =
@@ -344,7 +378,9 @@ public final class HeaderAreaStyler {
     if (adjustedTopMargin != mlp.topMargin || leftMargin != mlp.leftMargin) {
       FrameLayout.LayoutParams params =
           new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-      params.setMargins(leftMargin, adjustedTopMargin, mlp.rightMargin, mlp.bottomMargin);
+      params.setMargins(mlp.leftMargin, adjustedTopMargin, mlp.rightMargin, mlp.bottomMargin);
+      // Call the setMarginStart method to support the RTL layout.
+      params.setMarginStart(leftMargin);
       buttonContainer.setLayoutParams(params);
     }
   }

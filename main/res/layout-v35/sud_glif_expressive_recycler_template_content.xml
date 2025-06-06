@@ -25,6 +25,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:filterTouchesWhenObscured="true"
+    android:clipChildren="?attr/sudClipChildren"
+    android:clipToPadding="?attr/sudClipToPadding"
     android:orientation="vertical">
 
     <ViewStub
@@ -36,6 +38,8 @@
         android:id="@+id/sud_layout_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipChildren="?attr/sudClipChildren"
+        android:clipToPadding="?attr/sudClipToPadding"
         android:layout_weight="1">
 
         <!-- Ignore UnusedAttribute: scrollIndicators is new in M. Default to no indicators in older
@@ -46,6 +50,8 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical"
             android:scrollIndicators="?attr/sudScrollIndicators"
+            android:clipChildren="?attr/sudClipChildren"
+            android:clipToPadding="?attr/sudClipToPadding"
             app:sudHeader="@layout/sud_glif_header"
             app:sudShouldApplyAdditionalMargin="true"
             tools:ignore="UnusedAttribute" />

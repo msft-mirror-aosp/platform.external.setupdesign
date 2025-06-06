@@ -40,6 +40,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.ViewTreeObserver;
+import android.view.WindowInsets;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -248,9 +249,8 @@ public class GlifLayout extends PartnerCustomizationLayout {
   protected Parcelable onSaveInstanceState() {
     Parcelable superState = super.onSaveInstanceState();
     GlifSavedState savedState = new GlifSavedState(superState);
-    // save the state of the scroll to bottom for expressive.
-    savedState.everScrolledToBottomForExpressive =
-        getMixin(RequireScrollMixin.class).getEverScrolledToBottomForExpressive();
+    // save the state of the scroll to bottom
+    savedState.everScrolledToBottom = getMixin(RequireScrollMixin.class).isEverScrolledToBottom();
     return savedState;
   }
 
@@ -261,13 +261,13 @@ public class GlifLayout extends PartnerCustomizationLayout {
       return;
     }
     super.onRestoreInstanceState(savedState.getSuperState());
-    // assign the state of the scroll to bottom for expressive.
+    // assign the state of the scroll to bottom
     getMixin(RequireScrollMixin.class)
-        .onRestoreEverScrolledToBottomForExpressive(savedState.everScrolledToBottomForExpressive);
+        .onRestoreEverScrolledToBottom(savedState.everScrolledToBottom);
   }
 
   static class GlifSavedState extends BaseSavedState {
-    boolean everScrolledToBottomForExpressive = false;
+    boolean everScrolledToBottom = false;
 
     GlifSavedState(Parcelable superState) {
       super(superState);
@@ -275,13 +275,13 @@ public class GlifLayout extends PartnerCustomizationLayout {
 
     private GlifSavedState(Parcel in) {
       super(in);
-      this.everScrolledToBottomForExpressive = (in.readInt() == 1);
+      this.everScrolledToBottom = (in.readInt() == 1);
     }
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
       super.writeToParcel(out, flags);
-      out.writeInt(this.everScrolledToBottomForExpressive ? 1 : 0);
+      out.writeInt(this.everScrolledToBottom ? 1 : 0);
     }
 
     public static final Parcelable.Creator<GlifSavedState> CREATOR =
@@ -365,7 +365,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
       }
       int paddingEnd = (horizontalSpacing / 2) - layoutMarginEnd;
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-        headerView.setPadding(
+        headerView.setPaddingRelative(
             headerView.getPaddingStart(),
             headerView.getPaddingTop(),
             paddingEnd,
@@ -399,7 +399,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
         paddingStart = (horizontalSpacing / 2) - layoutMarginStart;
       }
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-        contentView.setPadding(
+        contentView.setPaddingRelative(
             paddingStart,
             contentView.getPaddingTop(),
             contentView.getPaddingEnd(),
@@ -814,6 +814,27 @@ public class GlifLayout extends PartnerCustomizationLayout {
     Theme theme = getContext().getTheme();
     theme.resolveAttribute(R.attr.sudFooterBackgroundColor, typedValue, true);
     return typedValue.data;
+  }
+
+  // TODO: b/398407478 - Add test case for edge to edge to layout from library.
+  @Override
+  public WindowInsets onApplyWindowInsets(WindowInsets insets) {
+    if (isGlifExpressiveEnabled()) {
+      View container = findManagedViewById(R.id.sud_layout_container);
+      if (container != null) {
+        container.setPadding(
+            insets.getSystemWindowInsetLeft(),
+            container.getPaddingTop(),
+            insets.getSystemWindowInsetRight(),
+            container.getPaddingBottom());
+      }
+      FooterBarMixin footerBarMixin = getMixin(FooterBarMixin.class);
+      if (footerBarMixin != null) {
+        footerBarMixin.setWindowInsets(
+            insets.getSystemWindowInsetLeft(), insets.getSystemWindowInsetRight());
+      }
+    }
+    return super.onApplyWindowInsets(insets);
   }
 
   protected boolean isGlifExpressiveEnabled() {

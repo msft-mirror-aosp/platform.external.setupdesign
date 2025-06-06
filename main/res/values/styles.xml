@@ -123,6 +123,8 @@
         <item name="sudItemIconDefaultTint">@android:color/transparent</item>
         <item name="sudItemRadioButtonStyle">@style/SudItemRadioButton</item>
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
+        <item name="sudClipChildren">true</item>
+        <item name="sudClipToPadding">true</item>
     </style>
 
     <style name="SudThemeMaterial.Light" parent="Theme.AppCompat.Light.NoActionBar">
@@ -229,6 +231,8 @@
         <item name="sudItemIconDefaultTint">@android:color/transparent</item>
         <item name="sudItemRadioButtonStyle">@style/SudItemRadioButton</item>
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
+        <item name="sudClipChildren">true</item>
+        <item name="sudClipToPadding">true</item>
     </style>
 
     <style name="SudBaseThemeGlif" parent="Theme.AppCompat.NoActionBar">
@@ -391,6 +395,8 @@
         <item name="sudItemIconDefaultTint">@android:color/transparent</item>
         <item name="sudItemRadioButtonStyle">@style/SudItemRadioButton</item>
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
+        <item name="sudClipChildren">true</item>
+        <item name="sudClipToPadding">true</item>
     </style>
     <style name="SudThemeGlif" parent="SudBaseThemeGlif"/>
 
@@ -554,6 +560,8 @@
         <item name="sudItemIconDefaultTint">@android:color/transparent</item>
         <item name="sudItemRadioButtonStyle">@style/SudItemRadioButton</item>
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
+        <item name="sudClipChildren">true</item>
+        <item name="sudClipToPadding">true</item>
     </style>
     <style name="SudThemeGlif.Light" parent="SudBaseThemeGlif.Light"/>
 
@@ -899,6 +907,8 @@
         <item name="sudItemIconDefaultTint">@color/sud_system_on_surface_variant_dark</item>
         <item name="sudItemRadioButtonStyle">@style/SudExpressiveItemRadioButton</item>
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
+        <item name="sudClipChildren">false</item>
+        <item name="sudClipToPadding">false</item>
     </style>
 
     <style name="SudBaseThemeGlifExpressive.Light" parent="Theme.Material3.DynamicColors.Light.NoActionBar">
@@ -1087,6 +1097,8 @@
         <item name="sudItemIconDefaultTint">@color/sud_system_on_surface_variant_light</item>
         <item name="sudItemRadioButtonStyle">@style/SudExpressiveItemRadioButton</item>
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
+        <item name="sudClipChildren">false</item>
+        <item name="sudClipToPadding">false</item>
     </style>
 
     <style name="SudThemeGlifExpressive" parent="SudBaseThemeGlifExpressive" />
@@ -1735,6 +1747,7 @@
         <item name="android:fontFamily">google-sans-flex</item>
         <item name="fontVariationSettings">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 500.0</item>
         <item name="android:fontVariationSettings" tools:targetApi="28">\'CRSV\' 0.0, \'FILL\' 0.0, \'GRAD\' 0.0, \'HEXP\' 0.0, \'ROND\' 100.0, \'opsz\' 16.0, \'slnt\' 0.0, \'wdth\' 100.0, \'wght\' 500.0</item>
+        <item name="android:hyphenationFrequency" tools:targetApi="23">normal</item>
     </style>
 
     <style name="SudGlifDescription" parent="SudDescription.Glif">
@@ -1793,6 +1806,7 @@
 
     <style name="SudGlifAccountContainerExpressive" parent="SudGlifAccountContainerMaterialYou">
         <item name="android:layout_marginTop">@dimen/sud_glif_expressive_account_container_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/sud_glif_expressive_account_container_margin_bottom</item>
     </style>
 
     <style name="SudGlifAccountAvatar">

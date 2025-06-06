@@ -25,6 +25,8 @@
     android:fitsSystemWindows="true"
     android:gravity="center_horizontal"
     android:filterTouchesWhenObscured="true"
+    android:clipChildren="?attr/sudClipChildren"
+    android:clipToPadding="?attr/sudClipToPadding"
     android:orientation="vertical">
 
     <View
