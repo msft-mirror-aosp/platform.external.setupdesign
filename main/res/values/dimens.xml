@@ -355,7 +355,9 @@
     <dimen name="sud_items_padding_top_expressive">12dp</dimen>
     <dimen name="sud_items_padding_bottom_expressive">12dp</dimen>
     <dimen name="sud_items_padding_bottom_extra_expressive">0dp</dimen>
-    <dimen name="sud_items_expand_button_size">40dp</dimen>
+    <dimen name="sud_items_expand_button_size">48dp</dimen>
+    <dimen name="sud_items_expand_title_container_margin_top">-2dp</dimen>
+    <dimen name="sud_items_expand_title_container_margin_bottom">-2dp</dimen>
     <!-- The check box need addtional 8dp to make the check box follow the Accessibility request-->
     <dimen name="sud_items_check_box_margin_top">-4dp</dimen>
     <dimen name="sud_items_check_box_margin_bottom">-4dp</dimen>
@@ -420,7 +422,7 @@
     <dimen name="sud_glif_expressive_back_button_height">48dp</dimen>
     <!-- Calculated by (sud_glif_expressive_margin_start - 4dp internal padding of button) -->
     <dimen name="sud_glif_expressive_back_button_margin_start">20dp</dimen>
-    <dimen name="sud_glif_expressive_back_button_size">48dp</dimen>
+    <dimen name="sud_glif_expressive_back_button_min_size">48dp</dimen>
 
     <!-- Glif expressive Additional body text -->
     <dimen name="sud_glif_expressive_additional_body_text_size">16sp</dimen>
@@ -480,6 +482,7 @@
     <item name="sud_glif_expressive_progress_indicator_indeterminate_animator_duration_scale" format="float" type="dimen">1.5</item>
 
     <!-- Glif expressive account container -->
-    <dimen name="sud_glif_expressive_account_container_margin_top">16dp</dimen>
+    <dimen name="sud_glif_expressive_account_container_margin_top">0dp</dimen>
+    <dimen name="sud_glif_expressive_account_container_margin_bottom">16dp</dimen>
 
 </resources>

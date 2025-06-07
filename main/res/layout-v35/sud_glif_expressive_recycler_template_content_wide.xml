@@ -24,12 +24,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:filterTouchesWhenObscured="true"
+    android:clipChildren="?attr/sudClipChildren"
+    android:clipToPadding="?attr/sudClipToPadding"
     android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/sud_layout_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipChildren="?attr/sudClipChildren"
+        android:clipToPadding="?attr/sudClipToPadding"
         android:layout_weight="1">
 
         <LinearLayout
@@ -73,6 +77,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:clipChildren="?attr/sudClipChildren"
+                android:clipToPadding="?attr/sudClipToPadding"
                 android:scrollbars="vertical"
                 android:scrollIndicators="?attr/sudScrollIndicators"
                 app:sudShouldApplyAdditionalMargin="true" />
