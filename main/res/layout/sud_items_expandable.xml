@@ -27,6 +27,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sud_items_expand_title_container_margin_top"
+        android:layout_marginBottom="@dimen/sud_items_expand_title_container_margin_bottom"
         android:baselineAligned="false"
         android:orientation="horizontal">
 

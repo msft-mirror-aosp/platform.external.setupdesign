@@ -252,11 +252,20 @@ public class ExpandableSwitchItem extends SwitchItem
     }
   }
 
+  private void updateSummary(View view) {
+    TextView summary = view.findViewById(R.id.sud_items_summary);
+    if (summary != null) {
+      summary.setText(getSummary());
+    }
+  }
+
   @Override
   public void onClick(View v) {
     if (PartnerConfigHelper.isGlifExpressiveEnabled(v.getContext())) {
       if (v.getId() == R.id.sud_items_summary_container) {
         setExpanded(!isExpanded());
+        // update the text on the summary to make talkback announce again when click more info
+        updateSummary(v);
         updateShowMoreLinkText(v);
       }
     } else {

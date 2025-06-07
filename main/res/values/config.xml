@@ -39,7 +39,7 @@
     <string name="sudExpressiveButtonFontFamily" translatable="false">google-sans-text-medium</string>
 
     <!-- Glif expressive alert dialog styles -->
-    <string name="sudGlifExpressiveDialogFontFamily" translatable="false">google-sans-text</string>
+    <string name="sudGlifExpressiveDialogFontFamily" translatable="false">google-sans-flex</string>
 
     <!-- Glif card view styles -->
     <string name="sudCardViewFontFamily" translatable="false">google-sans-flex</string>

@@ -142,6 +142,10 @@
     <!-- Custom the scroll bar indicator  -->
     <attr name="sudScrollBarThumb" format="reference" />
 
+    <!-- Edge to edge attributes -->
+    <attr name="sudClipToPadding" format="boolean" />
+    <attr name="sudClipChildren" format="boolean" />
+
     <!-- Custom view attributes -->
     <attr name="sudColorPrimary" format="color" />
     <attr name="sudHeader" format="reference" />

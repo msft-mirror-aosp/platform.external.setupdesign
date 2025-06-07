@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -87,9 +88,6 @@ public class RequireScrollMixin implements Mixin {
 
   // Whether the user have seen the more button yet.
   private boolean everScrolledToBottom = false;
-
-  // Whether the user have scrolled to the bottom in expressive style.
-  private boolean everScrolledToBottomForExpressive = false;
 
   private ScrollHandlingDelegate delegate;
 
@@ -197,11 +195,24 @@ public class RequireScrollMixin implements Mixin {
       @Nullable OnClickListener onClickListener) {
     final CharSequence nextText = button.getText();
     button.setOnClickListener(createOnClickListener(onClickListener));
+
+    ScrollView scrollView = ((GlifLayout) templateLayout).getScrollView();
+    if (scrollView != null) {
+      scrollView.post(
+          () -> {
+            // Check if the scroll view is not scrollable.
+            if (!isScrollViewScrollable(scrollView)) {
+              setEverScrolledToBottom(true);
+              button.setText(nextText);
+            }
+          });
+    }
+
     setOnRequireScrollStateChangedListener(
         new OnRequireScrollStateChangedListener() {
           @Override
           public void onRequireScrollStateChanged(boolean scrollNeeded) {
-            button.setText(scrollNeeded ? moreText : nextText);
+            button.setText(!isEverScrolledToBottom() ? moreText : nextText);
           }
         });
     requireScroll();
@@ -258,12 +269,24 @@ public class RequireScrollMixin implements Mixin {
       requireScrollWithDownButton(context, onClickListener);
     } else {
       final CharSequence nextText = button.getText();
+      ScrollView scrollView = ((GlifLayout) templateLayout).getScrollView();
+      if (scrollView != null) {
+        scrollView.post(
+            () -> {
+              // Check if the scroll view is not scrollable.
+              if (!isScrollViewScrollable(scrollView)) {
+                setEverScrolledToBottom(true);
+                button.setText(nextText);
+              }
+            });
+      }
+
       button.setOnClickListener(createOnClickListener(onClickListener));
       setOnRequireScrollStateChangedListener(
           new OnRequireScrollStateChangedListener() {
             @Override
             public void onRequireScrollStateChanged(boolean scrollNeeded) {
-              button.setText(scrollNeeded ? moreText : nextText);
+              button.setText(!isEverScrolledToBottom() ? moreText : nextText);
             }
           });
       requireScroll();
@@ -335,13 +358,28 @@ public class RequireScrollMixin implements Mixin {
       requireScrollWithDownButton(context, onClickListener);
     } else {
       final CharSequence nextText = primaryButton.getText();
+      ScrollView scrollView = ((GlifLayout) templateLayout).getScrollView();
+      if (scrollView != null) {
+        scrollView.post(
+            () -> {
+              // Check if the scroll view is not scrollable.
+              if (!isScrollViewScrollable(scrollView)) {
+                setEverScrolledToBottom(true);
+
+                primaryButton.setText(nextText);
+                secondaryButton.setVisibility(View.VISIBLE);
+              }
+            });
+      }
+
       primaryButton.setOnClickListener(createOnClickListener(onClickListener));
+      // TODO: b/422071888 - Consider to make scrollView as a callback in the RequireScrollMixin.
       setOnRequireScrollStateChangedListener(
           new OnRequireScrollStateChangedListener() {
             @Override
             public void onRequireScrollStateChanged(boolean scrollNeeded) {
-              primaryButton.setText(scrollNeeded ? moreText : nextText);
-              secondaryButton.setVisibility(scrollNeeded ? View.GONE : View.VISIBLE);
+              primaryButton.setText(!isEverScrolledToBottom() ? moreText : nextText);
+              secondaryButton.setVisibility(!isEverScrolledToBottom() ? View.GONE : View.VISIBLE);
             }
           });
       requireScroll();
@@ -361,49 +399,100 @@ public class RequireScrollMixin implements Mixin {
     CharSequence contentDescription = primaryButtonView.getContentDescription();
     int initialFooterPaddingStart = footerContainer.getPaddingStart();
 
-    // Set the secondary button as GONE if it exists and the screen need to scroll.
-    if (secondaryButtonView != null && !getEverScrolledToBottomForExpressive()) {
-      secondaryButtonView.setVisibility(View.GONE);
+    // Handle the case if the scroll view cannot scrollable, then show buttons when first landed on
+    // the screen.
+    ScrollView scrollView = ((GlifLayout) templateLayout).getScrollView();
+    if (scrollView != null) {
+      scrollView.post(
+          () -> {
+            // Check if the scroll view is not scrollable.
+            if (!scrollView.canScrollVertically(1)) {
+              // Set the state for indicating the scroll view has scrolled to bottom because for
+              // this case the scroll is not needed.
+              setEverScrolledToBottom(true);
+
+              // Set the secondary button as visible if it exists.
+              if (secondaryButtonView != null) {
+                secondaryButtonView.setVisibility(View.VISIBLE);
+              }
+              // Set the primary button as common button style.
+              setupPrimaryButtonStyleWhenReachedToBottom(
+                  primaryButtonView,
+                  nextText,
+                  footerContainer,
+                  contentDescription,
+                  initialFooterPaddingStart,
+                  footerBarMixin);
+            } else {
+              if (secondaryButtonView == null) {
+                return;
+              }
+              // Set the secondary button as visible if screen has never scrolled to the bottom. If
+              // the screen has ever scrolled to the bottom, the secondary button will be set as
+              // gone.
+              if (isEverScrolledToBottom()) {
+                secondaryButtonView.setVisibility(View.VISIBLE);
+              } else {
+                secondaryButtonView.setVisibility(View.GONE);
+              }
+            }
+          });
     }
 
     setOnRequireScrollStateChangedListener(
         scrollNeeded -> {
-          if (!getEverScrolledToBottomForExpressive()) {
+          if (!isEverScrolledToBottom()) {
             generateGlifExpressiveDownButton(context, primaryButtonView, footerBarMixin);
             footerContainer.setBackgroundColor(
                 ((GlifLayout) templateLayout).getFooterBackgroundColorFromStyle());
           } else {
-            // Switch style to glif expressive common button.
-            if (primaryButtonView instanceof MaterialButton materialButton) {
-              // Set the padding back to the initial state due to we centered the down button and
-              // switch back to the common button style.
-              if (initialFooterPaddingStart != footerContainer.getPaddingStart()) {
-                footerContainer.setPadding(
-                    initialFooterPaddingStart,
-                    footerContainer.getPaddingTop(),
-                    footerContainer.getPaddingEnd(),
-                    footerContainer.getPaddingBottom());
-              }
-              // Set the secondary button as visible if it exists and the screen has scrolled to
-              // the bottom.
-              if (footerBarMixin.getSecondaryButton() != null) {
-                footerBarMixin.getSecondaryButton().setVisibility(View.VISIBLE);
-              }
-              // Set the primary button as invisible to avoid the button flicker and set to visible
-              // after button style is set up completely.
-              footerBarMixin.getPrimaryButton().setVisibility(View.INVISIBLE);
-              materialButton.setIcon(null);
-              footerBarMixin.getPrimaryButton().setText(nextText);
-              footerBarMixin.getPrimaryButton().setVisibility(View.VISIBLE);
-              primaryButtonView.setContentDescription(contentDescription);
-              footerContainer.setBackgroundColor(Color.TRANSPARENT);
-            } else {
-              Log.i(LOG_TAG, "Cannot clean up icon for the button. Skipping set text.");
-            }
+            setupPrimaryButtonStyleWhenReachedToBottom(
+                primaryButtonView,
+                nextText,
+                footerContainer,
+                contentDescription,
+                initialFooterPaddingStart,
+                footerBarMixin);
           }
         });
     primaryButtonView.setVisibility(View.VISIBLE);
     requireScroll();
+  }
+
+  private void setupPrimaryButtonStyleWhenReachedToBottom(
+      Button primaryButtonView,
+      CharSequence nextText,
+      LinearLayout footerContainer,
+      CharSequence contentDescription,
+      int initialFooterPaddingStart,
+      FooterBarMixin footerBarMixin) {
+    // Switch style to glif expressive common button.
+    if (primaryButtonView instanceof MaterialButton materialButton) {
+      // Set the padding back to the initial state due to we centered the down button and
+      // switch back to the common button style.
+      if (initialFooterPaddingStart != footerContainer.getPaddingStart()) {
+        footerContainer.setPadding(
+            initialFooterPaddingStart,
+            footerContainer.getPaddingTop(),
+            footerContainer.getPaddingEnd(),
+            footerContainer.getPaddingBottom());
+      }
+      // Set the secondary button as visible if it exists and the screen has scrolled to
+      // the bottom.
+      if (footerBarMixin.getSecondaryButton() != null) {
+        footerBarMixin.getSecondaryButton().setVisibility(View.VISIBLE);
+      }
+      // Set the primary button as invisible to avoid the button flicker and set to visible
+      // after button style is set up completely.
+      footerBarMixin.getPrimaryButton().setVisibility(View.INVISIBLE);
+      materialButton.setIcon(null);
+      footerBarMixin.getPrimaryButton().setText(nextText);
+      footerBarMixin.getPrimaryButton().setVisibility(View.VISIBLE);
+      primaryButtonView.setContentDescription(contentDescription);
+      footerContainer.setBackgroundColor(Color.TRANSPARENT);
+    } else {
+      Log.i(LOG_TAG, "Cannot clean up icon for the button. Skipping set text.");
+    }
   }
 
   @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
@@ -460,28 +549,24 @@ public class RequireScrollMixin implements Mixin {
       return;
     }
     if (canScrollDown) {
-      if (PartnerConfigHelper.isGlifExpressiveEnabled(templateLayout.getContext())) {
-        if (!getEverScrolledToBottomForExpressive()) {
-          postScrollStateChange(true);
-          requiringScrollToBottom = true;
-        }
-      } else if (!everScrolledToBottom) {
+      if (!isEverScrolledToBottom()) {
         postScrollStateChange(true);
         requiringScrollToBottom = true;
       }
     } else {
       postScrollStateChange(false);
       requiringScrollToBottom = false;
-      everScrolledToBottom = true;
-      if (PartnerConfigHelper.isGlifExpressiveEnabled(templateLayout.getContext())) {
-        setEverScrolledToBottomForExpressive(true);
-      }
+      setEverScrolledToBottom(true);
     }
   }
 
-  public void onRestoreEverScrolledToBottomForExpressive(boolean value) {
-    // set back the state of the scroll to bottom for expressive.
-    setEverScrolledToBottomForExpressive(value);
+  /**
+   * Restores the state of the scroll to bottom.
+   *
+   * @param value The state of the scroll to bottom.
+   */
+  public void onRestoreEverScrolledToBottom(boolean value) {
+    setEverScrolledToBottom(value);
     // trigger the scroll state change to update the button style.
     if (listener != null) {
       listener.onRequireScrollStateChanged(true);
@@ -489,17 +574,17 @@ public class RequireScrollMixin implements Mixin {
   }
 
   /**
-   * Set the state of the scroll to bottom for expressive.
+   * Set the state of the scroll to bottom.
    *
-   * @param state The state of the scroll to bottom for expressive.
+   * @param state The state of the scroll to bottom.
    */
-  public void setEverScrolledToBottomForExpressive(boolean state) {
-    everScrolledToBottomForExpressive = state;
+  public void setEverScrolledToBottom(boolean state) {
+    everScrolledToBottom = state;
   }
 
-  /** Returns true if the user has ever scrolled to the bottom for expressive. */
-  public boolean getEverScrolledToBottomForExpressive() {
-    return everScrolledToBottomForExpressive;
+  /** Returns true if the user has ever scrolled to the bottom. */
+  public boolean isEverScrolledToBottom() {
+    return everScrolledToBottom;
   }
 
   private void postScrollStateChange(final boolean scrollNeeded) {
@@ -512,5 +597,9 @@ public class RequireScrollMixin implements Mixin {
             }
           }
         });
+  }
+
+  private boolean isScrollViewScrollable(ScrollView scrollView) {
+    return scrollView.canScrollVertically(1);
   }
 }
