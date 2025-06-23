@@ -401,6 +401,9 @@ public class RequireScrollMixin implements Mixin {
 
     // Handle the case if the scroll view cannot scrollable, then show buttons when first landed on
     // the screen.
+    if (secondaryButtonView != null && secondaryButtonView.getVisibility() == View.VISIBLE) {
+      secondaryButtonView.setVisibility(View.GONE);
+    }
     ScrollView scrollView = ((GlifLayout) templateLayout).getScrollView();
     if (scrollView != null) {
       scrollView.post(
