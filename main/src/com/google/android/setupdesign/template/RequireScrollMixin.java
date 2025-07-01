@@ -360,6 +360,8 @@ public class RequireScrollMixin implements Mixin {
       final CharSequence nextText = primaryButton.getText();
       ScrollView scrollView = ((GlifLayout) templateLayout).getScrollView();
       if (scrollView != null) {
+        // Uses post to get correct scrollable state, otherwise the scrollable state is not
+        // correct due to the scroll view is not ready.
         scrollView.post(
             () -> {
               // Check if the scroll view is not scrollable.
@@ -568,11 +570,16 @@ public class RequireScrollMixin implements Mixin {
    *
    * @param value The state of the scroll to bottom.
    */
-  public void onRestoreEverScrolledToBottom(boolean value) {
-    setEverScrolledToBottom(value);
-    // trigger the scroll state change to update the button style.
-    if (listener != null) {
-      listener.onRequireScrollStateChanged(true);
+  public void onRestoreEverScrolledToBottom(boolean everScrolledToBottom) {
+    if (everScrolledToBottom) {
+      // set back the state of the scroll to bottom for expressive.
+      setEverScrolledToBottom(everScrolledToBottom);
+      // trigger the scroll state change to update the button style.
+      if (listener != null) {
+        listener.onRequireScrollStateChanged(true);
+      }
+    } else {
+      Log.d(LOG_TAG, "Don't restore the state due to the value is the same as default value");
     }
   }
 

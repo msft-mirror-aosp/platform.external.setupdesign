@@ -224,6 +224,7 @@
     <attr name="sudAnimationId" format="reference" />
     <attr name="sudItemRadioButtonStyle" format="reference" />
     <attr name="sudItemIconDefaultTint" format="color" />
+    <attr name="sudItemRecyclable" format="boolean" />
 
     <!-- EditBox -->
     <attr name="sudEditBoxStyle" format="reference" />
@@ -320,6 +321,7 @@
         <attr name="android:contentDescription" />
         <attr name="sudIconTint" />
         <attr name="sudIconGravity" />
+        <attr name="sudItemRecyclable" />
     </declare-styleable>
 
     <declare-styleable name="SudDividerItemDecoration">

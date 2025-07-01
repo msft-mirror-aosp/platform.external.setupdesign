@@ -15,6 +15,7 @@
     limitations under the License.
 -->
 
+<!--TODO: (b/423505693): change the resource name res/values-w839dp-h900dp/dimens.xml to res/values-w840p-h900dp/dimens.xml.-->
 <resources>
     <!-- Page Margins Glif Expressive -->
     <dimen name="sud_glif_expressive_margin_start">48dp</dimen>
@@ -31,8 +32,8 @@
     <dimen name="sud_glif_expressive_content_padding_top">80dp</dimen>
 
     <!-- Header layout expressive -->
-    <dimen name="sud_glif_expressive_header_title_size">45sp</dimen>
-    <dimen name="sud_glif_expressive_header_title_line_height">52sp</dimen>
+    <dimen name="sud_glif_expressive_header_title_size">36sp</dimen>
+    <dimen name="sud_glif_expressive_header_title_line_height">44sp</dimen>
 
     <!-- Material floating back button -->
     <!-- Calculated by (sud_glif_expressive_margin_start - 4dp internal padding of button) -->

@@ -43,4 +43,14 @@
 
     <!-- Glif card view styles -->
     <string name="sudCardViewFontFamily" translatable="false">google-sans-flex</string>
+
+    <!-- Modal dialog size constraints -->
+
+    <integer name="modal_dialog_min_largest_edge_dp">1020</integer>
+    <integer name="modal_dialog_min_smallest_edge_dp">574</integer>
+    <integer name="modal_dialog_max_largest_edge_dp">1440</integer>
+    <integer name="modal_dialog_max_smallest_edge_dp">810</integer>
+    <integer name="modal_dialog_wallpaper_alpha">128</integer>
+    <item name="modal_dialog_size_ratio" type="dimen" format="float">0.72</item>
+
 </resources>

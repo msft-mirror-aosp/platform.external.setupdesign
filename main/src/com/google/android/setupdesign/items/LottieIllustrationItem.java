@@ -20,7 +20,10 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
+import com.google.android.setupdesign.util.ItemStyler;
+import com.google.android.setupdesign.util.LayoutStyler;
 import org.jetbrains.annotations.Nullable;
 
 /** An item that is displayed with a Lottie animation. */
@@ -82,6 +85,10 @@ public class LottieIllustrationItem extends Item {
         animationViewListener.onAnimationViewBound(animationView);
       }
       animationView.playAnimation();
+      if (!PartnerConfigHelper.isGlifExpressiveEnabled(view.getContext())) {
+        LayoutStyler.applyPartnerCustomizationLayoutPaddingStyle(view);
+      }
+      ItemStyler.applyPartnerCustomizationItemViewLayoutStyle(view);
     }
   }
 

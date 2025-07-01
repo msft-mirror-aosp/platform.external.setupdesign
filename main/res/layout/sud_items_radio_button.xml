@@ -29,7 +29,8 @@
         style="?attr/sudItemRadioButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center_vertical"
+        android:importantForAccessibility="no" />
 
     <FrameLayout
         android:id="@+id/sud_items_icon_container"
