@@ -664,6 +664,7 @@
         <item name="sudDividerShown">false</item>
         <item name="sudItemContainerStyle">@style/SudItemContainerMaterialYou</item>
         <item name="sudNonActionableItemContainerStyle">@style/SudItemContainerMaterialYou</item>
+        <item name="sudIllustrationItemContainerStyle">@style/SudItemContainerMaterialYou.IllustrationItem</item>
         <item name="sudItemPaddingTop">@dimen/sud_items_padding_top_material_you</item>
         <item name="sudItemPaddingBottom">@dimen/sud_items_padding_bottom_material_you</item>
         <item name="sudItemTitleStyle">@style/SudItemTitleMaterialYou</item>
@@ -707,6 +708,7 @@
         <item name="sudDividerShown">false</item>
         <item name="sudItemContainerStyle">@style/SudItemContainerMaterialYou</item>
         <item name="sudNonActionableItemContainerStyle">@style/SudItemContainerMaterialYou</item>
+        <item name="sudIllustrationItemContainerStyle">@style/SudItemContainerMaterialYou.IllustrationItem</item>
         <item name="sudItemPaddingTop">@dimen/sud_items_padding_top_material_you</item>
         <item name="sudItemPaddingBottom">@dimen/sud_items_padding_bottom_material_you</item>
         <item name="sudItemTitleStyle">@style/SudItemTitleMaterialYou</item>
@@ -751,7 +753,6 @@
         <item name="sudFillContentLayoutStyle">@style/SudFillContentLayout</item>
         <item name="sudGlifAccountNameStyle">@style/SudGlifExpressiveAccountName</item>
         <item name="sudGlifAccountAvatarSize">@dimen/sud_account_avatar_max_height</item>
-        <item name="sudGlifAccountAvatarStyle">@style/SudGlifAccountAvatar</item>
         <item name="sudAccountNameTextSize">@dimen/sud_account_name_text_size</item>
         <item name="sudAccountNameTextColor">@color/sud_system_on_surface_dark</item>
         <item name="sudGlifIconStyle">@style/SudGlifIcon</item>
@@ -888,7 +889,7 @@
         <item name="sudBulletPointTitleStyle">@style/SudBulletPointTitle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudSectionItemContainerStyle">@style/SudGlifExpressiveItemContainer.SectionItem</item>
-        <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
+        <item name="sudIllustrationItemContainerStyle">@style/SudGlifExpressiveItemContainer.IllustrationItem</item>
         <item name="sudIllustrationItemStyle">@style/SudItemSummary.IllustrationStyle</item>
         <item name="sudSectionItemTitleStyle">@style/SudExpressiveItemTitle.SectionHeader</item>
         <item name="sudCardContainerStyle">@style/SudCardContainerStyle</item>
@@ -909,6 +910,7 @@
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
         <item name="sudClipChildren">false</item>
         <item name="sudClipToPadding">false</item>
+        <item name="sudGlifAccountAvatarStyle">@style/SudGlifAccountAvatarExpressive</item>
     </style>
 
     <style name="SudBaseThemeGlifExpressive.Light" parent="Theme.Material3.DynamicColors.Light.NoActionBar">
@@ -942,7 +944,6 @@
         <item name="sudFillContentLayoutStyle">@style/SudFillContentLayout</item>
         <item name="sudGlifAccountNameStyle">@style/SudGlifExpressiveAccountName</item>
         <item name="sudGlifAccountAvatarSize">@dimen/sud_account_avatar_max_height</item>
-        <item name="sudGlifAccountAvatarStyle">@style/SudGlifAccountAvatar</item>
         <item name="sudAccountNameTextSize">@dimen/sud_account_name_text_size</item>
         <item name="sudAccountNameTextColor">@color/sud_system_on_surface_light</item>
         <item name="sudGlifIconStyle">@style/SudGlifIcon</item>
@@ -1078,7 +1079,7 @@
         <item name="sudBulletPointTitleStyle">@style/SudBulletPointTitle</item>
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudSectionItemContainerStyle">@style/SudGlifExpressiveItemContainer.SectionItem</item>
-        <item name="sudIllustrationItemContainerStyle">@style/SudItemContainer.IllustrationItem</item>
+        <item name="sudIllustrationItemContainerStyle">@style/SudGlifExpressiveItemContainer.IllustrationItem</item>
         <item name="sudIllustrationItemStyle">@style/SudItemSummary.IllustrationStyle</item>
         <item name="sudSectionItemTitleStyle">@style/SudExpressiveItemTitle.SectionHeader</item>
         <item name="sudCardContainerStyle">@style/SudCardContainerStyle</item>
@@ -1099,6 +1100,7 @@
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
         <item name="sudClipChildren">false</item>
         <item name="sudClipToPadding">false</item>
+        <item name="sudGlifAccountAvatarStyle">@style/SudGlifAccountAvatarExpressive</item>
     </style>
 
     <style name="SudThemeGlifExpressive" parent="SudBaseThemeGlifExpressive" />
@@ -1566,6 +1568,30 @@
         <item name="android:paddingBottom">@dimen/sud_items_illustration_item_padding_bottom</item>
         <item name="android:paddingLeft">0dp</item>
         <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="SudItemContainerMaterialYou.IllustrationItem" parent="SudItemContainerMaterialYou">
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">@dimen/sud_items_illustration_item_padding_bottom</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="SudGlifExpressiveItemContainer.IllustrationItem" parent="SudGlifExpressiveItemContainer">
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">@dimen/sud_items_illustration_item_padding_bottom</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@null</item>
     </style>
@@ -1816,6 +1842,10 @@
         <item name="android:adjustViewBounds">true</item>
         <item name="android:maxHeight">?attr/sudAccountAvatarMaxHeight</item>
         <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="SudGlifAccountAvatarExpressive" parent="SudGlifAccountAvatar">
+        <item name="android:layout_gravity">top</item>
     </style>
 
     <style name="SudGlifAccountName">
@@ -2126,6 +2156,7 @@
         <item name="android:textColor">@color/sud_card_view_text_color</item>
         <item name="android:paddingTop">@dimen/sud_card_view_title_spacing_top</item>
         <item name="android:layout_marginBottom">@dimen/sud_card_view_title_margin_bottom</item>
+        <item name="android:hyphenationFrequency" tools:targetApi="23">normal</item>
     </style>
 
 </resources>

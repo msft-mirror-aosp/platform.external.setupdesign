@@ -229,8 +229,22 @@ public class GlifLayout extends PartnerCustomizationLayout {
     }
 
     initBackButton();
+    initialLogging();
 
     a.recycle();
+  }
+
+  private void initialLogging() {
+    if (activity != null) {
+      LOG.atInfo(
+          "Using setup design "
+              + this.getClass().getSimpleName()
+              + " to init for "
+              + activity.getClass().getSimpleName());
+    } else {
+      LOG.atInfo(
+          "Using setup design " + this.getClass().getSimpleName() + " to init for null activity");
+    }
   }
 
   @Override

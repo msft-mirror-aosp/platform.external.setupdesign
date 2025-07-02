@@ -16,28 +16,38 @@
 
 package com.google.android.setupdesign.view;
 
+import static java.lang.Math.max;
 import static java.lang.Math.min;
 
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.view.WindowMetrics;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.VisibleForTesting;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.util.BuildCompatUtils;
 import com.google.android.setupcompat.util.Logger;
+import com.google.android.setupcompat.util.WizardManagerHelper;
 import com.google.android.setupdesign.R;
+import android.content.Context;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.util.DisplayMetrics;
 
 /**
  * A FrameLayout subclass that has an "intrinsic size", which is the size it wants to be if that is
@@ -113,6 +123,16 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
 
       LOG.atInfo("CardViewIntrinsicPartnerConfig(" + intrinsicWidth + ", " + intrinsicHeight + ")");
     }
+
+    if (isModalDialogEligible()) {
+      // Get the window's visible display frame.
+      getWindowVisibleDisplayFrame(windowVisibleDisplayRect);
+
+      // Clamp the dimensions to the supported range.
+      Point finalGoodSize = getFinalDimensions(intrinsicWidth, intrinsicHeight);
+      intrinsicHeight = finalGoodSize.y;
+      intrinsicWidth = finalGoodSize.x;
+    }
   }
 
   @Override
@@ -132,6 +152,12 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
 
   @Override
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    if (isModalDialogEligible()) {
+      heightMeasureSpec = MeasureSpec.makeMeasureSpec(intrinsicHeight, MeasureSpec.EXACTLY);
+      widthMeasureSpec = MeasureSpec.makeMeasureSpec(intrinsicWidth, MeasureSpec.EXACTLY);
+      super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+      return;
+    }
     int measureWidth;
 
     // The the content may be truncated if the layout show in multi-window mode or two pane mode,
@@ -197,6 +223,16 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
   @Override
   protected void onAttachedToWindow() {
     super.onAttachedToWindow();
+    if (isModalDialogEligible()) {
+      // Set the background of the parent layout to the wallpaper.
+      LinearLayout parent = (LinearLayout) this.getParent();
+      Drawable wallpaper = WallpaperManager.getInstance(getContext()).getBuiltInDrawable();
+      wallpaper.setAlpha(
+          getContext().getResources().getInteger(R.integer.modal_dialog_wallpaper_alpha));
+      parent.setBackgroundDrawable(wallpaper);
+      // Set the radius of the card view to 16dp.
+      setBackgroundResource(R.drawable.corner);
+    }
     if (Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
       if (lastInsets == null) {
         requestApplyInsets();
@@ -208,5 +244,123 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
   public WindowInsets onApplyWindowInsets(WindowInsets insets) {
     lastInsets = insets;
     return super.onApplyWindowInsets(insets);
+  }
+
+  /**
+   * Checks whether the modal dialog is eligible to be displayed. The dialog is considered eligible
+   * only if two conditions are met: 1. The feature is enabled via its feature flag in {@link
+   * PartnerConfigHelper}. 2. The check is occurring during the initial Setup Wizard lifecycle.
+   *
+   * @return {@code true} if the modal dialog can be shown, {@code false} otherwise.
+   */
+  // TODO: Extend IntrinsicSizeFrameLayoutTest to test modal dialog logic.
+  protected boolean isModalDialogEligible() {
+    return PartnerConfigHelper.isSuwUseModalDialogEnabled(getContext())
+        && !WizardManagerHelper.isUserSetupComplete(getContext());
+  }
+
+  /**
+   * This method converts dp unit to equivalent pixels, depending on device density.
+   *
+   * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
+   * @return A float value to represent px equivalent to dp depending on device density
+   */
+  private float convertDpToPixel(float dp) {
+    DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics);
+  }
+
+  /**
+   * Adjusts the dimensions of a dialog to ensure they fall within predefined minimum and maximum
+   * size constraints.
+   *
+   * <p>This function takes the largest and smallest edges of a dialog in pixels and compares them
+   * against minimum and maximum values defined in DP (which are converted to pixels). If the
+   * largest edge is outside these bounds, both edges are scaled to the corresponding minimum or
+   * maximum size.
+   *
+   * @param largestEdgePx The length of the longest side of the dialog in pixels.
+   * @param smallestEdgePx The length of the shortest side of the dialog in pixels.
+   * @return A new Point object containing the potentially adjusted width and height for the dialog.
+   *     Note: The current implementation returns a Point with both dimensions set to the
+   *     finalSmallestEdge, which might be a bug. It likely intends to return new
+   *     Point(finalLargestEdge, finalSmallestEdge) or a similarly logical dimension based on
+   *     orientation.
+   */
+  private Point clampDialogSizeToSupportedRange(int largestEdgePx, int smallestEdgePx) {
+    // Convert the DP constants to pixels.
+    float minLargestEdgePx =
+        convertDpToPixel(
+            getContext().getResources().getInteger(R.integer.modal_dialog_min_largest_edge_dp));
+    float maxLargestEdgePx =
+        convertDpToPixel(
+            getContext().getResources().getInteger(R.integer.modal_dialog_max_largest_edge_dp));
+    float minSmallestEdgePx =
+        convertDpToPixel(
+            getContext().getResources().getInteger(R.integer.modal_dialog_min_smallest_edge_dp));
+    float maxSmallestEdgePx =
+        convertDpToPixel(
+            getContext().getResources().getInteger(R.integer.modal_dialog_max_smallest_edge_dp));
+
+    int finalLargestEdge = largestEdgePx;
+    int finalSmallestEdge = smallestEdgePx;
+
+    // If the longest edge is smaller than our minimum, scale it up to the minimum size.
+    if (largestEdgePx < minLargestEdgePx) {
+      finalLargestEdge = (int) minLargestEdgePx;
+      finalSmallestEdge = (int) minSmallestEdgePx;
+    }
+
+    // If the longest edge is larger than our maximum, scale it down to the maximum size.
+    if (largestEdgePx > maxLargestEdgePx) {
+      finalLargestEdge = (int) maxLargestEdgePx;
+      finalSmallestEdge = (int) maxSmallestEdgePx;
+    }
+
+    return new Point(finalLargestEdge, finalSmallestEdge);
+  }
+
+  /**
+   * Takes initial dimensions and returns the final, clamped dimensions while preserving
+   * orientation.
+   *
+   * <p>This function handles the logic of determining which dimension is width vs. height, clamping
+   * them to the allowed min/max boundaries, and returning the final, corrected width and height.
+   *
+   * @param initialWidth The starting width in pixels.
+   * @param initialHeight The starting height in pixels.
+   * @return A {@link Point} object where {@code x} is the final width and {@code y} is the final
+   *     height.
+   */
+  private Point getFinalDimensions(int initialWidth, int initialHeight) {
+    // 1. Determine which edge is larger for the function call
+    int largestEdge = max(initialWidth, initialHeight);
+    int smallestEdge = min(initialWidth, initialHeight);
+
+    final TypedValue out = new TypedValue();
+    getContext().getResources().getValue(R.dimen.modal_dialog_size_ratio, out, true);
+    float dialogSizeRatio = out.getFloat();
+
+    largestEdge = (int) (largestEdge * dialogSizeRatio);
+    smallestEdge = (int) (smallestEdge * dialogSizeRatio);
+
+    // 2. Call the helper function to get the corrected edge sizes
+    Point clampedEdges = clampDialogSizeToSupportedRange(largestEdge, smallestEdge);
+
+    int finalWidth;
+    int finalHeight;
+
+    // 3. Re-assign the corrected values back, preserving the original orientation.
+    if (initialWidth >= initialHeight) {
+      // Original was landscape or square, so width is the largest edge.
+      finalWidth = clampedEdges.x; // The largest value
+      finalHeight = clampedEdges.y; // The smallest value
+    } else {
+      // Original was portrait, so height is the largest edge.
+      finalWidth = clampedEdges.y; // The smallest value
+      finalHeight = clampedEdges.x; // The largest value
+    }
+
+    return new Point(finalWidth, finalHeight);
   }
 }

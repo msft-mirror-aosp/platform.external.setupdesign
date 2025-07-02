@@ -23,7 +23,6 @@ import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.ColorFilter;
 import android.os.Build;
@@ -326,11 +325,11 @@ public class GlifLoadingLayout extends GlifLayout {
 
   private void updateHeaderHeight() {
     View headerView = findManagedViewById(R.id.sud_header_scroll_view);
-    Configuration currentConfig = getResources().getConfiguration();
+    boolean isSinglePane = findManagedViewById(R.id.sud_landscape_content_area) == null;
     if (headerView != null
         && PartnerConfigHelper.get(getContext())
             .isPartnerConfigAvailable(PartnerConfig.CONFIG_LOADING_LAYOUT_HEADER_HEIGHT)
-        && currentConfig.orientation != Configuration.ORIENTATION_LANDSCAPE) {
+        && isSinglePane) {
       if (isHeaderFullTextEnabled) {
         // Set header height to wrap content for rendering full text view as much as possible.
         headerView.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;

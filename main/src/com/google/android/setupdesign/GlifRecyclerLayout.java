@@ -110,6 +110,10 @@ public class GlifRecyclerLayout extends GlifLayout {
 
   @Override
   protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+    if (PartnerConfigHelper.isGlifExpressiveEnabled(getContext())) {
+      // Update the footer bar background after recycler view is created.
+      onScrolling(!canWholeViewsScrollDown(getHeaderScrollView(), getRecyclerView()));
+    }
     super.onLayout(changed, left, top, right, bottom);
     recyclerMixin.onLayout();
   }

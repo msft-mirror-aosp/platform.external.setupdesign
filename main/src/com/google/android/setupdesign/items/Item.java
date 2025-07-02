@@ -60,6 +60,7 @@ public class Item extends AbstractItem implements LinkSpan.OnLinkClickListener {
     boolean onItemTextLinkClicked(LinkSpan span);
   }
 
+  private boolean isRecyclable = true;
   private boolean enabled = true;
   @Nullable private Drawable icon;
   private int layoutRes;
@@ -90,6 +91,7 @@ public class Item extends AbstractItem implements LinkSpan.OnLinkClickListener {
     visible = a.getBoolean(R.styleable.SudItem_android_visible, true);
     iconTint = a.getColor(R.styleable.SudItem_sudIconTint, Color.TRANSPARENT);
     iconGravity = a.getInt(R.styleable.SudItem_sudIconGravity, Gravity.CENTER_VERTICAL);
+    isRecyclable = a.getBoolean(R.styleable.SudItem_sudItemRecyclable, true);
 
     a.recycle();
   }
@@ -114,6 +116,25 @@ public class Item extends AbstractItem implements LinkSpan.OnLinkClickListener {
   @Override
   public boolean isEnabled() {
     return enabled;
+  }
+
+  /**
+   * Whether the item is recyclable.
+   *
+   * @return true if the item is recyclable, false otherwise.
+   */
+  @Override
+  public boolean isRecyclable() {
+    return isRecyclable;
+  }
+
+  /**
+   * Set whether the item is recyclable. The item will be recycled if it is in the recycler view. If
+   * the item is not recyclable, which may affect the performance. So not suggest to set it to
+   * false, if there are several items in the recycler view.
+   */
+  public void setRecyclable(boolean isRecyclable) {
+    this.isRecyclable = isRecyclable;
   }
 
   public void setIcon(@Nullable Drawable icon) {
