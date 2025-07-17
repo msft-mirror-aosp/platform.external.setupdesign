@@ -16,20 +16,13 @@
 
 package com.google.android.setupdesign.transition.support;
 
-import static com.google.android.setupdesign.transition.TransitionHelper.CONFIG_TRANSITION_SHARED_X_AXIS;
-import static com.google.android.setupdesign.transition.TransitionHelper.getConfigTransitionType;
-
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.os.Build;
-import android.os.Build.VERSION_CODES;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
-import android.view.Window;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
-import com.google.android.material.transition.platform.MaterialSharedAxis;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
+import com.google.errorprone.annotations.InlineMe;
 
 /** Helper class for apply the transition to the pages which uses support library. */
 public class TransitionHelper {
@@ -45,28 +38,13 @@ public class TransitionHelper {
    * com.google.android.setupdesign.transition.TransitionHelper#CONFIG_TRANSITION_NONE}. The timing
    * to apply the transition is going forward from the previous {@link Fragment} to this, or going
    * forward from this {@link Fragment} to the next.
+   *
+   * @deprecated Deprecated to use CONFIG_TRANSITION_SHARED_X_AXIS transition, so it never have
+   *     activity options input, should start the activity directly.
    */
-  @TargetApi(VERSION_CODES.M)
+  @Deprecated
   public static void applyForwardTransition(Fragment fragment) {
-    if (Build.VERSION.SDK_INT >= VERSION_CODES.M) {
-      if (CONFIG_TRANSITION_SHARED_X_AXIS == getConfigTransitionType(fragment.getContext())) {
-        MaterialSharedAxis exitTransition =
-            new MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true);
-        fragment.setExitTransition(exitTransition);
-
-        MaterialSharedAxis enterTransition =
-            new MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true);
-        fragment.setEnterTransition(enterTransition);
-      } else {
-        Log.w(TAG, "Not apply the forward transition for support lib's fragment.");
-      }
-    } else {
-      Log.w(
-          TAG,
-          "Not apply the forward transition for support lib's fragment. The API is supported from"
-              + " Android Sdk "
-              + VERSION_CODES.M);
-    }
+    Log.w(TAG, "Not apply the forward transition for support lib's fragment.");
   }
 
   /**
@@ -76,55 +54,27 @@ public class TransitionHelper {
    * com.google.android.setupdesign.transition.TransitionHelper#CONFIG_TRANSITION_NONE}. The timing
    * to apply the transition is going backward from the next {@link Fragment} to this, or going
    * backward from this {@link Fragment} to the previous.
+   *
+   * @deprecated Deprecated to use CONFIG_TRANSITION_SHARED_X_AXIS transition, so it never have
+   *     activity options input, should start the activity directly.
    */
-  @TargetApi(VERSION_CODES.M)
+  @Deprecated
   public static void applyBackwardTransition(Fragment fragment) {
-    if (Build.VERSION.SDK_INT >= VERSION_CODES.M) {
-      if (CONFIG_TRANSITION_SHARED_X_AXIS == getConfigTransitionType(fragment.getContext())) {
-        MaterialSharedAxis returnTransition =
-            new MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false);
-        fragment.setReturnTransition(returnTransition);
-
-        MaterialSharedAxis reenterTransition =
-            new MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ false);
-        fragment.setReenterTransition(reenterTransition);
-      } else {
-        Log.w(TAG, "Not apply the backward transition for support lib's fragment.");
-      }
-    } else {
-      Log.w(
-          TAG,
-          "Not apply the backward transition for support lib's fragment. The API is supported from"
-              + " Android Sdk "
-              + VERSION_CODES.M);
-    }
+    Log.w(TAG, "Not apply the backward transition for support lib's fragment.");
   }
 
   /**
    * A wrapper method, create an {@link ActivityOptionsCompat} to transition between activities as
    * the {@link ActivityOptionsCompat} parameter of {@link
    * androidx.activity.result.ActivityResultLauncher#launch(I, ActivityOptionsCompat)} method.
+   *
+   * @deprecated Deprecated to use CONFIG_TRANSITION_SHARED_X_AXIS transition, so it never have
+   *     activity options input, should start the activity directly.
    */
+  @Deprecated
+  @InlineMe(replacement = "null")
   @Nullable
   public static ActivityOptionsCompat makeActivityOptionsCompat(Activity activity) {
-    ActivityOptionsCompat activityOptionsCompat = null;
-    if (activity == null) {
-      return activityOptionsCompat;
-    }
-
-    if (getConfigTransitionType(activity) == CONFIG_TRANSITION_SHARED_X_AXIS) {
-      if (Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
-        if (activity.getWindow() != null
-            && !activity.getWindow().hasFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)) {
-          Log.w(
-              TAG,
-              "The transition won't take effect due to NO FEATURE_ACTIVITY_TRANSITIONS feature");
-        }
-
-        activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity);
-      }
-    }
-
-    return activityOptionsCompat;
+    return null;
   }
 }

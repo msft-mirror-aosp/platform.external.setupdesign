@@ -99,7 +99,7 @@ public class ProgressBarMixin implements Mixin {
     isGlifExpressiveEnabled = PartnerConfigHelper.isGlifExpressiveEnabled(layout.getContext());
   }
 
-  /** @return True if the progress bar is currently shown. */
+  /** Returns true if the progress bar is currently shown. */
   public boolean isShown() {
     final View progressBar;
     if (isGlifExpressiveEnabled) {
@@ -188,7 +188,7 @@ public class ProgressBarMixin implements Mixin {
   /** Sets the color of the indeterminate progress bar. This method is a no-op on SDK < 21. */
   /**
    * @deprecated Use {@link ProgressBar#setProgressBackgroundTintList(int)} or {@link
-   *     LinearProgressIndicator#setIndeterminateTintList(int)} and {@link
+   *     LinearProgressIndicator#setIndicatorColor(int)} and {@link
    *     LinearProgressIndicator#setTrackColor(int)} instead.
    */
   @Deprecated
@@ -197,8 +197,9 @@ public class ProgressBarMixin implements Mixin {
     if (Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
       final View view = peekProgressBar();
       if (view != null) {
-        if (view instanceof ProgressBar) {
-          ProgressBar bar = (ProgressBar) view;
+        if (view instanceof LinearProgressIndicator progressIndicator) {
+          progressIndicator.setIndicatorColor(color.getDefaultColor());
+        } else if (view instanceof ProgressBar bar) {
           bar.setIndeterminateTintList(color);
           if (Build.VERSION.SDK_INT >= VERSION_CODES.M || color != null) {
             // There is a bug in Lollipop where setting the progress tint color to null
@@ -209,16 +210,14 @@ public class ProgressBarMixin implements Mixin {
             // of NinePatchDrawable. (commit 6a8253fdc9f4574c28b4beeeed90580ffc93734a)
             bar.setProgressBackgroundTintList(color);
           }
-        } else if (view instanceof LinearProgressIndicator) {
-          // TODO: b/377241556 - Set color from the view LinearProgressIndicator.
         }
       }
     }
   }
 
   /**
-   * @return The color previously set in {@link #setColor(ColorStateList)}, or null if the color is
-   *     not set. In case of null, the color of the progress bar will be inherited from the theme.
+   * Returns the color previously set in {@link #setColor(ColorStateList)}, or null if the color is
+   * not set. In case of null, the color of the progress bar will be inherited from the theme.
    */
   @Nullable
   public ColorStateList getColor() {
@@ -247,13 +246,12 @@ public class ProgressBarMixin implements Mixin {
       Context context = progressBar.getContext();
       final ViewGroup.LayoutParams lp = progressBar.getLayoutParams();
 
-      if (lp instanceof ViewGroup.MarginLayoutParams) {
+      if (lp instanceof ViewGroup.MarginLayoutParams mlp) {
         int marginTop =
             (int) context.getResources().getDimension(R.dimen.sud_progress_bar_margin_top);
         int marginBottom =
             (int) context.getResources().getDimension(R.dimen.sud_progress_bar_margin_bottom);
 
-        final ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) lp;
         mlp.setMargins(mlp.leftMargin, marginTop, mlp.rightMargin, marginBottom);
       }
     }

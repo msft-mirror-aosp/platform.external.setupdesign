@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -67,6 +68,7 @@ public class Item extends AbstractItem implements LinkSpan.OnLinkClickListener {
   @Nullable private CharSequence summary;
   @Nullable private CharSequence title;
   @Nullable private CharSequence contentDescription;
+  @Nullable private CharSequence stateDescription;
   @Nullable private Boolean isClickable;
   @Nullable private OnItemTextLinkClickListener itemTextLinkClickListener;
   private boolean visible = true;
@@ -210,6 +212,16 @@ public class Item extends AbstractItem implements LinkSpan.OnLinkClickListener {
     notifyItemChanged();
   }
 
+  public void setStateDescription(@Nullable CharSequence stateDescription) {
+    this.stateDescription = stateDescription;
+    notifyItemChanged();
+  }
+
+  @Nullable
+  public CharSequence getStateDescription() {
+    return stateDescription;
+  }
+
   @Nullable
   public CharSequence getTitle() {
     return title;
@@ -270,6 +282,9 @@ public class Item extends AbstractItem implements LinkSpan.OnLinkClickListener {
     }
 
     view.setContentDescription(getContentDescription());
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+      view.setStateDescription(stateDescription);
+    }
 
     final View iconContainer = view.findViewById(R.id.sud_items_icon_container);
     final Drawable icon = getIcon();

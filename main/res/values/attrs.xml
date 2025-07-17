@@ -209,7 +209,6 @@
     <attr name="sudBulletPointIconContainerStyle" format="reference" />
     <attr name="sudAdditionalBodyTextStyle" format="reference" />
     <attr name="sudInfoFooterContainerStyle" format="reference" />
-    <attr name="sudInfoFooterIconContainerStyle" format="reference" />
     <attr name="sudInfoFooterIconStyle" format="reference" />
     <attr name="sudInfoFooterTitleStyle" format="reference" />
     <attr name="sudContentFramePaddingTop" format="dimension|reference" />
@@ -446,7 +445,9 @@
     <declare-styleable name="SudCardView">
         <attr name="sudIcon" format="reference" />
         <attr name="sudTitleText" format="string|reference" />
+        <attr name="sudTitleSize" format="dimension|reference" />
         <attr name="sudCardViewSkipClickSelection" format="boolean" />
+        <attr name="sudFontFamily" format="string|reference" />
         <attr name="android:lineHeight" />
     </declare-styleable>
 

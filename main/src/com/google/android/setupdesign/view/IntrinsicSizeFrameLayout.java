@@ -19,11 +19,10 @@ package com.google.android.setupdesign.view;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
@@ -35,19 +34,13 @@ import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.view.WindowMetrics;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.VisibleForTesting;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.util.BuildCompatUtils;
 import com.google.android.setupcompat.util.Logger;
-import com.google.android.setupcompat.util.WizardManagerHelper;
 import com.google.android.setupdesign.R;
-import android.content.Context;
-import android.graphics.Point;
-import android.graphics.Rect;
-import android.util.DisplayMetrics;
 
 /**
  * A FrameLayout subclass that has an "intrinsic size", which is the size it wants to be if that is
@@ -124,7 +117,7 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
       LOG.atInfo("CardViewIntrinsicPartnerConfig(" + intrinsicWidth + ", " + intrinsicHeight + ")");
     }
 
-    if (isModalDialogEligible()) {
+    if (PartnerConfigHelper.shouldApplyModalDialog(context)) {
       // Get the window's visible display frame.
       getWindowVisibleDisplayFrame(windowVisibleDisplayRect);
 
@@ -152,7 +145,7 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
 
   @Override
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    if (isModalDialogEligible()) {
+    if (PartnerConfigHelper.shouldApplyModalDialog(getContext())) {
       heightMeasureSpec = MeasureSpec.makeMeasureSpec(intrinsicHeight, MeasureSpec.EXACTLY);
       widthMeasureSpec = MeasureSpec.makeMeasureSpec(intrinsicWidth, MeasureSpec.EXACTLY);
       super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -223,14 +216,8 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
   @Override
   protected void onAttachedToWindow() {
     super.onAttachedToWindow();
-    if (isModalDialogEligible()) {
-      // Set the background of the parent layout to the wallpaper.
-      LinearLayout parent = (LinearLayout) this.getParent();
-      Drawable wallpaper = WallpaperManager.getInstance(getContext()).getBuiltInDrawable();
-      wallpaper.setAlpha(
-          getContext().getResources().getInteger(R.integer.modal_dialog_wallpaper_alpha));
-      parent.setBackgroundDrawable(wallpaper);
-      // Set the radius of the card view to 16dp.
+    if (PartnerConfigHelper.shouldApplyModalDialog(getContext())) {
+      // Set the radius of the card view to 16dp and the background color.
       setBackgroundResource(R.drawable.corner);
     }
     if (Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
@@ -244,19 +231,6 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
   public WindowInsets onApplyWindowInsets(WindowInsets insets) {
     lastInsets = insets;
     return super.onApplyWindowInsets(insets);
-  }
-
-  /**
-   * Checks whether the modal dialog is eligible to be displayed. The dialog is considered eligible
-   * only if two conditions are met: 1. The feature is enabled via its feature flag in {@link
-   * PartnerConfigHelper}. 2. The check is occurring during the initial Setup Wizard lifecycle.
-   *
-   * @return {@code true} if the modal dialog can be shown, {@code false} otherwise.
-   */
-  // TODO: Extend IntrinsicSizeFrameLayoutTest to test modal dialog logic.
-  protected boolean isModalDialogEligible() {
-    return PartnerConfigHelper.isSuwUseModalDialogEnabled(getContext())
-        && !WizardManagerHelper.isUserSetupComplete(getContext());
   }
 
   /**

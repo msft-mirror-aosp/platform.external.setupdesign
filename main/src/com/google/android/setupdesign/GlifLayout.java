@@ -50,6 +50,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.annotation.VisibleForTesting;
 import androidx.window.embedding.ActivityEmbeddingController;
 import com.google.android.setupcompat.PartnerCustomizationLayout;
 import com.google.android.setupcompat.logging.CustomEvent;
@@ -720,6 +721,13 @@ public class GlifLayout extends PartnerCustomizationLayout {
         PartnerConfigHelper.get(getContext())
             .getColor(getContext(), PartnerConfig.CONFIG_LAYOUT_BACKGROUND_COLOR);
     this.getRootView().setBackgroundColor(color);
+
+    // SudGlifCardContainer style is set with a background color. Update the background color of
+    // IntrinsicSizeFrameLayout with the partner-customizable background color.
+    final View intrinsicSizeLayout = findManagedViewById(R.id.suc_intrinsic_size_layout);
+    if (intrinsicSizeLayout != null) {
+      intrinsicSizeLayout.setBackgroundColor(color);
+    }
   }
 
   @TargetApi(VERSION_CODES.JELLY_BEAN_MR1)
@@ -787,9 +795,10 @@ public class GlifLayout extends PartnerCustomizationLayout {
       LinearLayout footerContainer = footerBarMixin.getButtonContainer();
       if (footerContainer != null) {
         if (isBottom) {
-          footerContainer.setBackgroundColor(Color.TRANSPARENT);
+          int backgroundColor = getFooterBackgroundColor();
+          footerContainer.setBackgroundColor(backgroundColor);
           if (systemNavBarMixin != null) {
-            systemNavBarMixin.setSystemNavBarBackground(Color.TRANSPARENT);
+            systemNavBarMixin.setSystemNavBarBackground(backgroundColor);
           }
         } else {
           footerContainer.setBackgroundColor(getFooterBackgroundColorFromStyle());
@@ -798,6 +807,28 @@ public class GlifLayout extends PartnerCustomizationLayout {
           }
         }
       }
+    }
+  }
+
+  /**
+   * Returns the footer background color. i
+   * <li>If not apply partner resource, return transparent color.
+   * <li>If apply partner resource and not apply dynamic color, return the content background color
+   *     from style.
+   * <li>If apply partner resource and apply dynamic color, return the color set by partner config.
+   */
+  public int getFooterBackgroundColor() {
+    if (!shouldApplyPartnerResource()) {
+      LOG.atDebug("Set footer background color as transparent");
+      return Color.TRANSPARENT;
+    }
+    if (useFullDynamicColor()) {
+      LOG.atDebug("Set footer background color as content background color");
+      return getContentBackgroundColorFromStyle();
+    } else {
+      LOG.atDebug("Set footer background color as partner config color");
+      return PartnerConfigHelper.get(getContext())
+          .getColor(getContext(), PartnerConfig.CONFIG_FOOTER_BAR_BG_COLOR);
     }
   }
 
@@ -827,6 +858,14 @@ public class GlifLayout extends PartnerCustomizationLayout {
     TypedValue typedValue = new TypedValue();
     Theme theme = getContext().getTheme();
     theme.resolveAttribute(R.attr.sudFooterBackgroundColor, typedValue, true);
+    return typedValue.data;
+  }
+
+  @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+  public int getContentBackgroundColorFromStyle() {
+    TypedValue typedValue = new TypedValue();
+    Theme theme = getContext().getTheme();
+    theme.resolveAttribute(android.R.attr.colorBackground, typedValue, true);
     return typedValue.data;
   }
 

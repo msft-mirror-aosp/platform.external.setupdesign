@@ -26,6 +26,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import androidx.recyclerview.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -127,8 +128,10 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     final View view = inflater.inflate(viewType, parent, false);
     final ItemViewHolder viewHolder = new ItemViewHolder(view);
     Drawable background = null;
-    final Object viewTag = view.getTag();
-    if (!TAG_NO_BACKGROUND.equals(viewTag)) {
+
+    final String viewTag = String.valueOf(view.getTag());
+
+    if (!TextUtils.equals(TAG_NO_BACKGROUND, viewTag)) {
       final TypedArray typedArray =
           parent.getContext().obtainStyledAttributes(R.styleable.SudRecyclerItemAdapter);
       Drawable selectableItemBackground =
@@ -140,14 +143,18 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
       } else {
         background = view.getBackground();
         if (background == null) {
-          // If full dynamic color enabled which means this activity is running outside of setup
-          // flow, the colors should refer to R.style.SudFullDynamicColorThemeGlifV3.
+          // If full dynamic color enabled, we can't use partner's background color. Just use
+          // system background color token as this is how dynamic color works.
           if (applyPartnerHeavyThemeResource && !useFullDynamicColor) {
+            Log.v(TAG, "Apply partner customized background color for the recycler view item.");
+            // If the partner has customized the background color, we use the customized color. The
+            // fallback color is in the Android setup wizard apk.
             int color =
                 PartnerConfigHelper.get(view.getContext())
                     .getColor(view.getContext(), PartnerConfig.CONFIG_LAYOUT_BACKGROUND_COLOR);
             background = new ColorDrawable(color);
           } else {
+            Log.v(TAG, "Apply theme background color for the recycler view item.");
             background =
                 typedArray.getDrawable(R.styleable.SudRecyclerItemAdapter_android_colorBackground);
           }

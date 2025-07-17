@@ -165,8 +165,13 @@ public class ButtonItem extends AbstractItem implements View.OnClickListener {
   private Button createButton(Context context) {
     // Inflate a single button from XML, so that when using support lib, it will take advantage
     // of the injected layout inflater and give us AppCompatButton instead.
-    return (Button) LayoutInflater.from(context).inflate(R.layout.sud_button, null, false);
-
+    if (PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
+      return (Button)
+          new MaterialButton(
+              context, null, com.google.android.setupcompat.R.attr.sucMaterialTonalButtonStyle);
+    } else {
+      return (Button) LayoutInflater.from(context).inflate(R.layout.sud_button, null, false);
+    }
   }
 
   @Override

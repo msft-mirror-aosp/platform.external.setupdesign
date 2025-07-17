@@ -23,6 +23,7 @@ import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.ColorFilter;
 import android.os.Build;
@@ -216,9 +217,25 @@ public class GlifLoadingLayout extends GlifLayout {
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
+    // We want to log when the screen is visible - so we do it here instead of in the constructor
+    // or init (which happens in onCreate, before we are visible)
+    maybeLogLoadingScreen();
+
     if (inflatedView instanceof LinearLayout) {
       updateContentPadding((LinearLayout) inflatedView);
     }
+  }
+
+  private boolean hasLogged = false;
+
+  private void maybeLogLoadingScreen() {
+    if (hasLogged) {
+      return;
+    }
+    hasLogged = true;
+
+    String screenId = calculateWaitScreenIdentity();
+    LOG.w("SUWLoadingScreen: " + hashString(screenId) + ":" + screenId);
   }
 
   private boolean isAnimateEnable() {
@@ -988,5 +1005,35 @@ public class GlifLoadingLayout extends GlifLayout {
     int LOTTIE = 1;
     int ILLUSTRATION = 2;
     int PROGRESS_BAR = 3;
+  }
+
+  /** Generates a string which identifies this waiting screen. */
+  private String calculateWaitScreenIdentity() {
+    Context context = getContext();
+    String pkg = "";
+    String activityName = "";
+    String action = "";
+    if (activity != null) {
+      Intent intent = activity.getIntent();
+      pkg = activity.getPackageName();
+      activityName = activity.getClass().getName();
+      if (intent != null) {
+        action = intent.getAction();
+      }
+    } else if (context != null) {
+      pkg = context.getPackageName();
+    }
+    return pkg + ":" + activityName + ":" + action;
+  }
+
+  /**
+   * Generate a hash string from a string.
+   *
+   * <p>This is not intended for security, but just to hash the output of {@link
+   * #calculateWaitScreenIdentity()} to present an unintrusive string that can be shown in debug
+   * output.
+   */
+  private String hashString(String str) {
+    return Integer.toHexString(str.hashCode());
   }
 }

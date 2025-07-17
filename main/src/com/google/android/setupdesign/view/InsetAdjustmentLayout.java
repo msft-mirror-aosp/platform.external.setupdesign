@@ -16,6 +16,7 @@
 
 package com.google.android.setupdesign.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
@@ -25,6 +26,7 @@ import android.widget.LinearLayout;
 import com.google.android.setupcompat.R;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.util.Logger;
+import java.util.Locale;
 
 /**
  * A custom LinearLayout that modifies system window insets, specifically the bottom inset, based on
@@ -56,19 +58,34 @@ public class InsetAdjustmentLayout extends LinearLayout {
   }
 
   @Override
+  @SuppressLint("NewApi")
   public WindowInsets onApplyWindowInsets(WindowInsets insets) {
-    // TODO: b/398407478 - Add test case for edge to edge to layout from library.
-    if (PartnerConfigHelper.isGlifExpressiveEnabled(getContext())) {
-      if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP && insets.getSystemWindowInsetBottom() > 0) {
-        LOG.atDebug("NavigationBarHeight: " + insets.getSystemWindowInsetBottom());
-        insets =
-            insets.replaceSystemWindowInsets(
-                0,
-                insets.getSystemWindowInsetTop(),
-                0,
-                findViewById(R.id.suc_layout_status).getPaddingBottom());
-      }
-    }
-    return super.onApplyWindowInsets(insets);
+    return super.onApplyWindowInsets(
+        shouldApplyEdgeToEdge(insets.getSystemWindowInsetBottom())
+            ? applyEdgeToEdge(insets)
+            : insets);
+  }
+
+  private boolean shouldApplyEdgeToEdge(int windowInsetBottom) {
+    boolean glifExpressiveEnabled = PartnerConfigHelper.isGlifExpressiveEnabled(getContext());
+    boolean isAtLeastLollipop = VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP;
+    LOG.atInfo(
+        String.format(
+            Locale.US,
+            "Apply edge to edge, glifExpressiveEnabled: %s, isAtLeastLollipop: %s,"
+                + " windowInsetBottom: %d",
+            glifExpressiveEnabled,
+            isAtLeastLollipop,
+            windowInsetBottom));
+    return glifExpressiveEnabled && isAtLeastLollipop && windowInsetBottom > 0;
+  }
+
+  @SuppressLint("NewApi")
+  private WindowInsets applyEdgeToEdge(WindowInsets insets) {
+    return insets.replaceSystemWindowInsets(
+        0,
+        insets.getSystemWindowInsetTop(),
+        0,
+        findViewById(R.id.suc_layout_status).getPaddingBottom());
   }
 }
