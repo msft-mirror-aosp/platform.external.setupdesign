@@ -27,6 +27,7 @@ import android.content.res.TypedArray;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -121,9 +122,11 @@ public class TransitionHelper {
   /**
    * Override the transition to the specific transition and the transition type will depends on the
    * partner resource.
+   *
+   * @deprecated Deprecated to use CONFIG_TRANSITION_SHARED_X_AXIS transition, so it never have
+   *     activity options input, should start the activity directly.
    */
-  // TODO: Add new partner resource to determine which transition type would be apply.
-  public static final int TRANSITION_CAPTIVE = 5;
+  @Deprecated public static final int TRANSITION_CAPTIVE = 5;
 
   /** Override the transition to a fade-through-from-right (or from-left for RTL locales). */
   public static final int TRANSITION_FADE_THROUGH = 6;
@@ -172,10 +175,14 @@ public class TransitionHelper {
    *
    * <p>For example, in the flow below, the forward transitions will be applied to all arrows
    * pointing to the right. Previous screen --> This screen --> Next screen
+   *
+   * @deprecated Deprecated to use CONFIG_TRANSITION_SHARED_X_AXIS transition, so it never have
+   *     activity options input, should start the activity directly.
    */
   @TargetApi(VERSION_CODES.LOLLIPOP)
+  @Deprecated
   public static void applyForwardTransition(Activity activity) {
-    applyForwardTransition(activity, TRANSITION_CAPTIVE);
+    // Do nothing.
   }
 
   /**
@@ -235,6 +242,11 @@ public class TransitionHelper {
   @TargetApi(VERSION_CODES.LOLLIPOP)
   public static void applyForwardTransition(
       Activity activity, @TransitionType int transitionId, boolean useClientTransitionSettings) {
+    if (PartnerConfigHelper.shouldApplyModalDialog(activity)) {
+      // Turn off the transition for modal dialog.
+      activity.overridePendingTransition(/* enterAnim= */ 0, /* exitAnim= */ 0);
+      return;
+    }
     if (BuildCompatUtils.isAtLeastU()
         && !useClientTransitionSettings
         && PartnerConfigHelper.isGlifThemeControlledTransitionApplied(activity)
@@ -292,10 +304,14 @@ public class TransitionHelper {
    *
    * <p>For example, in the flow below, the backward transitions will be applied to all arrows
    * pointing to the left. Previous screen <-- This screen <-- Next screen.
+   *
+   * @deprecated Deprecated to use CONFIG_TRANSITION_SHARED_X_AXIS transition, so it never have
+   *     activity options input, should start the activity directly.
    */
   @TargetApi(VERSION_CODES.LOLLIPOP)
+  @Deprecated
   public static void applyBackwardTransition(Activity activity) {
-    applyBackwardTransition(activity, TRANSITION_CAPTIVE);
+    // Do nothing.
   }
 
   /**
@@ -356,6 +372,11 @@ public class TransitionHelper {
   @TargetApi(VERSION_CODES.LOLLIPOP)
   public static void applyBackwardTransition(
       Activity activity, @TransitionType int transitionId, boolean useClientTransitionSettings) {
+    if (PartnerConfigHelper.shouldApplyModalDialog(activity)) {
+      // Turn off the transition for modal dialog.
+      activity.overridePendingTransition(/* enterAnim= */ 0, /* exitAnim= */ 0);
+      return;
+    }
     if (BuildCompatUtils.isAtLeastU()
         && !useClientTransitionSettings
         && PartnerConfigHelper.isGlifThemeControlledTransitionApplied(activity)
@@ -512,34 +533,28 @@ public class TransitionHelper {
    * when running in Android S and the transition type {link #CONFIG_TRANSITION_SHARED_X_AXIS}.
    *
    * @throws IllegalArgumentException is thrown when {@code activity} is null.
+   * @deprecated The {@code CONFIG_TRANSITION_SHARED_X_AXIS} transition is no longer supported for
+   *     use with activity options {@link ActivityOptions#makeSceneTransitionAnimation(Activity,
+   *     View, String)} ()} when starting the next activity. Callers should directly finish the
+   *     activity instead of calling this method to trigger {@link
+   *     Activity#finishAfterTransition()}.
    */
+  @InlineMe(replacement = "activity.finish()")
+  @Deprecated
   public static void finishActivity(Activity activity) {
-    if (activity == null) {
-      throw new IllegalArgumentException("Invalid activity=" + activity);
-    }
-
-    // Avoids finish been called more than once.
-    if (!isFinishCalled) {
-      isFinishCalled = true;
-      Log.w(
-          TAG,
-          "Fallback to using Activity#finish() due to the"
-              + " Activity#finishAfterTransition() is supported from Android Sdk "
-              + VERSION_CODES.LOLLIPOP);
-      activity.finish();
-    }
-      isFinishCalled = false;
+    activity.finish();
   }
 
   /**
    * Returns the transition type from the {@link PartnerConfig#CONFIG_TRANSITION_TYPE} partner
    * resource on Android S, otherwise returns {@link #CONFIG_TRANSITION_NONE}.
+   *
+   * @deprecated Deprecated to use CONFIG_TRANSITION_SHARED_X_AXIS transition, so it never has
+   *     activity options input, should start the activity directly.
    */
+  @Deprecated
   public static int getConfigTransitionType(Context context) {
-    return BuildCompatUtils.isAtLeastS() && ThemeHelper.shouldApplyExtendedPartnerConfig(context)
-        ? PartnerConfigHelper.get(context)
-            .getInteger(context, PartnerConfig.CONFIG_TRANSITION_TYPE, CONFIG_TRANSITION_NONE)
-        : CONFIG_TRANSITION_NONE;
+    return CONFIG_TRANSITION_NONE;
   }
 
   /**

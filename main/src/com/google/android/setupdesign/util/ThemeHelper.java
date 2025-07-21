@@ -279,7 +279,12 @@ public final class ThemeHelper {
     String themeName = PartnerConfigHelper.getSuwDefaultThemeString(context);
     @StyleRes int defaultTheme;
 
-    if (shouldApplyGlifExpressiveStyle(context)) {
+    if (PartnerConfigHelper.shouldApplyModalDialog(context)) {
+      LOG.atInfo("Applying the modal dialog style");
+      return isDayNightEnabled
+          ? R.style.SudThemeModalGlifExpressive_DayNight
+          : R.style.SudThemeModalGlifExpressive_Light;
+    } else if (shouldApplyGlifExpressiveStyle(context)) {
       LOG.atInfo(
           "Return "
               + (isDayNightEnabled

@@ -18,8 +18,10 @@ package com.google.android.setupdesign.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,6 +34,8 @@ public class CardView extends LinearLayout implements View.OnClickListener {
 
   private Drawable icon;
   private CharSequence title;
+  private float titleSize;
+  private String fontFamily;
 
   /* The line height of the title. */
   private int lineHeight;
@@ -54,6 +58,8 @@ public class CardView extends LinearLayout implements View.OnClickListener {
     TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SudCardView);
     icon = a.getDrawable(R.styleable.SudCardView_sudIcon);
     title = a.getText(R.styleable.SudCardView_sudTitleText);
+    titleSize = a.getDimensionPixelSize(R.styleable.SudCardView_sudTitleSize, /* defValue= */ 0);
+    fontFamily = a.getString(R.styleable.SudCardView_sudFontFamily);
     skipClickSelection =
         a.getBoolean(R.styleable.SudCardView_sudCardViewSkipClickSelection, /* defValue= */ false);
     lineHeight =
@@ -76,9 +82,16 @@ public class CardView extends LinearLayout implements View.OnClickListener {
       if (title != null) {
         titleView.setText(title);
       }
+      if (titleSize > 0) {
+        titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleSize);
+      }
+      if (fontFamily != null) {
+        titleView.setTypeface(Typeface.create(fontFamily, Typeface.NORMAL));
+      }
     }
   }
 
+  /** Sets the title of the card. */
   public void setCardTitle(CharSequence title) {
     this.title = title;
     if (titleView != null) {
@@ -86,6 +99,7 @@ public class CardView extends LinearLayout implements View.OnClickListener {
     }
   }
 
+  /** Sets the icon of the card. */
   public void setCardIcon(Drawable icon) {
     this.icon = icon;
     if (iconView != null) {
@@ -93,10 +107,12 @@ public class CardView extends LinearLayout implements View.OnClickListener {
     }
   }
 
+  /** Returns the title of the card. */
   public CharSequence getCardTitle() {
     return title;
   }
 
+  /** Returns the icon of the card. */
   public Drawable getCardIcon() {
     return icon;
   }
@@ -115,6 +131,32 @@ public class CardView extends LinearLayout implements View.OnClickListener {
       return titleView.getLineHeight();
     }
     return lineHeight;
+  }
+
+  /** Returns the title size of the title. */
+  public float getCardTitleSize() {
+    return titleSize;
+  }
+
+  /** Sets the title size of the title. */
+  public void setCardTitleSize(float titleSize) {
+    this.titleSize = titleSize;
+    if (titleView != null) {
+      titleView.setTextSize(titleSize);
+    }
+  }
+
+  /** Returns the font family of the title. */
+  public String getCardFontFamily() {
+    return fontFamily;
+  }
+
+  /** Sets the font family of the title. */
+  public void setCardFontFamily(String fontFamily) {
+    this.fontFamily = fontFamily;
+    if (titleView != null) {
+      titleView.setTypeface(Typeface.create(fontFamily, Typeface.NORMAL));
+    }
   }
 
   @Override
