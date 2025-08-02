@@ -240,7 +240,13 @@ public final class HeaderAreaStyler {
                     .getDimension(
                         context,
                         PartnerConfig.CONFIG_PROGRESS_BAR_MARGIN_TOP,
-                        context.getResources().getDimension(R.dimen.sud_progress_bar_margin_top));
+                        PartnerConfigHelper.isGlifExpressiveEnabled(context)
+                            ? context
+                                .getResources()
+                                .getDimension(R.dimen.sud_glif_expressive_progress_bar_margin_top)
+                            : context
+                                .getResources()
+                                .getDimension(R.dimen.sud_progress_bar_margin_top));
       }
       int marginBottom = mlp.bottomMargin;
       if (PartnerConfigHelper.get(context)
@@ -251,9 +257,14 @@ public final class HeaderAreaStyler {
                     .getDimension(
                         context,
                         PartnerConfig.CONFIG_PROGRESS_BAR_MARGIN_BOTTOM,
-                        context
-                            .getResources()
-                            .getDimension(R.dimen.sud_progress_bar_margin_bottom));
+                        PartnerConfigHelper.isGlifExpressiveEnabled(context)
+                            ? context
+                                .getResources()
+                                .getDimension(
+                                    R.dimen.sud_glif_expressive_progress_bar_margin_bottom)
+                            : context
+                                .getResources()
+                                .getDimension(R.dimen.sud_progress_bar_margin_bottom));
       }
 
       if (marginTop != mlp.topMargin || marginBottom != mlp.bottomMargin) {

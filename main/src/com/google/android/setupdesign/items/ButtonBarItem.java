@@ -75,7 +75,15 @@ public class ButtonBarItem extends AbstractItem implements ItemInflater.ItemPare
   }
 
   public void setVisible(boolean visible) {
+    if (this.visible == visible) {
+      return;
+    }
     this.visible = visible;
+    if (!visible) {
+      notifyItemRangeRemoved(0, 1);
+    } else {
+      notifyItemRangeInserted(0, 1);
+    }
   }
 
   public boolean isVisible() {

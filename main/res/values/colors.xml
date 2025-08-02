@@ -327,4 +327,5 @@
   <color name="sud_system_surface_container_high_dark">#ff2a2a2a</color>
   <color name="sud_system_surface_container_highest_dark">#ff343434</color>
 
+  <color name="sud_card_view_selected_background_color">@color/sud_system_primary_container_light</color>
 </resources>

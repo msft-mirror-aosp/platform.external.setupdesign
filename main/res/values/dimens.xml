@@ -294,6 +294,8 @@
     <dimen name="sud_progress_bar_margin_vertical">-7dp</dimen>
     <dimen name="sud_progress_bar_margin_top">-7dp</dimen>
     <dimen name="sud_progress_bar_margin_bottom">-7dp</dimen>
+    <dimen name="sud_glif_expressive_progress_bar_margin_top">0dp</dimen>
+    <dimen name="sud_glif_expressive_progress_bar_margin_bottom">23dp</dimen>
     <dimen name="sud_glif_progress_bar_margin_vertical">7dp</dimen>
     <dimen name="sud_glif_progress_bar_padding">40dp</dimen>
 
@@ -458,9 +460,9 @@
     <dimen name="sud_card_view_container_padding_end">16dp</dimen>
     <dimen name="sud_card_view_container_min_height">100dp</dimen>
     <dimen name="sud_card_view_container_default_radius">12dp</dimen>
-    <!-- TODO: b/390040419 - Update card view's corner radius to 12dp for AOSP. -->
-    <!-- Set 999dp to make radius to be full radius -->
-    <dimen name="sud_card_view_container_selected_radius">999dp</dimen>
+
+    <!-- Default radius for the card view container -->
+    <dimen name="sud_card_view_container_selected_default_radius">12dp</dimen>
     <!-- Card view icon -->
     <dimen name="sud_card_view_icon_size">24dp</dimen>
     <dimen name="sud_card_view_icon_container_margin_top">16dp</dimen>

@@ -399,13 +399,15 @@ public class RequireScrollMixin implements Mixin {
     LinearLayout footerContainer = footerBarMixin.getButtonContainer();
     CharSequence contentDescription = primaryButtonView.getContentDescription();
     int initialFooterPaddingStart = footerContainer.getPaddingStart();
-    // Handle the case if the scroll view cannot scrollable, then show buttons when first landed on
-    // the screen.
+
+    // Hide the secondary button if it exists and the screen has not scrolled to the bottom.
     if (secondaryButtonView != null
-            && secondaryButtonView.getVisibility() == View.VISIBLE
-            && !isEverScrolledToBottom()) {
+        && secondaryButtonView.getVisibility() == View.VISIBLE
+        && !isEverScrolledToBottom()) {
       secondaryButtonView.setVisibility(View.GONE);
     }
+    // Handle the case if the scroll view cannot scrollable, then show buttons when first landed on
+    // the screen.
     ScrollView scrollView = ((GlifLayout) templateLayout).getScrollView();
     if (scrollView != null) {
       scrollView.post(

@@ -36,55 +36,60 @@
         android:clipToPadding="?attr/sudClipToPadding">
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:baselineAligned="false" android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/sud_landscape_header_area"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="@dimen/sud_glif_land_header_area_weight"
-            android:orientation="vertical">
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:clipChildren="?attr/sudClipChildren"
+            android:clipToPadding="?attr/sudClipToPadding">
 
-            <ViewStub
-                android:id="@+id/sud_layout_sticky_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.google.android.setupdesign.view.BottomScrollView
-                android:id="@+id/sud_header_scroll_view"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/sud_landscape_header_area"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:fillViewport="true"
-                android:scrollIndicators="?attr/sudScrollIndicators">
+                android:layout_weight="@dimen/sud_glif_land_header_area_weight"
+                android:orientation="vertical">
 
-                <include layout="@layout/sud_glif_header" />
+                <ViewStub
+                    android:id="@+id/sud_layout_sticky_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-            </com.google.android.setupdesign.view.BottomScrollView>
+                <com.google.android.setupdesign.view.BottomScrollView
+                    android:id="@+id/sud_header_scroll_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fillViewport="true"
+                    android:scrollIndicators="?attr/sudScrollIndicators">
 
-        </LinearLayout>
+                    <include layout="@layout/sud_glif_header" />
 
-        <LinearLayout
-            android:id="@+id/sud_landscape_content_area"
-            style="@style/SudLandContentContianerStyle"
-            android:paddingTop="?attr/sudGlifContentPaddingTop"
-            android:orientation="vertical">
+                </com.google.android.setupdesign.view.BottomScrollView>
 
-            <com.google.android.setupdesign.view.StickyHeaderListView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@android:id/list"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                app:sudShouldApplyAdditionalMargin="true"
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sud_landscape_content_area"
+                style="@style/SudLandContentContianerStyle"
+                android:paddingTop="?attr/sudGlifContentPaddingTop"
                 android:clipChildren="?attr/sudClipChildren"
                 android:clipToPadding="?attr/sudClipToPadding"
-                android:scrollIndicators="?attr/sudScrollIndicators" />
+                android:orientation="vertical">
+
+                <com.google.android.setupdesign.view.StickyHeaderListView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@android:id/list"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:sudShouldApplyAdditionalMargin="true"
+                    android:clipChildren="?attr/sudClipChildren"
+                    android:clipToPadding="?attr/sudClipToPadding"
+                    android:scrollIndicators="?attr/sudScrollIndicators" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
 
         <include layout="@layout/sud_glif_floating_back_button" />
     </FrameLayout>
