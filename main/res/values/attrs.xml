@@ -448,7 +448,6 @@
         <attr name="sudTitleSize" format="dimension|reference" />
         <attr name="sudCardViewSkipClickSelection" format="boolean" />
         <attr name="sudFontFamily" format="string|reference" />
-        <attr name="android:lineHeight" />
     </declare-styleable>
 
     <attr name="sudCardContainerStyle" format="reference" />

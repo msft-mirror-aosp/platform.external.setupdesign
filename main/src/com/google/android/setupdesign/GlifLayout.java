@@ -106,7 +106,8 @@ public class GlifLayout extends PartnerCustomizationLayout {
 
   private boolean applyPartnerHeavyThemeResource = false;
 
-  private ViewTreeObserver.OnScrollChangedListener onScrollChangedListener =
+  @VisibleForTesting
+  ViewTreeObserver.OnScrollChangedListener onScrollChangedListener =
       new ViewTreeObserver.OnScrollChangedListener() {
         @Override
         public void onScrollChanged() {
@@ -750,7 +751,6 @@ public class GlifLayout extends PartnerCustomizationLayout {
     }
   }
 
-  // TODO: b/397835857 - Add unit test for initScrollingListener.
   protected void initScrollingListener() {
     ScrollView scrollView = getScrollView();
     if (scrollView != null) {

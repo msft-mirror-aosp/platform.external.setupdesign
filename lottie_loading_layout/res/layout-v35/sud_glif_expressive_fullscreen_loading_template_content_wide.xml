@@ -20,6 +20,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipChildren="?attr/sudClipChildren"
+    android:clipToPadding="?attr/sudClipToPadding"
     android:filterTouchesWhenObscured="true">
 
     <ViewStub
@@ -33,12 +35,16 @@
         android:id="@+id/sud_layout_template_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipChildren="?attr/sudClipChildren"
+        android:clipToPadding="?attr/sudClipToPadding"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:clipChildren="?attr/sudClipChildren"
+            android:clipToPadding="?attr/sudClipToPadding"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -46,6 +52,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="@dimen/sud_glif_land_header_area_weight"
+                android:clipChildren="?attr/sudClipChildren"
+                android:clipToPadding="?attr/sudClipToPadding"
                 android:orientation="vertical">
 
                 <ViewStub
@@ -58,6 +66,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fillViewport="true"
+                    android:clipChildren="?attr/sudClipChildren"
+                    android:clipToPadding="?attr/sudClipToPadding"
                     android:scrollIndicators="?attr/sudScrollIndicators">
 
                     <include layout="@layout/sud_glif_header" />
@@ -71,12 +81,16 @@
                 style="@style/SudLandContentContianerStyle"
                 android:paddingTop="?attr/sudGlifContentPaddingTop"
                 android:focusedByDefault="false"
+                android:clipChildren="?attr/sudClipChildren"
+                android:clipToPadding="?attr/sudClipToPadding"
                 android:orientation="vertical">
 
                 <FrameLayout
                     android:id="@+id/sud_layout_loading_content"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:clipChildren="?attr/sudClipChildren"
+                    android:clipToPadding="?attr/sudClipToPadding">
 
                     <ViewStub
                         android:id="@+id/sud_loading_layout_illustration_stub"
@@ -89,6 +103,8 @@
                         android:id="@+id/sud_layout_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clipChildren="?attr/sudClipChildren"
+                        android:clipToPadding="?attr/sudClipToPadding"
                         android:visibility="gone" />
 
                 </FrameLayout>

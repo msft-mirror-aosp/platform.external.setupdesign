@@ -24,6 +24,8 @@
     android:filterTouchesWhenObscured="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipChildren="?attr/sudClipChildren"
+    android:clipToPadding="?attr/sudClipToPadding"
     android:orientation="vertical">
 
     <ViewStub
@@ -40,11 +42,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipChildren="?attr/sudClipChildren"
+        android:clipToPadding="?attr/sudClipToPadding"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipChildren="?attr/sudClipChildren"
+            android:clipToPadding="?attr/sudClipToPadding"
             android:orientation="vertical">
 
             <!-- Ignore UnusedAttribute: scrollIndicators is new in M. Default to no indicators in older
@@ -55,6 +61,8 @@
                 android:layout_height="?attr/sudLoadingHeaderHeight"
                 android:fillViewport="true"
                 android:scrollIndicators="?attr/sudScrollIndicators"
+                android:clipChildren="?attr/sudClipChildren"
+                android:clipToPadding="?attr/sudClipToPadding"
                 tools:ignore="UnusedAttribute">
 
                 <include layout="@layout/sud_glif_header" />

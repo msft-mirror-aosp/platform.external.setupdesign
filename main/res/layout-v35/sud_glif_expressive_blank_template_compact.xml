@@ -22,6 +22,8 @@
     android:id="@+id/suc_layout_status"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipChildren="?attr/sudClipChildren"
+    android:clipToPadding="?attr/sudClipToPadding"
     android:filterTouchesWhenObscured="true">
 
     <include layout="@layout/sud_glif_expressive_blank_template_content_layout" />

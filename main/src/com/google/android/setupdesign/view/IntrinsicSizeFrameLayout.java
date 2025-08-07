@@ -19,11 +19,13 @@ package com.google.android.setupdesign.view;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -41,6 +43,7 @@ import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.util.BuildCompatUtils;
 import com.google.android.setupcompat.util.Logger;
 import com.google.android.setupdesign.R;
+import java.util.Locale;
 
 /**
  * A FrameLayout subclass that has an "intrinsic size", which is the size it wants to be if that is
@@ -228,9 +231,37 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
   }
 
   @Override
+  @SuppressLint("NewApi")
   public WindowInsets onApplyWindowInsets(WindowInsets insets) {
+    insets =
+        shouldApplyEdgeToEdge(insets.getSystemWindowInsetBottom())
+            ? applyEdgeToEdge(insets)
+            : insets;
     lastInsets = insets;
     return super.onApplyWindowInsets(insets);
+  }
+
+  private boolean shouldApplyEdgeToEdge(int windowInsetBottom) {
+    boolean glifExpressiveEnabled = PartnerConfigHelper.isGlifExpressiveEnabled(getContext());
+    boolean isAtLeastLollipop = VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP;
+    LOG.atInfo(
+        String.format(
+            Locale.US,
+            "Apply edge to edge, glifExpressiveEnabled: %s, isAtLeastLollipop: %s,"
+                + " windowInsetBottom: %d",
+            glifExpressiveEnabled,
+            isAtLeastLollipop,
+            windowInsetBottom));
+    return glifExpressiveEnabled && isAtLeastLollipop && windowInsetBottom > 0;
+  }
+
+  @SuppressLint("NewApi")
+  private WindowInsets applyEdgeToEdge(WindowInsets insets) {
+    return insets.replaceSystemWindowInsets(
+        0,
+        insets.getSystemWindowInsetTop(),
+        0,
+        findViewById(R.id.suc_intrinsic_size_layout).getPaddingBottom());
   }
 
   /**

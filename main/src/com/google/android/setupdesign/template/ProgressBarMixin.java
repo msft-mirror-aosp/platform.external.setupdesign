@@ -33,6 +33,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.setupcompat.internal.TemplateLayout;
+import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.template.Mixin;
 import com.google.android.setupdesign.R;
@@ -45,7 +46,8 @@ public class ProgressBarMixin implements Mixin {
   private static final String TAG = "ProgressBarMixin";
   private final TemplateLayout templateLayout;
   private final boolean useBottomProgressBar;
-  private final boolean isGlifExpressiveEnabled;
+  private final boolean useAnimatedProgressBar;
+  private final Context context;
   @Nullable private ColorStateList color;
 
   /** @param layout The layout this mixin belongs to. */
@@ -61,8 +63,9 @@ public class ProgressBarMixin implements Mixin {
    */
   public ProgressBarMixin(@NonNull TemplateLayout layout, boolean useBottomProgressBar) {
     templateLayout = layout;
+    context = layout.getContext();
     this.useBottomProgressBar = useBottomProgressBar;
-    isGlifExpressiveEnabled = PartnerConfigHelper.isGlifExpressiveEnabled(layout.getContext());
+    useAnimatedProgressBar = shouldUseAnimatedProgressBar();
   }
 
   /**
@@ -75,13 +78,11 @@ public class ProgressBarMixin implements Mixin {
   public ProgressBarMixin(
       @NonNull TemplateLayout layout, AttributeSet attrs, @AttrRes int defStyleAttr) {
     templateLayout = layout;
-
+    context = layout.getContext();
     boolean useBottomProgressBar = false;
     if (attrs != null) {
       final TypedArray a =
-          layout
-              .getContext()
-              .obtainStyledAttributes(attrs, R.styleable.SudProgressBarMixin, defStyleAttr, 0);
+          context.obtainStyledAttributes(attrs, R.styleable.SudProgressBarMixin, defStyleAttr, 0);
 
       if (a.hasValue(R.styleable.SudProgressBarMixin_sudUseBottomProgressBar)) {
         // Set whether we use bottom progress bar or not
@@ -96,13 +97,29 @@ public class ProgressBarMixin implements Mixin {
     }
 
     this.useBottomProgressBar = useBottomProgressBar;
-    isGlifExpressiveEnabled = PartnerConfigHelper.isGlifExpressiveEnabled(layout.getContext());
+    useAnimatedProgressBar = shouldUseAnimatedProgressBar();
+  }
+
+  private boolean shouldUseAnimatedProgressBar() {
+    boolean isGlifExpressiveEnabled = PartnerConfigHelper.isGlifExpressiveEnabled(context);
+    boolean useCommonProgressBar = true;
+    // overridden by partner resource
+    if (PartnerConfigHelper.get(context)
+        .isPartnerConfigAvailable(PartnerConfig.CONFIG_HEADER_PROGRESS_BAR_COMMON_STYLE)) {
+      useCommonProgressBar =
+          PartnerConfigHelper.get(context)
+              .getBoolean(
+                  context,
+                  PartnerConfig.CONFIG_HEADER_PROGRESS_BAR_COMMON_STYLE,
+                  useCommonProgressBar);
+    }
+    return !useCommonProgressBar && isGlifExpressiveEnabled;
   }
 
   /** Returns true if the progress bar is currently shown. */
   public boolean isShown() {
     final View progressBar;
-    if (isGlifExpressiveEnabled) {
+    if (useAnimatedProgressBar) {
       progressBar = templateLayout.findManagedViewById(R.id.sud_layout_progress_indicator);
     } else {
       progressBar =
@@ -127,10 +144,10 @@ public class ProgressBarMixin implements Mixin {
     } else {
       View progressBar = peekProgressBar();
       if (progressBar != null) {
-        if (isGlifExpressiveEnabled) {
+        if (useAnimatedProgressBar) {
           progressBar.setVisibility(View.GONE);
         } else {
-        progressBar.setVisibility(useBottomProgressBar ? View.INVISIBLE : View.GONE);
+          progressBar.setVisibility(useBottomProgressBar ? View.INVISIBLE : View.GONE);
         }
       }
     }
@@ -147,7 +164,7 @@ public class ProgressBarMixin implements Mixin {
   protected View getProgressBar() {
     final View progressBarView = peekProgressBar();
     if (progressBarView == null) {
-      if (isGlifExpressiveEnabled) {
+      if (useAnimatedProgressBar) {
         final ViewStub progressIndicatorStub =
             (ViewStub) templateLayout.findManagedViewById(R.id.sud_glif_progress_indicator_stub);
         if (progressIndicatorStub != null) {
@@ -174,7 +191,7 @@ public class ProgressBarMixin implements Mixin {
    *     or if the template does not contain a progress bar.
    */
   public ProgressBar peekProgressBar() {
-    if (isGlifExpressiveEnabled) {
+    if (useAnimatedProgressBar) {
       LinearProgressIndicator progressIndicator =
           templateLayout.findManagedViewById(R.id.sud_layout_progress_indicator);
       return (ProgressBar) progressIndicator;
@@ -243,7 +260,6 @@ public class ProgressBarMixin implements Mixin {
         Log.w(TAG, "The view is not a ProgressBar");
       }
     } else {
-      Context context = progressBar.getContext();
       final ViewGroup.LayoutParams lp = progressBar.getLayoutParams();
 
       if (lp instanceof ViewGroup.MarginLayoutParams mlp) {
