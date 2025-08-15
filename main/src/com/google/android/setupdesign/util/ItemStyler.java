@@ -189,6 +189,8 @@ public final class ItemStyler {
         }
         layoutParams.setMargins(
             marginStart, layoutParams.topMargin, marginEnd, layoutParams.bottomMargin);
+        layoutParams.setMarginStart(marginStart);
+        layoutParams.setMarginEnd(marginEnd);
       }
     }
   }

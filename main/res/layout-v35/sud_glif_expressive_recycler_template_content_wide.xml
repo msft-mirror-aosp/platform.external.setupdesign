@@ -80,8 +80,11 @@
                 <com.google.android.setupdesign.view.HeaderRecyclerView
                     android:id="@+id/sud_recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:paddingTop="?attr/sudRecyclerViewPaddingTop"
+                    android:paddingBottom="?attr/sudRecyclerViewPaddingBottom"
+                    android:layout_marginTop="?attr/sudRecyclerViewMarginTop"
+                    android:layout_marginBottom="?attr/sudRecyclerViewMarginBottom"
                     android:clipChildren="?attr/sudClipChildren"
                     android:clipToPadding="?attr/sudClipToPadding"
                     android:scrollbars="vertical"

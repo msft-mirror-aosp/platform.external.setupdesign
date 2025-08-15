@@ -49,7 +49,7 @@
     <!-- Calculated by (sud_glif_margin_end - 4dp internal padding of button) -->
     <dimen name="sud_glif_footer_padding_end">20dp</dimen>
     <dimen name="sud_glif_footer_bar_min_height">72dp</dimen>
-    <dimen name="sud_glif_footer_middle_spacing">0dp</dimen>
+    <dimen name="sud_glif_footer_button_middle_spacing">0dp</dimen>
     <dimen name="sud_glif_margin_start">24dp</dimen>
     <dimen name="sud_glif_margin_end">24dp</dimen>
     <dimen name="sud_glif_icon_margin_top">56dp</dimen>
@@ -486,5 +486,11 @@
     <!-- Glif expressive account container -->
     <dimen name="sud_glif_expressive_account_container_margin_top">0dp</dimen>
     <dimen name="sud_glif_expressive_account_container_margin_bottom">16dp</dimen>
+
+    <!-- Glif expressive recylcer view -->
+    <dimen name="sud_glif_expressive_recycler_view_padding_top">120dp</dimen>
+    <dimen name="sud_glif_expressive_recycler_view_margin_top">-120dp</dimen>
+    <dimen name="sud_glif_expressive_recycler_view_padding_bottom">120dp</dimen>
+    <dimen name="sud_glif_expressive_recycler_view_margin_bottom">-120dp</dimen>
 
 </resources>

@@ -38,13 +38,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:visibility="gone"
-        android:gravity="start">
+        android:gravity="start"
+        android:importantForAccessibility="no">
 
         <ImageView
             android:id="@+id/sud_items_icon"
             style="?attr/sudItemIconStyle"
             android:layout_height="wrap_content"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            android:importantForAccessibility="no" />
 
     </FrameLayout>
 
@@ -54,7 +56,8 @@
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:importantForAccessibility="no">
 
         <com.google.android.setupdesign.view.RichTextView
             android:id="@+id/sud_items_title"
@@ -64,7 +67,8 @@
             android:gravity="start"
             android:labelFor="@+id/sud_items_radio_button"
             android:textAlignment="viewStart"
-            tools:ignore="UnusedAttribute" />
+            tools:ignore="UnusedAttribute"
+            android:importantForAccessibility="no" />
 
         <com.google.android.setupdesign.view.RichTextView
             android:id="@+id/sud_items_summary"
@@ -74,7 +78,8 @@
             android:gravity="start"
             android:textAlignment="viewStart"
             android:visibility="gone"
-            tools:ignore="UnusedAttribute" />
+            tools:ignore="UnusedAttribute"
+            android:importantForAccessibility="no" />
 
     </LinearLayout>
 </LinearLayout>
