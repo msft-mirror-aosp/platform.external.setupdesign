@@ -124,6 +124,10 @@
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
         <item name="sudClipChildren">true</item>
         <item name="sudClipToPadding">true</item>
+        <item name="sudRecyclerViewPaddingTop">0dp</item>
+        <item name="sudRecyclerViewMarginTop">0dp</item>
+        <item name="sudRecyclerViewPaddingBottom">0dp</item>
+        <item name="sudRecyclerViewMarginBottom">0dp</item>
     </style>
 
     <style name="SudThemeMaterial.Light" parent="Theme.AppCompat.Light.NoActionBar">
@@ -231,6 +235,10 @@
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
         <item name="sudClipChildren">true</item>
         <item name="sudClipToPadding">true</item>
+        <item name="sudRecyclerViewPaddingTop">0dp</item>
+        <item name="sudRecyclerViewMarginTop">0dp</item>
+        <item name="sudRecyclerViewPaddingBottom">0dp</item>
+        <item name="sudRecyclerViewMarginBottom">0dp</item>
     </style>
 
     <style name="SudBaseThemeGlif" parent="Theme.AppCompat.NoActionBar">
@@ -318,7 +326,8 @@
         <item name="sucFooterButtonPaddingStart">@dimen/sud_glif_button_padding</item>
         <item name="sucFooterButtonPaddingEnd">@dimen/sud_glif_button_padding</item>
         <item name="sucFooterBarButtonMinHeight">@dimen/sud_glif_button_min_height</item>
-        <item name="sucFooterBarButtonMiddleSpacing">@dimen/sud_glif_footer_middle_spacing</item>
+        <item name="sucFooterBarButtonMiddleSpacing">@dimen/sud_glif_footer_button_middle_spacing</item>
+        <item name="sucFooterBarButtonStackMiddleSpacing">@dimen/sud_glif_footer_button_middle_spacing</item>
         <item name="sucFooterBarButtonFontWeight">@integer/sud_glif_footer_button_weight</item>
         <item name="sucFooterBarButtonTextSize">@dimen/sud_glif_footer_button_text_size</item>
         <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_footer_button_line_spacing_extra</item>
@@ -394,6 +403,10 @@
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
         <item name="sudClipChildren">true</item>
         <item name="sudClipToPadding">true</item>
+        <item name="sudRecyclerViewPaddingTop">0dp</item>
+        <item name="sudRecyclerViewMarginTop">0dp</item>
+        <item name="sudRecyclerViewPaddingBottom">0dp</item>
+        <item name="sudRecyclerViewMarginBottom">0dp</item>
     </style>
     <style name="SudThemeGlif" parent="SudBaseThemeGlif"/>
 
@@ -482,7 +495,8 @@
         <item name="sucFooterButtonPaddingStart">@dimen/sud_glif_button_padding</item>
         <item name="sucFooterButtonPaddingEnd">@dimen/sud_glif_button_padding</item>
         <item name="sucFooterBarButtonMinHeight">@dimen/sud_glif_button_min_height</item>
-        <item name="sucFooterBarButtonMiddleSpacing">@dimen/sud_glif_footer_middle_spacing</item>
+        <item name="sucFooterBarButtonMiddleSpacing">@dimen/sud_glif_footer_button_middle_spacing</item>
+        <item name="sucFooterBarButtonStackMiddleSpacing">@dimen/sud_glif_footer_button_middle_spacing</item>
         <item name="sucFooterBarButtonFontWeight">@integer/sud_glif_footer_button_weight</item>
         <item name="sucFooterBarButtonTextSize">@dimen/sud_glif_footer_button_text_size</item>
         <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_footer_button_line_spacing_extra</item>
@@ -558,6 +572,10 @@
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
         <item name="sudClipChildren">true</item>
         <item name="sudClipToPadding">true</item>
+        <item name="sudRecyclerViewPaddingTop">0dp</item>
+        <item name="sudRecyclerViewMarginTop">0dp</item>
+        <item name="sudRecyclerViewPaddingBottom">0dp</item>
+        <item name="sudRecyclerViewMarginBottom">0dp</item>
     </style>
     <style name="SudThemeGlif.Light" parent="SudBaseThemeGlif.Light"/>
 
@@ -835,6 +853,7 @@
         <item name="sudFooterBackgroundColor">@color/sud_system_surface_container_high_dark</item>
         <item name="sucFooterBarPrimaryFooterBackground">@color/sud_glif_expressive_footer_button_bg_color</item>
         <item name="sucFooterBarButtonMiddleSpacing">@dimen/sud_glif_expressive_footer_button_middle_spacing</item>
+        <item name="sucFooterBarButtonStackMiddleSpacing">@dimen/sud_glif_expressive_footer_button_middle_spacing</item>
         <item name="sudItemDividerWidth">@dimen/sud_items_divder_width</item>
         <item name="sudItemBackgroundPaddingStart">@dimen/sud_items_background_padding_start</item>
         <item name="sudItemBackgroundPaddingEnd">@dimen/sud_items_background_padding_end</item>
@@ -907,6 +926,10 @@
         <item name="sudClipChildren">false</item>
         <item name="sudClipToPadding">false</item>
         <item name="sudGlifAccountAvatarStyle">@style/SudGlifAccountAvatarExpressive</item>
+        <item name="sudRecyclerViewPaddingTop">@dimen/sud_glif_expressive_recycler_view_padding_top</item>
+        <item name="sudRecyclerViewMarginTop">@dimen/sud_glif_expressive_recycler_view_margin_top</item>
+        <item name="sudRecyclerViewPaddingBottom">@dimen/sud_glif_expressive_recycler_view_padding_bottom</item>
+        <item name="sudRecyclerViewMarginBottom">@dimen/sud_glif_expressive_recycler_view_margin_bottom</item>
     </style>
 
     <style name="SudBaseThemeGlifExpressive.Light" parent="Theme.Material3.DynamicColors.Light.NoActionBar">
@@ -1025,6 +1048,7 @@
         <item name="sudFooterBackgroundColor">@color/sud_system_surface_container_high_light</item>
         <item name="sucFooterBarPrimaryFooterBackground">@color/sud_glif_expressive_footer_button_bg_color</item>
         <item name="sucFooterBarButtonMiddleSpacing">@dimen/sud_glif_expressive_footer_button_middle_spacing</item>
+        <item name="sucFooterBarButtonStackMiddleSpacing">@dimen/sud_glif_expressive_footer_button_middle_spacing</item>
         <item name="sudItemDividerWidth">@dimen/sud_items_divder_width</item>
         <item name="sudItemBackgroundPaddingStart">@dimen/sud_items_background_padding_start</item>
         <item name="sudItemBackgroundPaddingEnd">@dimen/sud_items_background_padding_end</item>
@@ -1097,6 +1121,10 @@
         <item name="sudClipChildren">false</item>
         <item name="sudClipToPadding">false</item>
         <item name="sudGlifAccountAvatarStyle">@style/SudGlifAccountAvatarExpressive</item>
+        <item name="sudRecyclerViewPaddingTop">@dimen/sud_glif_expressive_recycler_view_padding_top</item>
+        <item name="sudRecyclerViewMarginTop">@dimen/sud_glif_expressive_recycler_view_margin_top</item>
+        <item name="sudRecyclerViewPaddingBottom">@dimen/sud_glif_expressive_recycler_view_padding_bottom</item>
+        <item name="sudRecyclerViewMarginBottom">@dimen/sud_glif_expressive_recycler_view_margin_bottom</item>
     </style>
 
     <style name="SudThemeGlifExpressive" parent="SudBaseThemeGlifExpressive" />

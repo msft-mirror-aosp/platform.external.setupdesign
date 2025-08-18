@@ -17,15 +17,20 @@
 
 <!-- Please keep filterTouchesWhenObscured=true; it's to prevent tapjacking.
      See https://developer.android.com/privacy-and-security/risks/tapjacking -->
-<com.google.android.setupcompat.view.StatusBarBackgroundLayout
+<androidx.core.view.insets.ProtectionLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/suc_layout_status"
+    android:id="@+id/sud_layout_protection"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipChildren="?attr/sudClipChildren"
-    android:clipToPadding="?attr/sudClipToPadding"
-    android:filterTouchesWhenObscured="true">
+    android:layout_height="match_parent">
+    <com.google.android.setupcompat.view.StatusBarBackgroundLayout
+        android:id="@+id/suc_layout_status"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="?attr/sudClipChildren"
+        android:clipToPadding="?attr/sudClipToPadding"
+        android:filterTouchesWhenObscured="true">
 
-    <include layout="@layout/sud_glif_expressive_template_content_layout" />
+        <include layout="@layout/sud_glif_expressive_template_content_layout" />
 
-</com.google.android.setupcompat.view.StatusBarBackgroundLayout>
+    </com.google.android.setupcompat.view.StatusBarBackgroundLayout>
+</androidx.core.view.insets.ProtectionLayout>

@@ -24,4 +24,8 @@
     android:clipChildren="false"
     android:scrollbars="vertical"
     android:filterTouchesWhenObscured="true"
-    app:sudShouldApplyAdditionalMargin="true" />
+    app:sudShouldApplyAdditionalMargin="true"
+    android:paddingTop="?attr/sudRecyclerViewPaddingTop"
+    android:paddingBottom="?attr/sudRecyclerViewPaddingBottom"
+    android:layout_marginTop="?attr/sudRecyclerViewMarginTop"
+    android:layout_marginBottom="?attr/sudRecyclerViewMarginBottom"/>

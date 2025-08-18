@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.google.android.setupdesign;
 
 import android.annotation.TargetApi;
@@ -51,6 +50,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.insets.GradientProtection;
+import androidx.core.view.insets.Protection;
+import androidx.core.view.insets.ProtectionLayout;
 import androidx.window.embedding.ActivityEmbeddingController;
 import com.google.android.setupcompat.PartnerCustomizationLayout;
 import com.google.android.setupcompat.logging.CustomEvent;
@@ -76,6 +79,7 @@ import com.google.android.setupdesign.template.RequireScrollMixin;
 import com.google.android.setupdesign.template.ScrollViewScrollHandlingDelegate;
 import com.google.android.setupdesign.util.DescriptionStyler;
 import com.google.android.setupdesign.util.LayoutStyler;
+import java.util.ArrayList;
 
 /**
  * Layout for the GLIF theme used in Setup Wizard for N.
@@ -97,13 +101,9 @@ import com.google.android.setupdesign.util.LayoutStyler;
  * }</pre>
  */
 public class GlifLayout extends PartnerCustomizationLayout {
-
   private static final Logger LOG = new Logger(GlifLayout.class);
-
   private ColorStateList primaryColor;
-
   private boolean backgroundPatterned = true;
-
   private boolean applyPartnerHeavyThemeResource = false;
 
   @VisibleForTesting
@@ -113,12 +113,10 @@ public class GlifLayout extends PartnerCustomizationLayout {
         public void onScrollChanged() {
           ScrollView scrollView = getScrollView();
           ScrollView headerScrollView = getHeaderScrollView();
-
           if (scrollView != null || headerScrollView != null) {
             boolean canHeaderViewScrollDown = canViewScrollDown(headerScrollView);
             boolean canViewScrollDown = canViewScrollDown(scrollView);
             boolean canWholeViewsScrollDown = canHeaderViewScrollDown || canViewScrollDown;
-
             onScrolling(!canWholeViewsScrollDown);
           }
         }
@@ -157,13 +155,11 @@ public class GlifLayout extends PartnerCustomizationLayout {
     if (isInEditMode()) {
       return;
     }
-
     TypedArray a =
         getContext().obtainStyledAttributes(attrs, R.styleable.SudGlifLayout, defStyleAttr, 0);
     boolean usePartnerHeavyTheme =
         a.getBoolean(R.styleable.SudGlifLayout_sudUsePartnerHeavyTheme, false);
     applyPartnerHeavyThemeResource = shouldApplyPartnerResource() && usePartnerHeavyTheme;
-
     registerMixin(HeaderMixin.class, new HeaderMixin(this, attrs, defStyleAttr));
     registerMixin(DescriptionMixin.class, new DescriptionMixin(this, attrs, defStyleAttr));
     registerMixin(IconMixin.class, new IconMixin(this, attrs, defStyleAttr));
@@ -174,13 +170,11 @@ public class GlifLayout extends PartnerCustomizationLayout {
         FloatingBackButtonMixin.class, new FloatingBackButtonMixin(this, attrs, defStyleAttr));
     final RequireScrollMixin requireScrollMixin = new RequireScrollMixin(this);
     registerMixin(RequireScrollMixin.class, requireScrollMixin);
-
     final ScrollView scrollView = getScrollView();
     if (scrollView != null) {
       requireScrollMixin.setScrollHandlingDelegate(
           new ScrollViewScrollHandlingDelegate(requireScrollMixin, scrollView));
     }
-
     ColorStateList primaryColor = a.getColorStateList(R.styleable.SudGlifLayout_sudColorPrimary);
     if (primaryColor != null) {
       setPrimaryColor(primaryColor);
@@ -188,7 +182,6 @@ public class GlifLayout extends PartnerCustomizationLayout {
     if (shouldApplyPartnerHeavyThemeResource()) {
       updateContentBackgroundColorWithPartnerConfig();
     }
-
     View view = findManagedViewById(R.id.sud_layout_content);
     if (view != null) {
       if (shouldApplyPartnerResource()) {
@@ -200,7 +193,6 @@ public class GlifLayout extends PartnerCustomizationLayout {
         // the value of partner config.
         LayoutStyler.applyPartnerCustomizationExtraPaddingStyle(view);
       }
-
       // {@class GlifPreferenceLayout} Inherited from {@class GlifRecyclerLayout}. The API would
       // be called twice from GlifRecyclerLayout and GlifLayout, so it should skip the API here
       // when the instance is GlifPreferenceLayout.
@@ -208,31 +200,33 @@ public class GlifLayout extends PartnerCustomizationLayout {
         tryApplyPartnerCustomizationContentPaddingTopStyle(view);
       }
     }
-
     updateLandscapeMiddleHorizontalSpacing();
-
     updateViewFocusable();
-
     ColorStateList backgroundColor =
         a.getColorStateList(R.styleable.SudGlifLayout_sudBackgroundBaseColor);
     setBackgroundBaseColor(backgroundColor);
-
     boolean backgroundPatterned =
         a.getBoolean(R.styleable.SudGlifLayout_sudBackgroundPatterned, true);
     setBackgroundPatterned(backgroundPatterned);
-
     final int stickyHeader = a.getResourceId(R.styleable.SudGlifLayout_sudStickyHeader, 0);
     if (stickyHeader != 0) {
       inflateStickyHeader(stickyHeader);
     }
-
     if (PartnerConfigHelper.isGlifExpressiveEnabled(getContext())) {
       initScrollingListener();
+      View protection = findViewById(R.id.sud_layout_protection);
+      if (protection != null
+          && protection instanceof ProtectionLayout protectionLayout
+          && backgroundBaseColor != null) {
+        ArrayList<Protection> list = new ArrayList<>();
+        list.add(
+            new GradientProtection(
+                WindowInsetsCompat.Side.TOP, backgroundBaseColor.getDefaultColor()));
+        protectionLayout.setProtections(list);
+      }
     }
-
     initBackButton();
     initialLogging();
-
     a.recycle();
   }
 
@@ -363,7 +357,6 @@ public class GlifLayout extends PartnerCustomizationLayout {
               PartnerConfigHelper.get(getContext())
                   .getDimension(getContext(), PartnerConfig.CONFIG_LAND_MIDDLE_HORIZONTAL_SPACING);
     }
-
     View headerView = this.findManagedViewById(R.id.sud_landscape_header_area);
     if (headerView != null) {
       int layoutMarginEnd;
@@ -394,7 +387,6 @@ public class GlifLayout extends PartnerCustomizationLayout {
             headerView.getPaddingBottom());
       }
     }
-
     View contentView = this.findManagedViewById(R.id.sud_landscape_content_area);
     if (contentView != null) {
       int layoutMarginStart;
@@ -434,7 +426,6 @@ public class GlifLayout extends PartnerCustomizationLayout {
   protected View onInflateTemplate(LayoutInflater inflater, @LayoutRes int template) {
     if (template == 0) {
       template = R.layout.sud_glif_template;
-
       // if the activity is embedded should apply an embedded layout.
       if (isEmbeddedActivityOnePaneEnabled(getContext())) {
         if (isGlifExpressiveEnabled()) {
@@ -449,7 +440,6 @@ public class GlifLayout extends PartnerCustomizationLayout {
         template = R.layout.sud_glif_template_two_pane;
       }
     }
-
     return inflateTemplate(inflater, R.style.SudThemeGlif_Light, template);
   }
 
@@ -468,24 +458,20 @@ public class GlifLayout extends PartnerCustomizationLayout {
     if (VERSION.SDK_INT >= Build.VERSION_CODES.Q
         && WizardManagerHelper.isAnySetupWizard(activity.getIntent())
         && PartnerConfigHelper.isGlifExpressiveEnabled(getContext())) {
-
       FloatingBackButtonMixin floatingBackButtonMixin = getMixin(FloatingBackButtonMixin.class);
       PersistableBundle backButtonMetrics =
           floatingBackButtonMixin != null
               ? floatingBackButtonMixin.getMetrics()
               : PersistableBundle.EMPTY;
-
       CustomEvent customEvent =
           CustomEvent.create(MetricKey.get("SetupDesignMetrics", activity), backButtonMetrics);
       SetupMetricsLogger.logCustomEvent(getContext(), customEvent);
-
       LOG.atVerbose("SetupDesignMetrics=" + CustomEvent.toBundle(customEvent));
     }
     ScrollView scrollView = getScrollView();
     if (scrollView != null) {
       scrollView.getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
     }
-
     ScrollView headerScrollView = getHeaderScrollView();
     if (headerScrollView != null) {
       headerScrollView.getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
@@ -688,7 +674,6 @@ public class GlifLayout extends PartnerCustomizationLayout {
    * Returns if the current layout/activity applies heavy partner customized configurations or not.
    */
   public boolean shouldApplyPartnerHeavyThemeResource() {
-
     return applyPartnerHeavyThemeResource
         || (shouldApplyPartnerResource()
             && PartnerConfigHelper.shouldApplyExtendedPartnerConfig(getContext()));
@@ -716,13 +701,11 @@ public class GlifLayout extends PartnerCustomizationLayout {
     if (useFullDynamicColor()) {
       return;
     }
-
     @ColorInt
     int color =
         PartnerConfigHelper.get(getContext())
             .getColor(getContext(), PartnerConfig.CONFIG_LAYOUT_BACKGROUND_COLOR);
     this.getRootView().setBackgroundColor(color);
-
     // SudGlifCardContainer style is set with a background color. Update the background color of
     // IntrinsicSizeFrameLayout with the partner-customizable background color.
     final View intrinsicSizeLayout = findManagedViewById(R.id.suc_intrinsic_size_layout);
@@ -737,13 +720,11 @@ public class GlifLayout extends PartnerCustomizationLayout {
     boolean partnerPaddingTopAvailable =
         PartnerConfigHelper.get(context)
             .isPartnerConfigAvailable(PartnerConfig.CONFIG_CONTENT_PADDING_TOP);
-
     if (shouldApplyPartnerResource() && partnerPaddingTopAvailable) {
       int paddingTop =
           (int)
               PartnerConfigHelper.get(context)
                   .getDimension(context, PartnerConfig.CONFIG_CONTENT_PADDING_TOP);
-
       if (paddingTop != view.getPaddingTop()) {
         view.setPadding(
             view.getPaddingStart(), paddingTop, view.getPaddingEnd(), view.getPaddingBottom());
@@ -756,12 +737,10 @@ public class GlifLayout extends PartnerCustomizationLayout {
     if (scrollView != null) {
       scrollView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
     }
-
     ScrollView headerScrollView = getHeaderScrollView();
     if (headerScrollView != null) {
       headerScrollView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
     }
-
     if (scrollView != null || headerScrollView != null) {
       // This is for the case that the view has been first visited to handle the initial state of
       // the footer bar.
@@ -840,7 +819,6 @@ public class GlifLayout extends PartnerCustomizationLayout {
   protected void initBackButton() {
     if (PartnerConfigHelper.isGlifExpressiveEnabled(getContext())) {
       Activity activity = PartnerCustomizationLayout.lookupActivityFromContext(getContext());
-
       FloatingBackButtonMixin floatingBackButtonMixin = getMixin(FloatingBackButtonMixin.class);
       if (floatingBackButtonMixin != null) {
         floatingBackButtonMixin.setVisibility(VISIBLE);

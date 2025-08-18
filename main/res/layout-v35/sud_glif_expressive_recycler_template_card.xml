@@ -17,39 +17,45 @@
 
 <!-- Please keep filterTouchesWhenObscured=true; it's to prevent tapjacking.
      See https://developer.android.com/privacy-and-security/risks/tapjacking -->
-<com.google.android.setupdesign.view.InsetAdjustmentLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/suc_layout_status"
-    style="@style/SudGlifCardBackground"
+<androidx.core.view.insets.ProtectionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sud_layout_protection"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:gravity="center_horizontal"
-    android:filterTouchesWhenObscured="true"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+    <com.google.android.setupdesign.view.InsetAdjustmentLayout
+        android:id="@+id/suc_layout_status"
+        style="@style/SudGlifCardBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:gravity="center_horizontal"
+        android:filterTouchesWhenObscured="true"
+        android:orientation="vertical">
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:visibility="invisible" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="invisible" />
 
-    <com.google.android.setupdesign.view.IntrinsicSizeFrameLayout
-        android:id="@+id/suc_intrinsic_size_layout"
-        style="@style/SudGlifCardContainer"
-        android:layout_width="@dimen/sud_glif_card_width"
-        android:layout_height="wrap_content"
-        android:height="@dimen/sud_glif_card_height"
-        android:clipChildren="?attr/sudClipChildren"
-        android:clipToPadding="?attr/sudClipToPadding">
+        <com.google.android.setupdesign.view.IntrinsicSizeFrameLayout
+            android:id="@+id/suc_intrinsic_size_layout"
+            style="@style/SudGlifCardContainer"
+            android:layout_width="@dimen/sud_glif_card_width"
+            android:layout_height="wrap_content"
+            android:height="@dimen/sud_glif_card_height"
+            android:clipChildren="?attr/sudClipChildren"
+            android:clipToPadding="?attr/sudClipToPadding">
 
-        <include layout="@layout/sud_glif_expressive_recycler_template_content_layout" />
+            <include layout="@layout/sud_glif_expressive_recycler_template_content_layout" />
 
-    </com.google.android.setupdesign.view.IntrinsicSizeFrameLayout>
+        </com.google.android.setupdesign.view.IntrinsicSizeFrameLayout>
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:visibility="invisible" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="invisible" />
 
-</com.google.android.setupdesign.view.InsetAdjustmentLayout>
+    </com.google.android.setupdesign.view.InsetAdjustmentLayout>
+</androidx.core.view.insets.ProtectionLayout>
