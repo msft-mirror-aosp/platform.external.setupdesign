@@ -80,6 +80,7 @@ import com.google.android.setupdesign.template.ScrollViewScrollHandlingDelegate;
 import com.google.android.setupdesign.util.DescriptionStyler;
 import com.google.android.setupdesign.util.LayoutStyler;
 import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * Layout for the GLIF theme used in Setup Wizard for N.
@@ -111,13 +112,9 @@ public class GlifLayout extends PartnerCustomizationLayout {
       new ViewTreeObserver.OnScrollChangedListener() {
         @Override
         public void onScrollChanged() {
-          ScrollView scrollView = getScrollView();
-          ScrollView headerScrollView = getHeaderScrollView();
-          if (scrollView != null || headerScrollView != null) {
-            boolean canHeaderViewScrollDown = canViewScrollDown(headerScrollView);
-            boolean canViewScrollDown = canViewScrollDown(scrollView);
-            boolean canWholeViewsScrollDown = canHeaderViewScrollDown || canViewScrollDown;
-            onScrolling(!canWholeViewsScrollDown);
+          Optional<Boolean> canWholeViewsScrollDown = canWholeViewsScrollDown();
+          if (canWholeViewsScrollDown.isPresent()) {
+            onScrolling(!canWholeViewsScrollDown.get());
           }
         }
       };
@@ -768,6 +765,10 @@ public class GlifLayout extends PartnerCustomizationLayout {
   }
 
   protected void onScrolling(boolean isBottom) {
+    updateBackgroundColor(isBottom);
+  }
+
+  private void updateBackgroundColor(boolean isBottom) {
     FooterBarMixin footerBarMixin = getMixin(FooterBarMixin.class);
     SystemNavBarMixin systemNavBarMixin = getMixin(SystemNavBarMixin.class);
     if (footerBarMixin != null) {
@@ -863,9 +864,28 @@ public class GlifLayout extends PartnerCustomizationLayout {
       if (footerBarMixin != null) {
         footerBarMixin.setWindowInsets(
             insets.getSystemWindowInsetLeft(), insets.getSystemWindowInsetRight());
+
+        // Update the background color when insets are updated to prevent the background keeps
+        // transparent but the bar being lifted up by additional insets, like: keyboard.
+        Optional<Boolean> canWholeViewsScrollDown = canWholeViewsScrollDown();
+        if (canWholeViewsScrollDown.isPresent()) {
+          updateBackgroundColor(!canWholeViewsScrollDown.get());
+        }
       }
     }
     return super.onApplyWindowInsets(insets);
+  }
+
+  private Optional<Boolean> canWholeViewsScrollDown() {
+    ScrollView scrollView = getScrollView();
+    ScrollView headerScrollView = getHeaderScrollView();
+    if (scrollView == null && headerScrollView == null) {
+      return Optional.empty();
+    }
+
+    boolean canHeaderViewScrollDown = canViewScrollDown(headerScrollView);
+    boolean canViewScrollDown = canViewScrollDown(scrollView);
+    return Optional.of(canHeaderViewScrollDown || canViewScrollDown);
   }
 
   protected boolean isGlifExpressiveEnabled() {

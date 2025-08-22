@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import com.google.android.setupcompat.internal.TemplateLayout;
+import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.template.Mixin;
 import com.google.android.setupdesign.R;
@@ -82,8 +83,14 @@ public class IconMixin implements Mixin {
         a.getBoolean(R.styleable.SudIconMixin_sudUpscaleIcon, /* defValue= */ false);
     setUpscaleIcon(upscaleIcon);
 
-    @ColorInt
-    final int iconTint = a.getColor(R.styleable.SudIconMixin_sudIconTint, Color.TRANSPARENT);
+    @ColorInt int iconTint = a.getColor(R.styleable.SudIconMixin_sudIconTint, Color.TRANSPARENT);
+    if (PartnerConfigHelper.isGlifExpressiveEnabled(context)
+        && PartnerConfigHelper.get(context)
+            .isPartnerConfigAvailable(PartnerConfig.CONFIG_ICON_COLOR)) {
+      iconTint =
+          PartnerConfigHelper.get(context).getColor(context, PartnerConfig.CONFIG_ICON_COLOR);
+    }
+
     if (iconTint != Color.TRANSPARENT) {
       setIconTint(iconTint);
     }
