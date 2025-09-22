@@ -224,10 +224,10 @@
     <attr name="sudItemRadioButtonStyle" format="reference" />
     <attr name="sudItemIconDefaultTint" format="color" />
     <attr name="sudItemRecyclable" format="boolean" />
-    <attr name="sudRecyclerViewPaddingTop" format="dimension|reference" />
-    <attr name="sudRecyclerViewMarginTop" format="dimension|reference" />
-    <attr name="sudRecyclerViewMarginBottom" format="dimension|reference" />
-    <attr name="sudRecyclerViewPaddingBottom" format="dimension|reference" />
+    <attr name="sudScrollViewPaddingTop" format="dimension|reference" />
+    <attr name="sudScrollViewMarginTop" format="dimension|reference" />
+    <attr name="sudScrollViewMarginBottom" format="dimension|reference" />
+    <attr name="sudScrollViewPaddingBottom" format="dimension|reference" />
 
     <!-- EditBox -->
     <attr name="sudEditBoxStyle" format="reference" />

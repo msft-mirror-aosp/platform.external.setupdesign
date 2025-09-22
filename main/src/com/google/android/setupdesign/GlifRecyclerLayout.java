@@ -108,12 +108,21 @@ public class GlifRecyclerLayout extends GlifLayout {
     return canHeaderViewScrollDown || canRecyclerViewScrollDown;
   }
 
-  @Override
-  protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+  /**
+   * Forces a re-evaluation of the scroll state and updates the footer bar background accordingly.
+   * This method should be called whenever the scrollability of the content might have changed
+   * without a direct scroll event, such as layout changes, item expansions, or initial loading.
+   */
+  public void updateFooterBarBackground() {
     if (PartnerConfigHelper.isGlifExpressiveEnabled(getContext())) {
-      // Update the footer bar background after recycler view is created.
       onScrolling(!canWholeViewsScrollDown(getHeaderScrollView(), getRecyclerView()));
     }
+  }
+
+  @Override
+  protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+    // Update the footer bar background color after recycler view is created.
+    updateFooterBarBackground();
     super.onLayout(changed, left, top, right, bottom);
     recyclerMixin.onLayout();
   }
@@ -184,7 +193,7 @@ public class GlifRecyclerLayout extends GlifLayout {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
               super.onScrolled(recyclerView, dx, dy);
-              onScrolling(!canWholeViewsScrollDown(getHeaderScrollView(), recyclerView));
+              updateFooterBarBackground();
             }
           };
       recyclerView.addOnScrollListener(onRecyclerViewScrollListener);
@@ -198,7 +207,7 @@ public class GlifRecyclerLayout extends GlifLayout {
           new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-              onScrolling(!canWholeViewsScrollDown(getHeaderScrollView(), getRecyclerView()));
+              updateFooterBarBackground();
             }
           };
       headerScrollView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);

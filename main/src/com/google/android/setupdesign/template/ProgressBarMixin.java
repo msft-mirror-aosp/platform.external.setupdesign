@@ -65,7 +65,7 @@ public class ProgressBarMixin implements Mixin {
     templateLayout = layout;
     context = layout.getContext();
     this.useBottomProgressBar = useBottomProgressBar;
-    useAnimatedProgressBar = shouldUseAnimatedProgressBar();
+    useAnimatedProgressBar = shouldUseAnimatedProgressBar(context);
   }
 
   /**
@@ -97,10 +97,16 @@ public class ProgressBarMixin implements Mixin {
     }
 
     this.useBottomProgressBar = useBottomProgressBar;
-    useAnimatedProgressBar = shouldUseAnimatedProgressBar();
+    useAnimatedProgressBar = shouldUseAnimatedProgressBar(context);
   }
 
-  private boolean shouldUseAnimatedProgressBar() {
+  /**
+   * Returns true if the animated progress bar should be used.
+   *
+   * <p>This is true if the GlifExpressive theme is enabled and the partner has disabled the common
+   * progress bar style.
+   */
+  public static boolean shouldUseAnimatedProgressBar(Context context) {
     boolean isGlifExpressiveEnabled = PartnerConfigHelper.isGlifExpressiveEnabled(context);
     boolean useCommonProgressBar = true;
     // overridden by partner resource

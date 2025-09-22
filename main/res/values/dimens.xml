@@ -188,6 +188,7 @@
     <dimen name="sud_items_background_padding_start">16dp</dimen>
     <dimen name="sud_items_background_padding_end">16dp</dimen>
     <dimen name="sud_items_radio_button_padding_end">16dp</dimen>
+    <dimen name="sud_items_radio_button_min_height">48dp</dimen>
 
     <!-- General Material You -->
     <dimen name="sud_glif_land_middle_horizontal_spacing_material_you">48dp</dimen>
@@ -488,9 +489,9 @@
     <dimen name="sud_glif_expressive_account_container_margin_bottom">16dp</dimen>
 
     <!-- Glif expressive recylcer view -->
-    <dimen name="sud_glif_expressive_recycler_view_padding_top">120dp</dimen>
-    <dimen name="sud_glif_expressive_recycler_view_margin_top">-120dp</dimen>
-    <dimen name="sud_glif_expressive_recycler_view_padding_bottom">120dp</dimen>
-    <dimen name="sud_glif_expressive_recycler_view_margin_bottom">-120dp</dimen>
+    <dimen name="sud_glif_expressive_scroll_view_padding_top">120dp</dimen>
+    <dimen name="sud_glif_expressive_scroll_view_margin_top">-120dp</dimen>
+    <dimen name="sud_glif_expressive_scroll_view_padding_bottom">120dp</dimen>
+    <dimen name="sud_glif_expressive_scroll_view_margin_bottom">-120dp</dimen>
 
 </resources>

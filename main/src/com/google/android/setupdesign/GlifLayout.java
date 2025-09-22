@@ -27,8 +27,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
@@ -731,37 +729,60 @@ public class GlifLayout extends PartnerCustomizationLayout {
 
   protected void initScrollingListener() {
     ScrollView scrollView = getScrollView();
+    ScrollView headerScrollView = getHeaderScrollView();
+
     if (scrollView != null) {
       scrollView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
     }
-    ScrollView headerScrollView = getHeaderScrollView();
     if (headerScrollView != null) {
       headerScrollView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
     }
-    if (scrollView != null || headerScrollView != null) {
-      // This is for the case that the view has been first visited to handle the initial state of
-      // the footer bar.
-      new Handler(Looper.getMainLooper())
-          .postDelayed(
-              () -> {
-                if (isContentScrollable(scrollView) || isContentScrollable(headerScrollView)) {
-                  onScrolling(/* isBottom= */ false);
+
+    // Add onPreDrawListener to check the scroll state after the layout is drawn to avoid the
+    // onScrollChangedListener being called before the layout is drawn.
+    if (scrollView != null) {
+      scrollView
+          .getViewTreeObserver()
+          .addOnPreDrawListener(
+              new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                  if (scrollView.getViewTreeObserver().isAlive()) {
+                    scrollView.getViewTreeObserver().removeOnPreDrawListener(this);
+                  }
+                  onInitialScrollState();
+                  return true;
                 }
-              },
-              100L);
+              });
+    }
+    if (headerScrollView != null) {
+      headerScrollView
+          .getViewTreeObserver()
+          .addOnPreDrawListener(
+              new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                  if (headerScrollView.getViewTreeObserver().isAlive()) {
+                    headerScrollView.getViewTreeObserver().removeOnPreDrawListener(this);
+                  }
+                  onInitialScrollState();
+                  return true;
+                }
+              });
     }
   }
 
-  private boolean isContentScrollable(ScrollView scrollView) {
-    // No scroll view, so we can't scroll.
-    if (scrollView == null) {
-      return false;
-    }
-    View child = scrollView.getChildAt(0);
-    if (child != null) {
-      return child.getHeight() > scrollView.getHeight();
-    }
-    return false;
+  private void onInitialScrollState() {
+    // Post to the main thread to ensure the layout is drawn before we check the scroll state.
+    // Otherwise, the canWholeViewsScrollDown() will return the wrong result. A small delay is
+    // used here to give the layout system enough time to settle, as even a double-post can
+    // sometimes be too early if the content is complex.
+    postDelayed(
+        () -> {
+          Optional<Boolean> canScroll = canWholeViewsScrollDown();
+          onScrolling(!canScroll.orElse(false));
+        },
+        100L);
   }
 
   protected void onScrolling(boolean isBottom) {
@@ -791,7 +812,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
   }
 
   /**
-   * Returns the footer background color. i
+   * Returns the footer background color.
    * <li>If not apply partner resource, return transparent color.
    * <li>If apply partner resource and not apply dynamic color, return the content background color
    *     from style.

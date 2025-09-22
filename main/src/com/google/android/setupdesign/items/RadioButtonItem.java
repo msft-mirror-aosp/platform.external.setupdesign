@@ -18,10 +18,15 @@ package com.google.android.setupdesign.items;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
+import androidx.core.view.AccessibilityDelegateCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.util.ThemeHelper;
@@ -34,6 +39,43 @@ import com.google.android.setupdesign.util.ThemeHelper;
  */
 public class RadioButtonItem extends Item
     implements CompoundButton.OnCheckedChangeListener, OnClickListener {
+
+  private final AccessibilityDelegateCompat accessibilityDelegate =
+      new AccessibilityDelegateCompat() {
+        @Override
+        public void onInitializeAccessibilityNodeInfo(
+            View view, AccessibilityNodeInfoCompat nodeInfo) {
+          super.onInitializeAccessibilityNodeInfo(view, nodeInfo);
+          nodeInfo.setClassName("android.widget.RadioButton");
+          nodeInfo.setCheckable(true);
+          nodeInfo.setChecked(isChecked());
+
+          CharSequence title = getTitle();
+          CharSequence summary = getSummary();
+          StringBuilder accessibilityText = new StringBuilder();
+          if (!TextUtils.isEmpty(title)) {
+            accessibilityText.append(title);
+          }
+          if (!TextUtils.isEmpty(summary)) {
+            if (accessibilityText.length() > 0) {
+              accessibilityText.append("\n");
+            }
+            accessibilityText.append(summary);
+          }
+          if (accessibilityText.length() > 0) {
+            nodeInfo.setText(accessibilityText.toString());
+          }
+        }
+
+        @Override
+        public boolean performAccessibilityAction(View host, int action, Bundle args) {
+          if (action == AccessibilityNodeInfoCompat.ACTION_CLICK && !isChecked()) {
+            host.performClick();
+            return true;
+          }
+          return super.performAccessibilityAction(host, action, args);
+        }
+      };
 
   /** Listener for check state changes of this radio button item. */
   public interface OnCheckedChangeListener {
@@ -115,6 +157,8 @@ public class RadioButtonItem extends Item
     radioButtonView.setChecked(checked);
     radioButtonView.setOnCheckedChangeListener(this);
     radioButtonView.setEnabled(isEnabled());
+
+    ViewCompat.setAccessibilityDelegate(view, accessibilityDelegate);
   }
 
   /**

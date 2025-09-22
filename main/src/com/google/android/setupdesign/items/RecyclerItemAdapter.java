@@ -74,6 +74,7 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
   private OnItemSelectedListener listener;
   private RecyclerView recyclerView = null;
   @Nullable private Float groupCornerRadiusExternal;
+  private ItemHierarchy.Observer observer;
 
   public RecyclerItemAdapter(ItemHierarchy hierarchy) {
     this(hierarchy, false);
@@ -387,14 +388,38 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     notifyDataSetChanged();
   }
 
+  /**
+   * Sets the observer to listen for when item hierarchy is changed.
+   *
+   * @param observer the observer to listen for item hierarchy changes
+   */
+  public void setItemHierarchyObserver(ItemHierarchy.Observer observer) {
+    this.observer = observer;
+  }
+
+  /**
+   * Gets the observer to listen for when item hierarchy is changed.
+   *
+   * @return the observer to listen for item hierarchy changes
+   */
+  public ItemHierarchy.Observer getItemHierarchyObserver() {
+    return observer;
+  }
+
   @Override
   public void onItemRangeChanged(ItemHierarchy itemHierarchy, int positionStart, int itemCount) {
     notifyItemRangeChanged(positionStart, itemCount);
+    if (observer != null) {
+      observer.onItemRangeChanged(itemHierarchy, positionStart, itemCount);
+    }
   }
 
   @Override
   public void onItemRangeInserted(ItemHierarchy itemHierarchy, int positionStart, int itemCount) {
     notifyItemRangeInserted(positionStart, itemCount);
+    if (observer != null) {
+      observer.onItemRangeInserted(itemHierarchy, positionStart, itemCount);
+    }
   }
 
   @Override
@@ -413,11 +438,17 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
       Log.i(TAG, "onItemRangeMoved with more than one item");
       notifyDataSetChanged();
     }
+    if (observer != null) {
+      observer.onItemRangeMoved(itemHierarchy, fromPosition, toPosition, itemCount);
+    }
   }
 
   @Override
   public void onItemRangeRemoved(ItemHierarchy itemHierarchy, int positionStart, int itemCount) {
     notifyItemRangeRemoved(positionStart, itemCount);
+    if (observer != null) {
+      observer.onItemRangeRemoved(itemHierarchy, positionStart, itemCount);
+    }
   }
 
   /**
