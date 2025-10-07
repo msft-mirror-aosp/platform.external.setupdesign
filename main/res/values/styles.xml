@@ -332,6 +332,7 @@
         <item name="sucFooterBarButtonTextSize">@dimen/sud_glif_footer_button_text_size</item>
         <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_footer_button_line_spacing_extra</item>
         <item name="sucFooterBarButtonOutlinedColor">@color/sud_system_outline_variant_dark</item>
+        <item name="sucFooterBarLandMiddleHorizontalSpacing">@dimen/sud_glif_land_middle_horizontal_spacing</item>
         <item name="sudContentIllustrationMaxWidth">@dimen/sud_content_illustration_max_width</item>
         <item name="sudContentIllustrationMaxHeight">@dimen/sud_content_illustration_max_height</item>
         <item name="sudContentIllustrationPaddingTop">@dimen/sud_content_illustration_padding_vertical</item>
@@ -501,6 +502,7 @@
         <item name="sucFooterBarButtonTextSize">@dimen/sud_glif_footer_button_text_size</item>
         <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_footer_button_line_spacing_extra</item>
         <item name="sucFooterBarButtonOutlinedColor">@color/sud_system_outline_variant_light</item>
+        <item name="sucFooterBarLandMiddleHorizontalSpacing">@dimen/sud_glif_land_middle_horizontal_spacing</item>
         <item name="sudContentIllustrationMaxWidth">@dimen/sud_content_illustration_max_width</item>
         <item name="sudContentIllustrationMaxHeight">@dimen/sud_content_illustration_max_height</item>
         <item name="sudContentIllustrationPaddingTop">@dimen/sud_content_illustration_padding_vertical</item>
@@ -897,6 +899,7 @@
         <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_expressive_footer_button_text_line_spacing_extra</item>
         <item name="sucFooterBarButtonOutlinedColor">@color/sud_system_outline_variant_dark</item>
         <item name="sucGlifExpressiveStyleEnabled">true</item>
+        <item name="sucFooterBarLandMiddleHorizontalSpacing">@dimen/sud_glif_expressive_land_middle_horizontal_spacing</item>
         <item name="sudItemIconContainerStyle">@style/SudExpressiveItemIconContainer</item>
         <item name="textAppearanceListItem">@style/TextAppearance.SudExpressiveItemTitle</item>
         <item name="textAppearanceListItemSmall">@style/TextAppearance.SudExpressiveItemSummary</item>
@@ -1086,6 +1089,7 @@
         <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_expressive_footer_button_text_line_spacing_extra</item>
         <item name="sucFooterBarButtonOutlinedColor">@color/sud_system_outline_variant_light</item>
         <item name="sucGlifExpressiveStyleEnabled">true</item>
+        <item name="sucFooterBarLandMiddleHorizontalSpacing">@dimen/sud_glif_expressive_land_middle_horizontal_spacing</item>
         <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
         <item name="sudAdditionalBodyTextStyle">@style/SudAdditionalBodyTextExpressive</item>
         <item name="sudBulletPointContainerStyle">@style/sudBulletPointContainer</item>

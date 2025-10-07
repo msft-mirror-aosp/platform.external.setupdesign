@@ -558,19 +558,43 @@ public class RequireScrollMixin implements Mixin {
    * @param canScrollDown True if the view can scroll down further.
    */
   void notifyScrollabilityChange(boolean canScrollDown) {
-    if (canScrollDown == requiringScrollToBottom) {
-      // Already at the desired require-scroll state
-      return;
-    }
     if (canScrollDown) {
-      if (!isEverScrolledToBottom()) {
-        postScrollStateChange(true);
-        requiringScrollToBottom = true;
+      // The view reports it is scrollable. If we are not already requiring scroll (and haven't
+      // been satisfied before), start requiring scroll now.
+      if (requiringScrollToBottom || isEverScrolledToBottom()) {
+        return;
       }
+      postScrollStateChange(true);
+      requiringScrollToBottom = true;
     } else {
-      postScrollStateChange(false);
-      requiringScrollToBottom = false;
-      setEverScrolledToBottom(true);
+      // The view reports it is not scrollable. This could be a premature signal, or because the
+      // user has scrolled to the bottom. Post a delayed check to verify.
+      handler.post(
+          () -> {
+            boolean actuallyCanScroll = false;
+            if (templateLayout instanceof GlifLayout glifLayout) {
+              ScrollView scrollView = glifLayout.getScrollView();
+              if (scrollView != null && scrollView.canScrollVertically(1)) {
+                actuallyCanScroll = true;
+              }
+            }
+
+            if (actuallyCanScroll) {
+              // This was a false negative; the view is actually scrollable.
+              // Start requiring scroll if we aren't already.
+              if (!requiringScrollToBottom && !isEverScrolledToBottom()) {
+                postScrollStateChange(true);
+                requiringScrollToBottom = true;
+              }
+            } else {
+              // Confirmed not scrollable. Stop requiring scroll if we were.
+              if (requiringScrollToBottom) {
+                postScrollStateChange(false);
+                requiringScrollToBottom = false;
+                setEverScrolledToBottom(true);
+              }
+            }
+          });
     }
   }
 
