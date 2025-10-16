@@ -124,6 +124,10 @@
     <item name="sudSwitchBarTrackOffColor">@color/sud_dynamic_switch_track_off_dark</item>
     <item name="sudSwitchBarTrackOffOutlineColor">@color/sud_dynamic_switch_thumb_off_outline_dark</item>
     <item name="sudEditBoxColor">@color/sud_dynamic_color_accent_glif_v3_dark</item>
+    <item name="sudPromoCardIconBackgroundColor">@color/sud_system_secondary_fixed_dim_dark</item>
+    <item name="sudPromoItemIconContainerBackground">@drawable/sud_promo_card_icon_background</item>
+    <item name="sudPromoItemIconTintColor">@color/sud_system_on_secondary_container_dark</item>
+    <item name="sudItemBackgroundColor">@color/sud_system_surface_bright_dark</item>
   </style>
 
   <style name="SudDynamicColorThemeGlifV3.Light" parent="SudThemeGlifV3.Light">
@@ -139,6 +143,10 @@
     <item name="sudSwitchBarTrackOffColor">@color/sud_dynamic_switch_track_off_light</item>
     <item name="sudSwitchBarTrackOffOutlineColor">@color/sud_dynamic_switch_thumb_off_outline_light</item>
     <item name="sudEditBoxColor">@color/sud_dynamic_color_accent_glif_v3_light</item>
+    <item name="sudPromoCardIconBackgroundColor">@color/sud_system_secondary_fixed_dim_light</item>
+    <item name="sudPromoItemIconContainerBackground">@drawable/sud_promo_card_icon_background</item>
+    <item name="sudPromoItemIconTintColor">@color/sud_system_on_secondary_container_light</item>
+    <item name="sudItemBackgroundColor">@color/sud_system_surface_bright_light</item>
   </style>
 
   <style name="SudFullDynamicColorThemeGlifV3" parent="SudDynamicColorThemeGlifV3">

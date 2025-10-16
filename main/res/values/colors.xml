@@ -58,6 +58,12 @@
     <color name="sud_glif_window_bg_dark_color">#ff202124</color>
     <color name="sud_glif_window_bg_light_color">#ffffffff</color>
 
+    <!-- Constant default colors -->
+    <color name="sud_glif_color_secondary_container_light">#ffc2e7ff</color>
+    <color name="sud_glif_color_secondary_container_dark">#ff004a77</color>
+    <color name="sud_glif_color_on_secondary_container_light">#ff004a77</color>
+    <color name="sud_glif_color_on_secondary_container_dark">#ffc2e7ff</color>
+
     <!-- Color for error text  -->
 
     <color name="sud_color_error_text_dark">#fff28b82</color>

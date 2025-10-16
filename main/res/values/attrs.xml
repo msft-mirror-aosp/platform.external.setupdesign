@@ -166,6 +166,8 @@
     <attr name="sudPromoItemSummaryStyle" format="reference"/>
     <attr name="sudPromoCardIconBackgroundColor" format="color|reference"/>
     <attr name="sudPromoItemBackground" format="color|reference"/>
+    <attr name="sudPromoItemIconContainerBackground" format="color|reference"/>
+    <attr name="sudPromoItemIconTintColor" format="color"/>
     <attr name="sudItemIconContainerStyle" format="reference"/>
     <attr name="sudItemIconStyle" format="reference"/>
     <attr name="sudItemTitleStyle" format="reference"/>

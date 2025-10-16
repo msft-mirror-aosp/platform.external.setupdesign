@@ -108,7 +108,9 @@
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudPromoItemBackground">@drawable/sud_item_background</item>
         <item name="sudPromoItemContainerStyle">@style/SudPromoItemContainer</item>
-        <item name="sudPromoCardIconBackgroundColor">@color/sud_system_secondary_fixed_dim_light</item>
+        <item name="sudPromoCardIconBackgroundColor">@android:color/transparent</item>
+        <item name="sudPromoItemIconTintColor">@android:color/transparent</item>
+        <item name="sudPromoItemIconContainerBackground">@drawable/sud_item_background</item>
         <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
         <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
         <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
@@ -219,7 +221,9 @@
         <item name="sudBulletPointSummaryStyle">?attr/sudItemSummaryStyle</item>
         <item name="sudPromoItemBackground">@drawable/sud_item_background</item>
         <item name="sudPromoItemContainerStyle">@style/SudPromoItemContainer</item>
-        <item name="sudPromoCardIconBackgroundColor">@color/sud_system_secondary_fixed_dim_light</item>
+        <item name="sudPromoCardIconBackgroundColor">@android:color/transparent</item>
+        <item name="sudPromoItemIconTintColor">@android:color/transparent</item>
+        <item name="sudPromoItemIconContainerBackground">@drawable/sud_item_background</item>
         <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
         <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
         <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
@@ -392,7 +396,9 @@
         <item name="sudCardTitleStyle">@style/SudCardTitleStyle</item>
         <item name="sudPromoItemBackground">@drawable/sud_item_background</item>
         <item name="sudPromoItemContainerStyle">@style/SudPromoItemContainer</item>
-        <item name="sudPromoCardIconBackgroundColor">@color/sud_system_secondary_fixed_dim_light</item>
+        <item name="sudPromoCardIconBackgroundColor">@color/sud_glif_color_secondary_container_dark</item>
+        <item name="sudPromoItemIconTintColor">@android:color/transparent</item>
+        <item name="sudPromoItemIconContainerBackground">@drawable/sud_item_background</item>
         <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
         <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
         <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
@@ -562,7 +568,9 @@
         <item name="sudCardTitleStyle">@style/SudCardTitleStyle</item>
         <item name="sudPromoItemBackground">@drawable/sud_item_background</item>
         <item name="sudPromoItemContainerStyle">@style/SudPromoItemContainer</item>
-        <item name="sudPromoCardIconBackgroundColor">@color/sud_system_secondary_fixed_dim_light</item>
+        <item name="sudPromoCardIconBackgroundColor">@color/sud_glif_color_secondary_container_light</item>
+        <item name="sudPromoItemIconTintColor">@android:color/transparent</item>
+        <item name="sudPromoItemIconContainerBackground">@drawable/sud_item_background</item>
         <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
         <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
         <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
@@ -681,6 +689,11 @@
         <item name="sudItemContainerStyle">@style/SudItemContainerMaterialYou</item>
         <item name="sudNonActionableItemContainerStyle">@style/SudItemContainerMaterialYou</item>
         <item name="sudIllustrationItemContainerStyle">@style/SudItemContainerMaterialYou.IllustrationItem</item>
+        <item name="sudItemBackground">@drawable/sud_item_background</item>
+        <item name="sudItemBackgroundFirst">@drawable/sud_item_background_first</item>
+        <item name="sudItemBackgroundLast">@drawable/sud_item_background_last</item>
+        <item name="sudItemBackgroundSingle">@drawable/sud_item_background_single</item>
+        <item name="sudItemBackgroundColor">@color/sud_system_surface_container_lowest_dark</item>
         <item name="sudItemPaddingTop">@dimen/sud_items_padding_top_material_you</item>
         <item name="sudItemPaddingBottom">@dimen/sud_items_padding_bottom_material_you</item>
         <item name="sudItemTitleStyle">@style/SudItemTitleMaterialYou</item>
@@ -690,6 +703,8 @@
         <item name="sudItemDescriptionTitleStyle">@style/SudItemTitleMaterialYou</item>
         <item name="sudItemDescriptionStyle">@style/SudItemContainerMaterialYou.Description</item>
         <item name="sudItemVerboseTitleStyle">@style/SudMaterialYouItemTitle.Verbose</item>
+        <item name="sudPromoItemIconContainerBackground">@drawable/sud_promo_card_icon_background</item>
+        <item name="sudPromoItemIconTintColor">@color/sud_glif_color_on_secondary_container_dark</item>
         <item name="alertDialogTheme">@style/SudMaterialYouAlertDialogThemeCompat</item>
         <item name="android:alertDialogTheme">@style/SudMaterialYouAlertDialogTheme</item>
     </style>
@@ -725,6 +740,11 @@
         <item name="sudItemContainerStyle">@style/SudItemContainerMaterialYou</item>
         <item name="sudNonActionableItemContainerStyle">@style/SudItemContainerMaterialYou</item>
         <item name="sudIllustrationItemContainerStyle">@style/SudItemContainerMaterialYou.IllustrationItem</item>
+        <item name="sudItemBackground">@drawable/sud_item_background</item>
+        <item name="sudItemBackgroundFirst">@drawable/sud_item_background_first</item>
+        <item name="sudItemBackgroundLast">@drawable/sud_item_background_last</item>
+        <item name="sudItemBackgroundSingle">@drawable/sud_item_background_single</item>
+        <item name="sudItemBackgroundColor">@color/sud_system_surface_container_lowest_light</item>
         <item name="sudItemPaddingTop">@dimen/sud_items_padding_top_material_you</item>
         <item name="sudItemPaddingBottom">@dimen/sud_items_padding_bottom_material_you</item>
         <item name="sudItemTitleStyle">@style/SudItemTitleMaterialYou</item>
@@ -734,6 +754,8 @@
         <item name="sudItemDescriptionTitleStyle">@style/SudItemTitleMaterialYou</item>
         <item name="sudItemDescriptionStyle">@style/SudItemContainerMaterialYou.Description</item>
         <item name="sudItemVerboseTitleStyle">@style/SudMaterialYouItemTitle.Verbose</item>
+        <item name="sudPromoItemIconContainerBackground">@drawable/sud_promo_card_icon_background</item>
+        <item name="sudPromoItemIconTintColor">@color/sud_glif_color_on_secondary_container_light</item>
         <item name="alertDialogTheme">@style/SudMaterialYouAlertDialogThemeCompat.Light</item>
         <item name="android:alertDialogTheme">@style/SudMaterialYouAlertDialogTheme.Light</item>
     </style>
@@ -917,8 +939,10 @@
         <item name="sudPromoItemContainerStyle">@style/SudPromoItemContainer</item>
         <item name="sudPromoItemBackground">@drawable/sud_item_background</item>
         <item name="sudPromoCardIconBackgroundColor">@color/sud_system_secondary_fixed_dim_dark</item>
+        <item name="sudPromoItemIconTintColor">@color/sud_system_on_secondary_fixed_variant_dark</item>
+        <item name="sudPromoItemIconContainerBackground">@drawable/sud_promo_card_icon_background</item>
         <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
-        <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
+        <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitleExpressive</item>
         <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
         <item name="sudItemIconStyle">@style/SudExpressiveItemIcon</item>
         <item name="sudCameraPreviewStyle">@style/SudExpressiveCameraPreview</item>
@@ -1113,8 +1137,10 @@
         <item name="sudPromoItemBackground">@drawable/sud_item_background</item>
         <item name="sudPromoItemContainerStyle">@style/SudPromoItemContainer</item>
         <item name="sudPromoCardIconBackgroundColor">@color/sud_system_secondary_fixed_dim_light</item>
+        <item name="sudPromoItemIconTintColor">@color/sud_system_on_secondary_fixed_variant_light</item>
+        <item name="sudPromoItemIconContainerBackground">@drawable/sud_promo_card_icon_background</item>
         <item name="sudPromoItemIconContainerStyle">@style/SudPromoItemIconContainer</item>
-        <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitle</item>
+        <item name="sudPromoItemTitleStyle">@style/SudPromoItemTitleExpressive</item>
         <item name="sudPromoItemSummaryStyle">@style/SudPromoItemSummary</item>
         <item name="sudItemIconStyle">@style/SudExpressiveItemIcon</item>
         <item name="sudCameraPreviewStyle">@style/SudExpressiveCameraPreview</item>
@@ -1591,7 +1617,7 @@
         <item name="android:minHeight">@dimen/sud_items_min_height_material_you</item>
     </style>
     <style name="SudPromoItemIconContainer">
-        <item name="android:background">@drawable/sud_promo_card_icon_background</item>
+        <item name="android:background">?attr/sudPromoItemIconContainerBackground</item>
         <item name="android:paddingBottom">@dimen/sud_glif_expressive_promo_card_icon_padding</item>
         <item name="android:paddingEnd" tools:ignore="NewApi">@dimen/sud_glif_expressive_promo_card_icon_padding</item>
         <item name="android:paddingLeft">@dimen/sud_glif_expressive_promo_card_icon_padding</item>
@@ -1605,6 +1631,11 @@
         <item name="android:textAppearance">?attr/textAppearanceListItem</item>
         <item name="android:layout_marginBottom">@dimen/sud_items_summary_margin_top</item>
         <item name="android:lineHeight" tools:targetApi="28">@dimen/sud_glif_promo_card_title_line_height</item>
+        <item name="android:textFontWeight" tools:targetApi="28">400</item>
+        <item name="fontFamily">Roboto</item>
+        <item name="android:fontFamily">Roboto</item>
+    </style>
+    <style name="SudPromoItemTitleExpressive" parent="SudPromoItemTitle">
         <item name="android:textFontWeight" tools:targetApi="28">500</item>
         <item name="fontFamily">google-sans-flex</item>
         <item name="android:fontFamily">google-sans-flex</item>

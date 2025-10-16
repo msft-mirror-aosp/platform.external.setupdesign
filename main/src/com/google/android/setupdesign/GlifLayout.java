@@ -42,6 +42,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -795,28 +796,22 @@ public class GlifLayout extends PartnerCustomizationLayout {
     if (footerBarMixin != null) {
       LinearLayout footerContainer = footerBarMixin.getButtonContainer();
       if (footerContainer != null) {
-        if (isBottom) {
-          int backgroundColor = getFooterBackgroundColor();
-          footerContainer.setBackgroundColor(backgroundColor);
-          if (systemNavBarMixin != null) {
-            systemNavBarMixin.setSystemNavBarBackground(backgroundColor);
-          }
-        } else {
-          footerContainer.setBackgroundColor(getFooterBackgroundColorFromStyle());
-          if (systemNavBarMixin != null) {
-            systemNavBarMixin.setSystemNavBarBackground(getFooterBackgroundColorFromStyle());
-          }
+        int backgroundColor =
+            isBottom ? getFooterBackgroundColor() : getFooterBarMoreToScrollBackgroundColor();
+        footerContainer.setBackgroundColor(backgroundColor);
+        if (systemNavBarMixin != null) {
+          systemNavBarMixin.setSystemNavBarBackground(backgroundColor);
         }
       }
     }
   }
 
   /**
-   * Returns the footer background color.
-   * <li>If not apply partner resource, return transparent color.
-   * <li>If apply partner resource and not apply dynamic color, return the content background color
-   *     from style.
-   * <li>If apply partner resource and apply dynamic color, return the color set by partner config.
+   * Returns the footer background color to be used when the content is scrolled to the bottom.
+   * <li>Returns TRANSPARENT if partner resources are not applied.
+   * <li>Returns the theme's content background color if dynamic color is enabled.
+   * <li>Returns the color from {@link PartnerConfig#CONFIG_FOOTER_BAR_BG_COLOR} if dynamic color is
+   *     disabled.
    */
   public int getFooterBackgroundColor() {
     if (!shouldApplyPartnerResource()) {
@@ -831,6 +826,39 @@ public class GlifLayout extends PartnerCustomizationLayout {
       return PartnerConfigHelper.get(getContext())
           .getColor(getContext(), PartnerConfig.CONFIG_FOOTER_BAR_BG_COLOR);
     }
+  }
+
+  /**
+   * Returns the footer background color to be used when there is more content to scroll (i.e. not
+   * at the bottom).
+   * <li>Returns the theme's footer background color if dynamic color is enabled.
+   * <li>When dynamic color is disabled, returns the color from {@link
+   *     PartnerConfig#CONFIG_FOOTER_BAR_MORE_TO_SCROLL_BG_COLOR}.
+   * <li>If the partner-configured color is not available or is transparent (default), it falls back
+   *     to the theme attribute {@code R.attr.sudFooterBackgroundColor}.
+   */
+  public int getFooterBarMoreToScrollBackgroundColor() {
+    if (shouldApplyDynamicColor()) {
+      LOG.atDebug(
+          "In scrolling state, dynamic color is enabled, using theme footer background color");
+      return getColorFromTheme(R.attr.sudFooterBackgroundColor);
+    }
+
+    PartnerConfigHelper partnerConfigHelper = PartnerConfigHelper.get(getContext());
+    if (partnerConfigHelper.isPartnerConfigAvailable(
+        PartnerConfig.CONFIG_FOOTER_BAR_MORE_TO_SCROLL_BG_COLOR)) {
+      int moreToScrollColor =
+          partnerConfigHelper.getColor(
+              getContext(), PartnerConfig.CONFIG_FOOTER_BAR_MORE_TO_SCROLL_BG_COLOR);
+      if (moreToScrollColor != Color.TRANSPARENT) {
+        LOG.atDebug("In scrolling state, using partner-configured color for footer");
+        return moreToScrollColor;
+      }
+    }
+    LOG.atDebug(
+        "In scrolling state, partner color is transparent or unavailable, using theme footer"
+            + " background color");
+    return getColorFromTheme(R.attr.sudFooterBackgroundColor);
   }
 
   /**
@@ -853,19 +881,29 @@ public class GlifLayout extends PartnerCustomizationLayout {
     }
   }
 
-  /** Gets footer bar background color from theme style. */
+  /**
+   * Gets the footer bar background color from the current theme.
+   *
+   * @deprecated Not typically used, as colors are derived from dynamic color or partner configs.
+   */
+  @Deprecated
   public int getFooterBackgroundColorFromStyle() {
-    TypedValue typedValue = new TypedValue();
-    Theme theme = getContext().getTheme();
-    theme.resolveAttribute(R.attr.sudFooterBackgroundColor, typedValue, true);
-    return typedValue.data;
+    return getColorFromTheme(R.attr.sudFooterBackgroundColor);
   }
 
+  /**
+   * Gets the standard background color ({@code android.R.attr.colorBackground}) from the current
+   * theme.
+   */
   @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
   public int getContentBackgroundColorFromStyle() {
+    return getColorFromTheme(android.R.attr.colorBackground);
+  }
+
+  private int getColorFromTheme(@AttrRes int attr) {
     TypedValue typedValue = new TypedValue();
     Theme theme = getContext().getTheme();
-    theme.resolveAttribute(android.R.attr.colorBackground, typedValue, true);
+    theme.resolveAttribute(attr, typedValue, true);
     return typedValue.data;
   }
 
