@@ -26,8 +26,8 @@
     android:filterTouchesWhenObscured="true"
     app:sudShouldApplyAdditionalMargin="true"
     app:sudHeader="@layout/sud_glif_header"
-    android:paddingTop="?attr/sudRecyclerViewPaddingTop"
-    android:paddingBottom="?attr/sudRecyclerViewPaddingBottom"
-    android:layout_marginTop="?attr/sudRecyclerViewMarginTop"
-    android:layout_marginBottom="?attr/sudRecyclerViewMarginBottom"/>
+    android:paddingTop="?attr/sudScrollViewPaddingTop"
+    android:paddingBottom="?attr/sudScrollViewPaddingBottom"
+    android:layout_marginTop="?attr/sudScrollViewMarginTop"
+    android:layout_marginBottom="?attr/sudScrollViewMarginBottom"/>
 

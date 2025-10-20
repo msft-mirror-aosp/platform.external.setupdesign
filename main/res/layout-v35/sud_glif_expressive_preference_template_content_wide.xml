@@ -64,7 +64,9 @@
                     android:fillViewport="true"
                     android:scrollIndicators="?attr/sudScrollIndicators"
                     android:clipChildren="?attr/sudClipChildren"
-                    android:clipToPadding="?attr/sudClipToPadding">
+                    android:clipToPadding="?attr/sudClipToPadding"
+                    android:paddingTop="?attr/sudScrollViewPaddingTop"
+                    android:layout_marginTop="?attr/sudScrollViewMarginTop">
 
                     <include layout="@layout/sud_glif_header" />
 
@@ -84,7 +86,7 @@
                     android:id="@+id/sud_layout_content"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1" 
+                    android:layout_weight="1"
                     android:clipChildren="?attr/sudClipChildren"
                     android:clipToPadding="?attr/sudClipToPadding"/>
 

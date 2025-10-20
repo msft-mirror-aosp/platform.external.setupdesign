@@ -37,6 +37,7 @@ import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupcompat.template.Mixin;
 import com.google.android.setupdesign.DividerItemDecoration;
 import com.google.android.setupdesign.GlifLayout;
+import com.google.android.setupdesign.GlifRecyclerLayout;
 import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.items.ItemHierarchy;
 import com.google.android.setupdesign.items.ItemInflater;
@@ -239,6 +240,10 @@ public class RecyclerMixin implements Mixin {
   public void setAdapter(Adapter<? extends ViewHolder> adapter) {
     if (adapter instanceof RecyclerItemAdapter) {
       ((RecyclerItemAdapter) adapter).setRecyclerView(recyclerView);
+      if (PartnerConfigHelper.isGlifExpressiveEnabled(templateLayout.getContext())) {
+        ((RecyclerItemAdapter) adapter)
+            .setItemHierarchyObserver(new RecyclerItemHierarchyObserver());
+      }
     }
     recyclerView.setAdapter(adapter);
   }
@@ -329,5 +334,40 @@ public class RecyclerMixin implements Mixin {
     dividerDecoration = decoration;
     recyclerView.addItemDecoration(dividerDecoration);
     updateDivider();
+  }
+
+  /**
+   * An observer class that is used to observe the data changes in {@link RecyclerItemAdapter} and
+   * updates the footer bar background.
+   */
+  private class RecyclerItemHierarchyObserver implements ItemHierarchy.Observer {
+
+    @Override
+    public void onItemRangeChanged(ItemHierarchy itemHierarchy, int positionStart, int itemCount) {
+      if (templateLayout instanceof GlifRecyclerLayout glifRecyclerLayout) {
+        getRecyclerView().post(() -> glifRecyclerLayout.updateFooterBarBackground());
+      }
+    }
+
+    @Override
+    public void onItemRangeRemoved(ItemHierarchy itemHierarchy, int positionStart, int itemCount) {
+      // Do nothing.
+    }
+
+    @Override
+    public void onItemRangeMoved(
+        ItemHierarchy itemHierarchy, int fromPosition, int toPosition, int itemCount) {
+      // Do nothing.
+    }
+
+    @Override
+    public void onItemRangeInserted(ItemHierarchy itemHierarchy, int positionStart, int itemCount) {
+      // Do nothing.
+    }
+
+    @Override
+    public void onChanged(ItemHierarchy itemHierarchy) {
+      // Do nothing.
+    }
   }
 }

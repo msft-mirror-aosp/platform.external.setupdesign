@@ -48,7 +48,7 @@ android_library {
     srcs: [
         "main/src/**/*.java",
     ],
-    min_sdk_version: "21",
+    min_sdk_version: "23",
     optimize: {
         proguard_flags_files: ["proguard.flags"],
     },

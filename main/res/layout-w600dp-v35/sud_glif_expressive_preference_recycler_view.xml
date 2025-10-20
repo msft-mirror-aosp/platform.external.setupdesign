@@ -25,7 +25,7 @@
     android:scrollbars="vertical"
     android:filterTouchesWhenObscured="true"
     app:sudShouldApplyAdditionalMargin="true"
-    android:paddingTop="?attr/sudRecyclerViewPaddingTop"
-    android:paddingBottom="?attr/sudRecyclerViewPaddingBottom"
-    android:layout_marginTop="?attr/sudRecyclerViewMarginTop"
-    android:layout_marginBottom="?attr/sudRecyclerViewMarginBottom"/>
+    android:paddingTop="?attr/sudScrollViewPaddingTop"
+    android:paddingBottom="?attr/sudScrollViewPaddingBottom"
+    android:layout_marginTop="?attr/sudScrollViewMarginTop"
+    android:layout_marginBottom="?attr/sudScrollViewMarginBottom"/>

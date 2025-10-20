@@ -124,10 +124,10 @@
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
         <item name="sudClipChildren">true</item>
         <item name="sudClipToPadding">true</item>
-        <item name="sudRecyclerViewPaddingTop">0dp</item>
-        <item name="sudRecyclerViewMarginTop">0dp</item>
-        <item name="sudRecyclerViewPaddingBottom">0dp</item>
-        <item name="sudRecyclerViewMarginBottom">0dp</item>
+        <item name="sudScrollViewPaddingTop">0dp</item>
+        <item name="sudScrollViewMarginTop">0dp</item>
+        <item name="sudScrollViewPaddingBottom">0dp</item>
+        <item name="sudScrollViewMarginBottom">0dp</item>
     </style>
 
     <style name="SudThemeMaterial.Light" parent="Theme.AppCompat.Light.NoActionBar">
@@ -235,10 +235,10 @@
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
         <item name="sudClipChildren">true</item>
         <item name="sudClipToPadding">true</item>
-        <item name="sudRecyclerViewPaddingTop">0dp</item>
-        <item name="sudRecyclerViewMarginTop">0dp</item>
-        <item name="sudRecyclerViewPaddingBottom">0dp</item>
-        <item name="sudRecyclerViewMarginBottom">0dp</item>
+        <item name="sudScrollViewPaddingTop">0dp</item>
+        <item name="sudScrollViewMarginTop">0dp</item>
+        <item name="sudScrollViewPaddingBottom">0dp</item>
+        <item name="sudScrollViewMarginBottom">0dp</item>
     </style>
 
     <style name="SudBaseThemeGlif" parent="Theme.AppCompat.NoActionBar">
@@ -332,6 +332,7 @@
         <item name="sucFooterBarButtonTextSize">@dimen/sud_glif_footer_button_text_size</item>
         <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_footer_button_line_spacing_extra</item>
         <item name="sucFooterBarButtonOutlinedColor">@color/sud_system_outline_variant_dark</item>
+        <item name="sucFooterBarLandMiddleHorizontalSpacing">@dimen/sud_glif_land_middle_horizontal_spacing</item>
         <item name="sudContentIllustrationMaxWidth">@dimen/sud_content_illustration_max_width</item>
         <item name="sudContentIllustrationMaxHeight">@dimen/sud_content_illustration_max_height</item>
         <item name="sudContentIllustrationPaddingTop">@dimen/sud_content_illustration_padding_vertical</item>
@@ -403,10 +404,10 @@
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
         <item name="sudClipChildren">true</item>
         <item name="sudClipToPadding">true</item>
-        <item name="sudRecyclerViewPaddingTop">0dp</item>
-        <item name="sudRecyclerViewMarginTop">0dp</item>
-        <item name="sudRecyclerViewPaddingBottom">0dp</item>
-        <item name="sudRecyclerViewMarginBottom">0dp</item>
+        <item name="sudScrollViewPaddingTop">0dp</item>
+        <item name="sudScrollViewMarginTop">0dp</item>
+        <item name="sudScrollViewPaddingBottom">0dp</item>
+        <item name="sudScrollViewMarginBottom">0dp</item>
     </style>
     <style name="SudThemeGlif" parent="SudBaseThemeGlif"/>
 
@@ -501,6 +502,7 @@
         <item name="sucFooterBarButtonTextSize">@dimen/sud_glif_footer_button_text_size</item>
         <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_footer_button_line_spacing_extra</item>
         <item name="sucFooterBarButtonOutlinedColor">@color/sud_system_outline_variant_light</item>
+        <item name="sucFooterBarLandMiddleHorizontalSpacing">@dimen/sud_glif_land_middle_horizontal_spacing</item>
         <item name="sudContentIllustrationMaxWidth">@dimen/sud_content_illustration_max_width</item>
         <item name="sudContentIllustrationMaxHeight">@dimen/sud_content_illustration_max_height</item>
         <item name="sudContentIllustrationPaddingTop">@dimen/sud_content_illustration_padding_vertical</item>
@@ -572,10 +574,10 @@
         <item name="sudTextAppearanceBulletPoint">@style/TextAppearance.SudBulletPoint</item>
         <item name="sudClipChildren">true</item>
         <item name="sudClipToPadding">true</item>
-        <item name="sudRecyclerViewPaddingTop">0dp</item>
-        <item name="sudRecyclerViewMarginTop">0dp</item>
-        <item name="sudRecyclerViewPaddingBottom">0dp</item>
-        <item name="sudRecyclerViewMarginBottom">0dp</item>
+        <item name="sudScrollViewPaddingTop">0dp</item>
+        <item name="sudScrollViewMarginTop">0dp</item>
+        <item name="sudScrollViewPaddingBottom">0dp</item>
+        <item name="sudScrollViewMarginBottom">0dp</item>
     </style>
     <style name="SudThemeGlif.Light" parent="SudBaseThemeGlif.Light"/>
 
@@ -897,6 +899,7 @@
         <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_expressive_footer_button_text_line_spacing_extra</item>
         <item name="sucFooterBarButtonOutlinedColor">@color/sud_system_outline_variant_dark</item>
         <item name="sucGlifExpressiveStyleEnabled">true</item>
+        <item name="sucFooterBarLandMiddleHorizontalSpacing">@dimen/sud_glif_expressive_land_middle_horizontal_spacing</item>
         <item name="sudItemIconContainerStyle">@style/SudExpressiveItemIconContainer</item>
         <item name="textAppearanceListItem">@style/TextAppearance.SudExpressiveItemTitle</item>
         <item name="textAppearanceListItemSmall">@style/TextAppearance.SudExpressiveItemSummary</item>
@@ -926,10 +929,10 @@
         <item name="sudClipChildren">false</item>
         <item name="sudClipToPadding">false</item>
         <item name="sudGlifAccountAvatarStyle">@style/SudGlifAccountAvatarExpressive</item>
-        <item name="sudRecyclerViewPaddingTop">@dimen/sud_glif_expressive_recycler_view_padding_top</item>
-        <item name="sudRecyclerViewMarginTop">@dimen/sud_glif_expressive_recycler_view_margin_top</item>
-        <item name="sudRecyclerViewPaddingBottom">@dimen/sud_glif_expressive_recycler_view_padding_bottom</item>
-        <item name="sudRecyclerViewMarginBottom">@dimen/sud_glif_expressive_recycler_view_margin_bottom</item>
+        <item name="sudScrollViewPaddingTop">@dimen/sud_glif_expressive_scroll_view_padding_top</item>
+        <item name="sudScrollViewMarginTop">@dimen/sud_glif_expressive_scroll_view_margin_top</item>
+        <item name="sudScrollViewPaddingBottom">@dimen/sud_glif_expressive_scroll_view_padding_bottom</item>
+        <item name="sudScrollViewMarginBottom">@dimen/sud_glif_expressive_scroll_view_margin_bottom</item>
     </style>
 
     <style name="SudBaseThemeGlifExpressive.Light" parent="Theme.Material3.DynamicColors.Light.NoActionBar">
@@ -1086,6 +1089,7 @@
         <item name="sucFooterButtonTextLineSpacingExtra">@dimen/sud_glif_expressive_footer_button_text_line_spacing_extra</item>
         <item name="sucFooterBarButtonOutlinedColor">@color/sud_system_outline_variant_light</item>
         <item name="sucGlifExpressiveStyleEnabled">true</item>
+        <item name="sucFooterBarLandMiddleHorizontalSpacing">@dimen/sud_glif_expressive_land_middle_horizontal_spacing</item>
         <item name="sudBulletPointIconContainerStyle">@style/sudBulletPointIconContainer</item>
         <item name="sudAdditionalBodyTextStyle">@style/SudAdditionalBodyTextExpressive</item>
         <item name="sudBulletPointContainerStyle">@style/sudBulletPointContainer</item>
@@ -1121,10 +1125,10 @@
         <item name="sudClipChildren">false</item>
         <item name="sudClipToPadding">false</item>
         <item name="sudGlifAccountAvatarStyle">@style/SudGlifAccountAvatarExpressive</item>
-        <item name="sudRecyclerViewPaddingTop">@dimen/sud_glif_expressive_recycler_view_padding_top</item>
-        <item name="sudRecyclerViewMarginTop">@dimen/sud_glif_expressive_recycler_view_margin_top</item>
-        <item name="sudRecyclerViewPaddingBottom">@dimen/sud_glif_expressive_recycler_view_padding_bottom</item>
-        <item name="sudRecyclerViewMarginBottom">@dimen/sud_glif_expressive_recycler_view_margin_bottom</item>
+        <item name="sudScrollViewPaddingTop">@dimen/sud_glif_expressive_scroll_view_padding_top</item>
+        <item name="sudScrollViewMarginTop">@dimen/sud_glif_expressive_scroll_view_margin_top</item>
+        <item name="sudScrollViewPaddingBottom">@dimen/sud_glif_expressive_scroll_view_padding_bottom</item>
+        <item name="sudScrollViewMarginBottom">@dimen/sud_glif_expressive_scroll_view_margin_bottom</item>
     </style>
 
     <style name="SudThemeGlifExpressive" parent="SudBaseThemeGlifExpressive" />
@@ -1691,6 +1695,7 @@
     <style name="SudItemRadioButton">
         <item name="android:paddingEnd">@dimen/sud_items_radio_button_padding_end</item>
         <item name="android:paddingRight">@dimen/sud_items_radio_button_padding_end</item>
+        <item name="android:minHeight">@dimen/sud_items_radio_button_min_height</item>
     </style>
 
     <!-- the expressive style for Item Radio button wiil provided by the material theme-->

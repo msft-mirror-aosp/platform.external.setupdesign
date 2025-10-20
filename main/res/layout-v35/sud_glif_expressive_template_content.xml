@@ -51,6 +51,8 @@
             android:scrollIndicators="?attr/sudScrollIndicators"
             android:clipChildren="?attr/sudClipChildren"
             android:clipToPadding="?attr/sudClipToPadding"
+            android:paddingTop="?attr/sudScrollViewPaddingTop"
+            android:layout_marginTop="?attr/sudScrollViewMarginTop"
             tools:ignore="UnusedAttribute">
 
             <LinearLayout

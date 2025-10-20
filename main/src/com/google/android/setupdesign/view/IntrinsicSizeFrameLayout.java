@@ -125,7 +125,8 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
       getWindowVisibleDisplayFrame(windowVisibleDisplayRect);
 
       // Clamp the dimensions to the supported range.
-      Point finalGoodSize = getFinalDimensions(intrinsicWidth, intrinsicHeight);
+      Point finalGoodSize =
+          getFinalDimensions(windowVisibleDisplayRect.width(), windowVisibleDisplayRect.height());
       intrinsicHeight = finalGoodSize.y;
       intrinsicWidth = finalGoodSize.x;
     }
@@ -222,6 +223,7 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
     if (PartnerConfigHelper.shouldApplyModalDialog(getContext())) {
       // Set the radius of the card view to 16dp and the background color.
       setBackgroundResource(R.drawable.corner);
+      setClipToOutline(true);
     }
     if (Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
       if (lastInsets == null) {
