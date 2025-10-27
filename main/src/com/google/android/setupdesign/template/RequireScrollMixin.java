@@ -455,7 +455,7 @@ public class RequireScrollMixin implements Mixin {
             footerBarMixin.setDownButtonEnabled(true);
             generateGlifExpressiveDownButton(context, primaryButtonView, footerBarMixin);
             footerContainer.setBackgroundColor(
-                ((GlifLayout) templateLayout).getFooterBackgroundColorFromStyle());
+                ((GlifLayout) templateLayout).getFooterBarMoreToScrollBackgroundColor());
           } else {
             footerBarMixin.setDownButtonEnabled(false);
             setupPrimaryButtonStyleWhenReachedToBottom(
