@@ -327,6 +327,7 @@ public class Item extends AbstractItem implements LinkSpan.OnLinkClickListener {
       }
     }
     ItemStyler.applyPartnerCustomizationItemStyle(view);
+    ItemStyler.applyPartnerCustomizationItemViewBackgroundColor(view);
   }
 
   /**
@@ -346,5 +347,4 @@ public class Item extends AbstractItem implements LinkSpan.OnLinkClickListener {
     }
     return false;
   }
-
 }
