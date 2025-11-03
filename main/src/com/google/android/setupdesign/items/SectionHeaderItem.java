@@ -49,6 +49,13 @@ public class SectionHeaderItem extends Item implements Dividable {
     view.findViewById(R.id.sud_items_icon_container).setVisibility(View.GONE);
     view.setContentDescription(getContentDescription());
     view.setClickable(/* clickable= */ false);
+
+    if (getTitle().isEmpty()) {
+      view.setFocusable(false);
+      view.setFocusableInTouchMode(false);
+      view.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+    }
+
     if (!PartnerConfigHelper.isGlifExpressiveEnabled(view.getContext())) {
       LayoutStyler.applyPartnerCustomizationLayoutPaddingStyle(view);
     }
