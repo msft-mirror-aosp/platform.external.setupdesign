@@ -23,7 +23,7 @@
     <string name="sud_more_button_label" msgid="7621069783233060852">"Bővebben"</string>
     <string name="sud_expressive_accessibility_more_button_label" msgid="9095475386748768626">"Görgetés lefelé"</string>
     <string name="sud_default_device_name" msgid="7659799100092593458">"eszköz"</string>
-    <string name="sud_more_info" msgid="634386452901044160">"Több információ"</string>
+    <string name="sud_more_info" msgid="634386452901044160">"További információ"</string>
     <string name="sud_less_info" msgid="1694784631651721536">"Kevesebb információ"</string>
     <string name="sud_card_view_check_mark_icon_label" msgid="3751763705689966938">"bejelölve"</string>
     <string name="sud_lottie_animation_view_accessibility_animation_playing_status" msgid="2429843612774477771">"animáció lejátszása folyamatban"</string>
