@@ -75,6 +75,9 @@ public final class ItemStyler {
 
     // apply list item view style
     applyPartnerCustomizationItemViewLayoutStyle(listItemView);
+
+    // apply list item view background color
+    applyPartnerCustomizationItemViewBackgroundColor(listItemView);
   }
 
   /**
@@ -240,6 +243,36 @@ public final class ItemStyler {
           PartnerConfigHelper.get(context)
               .getDimension(context, PartnerConfig.CONFIG_ITEMS_MIN_HEIGHT);
       listItemView.setMinimumHeight((int) minHeight);
+    }
+  }
+
+  /**
+   * Applies the partner background color to the given list item view {@code listItemView} when the
+   * glif expressive is enabled and dynamic color is not enabled.
+   *
+   * @param listItemView A view would be applied partner background color style.
+   */
+  public static void applyPartnerCustomizationItemViewBackgroundColor(@Nullable View listItemView) {
+    if (listItemView == null) {
+      return;
+    }
+
+    Context context = listItemView.getContext();
+
+    if (!PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
+      return;
+    }
+
+    if (ThemeHelper.shouldApplyDynamicColor(context)) {
+      return;
+    }
+
+    if (PartnerConfigHelper.get(context)
+        .isPartnerConfigAvailable(PartnerConfig.CONFIG_ITEMS_BACKGROUND_COLOR)) {
+      int backgroundColor =
+          PartnerConfigHelper.get(context)
+              .getColor(context, PartnerConfig.CONFIG_ITEMS_BACKGROUND_COLOR);
+      listItemView.setBackgroundColor(backgroundColor);
     }
   }
 
