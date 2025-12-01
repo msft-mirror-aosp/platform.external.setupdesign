@@ -31,6 +31,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
 import android.view.WindowManager;
@@ -254,16 +255,15 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
             glifExpressiveEnabled,
             isAtLeastLollipop,
             windowInsetBottom));
-    return glifExpressiveEnabled && isAtLeastLollipop && windowInsetBottom > 0;
+    return glifExpressiveEnabled && isAtLeastLollipop && windowInsetBottom >= 0;
   }
 
   @SuppressLint("NewApi")
   private WindowInsets applyEdgeToEdge(WindowInsets insets) {
-    return insets.replaceSystemWindowInsets(
-        0,
-        insets.getSystemWindowInsetTop(),
-        0,
-        findViewById(R.id.suc_intrinsic_size_layout).getPaddingBottom());
+    View view = findViewById(R.id.suc_intrinsic_size_layout);
+    int paddingBottom = view != null ? view.getPaddingBottom() : 0;
+    LOG.atDebug("applyEdgeToEdge, paddingBottom: " + paddingBottom);
+    return insets.replaceSystemWindowInsets(0, insets.getSystemWindowInsetTop(), 0, paddingBottom);
   }
 
   /**
