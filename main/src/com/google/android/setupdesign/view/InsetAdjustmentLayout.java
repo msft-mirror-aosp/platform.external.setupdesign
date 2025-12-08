@@ -21,6 +21,7 @@ import android.content.Context;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.WindowInsets;
 import android.widget.LinearLayout;
 import com.google.android.setupcompat.R;
@@ -77,15 +78,14 @@ public class InsetAdjustmentLayout extends LinearLayout {
             glifExpressiveEnabled,
             isAtLeastLollipop,
             windowInsetBottom));
-    return glifExpressiveEnabled && isAtLeastLollipop && windowInsetBottom > 0;
+    return glifExpressiveEnabled && isAtLeastLollipop && windowInsetBottom >= 0;
   }
 
   @SuppressLint("NewApi")
   private WindowInsets applyEdgeToEdge(WindowInsets insets) {
-    return insets.replaceSystemWindowInsets(
-        0,
-        insets.getSystemWindowInsetTop(),
-        0,
-        findViewById(R.id.suc_layout_status).getPaddingBottom());
+    View view = findViewById(R.id.suc_layout_status);
+    int paddingBottom = view != null ? view.getPaddingBottom() : 0;
+    LOG.atDebug("applyEdgeToEdge, paddingBottom: " + paddingBottom);
+    return insets.replaceSystemWindowInsets(0, insets.getSystemWindowInsetTop(), 0, paddingBottom);
   }
 }
