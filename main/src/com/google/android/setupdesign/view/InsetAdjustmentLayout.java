@@ -61,6 +61,23 @@ public class InsetAdjustmentLayout extends LinearLayout {
   @Override
   @SuppressLint("NewApi")
   public WindowInsets onApplyWindowInsets(WindowInsets insets) {
+    // Handle insets for modal dialog
+    View view = findViewById(R.id.suc_layout_status);
+    if (PartnerConfigHelper.shouldApplyModalDialog(getContext()) && view != null) {
+      // Vertically center the content container relative to the screen edges.
+      view.setPadding(
+          view.getPaddingLeft(),
+          insets.getSystemWindowInsetTop(),
+          view.getPaddingRight(),
+          /*
+           *  Navigation bar might be hidden. In this case apply the top padding also at the bottom
+           *  to keep padding symmetric.
+           *  If virtual keyboard is shown, center between the status bar and keyboard.
+           */
+          Math.max(insets.getSystemWindowInsetTop(), insets.getSystemWindowInsetBottom()));
+      return insets;
+    }
+
     return super.onApplyWindowInsets(
         shouldApplyEdgeToEdge(insets.getSystemWindowInsetBottom())
             ? applyEdgeToEdge(insets)
