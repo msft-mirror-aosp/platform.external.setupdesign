@@ -1160,7 +1160,7 @@
     <style name="SudThemeGlifExpressive" parent="SudBaseThemeGlifExpressive" />
     <style name="SudThemeGlifExpressive.Light" parent="SudBaseThemeGlifExpressive.Light" />
 
-    <style name="SudThemeModalGlifExpressive" parent="SudBaseThemeGlifExpressive">
+    <style name="SudThemeModalGlifExpressive" parent="SudThemeGlifExpressive">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowShowWallpaper">true</item>
         <item name="android:windowBlurBehindEnabled" tools:ignore="NewApi">true</item>
@@ -1172,7 +1172,7 @@
         <item name="android:colorBackground">@android:color/transparent</item>
     </style>
 
-    <style name="SudThemeModalGlifExpressive.Light" parent="SudBaseThemeGlifExpressive.Light">
+    <style name="SudThemeModalGlifExpressive.Light" parent="SudThemeGlifExpressive.Light">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowShowWallpaper">true</item>
         <item name="android:windowBlurBehindEnabled" tools:ignore="NewApi">true</item>
@@ -1181,7 +1181,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:backgroundDimEnabled">false</item>
-        <item name="android:colorBackground"> @android:color/transparent</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
     </style>
 
     <style name="SudThemeModalGlifExpressive.DayNight" parent="SudThemeModalGlifExpressive.Light" />

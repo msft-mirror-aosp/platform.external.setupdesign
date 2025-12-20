@@ -151,17 +151,32 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
   @Override
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     if (PartnerConfigHelper.shouldApplyModalDialog(getContext())) {
-      heightMeasureSpec = MeasureSpec.makeMeasureSpec(intrinsicHeight, MeasureSpec.EXACTLY);
+      int measuredHeight = intrinsicHeight;
+      if (VERSION.SDK_INT >= VERSION_CODES.S && lastInsets != null) {
+        WindowManager windowManager = getContext().getSystemService(WindowManager.class);
+        WindowMetrics windowMetrics = windowManager.getCurrentWindowMetrics();
+
+        WindowInsets insets = (WindowInsets) lastInsets;
+        int availableHeight =
+            windowMetrics.getBounds().height()
+                - insets.getSystemWindowInsetTop()
+                - insets.getSystemWindowInsetBottom();
+        if (intrinsicHeight > availableHeight) {
+           measuredHeight = availableHeight;
+        }
+      }
+
+      heightMeasureSpec = MeasureSpec.makeMeasureSpec(measuredHeight, MeasureSpec.EXACTLY);
       widthMeasureSpec = MeasureSpec.makeMeasureSpec(intrinsicWidth, MeasureSpec.EXACTLY);
       super.onMeasure(widthMeasureSpec, heightMeasureSpec);
       return;
     }
-    int measureWidth;
 
-    // The the content may be truncated if the layout show in multi-window mode or two pane mode,
+    // The content may be truncated if the layout show in multi-window mode or two pane mode,
     // because the given width is fixed size which based on the display to compute. So the width
     // the content may be truncated. Make the layout width align window while window width smaller
     // than display size.
+    int measureWidth;
     if (isWindowSizeSmallerThanDisplaySize()) {
       getWindowVisibleDisplayFrame(windowVisibleDisplayRect);
 
@@ -247,15 +262,17 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
   private boolean shouldApplyEdgeToEdge(int windowInsetBottom) {
     boolean glifExpressiveEnabled = PartnerConfigHelper.isGlifExpressiveEnabled(getContext());
     boolean isAtLeastLollipop = VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP;
+    boolean isModalDialog = PartnerConfigHelper.shouldApplyModalDialog(getContext());
     LOG.atInfo(
         String.format(
             Locale.US,
             "Apply edge to edge, glifExpressiveEnabled: %s, isAtLeastLollipop: %s,"
-                + " windowInsetBottom: %d",
+                + " windowInsetBottom: %d,  isModalDialog: %s",
             glifExpressiveEnabled,
             isAtLeastLollipop,
-            windowInsetBottom));
-    return glifExpressiveEnabled && isAtLeastLollipop && windowInsetBottom >= 0;
+            windowInsetBottom,
+            isModalDialog));
+    return glifExpressiveEnabled && isAtLeastLollipop && windowInsetBottom >= 0 && !isModalDialog;
   }
 
   @SuppressLint("NewApi")
