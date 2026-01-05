@@ -1,0 +1,15 @@
+<!-- Accessibility Menu Button -->
+<ImageButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/accessibility_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+    android:layout_marginEnd="24dp"
+    android:layout_marginBottom="24dp"
+    android:src="@drawable/sud_ic_accessibility_menu"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:clickable="true"
+    android:focusable="true"
+    android:filterTouchesWhenObscured="true"
+    android:visibility="gone"/>

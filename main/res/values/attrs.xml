@@ -345,6 +345,8 @@
 
     <declare-styleable name="SudIconMixin">
         <attr name="android:icon" />
+        <attr name="sudAnimationIcon" format="reference" />
+        <attr name="sudIsAnimatedIconDelayed" format="boolean" />
         <attr name="sudUpscaleIcon" format="boolean" />
         <attr name="sudIconTint" />
     </declare-styleable>

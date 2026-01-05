@@ -45,12 +45,19 @@
     <string name="sudCardViewFontFamily" translatable="false">google-sans-flex</string>
 
     <!-- Modal dialog size constraints -->
-
     <integer name="modal_dialog_min_largest_edge_dp">1280</integer>
     <integer name="modal_dialog_min_smallest_edge_dp">720</integer>
     <integer name="modal_dialog_max_largest_edge_dp">1440</integer>
     <integer name="modal_dialog_max_smallest_edge_dp">810</integer>
     <integer name="modal_dialog_wallpaper_alpha">128</integer>
     <item name="modal_dialog_size_ratio" type="dimen" format="float">0.72</item>
+
+    <!-- Customization dynamic color of animated icon. Not translatable. -->
+    <string-array name="layout_animated_icon_customization" translatable="false">
+        <item>.primary:@sud_system_primary_light</item>
+    </string-array>
+
+    <!-- Whether to hide the footer bar when the IME is shown. -->
+    <bool name="sud_footer_bar_hide_when_ime_shown">false</bool>
 
 </resources>

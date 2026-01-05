@@ -753,13 +753,13 @@ public class GlifLoadingLayout extends GlifLayout {
 
         // if the activity is embedded should apply an embedded layout.
         if (isEmbeddedActivityOnePaneEnabled(context)) {
-          // TODO add unit test for this case.
+          // TODO(b/366141305) add unit test for this case.
           if (isGlifExpressiveEnabled()) {
             template = R.layout.sud_glif_expressive_fullscreen_loading_embedded_template;
           } else {
             template = R.layout.sud_glif_fullscreen_loading_embedded_template;
           }
-          // TODO add unit test for this case.
+          // TODO(b/366141305) add unit test for this case.
         } else if (isGlifExpressiveEnabled()) {
           template = R.layout.sud_glif_expressive_fullscreen_loading_template;
         } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
@@ -772,11 +772,11 @@ public class GlifLoadingLayout extends GlifLayout {
         if (isEmbeddedActivityOnePaneEnabled(context)) {
           if (isGlifExpressiveEnabled()) {
             template = R.layout.sud_glif_expressive_loading_embedded_template;
-            // TODO add unit test for this case.
+            // TODO(b/366141305) add unit test for this case.
           } else {
             template = R.layout.sud_glif_loading_embedded_template;
           }
-          // TODO add unit test for this case.
+          // TODO(b/366141305) add unit test for this case.
         } else if (isGlifExpressiveEnabled()) {
           template = R.layout.sud_glif_expressive_loading_template;
         } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
