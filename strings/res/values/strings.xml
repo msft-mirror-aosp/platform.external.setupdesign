@@ -60,4 +60,12 @@
 
     <!-- Label for SuwLottieAnimationView description [CHAR LIMIT=NONE] -->
     <string name="sud_lottie_animation_view_accessibility_description">Animation</string>
+
+    <!-- TalkBack hints for QrCode animation. [CHAR LIMIT=NONE]-->
+    <string name="sud_qrcode_content_description">QR code</string>
+
+    <!-- TODO: Update the hint of talkback after confirmation -->
+    <!-- TalkBack hints for QrCode animation control. [CHAR LIMIT=NONE]-->
+    <string name="sud_qrcode_animation_control">pause the animation</string>
+
 </resources>

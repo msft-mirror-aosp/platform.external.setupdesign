@@ -374,7 +374,7 @@ public class RequireScrollMixin implements Mixin {
       }
 
       primaryButton.setOnClickListener(createOnClickListener(onClickListener));
-      // TODO: b/422071888 - Consider to make scrollView as a callback in the RequireScrollMixin.
+      // TODO: Consider to make scrollView as a callback in the RequireScrollMixin.
       setOnRequireScrollStateChangedListener(
           new OnRequireScrollStateChangedListener() {
             @Override
@@ -483,7 +483,7 @@ public class RequireScrollMixin implements Mixin {
       // Set the padding back to the initial state due to we centered the down button and
       // switch back to the common button style.
       if (initialFooterPaddingStart != footerContainer.getPaddingStart()) {
-        footerContainer.setPadding(
+        footerContainer.setPaddingRelative(
             initialFooterPaddingStart,
             footerContainer.getPaddingTop(),
             footerContainer.getPaddingEnd(),
