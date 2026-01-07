@@ -17,7 +17,9 @@ package com.google.android.setupdesign;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources.Theme;
 import android.content.res.TypedArray;
@@ -38,6 +40,7 @@ import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.ViewTreeObserver;
 import android.view.WindowInsets;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -78,6 +81,7 @@ import com.google.android.setupdesign.template.RequireScrollMixin;
 import com.google.android.setupdesign.template.ScrollViewScrollHandlingDelegate;
 import com.google.android.setupdesign.util.DescriptionStyler;
 import com.google.android.setupdesign.util.LayoutStyler;
+import com.google.android.setupdesign.util.ThemeHelper;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -105,6 +109,10 @@ public class GlifLayout extends PartnerCustomizationLayout {
   private ColorStateList primaryColor;
   private boolean backgroundPatterned = true;
   private boolean applyPartnerHeavyThemeResource = false;
+  private boolean footerHiddenByIme = false;
+  private int originalFooterVisibility = View.VISIBLE;
+
+  private static final int ACCESSIBILITY_SETTINGS_REQUEST_CODE = 101;
 
   @VisibleForTesting
   ViewTreeObserver.OnScrollChangedListener onScrollChangedListener =
@@ -222,6 +230,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
       }
     }
     initBackButton();
+    initAccessibilityButton();
     initialLogging();
     a.recycle();
   }
@@ -429,7 +438,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
         } else {
           template = R.layout.sud_glif_embedded_template;
         }
-        // TODO add unit test for this case.
+        // TODO(b/366141305) add unit test for this case.
       } else if (isGlifExpressiveEnabled()) {
         template = R.layout.sud_glif_expressive_template;
       } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
@@ -881,6 +890,48 @@ public class GlifLayout extends PartnerCustomizationLayout {
     }
   }
 
+  private void initAccessibilityButton() {
+    ImageButton accessibilityButton = findManagedViewById(R.id.accessibility_button);
+    boolean useA11yShortcut = PartnerConfigHelper.isSuwUseA11yShortcutEnabled(getContext());
+    boolean useSuwModal = PartnerConfigHelper.isSuwUseModalDialogEnabled(getContext());
+
+    if (accessibilityButton == null || !useA11yShortcut || !useSuwModal) {
+      return;
+    }
+
+    accessibilityButton.setVisibility(View.VISIBLE);
+    accessibilityButton.setOnClickListener(
+        v -> {
+          Activity activity = PartnerCustomizationLayout.lookupActivityFromContext(getContext());
+
+          if (PartnerConfigHelper.get(getContext())
+              .isPartnerConfigAvailable(PartnerConfig.CONFIG_ASSISTIVE_OPTIONS_PACKAGE_NAME)) {
+            String packageName =
+                PartnerConfigHelper.get(getContext())
+                    .getString(getContext(), PartnerConfig.CONFIG_ASSISTIVE_OPTIONS_PACKAGE_NAME);
+            String activityName =
+                PartnerConfigHelper.get(getContext())
+                    .getString(getContext(), PartnerConfig.CONFIG_ASSISTIVE_OPTIONS_ACTIVITY_NAME);
+            Intent intent = new Intent(packageName + "." + activityName);
+            intent.setPackage(packageName);
+
+            intent.putExtra(WizardManagerHelper.EXTRA_IS_FIRST_RUN, true);
+            intent.putExtra(WizardManagerHelper.EXTRA_IS_SETUP_FLOW, true);
+
+            if (activity != null) {
+              intent.putExtra(
+                  WizardManagerHelper.EXTRA_THEME, ThemeHelper.getSuwDefaultTheme(activity));
+              WizardManagerHelper.copyWizardManagerExtras(activity.getIntent(), intent);
+              try {
+                activity.startActivityForResult(intent, ACCESSIBILITY_SETTINGS_REQUEST_CODE);
+              } catch (ActivityNotFoundException e) {
+                LOG.e("Activity not found: " + e.getMessage());
+              }
+            }
+          }
+        });
+  }
+
   /**
    * Gets the footer bar background color from the current theme.
    *
@@ -907,7 +958,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
     return typedValue.data;
   }
 
-  // TODO: b/398407478 - Add test case for edge to edge to layout from library.
+  // TODO: Add test case for edge to edge to layout from library.
   @Override
   public WindowInsets onApplyWindowInsets(WindowInsets insets) {
     if (isGlifExpressiveEnabled()) {
@@ -931,8 +982,57 @@ public class GlifLayout extends PartnerCustomizationLayout {
           updateBackgroundColor(!canWholeViewsScrollDown.get());
         }
       }
+
+      updateFooterBarVisibilityWhenImeVisible(footerBarMixin, insets);
     }
     return super.onApplyWindowInsets(insets);
+  }
+
+  private void updateFooterBarVisibilityWhenImeVisible(
+      FooterBarMixin footerBarMixin, WindowInsets insets) {
+    boolean hideFooterBarWhenImeShown = false;
+    PartnerConfigHelper partnerConfigHelper = PartnerConfigHelper.get(getContext());
+    if (partnerConfigHelper.isPartnerConfigAvailable(
+        PartnerConfig.CONFIG_FOOTER_BAR_HIDE_WHEN_IME_SHOWN)) {
+      hideFooterBarWhenImeShown =
+          PartnerConfigHelper.get(getContext())
+              .getBoolean(getContext(), PartnerConfig.CONFIG_FOOTER_BAR_HIDE_WHEN_IME_SHOWN, false);
+    } else {
+      hideFooterBarWhenImeShown =
+          getContext().getResources().getBoolean(R.bool.sud_footer_bar_hide_when_ime_shown);
+    }
+
+    if (!hideFooterBarWhenImeShown
+        || footerBarMixin == null
+        || footerBarMixin.getButtonContainer() == null) {
+      LOG.atDebug(
+          "Skip updateFooterBarVisibilityWhenImeVisible, hideFooterBarWhenImeShown: "
+              + hideFooterBarWhenImeShown);
+      return;
+    }
+
+    boolean imeVisibleNow =
+        WindowInsetsCompat.toWindowInsetsCompat(insets, this)
+            .isVisible(WindowInsetsCompat.Type.ime());
+
+    View buttonContainer = footerBarMixin.getButtonContainer();
+
+    if (imeVisibleNow) {
+      if (!footerHiddenByIme) {
+        footerHiddenByIme = true;
+        // Backup original footer visibility and hide the footer bar.
+        originalFooterVisibility = buttonContainer.getVisibility();
+        buttonContainer.setVisibility(View.GONE);
+        LOG.atInfo("IME visible, hiding FooterBar");
+      }
+    } else {
+      if (footerHiddenByIme) {
+        footerHiddenByIme = false;
+        // Restore the footer bar visibility to its original state.
+        buttonContainer.setVisibility(originalFooterVisibility);
+        LOG.atInfo("Restoring FooterBar visibility to " + originalFooterVisibility);
+      }
+    }
   }
 
   private Optional<Boolean> canWholeViewsScrollDown() {

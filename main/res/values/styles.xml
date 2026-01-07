@@ -1924,7 +1924,7 @@
     </style>
 
     <style name="SudGlifAccountAvatar">
-        <!--TODO create sudAccountAvatarMarginStart to let it as a pair with sudAccountAvatarMarginEnd -->
+        <!--TODO(b/356046683) create sudAccountAvatarMarginStart to let it as a pair with sudAccountAvatarMarginEnd -->
         <item name="android:layout_marginRight">?attr/sudAccountAvatarMarginEnd</item>
         <item name="android:layout_marginEnd">?attr/sudAccountAvatarMarginEnd</item>
         <item name="android:adjustViewBounds">true</item>

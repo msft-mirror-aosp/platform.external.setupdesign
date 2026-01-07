@@ -38,6 +38,7 @@ android_library {
         "error_prone_annotations",
         "lottie",
         "setupcompat",
+        "setupdesign-lottie-animation-view",
         "setupdesign-strings",
     ],
     manifest: "main/AndroidManifest.xml",

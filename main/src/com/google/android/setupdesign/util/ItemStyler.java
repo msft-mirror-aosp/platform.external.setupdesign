@@ -28,6 +28,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
+import com.google.android.setupcompat.util.Logger;
 import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.util.TextViewPartnerStyler.TextPartnerConfigs;
 
@@ -36,6 +37,8 @@ import com.google.android.setupdesign.util.TextViewPartnerStyler.TextPartnerConf
  * the {@code view} should apply partner heavy theme before calling this method.
  */
 public final class ItemStyler {
+
+  private static final Logger LOG = new Logger(ItemStyler.class);
 
   /**
    * Applies the heavy theme partner configs to the given listItemView {@code listItemView}. The
@@ -113,7 +116,11 @@ public final class ItemStyler {
             PartnerConfigHelper.get(context)
                 .getString(context, PartnerConfig.CONFIG_ITEMS_TITLE_FONT_VARIATION_SETTINGS);
         if (fontVariationSettings != null && !fontVariationSettings.isEmpty()) {
-          titleTextView.setFontVariationSettings(fontVariationSettings);
+          try {
+            titleTextView.setFontVariationSettings(fontVariationSettings);
+          } catch (IllegalArgumentException e) {
+            LOG.e("Failed to set font variation settings: " + fontVariationSettings, e);
+          }
         }
       }
     }

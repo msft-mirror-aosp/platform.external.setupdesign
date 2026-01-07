@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2024 The Android Open Source Project
+    Copyright (C) 2025 The Android Open Source Project
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -13,17 +14,12 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
+
 <resources>
-    <!-- Default button font weight -->
-    <integer name="sud_glif_footer_button_weight">400</integer>
 
-    <!-- Glif expressive button styles -->
-    <integer name="sud_glif_expressive_footer_button_weight">500</integer>
-
-    <!-- Glif expressive account name font weight -->
-    <integer name="sud_glif_account_name_text_font_weight">600</integer>
-
-    <!-- The delay time of lottie animation. -->
-    <integer name="sud_lottie_animation_delay_ms">3000</integer>
+    <!-- Customization dynamic color of animated icon . Not translatable. -->
+    <string-array name="layout_animated_icon_customization" translatable="false">
+        <item>.primary:@sud_system_primary_dark</item>
+    </string-array>
 
 </resources>

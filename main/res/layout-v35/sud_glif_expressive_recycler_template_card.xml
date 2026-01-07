@@ -58,4 +58,5 @@
             android:visibility="invisible" />
 
     </com.google.android.setupdesign.view.InsetAdjustmentLayout>
+    <include layout="@layout/sud_glif_expressive_accessibility_shortcut" />
 </androidx.core.view.insets.ProtectionLayout>

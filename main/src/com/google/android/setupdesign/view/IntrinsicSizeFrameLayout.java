@@ -144,6 +144,9 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         setElevation(0.0f);
       }
+      if (PartnerConfigHelper.shouldApplyModalDialog(getContext())) {
+        setElevation(0.0f);
+      }
     }
     super.setLayoutParams(params);
   }
@@ -162,7 +165,7 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
                 - insets.getSystemWindowInsetTop()
                 - insets.getSystemWindowInsetBottom();
         if (intrinsicHeight > availableHeight) {
-           measuredHeight = availableHeight;
+          measuredHeight = availableHeight;
         }
       }
 
