@@ -32,4 +32,6 @@
     <string name="sud_lottie_animation_view_accessibility_action_pause" msgid="3594346538387297612">"jeda"</string>
     <string name="sud_lottie_animation_view_accessibility_action_resume" msgid="5654144404528664842">"sambung semula"</string>
     <string name="sud_lottie_animation_view_accessibility_description" msgid="2130817807970911136">"Animasi"</string>
+    <string name="sud_qrcode_content_description" msgid="7201320681442117512">"Kod QR"</string>
+    <string name="sud_qrcode_animation_control" msgid="219222410307225239">"jeda animasi"</string>
 </resources>

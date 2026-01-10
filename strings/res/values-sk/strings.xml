@@ -32,4 +32,8 @@
     <string name="sud_lottie_animation_view_accessibility_action_pause" msgid="3594346538387297612">"pozastaviť"</string>
     <string name="sud_lottie_animation_view_accessibility_action_resume" msgid="5654144404528664842">"pokračovať"</string>
     <string name="sud_lottie_animation_view_accessibility_description" msgid="2130817807970911136">"Animácia"</string>
+    <!-- no translation found for sud_qrcode_content_description (7201320681442117512) -->
+    <skip />
+    <!-- no translation found for sud_qrcode_animation_control (219222410307225239) -->
+    <skip />
 </resources>
