@@ -32,8 +32,6 @@
     <string name="sud_lottie_animation_view_accessibility_action_pause" msgid="3594346538387297612">"tạm dừng"</string>
     <string name="sud_lottie_animation_view_accessibility_action_resume" msgid="5654144404528664842">"tiếp tục"</string>
     <string name="sud_lottie_animation_view_accessibility_description" msgid="2130817807970911136">"Ảnh động"</string>
-    <!-- no translation found for sud_qrcode_content_description (7201320681442117512) -->
-    <skip />
-    <!-- no translation found for sud_qrcode_animation_control (219222410307225239) -->
-    <skip />
+    <string name="sud_qrcode_content_description" msgid="7201320681442117512">"Mã QR"</string>
+    <string name="sud_qrcode_animation_control" msgid="219222410307225239">"tạm dừng ảnh động"</string>
 </resources>
