@@ -18,7 +18,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="sud_next_button_label" msgid="6328701463199740381">"بعدی"</string>
-    <string name="sud_back_button_label" msgid="7489072821281801727">"برگشت"</string>
+    <string name="sud_back_button_label" msgid="7489072821281801727">"برگشتن"</string>
     <string name="sud_skip_button_label" msgid="7179992472691302817">"رد شدن"</string>
     <string name="sud_more_button_label" msgid="7621069783233060852">"بیشتر"</string>
     <string name="sud_expressive_accessibility_more_button_label" msgid="9095475386748768626">"پیمایش به‌پایین"</string>
