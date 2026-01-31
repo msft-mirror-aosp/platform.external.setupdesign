@@ -64,6 +64,8 @@ public class IconMixin implements Mixin {
   private final int originalHeight;
   private final ImageView.ScaleType originalScaleType;
   private final Context context;
+  private boolean isAnimatedIconDelayed = true;
+  @DrawableRes private int staticResIcon = 0;
   private SudLottieAnimationView lottieView;
   private boolean isSetAnimatedIcon = false;
 
@@ -94,17 +96,16 @@ public class IconMixin implements Mixin {
         context.obtainStyledAttributes(
             attrs, R.styleable.SudIconMixin, defStyleAttr, /* defStyleRes= */ 0);
 
-    @DrawableRes
-    final int icon = a.getResourceId(R.styleable.SudIconMixin_android_icon, /* defValue= */ 0);
-    if (icon != 0 || PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
-      setIcon(icon);
+    staticResIcon = a.getResourceId(R.styleable.SudIconMixin_android_icon, /* defValue= */ 0);
+    if (staticResIcon != 0 || PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
+      setIcon(staticResIcon);
     }
 
     @RawRes
     final int animationIcon =
         a.getResourceId(R.styleable.SudIconMixin_sudAnimationIcon, /* defValue= */ 0);
 
-    final boolean isAnimatedIconDelayed =
+    isAnimatedIconDelayed =
         a.getBoolean(R.styleable.SudIconMixin_sudIsAnimatedIconDelayed, /* defValue= */ true);
 
     final boolean upscaleIcon =
@@ -113,6 +114,7 @@ public class IconMixin implements Mixin {
 
     @ColorInt int iconTint = a.getColor(R.styleable.SudIconMixin_sudIconTint, Color.TRANSPARENT);
     if (PartnerConfigHelper.isGlifExpressiveEnabled(context)
+        && PartnerConfigHelper.isSetupWizardDynamicColorEnabled(context)
         && PartnerConfigHelper.get(context)
             .isPartnerConfigAvailable(PartnerConfig.CONFIG_ICON_COLOR)) {
       iconTint =
@@ -124,7 +126,12 @@ public class IconMixin implements Mixin {
     }
 
     lottieView = templateLayout.findManagedViewById(R.id.sud_layout_animation_icon);
+    updateLottieView(animationIcon, /* setStaticIcon= */ true);
 
+    a.recycle();
+  }
+
+  private void updateLottieView(@RawRes int animationIcon, boolean setStaticIcon) {
     if (DelightHelper.shouldApplyAnimatedIcon(context)
         && PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
       if (lottieView != null) {
@@ -143,7 +150,9 @@ public class IconMixin implements Mixin {
           lottieView.setAnimation(inputRaw, null);
           isSetAnimatedIcon = true;
         } else {
-          lottieView.setImageResource(icon);
+          if (staticResIcon != 0 && setStaticIcon) {
+            lottieView.setImageResource(staticResIcon);
+          }
         }
 
         // Create a Handler to delay the animation start by a delay time.
@@ -166,7 +175,6 @@ public class IconMixin implements Mixin {
         LOG.e("Fail to display the lottie icon from partner overlay, e=" + e.getMessage());
       }
     }
-    a.recycle();
   }
 
   /** Tries to apply the partner customization to the header icon. */
@@ -244,6 +252,16 @@ public class IconMixin implements Mixin {
       }
       tryApplyPartnerCustomizationStyle();
     }
+  }
+
+  /**
+   * Sets the animated icon on this layout. The animated icon can also be set in XML using {@code
+   * sudAnimationIcon}.
+   *
+   * @param animationIcon A raw resource id of lottie file.
+   */
+  public void setAnimatedIcon(@RawRes int animationIcon) {
+    updateLottieView(animationIcon, /* setStaticIcon= */ false);
   }
 
   /** @return The icon previously set in {@link #setIcon(Drawable)} or {@code android:icon} */
