@@ -15,7 +15,7 @@
     limitations under the License.
 -->
 
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" >
     <!-- Button for going to the next screen or step [CHAR LIMIT=20] -->
     <string name="sud_next_button_label">Next</string>
 
@@ -64,8 +64,17 @@
     <!-- TalkBack hints for QrCode animation. [CHAR LIMIT=NONE]-->
     <string name="sud_qrcode_content_description">QR code</string>
 
+    <!-- TalkBack hints for accessibility button. [CHAR LIMIT=NONE]-->
+    <string name="sud_accessibility_button_label">Accessibility</string>
+
     <!-- TODO: Update the hint of talkback after confirmation -->
     <!-- TalkBack hints for QrCode animation control. [CHAR LIMIT=NONE]-->
     <string name="sud_qrcode_animation_control">pause the animation</string>
+
+    <!-- Percentage of setup progress [CHAR LIMIT=10] -->
+    <string name="sud_setup_progress_percentage"><xliff:g id="percentage" example="20">%1$s</xliff:g>%%</string>
+
+    <!-- Icon description for the setup progress indicator [CHAR LIMIT=NONE] -->
+    <string name="sud_setup_progress_indicator_icon_description">Setup progress indicator</string>
 
 </resources>

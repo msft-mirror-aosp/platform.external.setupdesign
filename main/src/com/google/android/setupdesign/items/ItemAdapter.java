@@ -171,7 +171,7 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
     Drawable backgroundDrawable = null;
     GradientDrawable background = null;
 
-    // TODO(b/400607394) add test case in updateBackground for list item to get background for Item
+    // TODO add test case in updateBackground for list item to get background for Item
     if (isFirstItemOfGroup(position) && isLastItemOfGroup(position)) {
       backgroundDrawable = getSingleBackground(convertView.getContext(), position);
     } else if (isFirstItemOfGroup(position)) {
@@ -181,7 +181,7 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
     } else {
       backgroundDrawable = getMiddleBackground(convertView.getContext(), position);
     }
-    // TODO(b/369531582) add test case for list item group corner partner config
+    // TODO add test case for list item group corner partner config
     if (drawable instanceof LayerDrawable && ((LayerDrawable) drawable).getNumberOfLayers() >= 2) {
       clickDrawable = ((LayerDrawable) drawable).getDrawable(1);
     } else {
@@ -222,7 +222,7 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
 
-    // TODO(b/369488795)  when getContext is not activity context then fallback to out suw behavior
+    // TODO  when getContext is not activity context then fallback to out suw behavior
     if (PartnerConfigHelper.isGlifExpressiveEnabled(parent.getContext())) {
       IItem item = getItem(position);
       LinearLayout linearLayout = null;

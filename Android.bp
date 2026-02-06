@@ -48,6 +48,7 @@ android_library {
     sdk_version: "current",
     srcs: [
         "main/src/**/*.java",
+        "main/src/**/*.kt",
     ],
     min_sdk_version: "23",
     optimize: {

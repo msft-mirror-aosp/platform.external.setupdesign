@@ -98,7 +98,7 @@ public class GlifListLayout extends GlifLayout {
     }
 
     boolean canHeaderViewScrollDown = canViewScrollDown(headerScrollView);
-    boolean canListViewScrollDown = listView.canScrollVertically(/* direction= */ 1);
+    boolean canListViewScrollDown = listView.canScrollList(/* direction= */ 1);
 
     return canHeaderViewScrollDown || canListViewScrollDown;
   }
@@ -124,7 +124,7 @@ public class GlifListLayout extends GlifLayout {
         } else {
           template = R.layout.sud_glif_list_embedded_template;
         }
-        // TODO(b/366141305) add unit test for this case.
+        // TODO add unit test for this case.
       } else if (isGlifExpressiveEnabled()) {
         template = R.layout.sud_glif_expressive_list_template;
       } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {

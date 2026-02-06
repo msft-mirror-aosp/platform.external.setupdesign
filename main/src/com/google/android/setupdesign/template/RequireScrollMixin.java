@@ -374,7 +374,7 @@ public class RequireScrollMixin implements Mixin {
       }
 
       primaryButton.setOnClickListener(createOnClickListener(onClickListener));
-      // TODO: Consider to make scrollView as a callback in the RequireScrollMixin.
+      // TODO: b/422071888 - Consider to make scrollView as a callback in the RequireScrollMixin.
       setOnRequireScrollStateChangedListener(
           new OnRequireScrollStateChangedListener() {
             @Override
