@@ -69,6 +69,15 @@ public class IconMixin implements Mixin {
   private SudLottieAnimationView lottieView;
   private boolean isSetAnimatedIcon = false;
 
+  private final Handler handler = new Handler(Looper.getMainLooper());
+  private final Runnable playAnimationRunnable =
+      () -> {
+        if (lottieView != null) {
+          lottieView.setProgress(0f);
+          lottieView.playAnimation();
+        }
+      };
+
   public final Map<String, Integer> colorResourceMapping = new HashMap<>();
 
   /**
@@ -131,6 +140,16 @@ public class IconMixin implements Mixin {
     a.recycle();
   }
 
+  private void applyDynamicColor() {
+    if (lottieView != null) {
+      List<String> colorResultText = new ArrayList<>();
+      Collections.addAll(
+          colorResultText,
+          context.getResources().getStringArray(R.array.layout_animated_icon_customization));
+      LottieAnimationHelper.get().applyColor(context, lottieView, colorResultText);
+    }
+  }
+
   private void updateLottieView(@RawRes int animationIcon, boolean setStaticIcon) {
     if (DelightHelper.shouldApplyAnimatedIcon(context)
         && PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
@@ -138,12 +157,6 @@ public class IconMixin implements Mixin {
         lottieView.setVisibility(View.VISIBLE);
       }
       try {
-        List<String> colorResultText = new ArrayList<>();
-        Collections.addAll(
-            colorResultText,
-            context.getResources().getStringArray(R.array.layout_animated_icon_customization));
-        LottieAnimationHelper.get().applyColor(context, lottieView, colorResultText);
-
         if (animationIcon != 0) {
           InputStream inputRaw = context.getResources().openRawResource(animationIcon);
           // Set LottieAnimationView with inputStream
@@ -154,21 +167,17 @@ public class IconMixin implements Mixin {
             lottieView.setImageResource(staticResIcon);
           }
         }
+        applyDynamicColor();
 
+        // remove any pending animation task
+        handler.removeCallbacks(playAnimationRunnable);
         // Create a Handler to delay the animation start by a delay time.
         if (isAnimatedIconDelayed) {
-          new Handler(Looper.getMainLooper())
-              .postDelayed(
-                  () -> {
-                    if (lottieView != null) {
-                      lottieView.setProgress(0f);
-                      lottieView.playAnimation();
-                    }
-                  },
-                  context.getResources().getInteger(R.integer.sud_lottie_animation_delay_ms));
+          handler.postDelayed(
+              playAnimationRunnable,
+              context.getResources().getInteger(R.integer.sud_lottie_animation_delay_ms));
         } else {
-          lottieView.setProgress(0f);
-          lottieView.playAnimation();
+          handler.post(playAnimationRunnable);
         }
 
       } catch (NullPointerException | NotFoundException | IllegalStateException e) {
@@ -264,6 +273,29 @@ public class IconMixin implements Mixin {
     updateLottieView(animationIcon, /* setStaticIcon= */ false);
   }
 
+  /**
+   * Sets whether to delay the start of the animated icon.
+   *
+   * @param delayed {@code true} to delay the animation, {@code false} to start immediately.
+   */
+  public void setAnimatedIconDelayed(boolean delayed) {
+    isAnimatedIconDelayed = delayed;
+    handler.removeCallbacks(playAnimationRunnable);
+    if (lottieView != null) {
+      lottieView.cancelAnimation();
+      lottieView.setProgress(0f);
+      applyDynamicColor();
+    }
+
+    if (isAnimatedIconDelayed) {
+      handler.postDelayed(
+          playAnimationRunnable,
+          context.getResources().getInteger(R.integer.sud_lottie_animation_delay_ms));
+    } else {
+      handler.post(playAnimationRunnable);
+    }
+  }
+
   /** @return The icon previously set in {@link #setIcon(Drawable)} or {@code android:icon} */
   public Drawable getIcon() {
     final ImageView iconView = getView();
@@ -328,6 +360,18 @@ public class IconMixin implements Mixin {
    */
   public void setVisibility(int visibility) {
     final ImageView iconView = getView();
+
+    if (PartnerConfigHelper.isGlifExpressiveEnabled(context)) {
+      if (DelightHelper.shouldApplyAnimatedIcon(context)) {
+        iconView.setVisibility(View.GONE);
+        if (lottieView != null) {
+          lottieView.setVisibility(visibility);
+        }
+        setIconContainerVisibility(visibility);
+        return;
+      }
+    }
+
     if (iconView != null) {
       iconView.setVisibility(visibility);
       setIconContainerVisibility(visibility);

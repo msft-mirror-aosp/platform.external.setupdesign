@@ -119,10 +119,15 @@ public class GlifLayout extends PartnerCustomizationLayout {
       new ViewTreeObserver.OnScrollChangedListener() {
         @Override
         public void onScrollChanged() {
-          Optional<Boolean> canWholeViewsScrollDown = canWholeViewsScrollDown();
-          if (canWholeViewsScrollDown.isPresent()) {
-            onScrolling(!canWholeViewsScrollDown.get());
-          }
+          updateScrollState();
+        }
+      };
+
+  private ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener =
+      new ViewTreeObserver.OnGlobalLayoutListener() {
+        @Override
+        public void onGlobalLayout() {
+          updateScrollState();
         }
       };
 
@@ -233,6 +238,13 @@ public class GlifLayout extends PartnerCustomizationLayout {
     initAccessibilityButton();
     initialLogging();
     a.recycle();
+  }
+
+  private void updateScrollState() {
+    Optional<Boolean> canWholeViewsScrollDown = canWholeViewsScrollDown();
+    if (canWholeViewsScrollDown.isPresent()) {
+      onScrolling(!canWholeViewsScrollDown.get());
+    }
   }
 
   private void initialLogging() {
@@ -476,10 +488,12 @@ public class GlifLayout extends PartnerCustomizationLayout {
     ScrollView scrollView = getScrollView();
     if (scrollView != null) {
       scrollView.getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
+      scrollView.getViewTreeObserver().removeOnGlobalLayoutListener(onGlobalLayoutListener);
     }
     ScrollView headerScrollView = getHeaderScrollView();
     if (headerScrollView != null) {
       headerScrollView.getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
+      headerScrollView.getViewTreeObserver().removeOnGlobalLayoutListener(onGlobalLayoutListener);
     }
   }
 
@@ -743,9 +757,11 @@ public class GlifLayout extends PartnerCustomizationLayout {
 
     if (scrollView != null) {
       scrollView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
+      scrollView.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
     }
     if (headerScrollView != null) {
       headerScrollView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
+      headerScrollView.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
     }
 
     // Add onPreDrawListener to check the scroll state after the layout is drawn to avoid the
