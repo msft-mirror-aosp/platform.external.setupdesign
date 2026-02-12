@@ -227,7 +227,7 @@
     <color name="sud_glif_expressive_ic_back_arrow_color">@color/sud_color_on_surface</color>
     <color name="sud_glif_expressive_footer_primary_button_enable_text_color">@color/sud_system_on_primary</color>
     <color name="sud_glif_expressive_footer_primary_button_disable_text_color">@color/sud_on_surface_variant</color>
-    <color name="sud_glif_expressive_footer_secondary_button_enable_text_color">@color/sud_color_primary</color>
+    <color name="sud_glif_expressive_footer_secondary_button_enable_text_color">@color/sud_on_secondary_container</color>
     <color name="sud_glif_expressive_footer_secondary_button_disable_text_color">@color/sud_on_surface_variant</color>
 
   <!-- Light dynamic system palette -->
@@ -333,6 +333,5 @@
   <color name="sud_system_surface_container_high_dark">#ff2a2a2a</color>
   <color name="sud_system_surface_container_highest_dark">#ff343434</color>
 
-  <color name="sud_accessibility_button_background_color">@color/sud_system_secondary_container_light</color>
   <color name="sud_card_view_selected_background_color">@color/sud_system_primary_container_light</color>
 </resources>

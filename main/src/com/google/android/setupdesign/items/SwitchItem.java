@@ -18,8 +18,8 @@ package com.google.android.setupdesign.items;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+import android.os.Build.VERSION;
 import androidx.appcompat.widget.SwitchCompat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -101,7 +101,7 @@ public class SwitchItem extends Item implements CompoundButton.OnCheckedChangeLi
     switchView.setChecked(checked);
     if (ThemeHelper.shouldApplyGlifExpressiveStyle(view.getContext())
         && VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
-      updateThumbIconDrawable(switchView);
+      updateThumbIconDrawable(switchView, checked);
     }
   }
 
@@ -114,7 +114,7 @@ public class SwitchItem extends Item implements CompoundButton.OnCheckedChangeLi
 
     if (ThemeHelper.shouldApplyGlifExpressiveStyle(view.getContext())
         && VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
-      updateThumbIconDrawable(switchView);
+      updateThumbIconDrawable(switchView, checked);
     }
     switchView.setOnCheckedChangeListener(this);
     switchView.setEnabled(isEnabled());
@@ -133,7 +133,7 @@ public class SwitchItem extends Item implements CompoundButton.OnCheckedChangeLi
     checked = isChecked;
     if (ThemeHelper.shouldApplyGlifExpressiveStyle(buttonView.getContext())
         && VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
-      updateThumbIconDrawable(buttonView);
+      updateThumbIconDrawable(buttonView, isChecked);
     }
     if (listener != null) {
       listener.onCheckedChange(this, isChecked);
@@ -141,10 +141,14 @@ public class SwitchItem extends Item implements CompoundButton.OnCheckedChangeLi
   }
 
   @RequiresApi(VERSION_CODES.LOLLIPOP)
-  private void updateThumbIconDrawable(View view) {
+  private void updateThumbIconDrawable(View view, boolean checked) {
     if (view instanceof MaterialSwitch materialSwitch) {
-      materialSwitch.setThumbIconDrawable(
-          view.getContext().getDrawable(R.drawable.sud_ic_switch_selector_expressive));
+      if (checked) {
+        materialSwitch.setThumbIconDrawable(
+            view.getContext().getDrawable(R.drawable.sud_ic_switch_selector_expressive));
+      } else {
+        materialSwitch.setThumbIconDrawable(null);
+      }
     }
   }
 }
