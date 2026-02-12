@@ -139,7 +139,7 @@ public class GlifRecyclerLayout extends GlifLayout {
         } else {
         template = R.layout.sud_glif_recycler_embedded_template;
         }
-        // TODO(b/366141305) add unit test for this case.
+        // TODO add unit test for this case.
       } else if (isGlifExpressiveEnabled()) {
         template = R.layout.sud_glif_expressive_recycler_template;
       } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {

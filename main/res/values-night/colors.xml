@@ -42,5 +42,6 @@
   <!-- neutral_variant80 -->
   <color name="sud_glif_expressive_footer_secondary_button_disable_text_color">#ffcac4d0</color>
 
+  <color name="sud_accessibility_button_background_color">@color/sud_system_secondary_container_dark</color>
   <color name="sud_card_view_selected_background_color">@color/sud_system_primary_container_dark</color>
 </resources>
