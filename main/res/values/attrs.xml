@@ -430,6 +430,10 @@
         <attr name="sudUseBottomProgressBar" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="SudSetupProgressIndicatorMixin">
+        <attr name="sudShowSetupProgressIndicator" format="boolean" />
+    </declare-styleable>
+
     <declare-styleable name="SudGlifLoadingFramePadding">
         <attr name="sudLoadingContentFramePaddingTop" format="dimension|reference" />
         <attr name="sudLoadingContentFramePaddingStart" format="dimension|reference" />

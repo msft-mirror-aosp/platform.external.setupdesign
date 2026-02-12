@@ -283,13 +283,13 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
                 .getDimension(view.getContext(), PartnerConfig.CONFIG_ITEMS_GROUP_CORNER_RADIUS);
     float cornerRadius = getCornerRadius(view.getContext());
     Drawable drawable = view.getBackground();
-    // TODO(b/369531582) add test case for list item group corner partner config
+    // TODO add test case for list item group corner partner config
     if (drawable instanceof LayerDrawable && ((LayerDrawable) drawable).getNumberOfLayers() >= 2) {
       Drawable clickDrawable = ((LayerDrawable) drawable).getDrawable(1);
       Drawable backgroundDrawable = null;
       GradientDrawable background = null;
 
-      // TODO(b/400607394) add test case in updateBackground for list item to get background for Item
+      // TODO add test case in updateBackground for list item to get background for Item
       if (isFirstItemOfGroup(position) && isLastItemOfGroup(position)) {
         backgroundDrawable = getSingleBackground(view.getContext(), position);
       } else if (isFirstItemOfGroup(position)) {
@@ -339,7 +339,7 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     if (holder.isRecyclable() != item.isRecyclable()) {
       holder.setIsRecyclable(item.isRecyclable());
     }
-    // TODO(b/369488795)  when getContext is not activity context then fallback to out suw behavior
+    // TODO  when getContext is not activity context then fallback to out suw behavior
     if (PartnerConfigHelper.isGlifExpressiveEnabled(holder.itemView.getContext())) {
       updateBackground(holder.itemView, position);
       updateMargin(holder.itemView);

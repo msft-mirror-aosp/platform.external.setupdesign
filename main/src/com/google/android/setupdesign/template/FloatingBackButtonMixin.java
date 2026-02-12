@@ -157,6 +157,12 @@ public class FloatingBackButtonMixin implements Mixin {
 
     viewStub.setLayoutInflater(inflater);
     viewStub.inflate();
+
+    Button backButton = templateLayout.findManagedViewById(R.id.sud_floating_back_button);
+    View titleView = templateLayout.findManagedViewById(R.id.suc_layout_title);
+    if (backButton != null && titleView != null) {
+      backButton.setAccessibilityTraversalBefore(titleView.getId());
+    }
   }
 
   protected FrameLayout getContainerView() {

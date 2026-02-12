@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2026 The Android Open Source Project
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<!-- TODO: b/472218697 - Update the layout as per the requirements once the mocks are finalized. -->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minWidth="@dimen/sud_glif_expressive_setup_progress_indicator_container_min_size"
+    android:minHeight="@dimen/sud_glif_expressive_setup_progress_indicator_container_min_size"
+    android:padding="@dimen/sud_glif_expressive_setup_progress_indicator_container_padding"
+    android:clickable="true"
+    android:focusable="true"
+    android:filterTouchesWhenObscured="true">
+
+    <com.google.android.material.loadingindicator.LoadingIndicator
+        android:id="@+id/sud_setup_progress_indicator_indeterminate"
+        style="@style/Widget.Material3.LoadingIndicator.Contained"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="false"
+        app:indicatorColor="?attr/colorPrimary"
+        app:containerColor="?attr/colorSurfaceContainerHigh"
+        app:indicatorSize="@dimen/sud_glif_expressive_setup_progress_loading_indicator_size"
+        app:containerWidth="@dimen/sud_glif_expressive_setup_progress_indicator_min_size"
+        app:containerHeight="@dimen/sud_glif_expressive_setup_progress_indicator_min_size"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/sud_setup_progress_indicator_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="@dimen/sud_glif_expressive_setup_progress_indicator_min_size"
+        android:minHeight="@dimen/sud_glif_expressive_setup_progress_indicator_min_size"
+        android:clickable="false"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="0dp"
+        android:background="@drawable/sud_setup_progress_indicator_background"
+        android:backgroundTint="?attr/colorPrimary"
+        android:textSize="@dimen/sud_glif_expressive_setup_progress_indicator_text_size"
+        android:textColor="?attr/colorOnSecondary"
+        android:includeFontPadding="false"
+        android:fontFamily="@string/sudGlifExpressiveDialogFontFamily"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/sud_setup_progress_indicator_icon"
+        android:contentDescription="@string/sud_setup_progress_indicator_icon_description"
+        android:layout_width="@dimen/sud_glif_expressive_setup_progress_indicator_min_size"
+        android:layout_height="@dimen/sud_glif_expressive_setup_progress_indicator_min_size"
+        android:clickable="false"
+        android:padding="@dimen/sud_glif_expressive_setup_progress_indicator_icon_padding"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:tint="?attr/colorPrimary"
+        android:background="@drawable/sud_setup_progress_indicator_background"
+        android:backgroundTint="?attr/colorSurfaceContainerHigh"
+        android:visibility="gone"/>
+
+</FrameLayout>

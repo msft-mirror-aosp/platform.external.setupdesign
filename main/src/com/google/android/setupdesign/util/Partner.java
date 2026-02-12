@@ -22,6 +22,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
@@ -63,7 +64,9 @@ public class Partner {
       "com.android.setupwizard.action.PARTNER_CUSTOMIZATION";
 
   private static boolean searched = false;
+  @Nullable private static ApplicationInfo partnerApplicationInfo;
   @Nullable private static Partner partner;
+  @Nullable private static Configuration cachedConfiguration;
 
   /**
    * Gets the string-array from partner overlay. If not available, an empty array will be returned.
@@ -216,6 +219,7 @@ public class Partner {
    * com.android.setupwizard.action.PARTNER_CUSTOMIZATION} intent action. The overlay package must
    * also be a system package.
    */
+  @Nullable
   public static synchronized Partner get(Context context) {
     if (!searched) {
       PackageManager pm = context.getPackageManager();
@@ -241,24 +245,45 @@ public class Partner {
         }
         final ApplicationInfo appInfo = info.activityInfo.applicationInfo;
         if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-          try {
-            final Resources res = pm.getResourcesForApplication(appInfo);
-            partner = new Partner(appInfo.packageName, res);
-            break;
-          } catch (NameNotFoundException e) {
-            Log.w(TAG, "Failed to find resources for " + appInfo.packageName);
-          }
+          partnerApplicationInfo = appInfo;
+          break;
         }
       }
       searched = true;
+    }
+
+    if (partnerApplicationInfo == null) {
+      Log.w(TAG, "No partner package found!");
+      return null;
+    }
+
+    Configuration currentConfig = context.getResources().getConfiguration();
+    // Force refresh partner resource if configuration changed or partner is not initialized yet
+    if (partner == null
+        || cachedConfiguration == null
+        || cachedConfiguration.compareTo(currentConfig) != 0) {
+      try {
+        Log.i(TAG, "Refreshing partner resources");
+        Resources res =
+            context.getPackageManager().getResourcesForApplication(partnerApplicationInfo);
+        partner = new Partner(partnerApplicationInfo.packageName, res);
+        cachedConfiguration = new Configuration(currentConfig);
+      } catch (NameNotFoundException e) {
+        Log.w(TAG, "Failed to find resources for " + partnerApplicationInfo.packageName);
+        cachedConfiguration = null;
+        partner = null;
+        return null;
+      }
     }
     return partner;
   }
 
   @VisibleForTesting
   public static synchronized void resetForTesting() {
-    searched = false;
+    cachedConfiguration = null;
+    partnerApplicationInfo = null;
     partner = null;
+    searched = false;
   }
 
   private final String packageName;
