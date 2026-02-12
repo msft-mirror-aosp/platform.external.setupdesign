@@ -438,7 +438,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
         } else {
           template = R.layout.sud_glif_embedded_template;
         }
-        // TODO(b/366141305) add unit test for this case.
+        // TODO add unit test for this case.
       } else if (isGlifExpressiveEnabled()) {
         template = R.layout.sud_glif_expressive_template;
       } else if (ForceTwoPaneHelper.isForceTwoPaneEnable(getContext())) {
@@ -870,6 +870,14 @@ public class GlifLayout extends PartnerCustomizationLayout {
     return getColorFromTheme(R.attr.sudFooterBackgroundColor);
   }
 
+  public boolean isShortcutIconVisible() {
+    ImageButton accessibilityButton = findManagedViewById(R.id.accessibility_button);
+    boolean useA11yShortcut = PartnerConfigHelper.isSuwUseA11yShortcutEnabled(getContext());
+    boolean useSuwModal = PartnerConfigHelper.isSuwUseModalDialogEnabled(getContext());
+
+    return (accessibilityButton != null && useA11yShortcut && useSuwModal);
+  }
+
   /**
    * Make button visible and register the {@link Activity#onBackPressed()} to the on click event of
    * the floating back button. It works when {@link
@@ -914,6 +922,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
                     .getString(getContext(), PartnerConfig.CONFIG_ASSISTIVE_OPTIONS_ACTIVITY_NAME);
             Intent intent = new Intent(packageName + "." + activityName);
             intent.setPackage(packageName);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
             intent.putExtra(WizardManagerHelper.EXTRA_IS_FIRST_RUN, true);
             intent.putExtra(WizardManagerHelper.EXTRA_IS_SETUP_FLOW, true);
@@ -958,7 +967,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
     return typedValue.data;
   }
 
-  // TODO: Add test case for edge to edge to layout from library.
+  // TODO: b/398407478 - Add test case for edge to edge to layout from library.
   @Override
   public WindowInsets onApplyWindowInsets(WindowInsets insets) {
     if (isGlifExpressiveEnabled()) {
