@@ -96,8 +96,6 @@
         </LinearLayout>
 
         <include layout="@layout/sud_glif_floating_back_button" />
-        <include layout="@layout/sud_glif_floating_setup_progress_indicator" />
-
     </FrameLayout>
 
     <ViewStub

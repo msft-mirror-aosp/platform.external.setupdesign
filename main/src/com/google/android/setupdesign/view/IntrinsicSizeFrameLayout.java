@@ -122,8 +122,14 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
     }
 
     if (PartnerConfigHelper.shouldApplyModalDialog(context)) {
-      // Get the window's visible display frame.
-      getWindowVisibleDisplayFrame(windowVisibleDisplayRect);
+      if (VERSION.SDK_INT >= VERSION_CODES.R) {
+        WindowManager windowManager = getContext().getSystemService(WindowManager.class);
+        WindowMetrics windowMetrics = windowManager.getCurrentWindowMetrics();
+        windowVisibleDisplayRect.set(windowMetrics.getBounds());
+      } else {
+        // Get the window's visible display frame.
+        getWindowVisibleDisplayFrame(windowVisibleDisplayRect);
+      }
 
       // Clamp the dimensions to the supported range.
       Point finalGoodSize =
@@ -155,7 +161,7 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
     if (PartnerConfigHelper.shouldApplyModalDialog(getContext())) {
       int measuredHeight = intrinsicHeight;
-      if (VERSION.SDK_INT >= VERSION_CODES.S && lastInsets != null) {
+      if (VERSION.SDK_INT >= VERSION_CODES.R && lastInsets != null) {
         WindowManager windowManager = getContext().getSystemService(WindowManager.class);
         WindowMetrics windowMetrics = windowManager.getCurrentWindowMetrics();
 
@@ -329,20 +335,10 @@ public class IntrinsicSizeFrameLayout extends FrameLayout {
         convertDpToPixel(
             getContext().getResources().getInteger(R.integer.modal_dialog_max_smallest_edge_dp));
 
-    int finalLargestEdge = largestEdgePx;
-    int finalSmallestEdge = smallestEdgePx;
-
-    // If the longest edge is smaller than our minimum, scale it up to the minimum size.
-    if (largestEdgePx < minLargestEdgePx) {
-      finalLargestEdge = (int) minLargestEdgePx;
-      finalSmallestEdge = (int) minSmallestEdgePx;
-    }
-
-    // If the longest edge is larger than our maximum, scale it down to the maximum size.
-    if (largestEdgePx > maxLargestEdgePx) {
-      finalLargestEdge = (int) maxLargestEdgePx;
-      finalSmallestEdge = (int) maxSmallestEdgePx;
-    }
+    int finalLargestEdge =
+        max((int) minLargestEdgePx, min(largestEdgePx, (int) maxLargestEdgePx));
+    int finalSmallestEdge =
+        max((int) minSmallestEdgePx, min(smallestEdgePx, (int) maxSmallestEdgePx));
 
     return new Point(finalLargestEdge, finalSmallestEdge);
   }

@@ -72,7 +72,6 @@ import com.google.android.setupcompat.util.Logger;
 import com.google.android.setupcompat.util.WizardManagerHelper;
 import com.google.android.setupdesign.template.DescriptionMixin;
 import com.google.android.setupdesign.template.FloatingBackButtonMixin;
-import com.google.android.setupdesign.template.FloatingSetupProgressIndicatorMixin;
 import com.google.android.setupdesign.template.HeaderMixin;
 import com.google.android.setupdesign.template.IconMixin;
 import com.google.android.setupdesign.template.IllustrationProgressMixin;
@@ -120,10 +119,15 @@ public class GlifLayout extends PartnerCustomizationLayout {
       new ViewTreeObserver.OnScrollChangedListener() {
         @Override
         public void onScrollChanged() {
-          Optional<Boolean> canWholeViewsScrollDown = canWholeViewsScrollDown();
-          if (canWholeViewsScrollDown.isPresent()) {
-            onScrolling(!canWholeViewsScrollDown.get());
-          }
+          updateScrollState();
+        }
+      };
+
+  private ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener =
+      new ViewTreeObserver.OnGlobalLayoutListener() {
+        @Override
+        public void onGlobalLayout() {
+          updateScrollState();
         }
       };
 
@@ -173,9 +177,6 @@ public class GlifLayout extends PartnerCustomizationLayout {
     registerMixin(IllustrationProgressMixin.class, new IllustrationProgressMixin(this));
     registerMixin(
         FloatingBackButtonMixin.class, new FloatingBackButtonMixin(this, attrs, defStyleAttr));
-    registerMixin(
-        FloatingSetupProgressIndicatorMixin.class,
-        new FloatingSetupProgressIndicatorMixin(this, attrs, defStyleAttr));
     final RequireScrollMixin requireScrollMixin = new RequireScrollMixin(this);
     registerMixin(RequireScrollMixin.class, requireScrollMixin);
     final ScrollView scrollView = getScrollView();
@@ -237,6 +238,13 @@ public class GlifLayout extends PartnerCustomizationLayout {
     initAccessibilityButton();
     initialLogging();
     a.recycle();
+  }
+
+  private void updateScrollState() {
+    Optional<Boolean> canWholeViewsScrollDown = canWholeViewsScrollDown();
+    if (canWholeViewsScrollDown.isPresent()) {
+      onScrolling(!canWholeViewsScrollDown.get());
+    }
   }
 
   private void initialLogging() {
@@ -461,16 +469,6 @@ public class GlifLayout extends PartnerCustomizationLayout {
   }
 
   @Override
-  protected void onAttachedToWindow() {
-    super.onAttachedToWindow();
-    FloatingSetupProgressIndicatorMixin floatingSetupProgressIndicatorMixin =
-        getMixin(FloatingSetupProgressIndicatorMixin.class);
-    if (floatingSetupProgressIndicatorMixin != null) {
-      floatingSetupProgressIndicatorMixin.onAttachedToWindow();
-    }
-  }
-
-  @Override
   protected void onDetachedFromWindow() {
     super.onDetachedFromWindow();
     // Log metrics of UI component
@@ -490,10 +488,12 @@ public class GlifLayout extends PartnerCustomizationLayout {
     ScrollView scrollView = getScrollView();
     if (scrollView != null) {
       scrollView.getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
+      scrollView.getViewTreeObserver().removeOnGlobalLayoutListener(onGlobalLayoutListener);
     }
     ScrollView headerScrollView = getHeaderScrollView();
     if (headerScrollView != null) {
       headerScrollView.getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
+      headerScrollView.getViewTreeObserver().removeOnGlobalLayoutListener(onGlobalLayoutListener);
     }
   }
 
@@ -757,9 +757,11 @@ public class GlifLayout extends PartnerCustomizationLayout {
 
     if (scrollView != null) {
       scrollView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
+      scrollView.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
     }
     if (headerScrollView != null) {
       headerScrollView.getViewTreeObserver().addOnScrollChangedListener(onScrollChangedListener);
+      headerScrollView.getViewTreeObserver().addOnGlobalLayoutListener(onGlobalLayoutListener);
     }
 
     // Add onPreDrawListener to check the scroll state after the layout is drawn to avoid the
