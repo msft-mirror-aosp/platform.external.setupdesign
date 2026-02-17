@@ -33,5 +33,6 @@
     <string name="sud_lottie_animation_view_accessibility_action_resume" msgid="5654144404528664842">"പുനരാരംഭിക്കുക"</string>
     <string name="sud_lottie_animation_view_accessibility_description" msgid="2130817807970911136">"ആനിമേഷൻ"</string>
     <string name="sud_qrcode_content_description" msgid="7201320681442117512">"QR കോഡ്"</string>
+    <string name="sud_accessibility_button_label" msgid="482144917611196550">"ഉപയോഗസഹായി"</string>
     <string name="sud_qrcode_animation_control" msgid="219222410307225239">"ആനിമേഷൻ താൽക്കാലികമായി നിർത്തുക"</string>
 </resources>
