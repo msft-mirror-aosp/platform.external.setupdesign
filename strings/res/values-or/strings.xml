@@ -33,7 +33,6 @@
     <string name="sud_lottie_animation_view_accessibility_action_resume" msgid="5654144404528664842">"ରିଜ୍ୟୁମ କରନ୍ତୁ"</string>
     <string name="sud_lottie_animation_view_accessibility_description" msgid="2130817807970911136">"ଆନିମେସନ"</string>
     <string name="sud_qrcode_content_description" msgid="7201320681442117512">"QR କୋଡ"</string>
-    <!-- no translation found for sud_accessibility_button_label (482144917611196550) -->
-    <skip />
+    <string name="sud_accessibility_button_label" msgid="482144917611196550">"ଆକ୍ସେସିବିଲିଟୀ"</string>
     <string name="sud_qrcode_animation_control" msgid="219222410307225239">"ଆନିମେସନକୁ ବିରତ କରନ୍ତୁ"</string>
 </resources>
