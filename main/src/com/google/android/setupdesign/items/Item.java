@@ -22,6 +22,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -75,6 +76,8 @@ public class Item extends AbstractItem implements LinkSpan.OnLinkClickListener {
   @ColorInt private int iconTint = Color.TRANSPARENT;
   @ColorInt private int titleColor = Color.TRANSPARENT;
   private int iconGravity = Gravity.CENTER_VERTICAL;
+  private ItemStyler.FocusIndicatorShape focusIndicatorShape =
+      ItemStyler.FocusIndicatorShape.RECTANGLE;
 
   public Item() {
     super();
@@ -253,6 +256,10 @@ public class Item extends AbstractItem implements LinkSpan.OnLinkClickListener {
     return visible;
   }
 
+  public void setFocusIndicatorShape(ItemStyler.FocusIndicatorShape focusIndicatorShape) {
+    this.focusIndicatorShape = focusIndicatorShape;
+  }
+
   private boolean hasSummary(CharSequence summary) {
     return summary != null && summary.length() > 0;
   }
@@ -328,6 +335,9 @@ public class Item extends AbstractItem implements LinkSpan.OnLinkClickListener {
     }
     ItemStyler.applyPartnerCustomizationItemStyle(view);
     ItemStyler.applyPartnerCustomizationItemViewBackgroundColor(view);
+    if (!isGroupDivider()) {
+      ItemStyler.applyFocusRingDrawable(view.getContext(), view, focusIndicatorShape, null);
+    }
   }
 
   /**
