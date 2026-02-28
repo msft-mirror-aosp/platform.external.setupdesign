@@ -21,6 +21,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -244,6 +245,7 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
         convertView = linearLayout.getChildAt(0);
       }
       updateBackground(convertView, position);
+      setFocusIndicatorShapeForItem(item, position);
       item.onBindView(convertView);
       updateMargin(convertView);
       return linearLayout;
@@ -255,6 +257,21 @@ public class ItemAdapter extends BaseAdapter implements ItemHierarchy.Observer {
       }
       item.onBindView(convertView);
       return convertView;
+    }
+  }
+
+  private void setFocusIndicatorShapeForItem(IItem item, int position) {
+    if (item instanceof Item) {
+      if (isFirstItemOfGroup(position) && isLastItemOfGroup(position)) {
+        ((Item) item).setFocusIndicatorShape(ItemStyler.FocusIndicatorShape.ROUNDED_RECTANGLE);
+      } else if (isFirstItemOfGroup(position)) {
+        ((Item) item).setFocusIndicatorShape(ItemStyler.FocusIndicatorShape.TOP_ROUNDED_RECTANGLE);
+      } else if (isLastItemOfGroup(position)) {
+        ((Item) item)
+            .setFocusIndicatorShape(ItemStyler.FocusIndicatorShape.BOTTOM_ROUNDED_RECTANGLE);
+      } else {
+        ((Item) item).setFocusIndicatorShape(ItemStyler.FocusIndicatorShape.RECTANGLE);
+      }
     }
   }
 

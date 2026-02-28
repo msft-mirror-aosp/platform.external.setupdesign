@@ -18,6 +18,7 @@ package com.google.android.setupdesign.util;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.view.Gravity;
@@ -203,6 +204,73 @@ public final class ItemStyler {
         layoutParams.setMarginEnd(marginEnd);
       }
     }
+  }
+  /** Enum representing the different shapes for the focus ring drawable. */
+  public enum FocusIndicatorShape {
+    /** See {@link com.google.android.setupcompat.R.drawable#suc_global_focus_indicator_rectangle}. */
+    RECTANGLE,
+    /** See {@link R.drawable#sud_global_focus_indicator_circle}. */
+    CIRCLE,
+    /** See {@link com.google.android.setupcompat.R.drawable#suc_global_focus_indicator_rounded_rectangle}. */
+    ROUNDED_RECTANGLE,
+    /** See {@link com.google.android.setupcompat.R.drawable#suc_global_focus_indicator_top_rounded_rectangle}. */
+    TOP_ROUNDED_RECTANGLE,
+    /** See {@link com.google.android.setupcompat.R.drawable#suc_global_focus_indicator_bottom_rounded_rectangle}. */
+    BOTTOM_ROUNDED_RECTANGLE
+  }
+
+  /**
+   * Applies a focus ring drawable to the given {@code listItemView}. The focus ring shape and color
+   * can be customized. This will only apply if focus ring is enabled via {@link
+   * PartnerConfigHelper#isSuwUseFocusRingEnabled(Context)}.
+   *
+   * @param context The context.
+   * @param listItemView The view to apply the focus ring drawable to.
+   * @param shape The desired shape of the focus indicator.
+   * @param color An optional color to tint the focus indicator drawable. If null, the default
+   *     primary color will be used.
+   */
+  public static void applyFocusRingDrawable(
+      Context context,
+      @Nullable View listItemView,
+      FocusIndicatorShape shape,
+      @Nullable Integer color) {
+    if (context == null || !PartnerConfigHelper.isSuwUseFocusRingEnabled(context)) {
+      return;
+    }
+    if (listItemView == null) {
+      return;
+    }
+
+    LOG.atInfo("Adding focus ring drawable with shape: " + shape);
+    int drawableResId;
+    switch (shape) {
+      case CIRCLE:
+        drawableResId = R.drawable.sud_global_focus_indicator_circle;
+        break;
+      case ROUNDED_RECTANGLE:
+        drawableResId = com.google.android.setupcompat.R.drawable.suc_global_focus_indicator_rounded_rectangle;
+        break;
+      case TOP_ROUNDED_RECTANGLE:
+        drawableResId = com.google.android.setupcompat.R.drawable.suc_global_focus_indicator_top_rounded_rectangle;
+        break;
+      case BOTTOM_ROUNDED_RECTANGLE:
+        drawableResId = com.google.android.setupcompat.R.drawable.suc_global_focus_indicator_bottom_rounded_rectangle;
+        break;
+      case RECTANGLE:
+      default:
+        drawableResId = com.google.android.setupcompat.R.drawable.suc_global_focus_indicator_rectangle;
+        break;
+    }
+    Drawable focusIndicatorDrawable = context.getDrawable(drawableResId);
+    if (focusIndicatorDrawable == null) {
+      return;
+    }
+    if (color != null) {
+      focusIndicatorDrawable = focusIndicatorDrawable.mutate();
+      focusIndicatorDrawable.setTint(color);
+    }
+    listItemView.setForeground(focusIndicatorDrawable);
   }
 
   public static void applyPartnerCustomizationItemViewLayoutStyle(@Nullable View listItemView) {

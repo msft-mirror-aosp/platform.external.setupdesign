@@ -344,7 +344,23 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
       updateBackground(holder.itemView, position);
       updateMargin(holder.itemView);
     }
+    updateFocusIndicatorShape(item, position);
     item.onBindView(holder.itemView);
+  }
+  
+  private void updateFocusIndicatorShape(IItem item, int position) {
+    if (item instanceof Item) {
+      if (isFirstItemOfGroup(position) && isLastItemOfGroup(position)) {
+        ((Item) item).setFocusIndicatorShape(ItemStyler.FocusIndicatorShape.ROUNDED_RECTANGLE);
+      } else if (isFirstItemOfGroup(position)) {
+        ((Item) item).setFocusIndicatorShape(ItemStyler.FocusIndicatorShape.TOP_ROUNDED_RECTANGLE);
+      } else if (isLastItemOfGroup(position)) {
+        ((Item) item)
+            .setFocusIndicatorShape(ItemStyler.FocusIndicatorShape.BOTTOM_ROUNDED_RECTANGLE);
+      } else {
+        ((Item) item).setFocusIndicatorShape(ItemStyler.FocusIndicatorShape.RECTANGLE);
+      }
+    }
   }
 
   private void updateMargin(View view) {

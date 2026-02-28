@@ -35,6 +35,7 @@ import com.google.android.setupcompat.template.Mixin;
 import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.util.HeaderAreaStyler;
 import com.google.android.setupdesign.util.PartnerStyleHelper;
+import com.google.android.setupdesign.util.ItemStyler;
 
 /** A {@link Mixin} for controlling back button on the template layout. */
 public class FloatingBackButtonMixin implements Mixin {
@@ -160,8 +161,12 @@ public class FloatingBackButtonMixin implements Mixin {
 
     Button backButton = templateLayout.findManagedViewById(R.id.sud_floating_back_button);
     View titleView = templateLayout.findManagedViewById(R.id.suc_layout_title);
-    if (backButton != null && titleView != null) {
-      backButton.setAccessibilityTraversalBefore(titleView.getId());
+    if (backButton != null) {
+      ItemStyler.applyFocusRingDrawable(
+          backButton.getContext(), backButton, ItemStyler.FocusIndicatorShape.CIRCLE, null);
+      if (titleView != null) {
+        backButton.setAccessibilityTraversalBefore(titleView.getId());
+      }
     }
   }
 
