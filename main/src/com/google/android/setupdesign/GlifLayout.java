@@ -890,7 +890,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
   public boolean isShortcutIconVisible() {
     ImageButton accessibilityButton = findManagedViewById(R.id.accessibility_button);
     boolean useA11yShortcut = PartnerConfigHelper.isSuwUseA11yShortcutEnabled(getContext());
-    boolean useSuwModal = PartnerConfigHelper.isSuwUseModalDialogEnabled(getContext());
+    boolean useSuwModal = PartnerConfigHelper.shouldApplyModalDialog(getContext());
 
     return (accessibilityButton != null && useA11yShortcut && useSuwModal);
   }
@@ -918,7 +918,7 @@ public class GlifLayout extends PartnerCustomizationLayout {
   private void initAccessibilityButton() {
     ImageButton accessibilityButton = findManagedViewById(R.id.accessibility_button);
     boolean useA11yShortcut = PartnerConfigHelper.isSuwUseA11yShortcutEnabled(getContext());
-    boolean useSuwModal = PartnerConfigHelper.isSuwUseModalDialogEnabled(getContext());
+    boolean useSuwModal = PartnerConfigHelper.shouldApplyModalDialog(getContext());
 
     if (accessibilityButton == null || !useA11yShortcut || !useSuwModal) {
       return;
