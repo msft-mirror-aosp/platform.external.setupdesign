@@ -38,26 +38,37 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:baselineAligned="false" 
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:clipChildren="?attr/sudClipChildren"
             android:clipToPadding="?attr/sudClipToPadding">
 
-            <LinearLayout
-                android:id="@+id/sud_landscape_header_area"
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="@dimen/sud_glif_land_header_area_weight"
-                android:orientation="vertical"
                 android:clipChildren="?attr/sudClipChildren"
                 android:clipToPadding="?attr/sudClipToPadding">
 
-                <ViewStub
-                    android:id="@+id/sud_layout_sticky_header"
+                <LinearLayout
+                    android:id="@+id/sud_landscape_header_area"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:clipChildren="?attr/sudClipChildren"
+                    android:clipToPadding="?attr/sudClipToPadding">
 
-            </LinearLayout>
+
+                    <ViewStub
+                        android:id="@+id/sud_layout_sticky_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <include layout="@layout/sud_glif_floating_setup_progress_indicator" />
+
+            </FrameLayout>
 
             <LinearLayout
                 android:id="@+id/sud_landscape_content_area"
@@ -75,11 +86,12 @@
                     android:clipChildren="?attr/sudClipChildren"
                     android:clipToPadding="?attr/sudClipToPadding" />
 
+            </LinearLayout>
+
         </LinearLayout>
 
-    </LinearLayout>
-
         <include layout="@layout/sud_glif_floating_back_button" />
+
     </FrameLayout>
 
     <ViewStub

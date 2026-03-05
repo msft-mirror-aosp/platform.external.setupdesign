@@ -29,8 +29,8 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
+import com.google.android.setupcompat.util.FocusIndicatorDrawable;
 import com.google.android.setupdesign.R;
-import com.google.android.setupdesign.util.ItemStyler;
 
 /**
  * Description of a button inside {@link com.google.android.setupdesign.items.ButtonBarItem}. This
@@ -153,8 +153,14 @@ public class ButtonItem extends AbstractItem implements View.OnClickListener {
     button.setEnabled(enabled);
     button.setText(text);
     button.setId(getViewId());
-    ItemStyler.applyFocusRingDrawable(
-        button.getContext(), button, ItemStyler.FocusIndicatorShape.ROUNDED_RECTANGLE, null);
+    if (PartnerConfigHelper.isSuwUseFocusRingEnabled(button.getContext())) {
+      button.setForeground(
+          new FocusIndicatorDrawable.Builder(button.getContext())
+              .withVerticalPaddingAdjustment(3)
+              .withHorizontalPaddingAdjustment(-1)
+              .withCornerRadius(999)
+              .build());
+    }
     if (button instanceof MaterialButton materialButton) {
       materialButton.setIcon(icon);
     } else {

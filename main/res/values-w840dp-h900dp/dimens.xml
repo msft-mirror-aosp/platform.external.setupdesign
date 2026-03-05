@@ -35,4 +35,8 @@
     <!-- Calculated by (sud_glif_expressive_margin_start - 4dp internal padding of button) -->
     <dimen name="sud_glif_expressive_back_button_margin_start">44dp</dimen>
 
+    <!-- Material floating setup progress indicator -->
+    <!-- Calculated by (sud_glif_expressive_margin_end - 4dp internal padding of indicator) -->
+    <dimen name="sud_glif_expressive_setup_progress_indicator_margin_end">44dp</dimen>
+
 </resources>

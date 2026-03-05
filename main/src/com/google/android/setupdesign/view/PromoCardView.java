@@ -17,6 +17,7 @@
 package com.google.android.setupdesign.view;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -199,6 +200,26 @@ public class PromoCardView extends LinearLayout {
     if (iconView != null) {
       iconView.setImageDrawable(icon);
       iconView.setVisibility(View.VISIBLE);
+    }
+  }
+
+  public void setIconContainerPadding(int start, int top, int end, int bottom) {
+    View iconContainer = findViewById(R.id.sud_items_icon_container);
+    if (iconContainer != null) {
+      iconContainer.setPaddingRelative(start, top, end, bottom);
+    }
+  }
+
+  public void setIconContainerBackground(Drawable background) {
+    View iconContainer = findViewById(R.id.sud_items_icon_container);
+    if (iconContainer != null) {
+      iconContainer.setBackground(background);
+    }
+  }
+
+  public void setIconTint(ColorStateList tint) {
+    if (iconView != null) {
+      iconView.setImageTintList(tint);
     }
   }
 

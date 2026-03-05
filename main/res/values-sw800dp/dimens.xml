@@ -20,4 +20,7 @@
     <dimen name="sud_content_illustration_max_height">468dp</dimen>
     <dimen name="sud_content_illustration_max_width">468dp</dimen>
 
+    <!-- TODO: b/489013431 - Remove this once the indicator is updated to use Partner Config for its dimensions. -->
+    <!-- Material floating setup progress indicator -->
+    <dimen name="sud_glif_expressive_setup_progress_indicator_margin_end">32dp</dimen>
 </resources>

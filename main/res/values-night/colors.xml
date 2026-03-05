@@ -32,11 +32,19 @@
 
   <color name="sud_color_primary">@color/sud_system_primary_dark</color>
   <color name="sud_system_on_primary">@color/sud_system_on_primary_dark</color>
+  <color name="sud_color_primary_container">@color/sud_system_primary_container_dark</color>
+  <color name="sud_color_secondary">@color/sud_system_secondary_dark</color>
+  <color name="sud_color_secondary_container">@color/sud_system_secondary_container_dark</color>
   <color name="sud_on_secondary_container">@color/sud_system_on_secondary_container_dark</color>
   <color name="sud_color_on_surface">@color/sud_neutral90</color>
+  <color name="sud_color_surface_bright">@color/sud_system_surface_bright_dark</color>
   <color name="sud_color_surface_container_high">@color/sud_system_surface_container_high_dark</color>
   <color name="sud_color_surface_container_highest">@color/sud_neutral22</color>
   <color name="sud_on_surface_variant">@color/sud_system_on_surface_variant_dark</color>
+  <color name="sud_color_tertiary">@color/sud_system_tertiary_dark</color>
+  <color name="sud_color_on_tertiary">@color/sud_system_on_tertiary_dark</color>
+  <color name="sud_color_tertiary_container">@color/sud_system_tertiary_container_dark</color>
+  <color name="sud_color_on_tertiary_container">@color/sud_system_on_tertiary_container_dark</color>
 
   <!-- Glif expressive style -->
   <!-- neutral_variant80 -->

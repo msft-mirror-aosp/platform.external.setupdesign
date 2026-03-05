@@ -311,6 +311,7 @@
         <item name="sudMarginStart">@dimen/sud_glif_margin_start</item>
         <item name="sudMarginEnd">@dimen/sud_glif_margin_end</item>
         <item name="sudBackButtonMarginStart">?attr/sudMarginStart</item>
+        <item name="sudSetupProgressIndicatorMarginEnd">?attr/sudMarginEnd</item>
         <item name="sudScrollIndicators">bottom</item>
         <item name="sudScrollBarThumb">@drawable/sud_scroll_bar_dark</item>
         <item name="textAppearanceListItem">@style/TextAppearance.SudGlifItemTitle</item>
@@ -483,6 +484,7 @@
         <item name="sudMarginStart">@dimen/sud_glif_margin_start</item>
         <item name="sudMarginEnd">@dimen/sud_glif_margin_end</item>
         <item name="sudBackButtonMarginStart">?attr/sudMarginStart</item>
+        <item name="sudSetupProgressIndicatorMarginEnd">?attr/sudMarginEnd</item>
         <item name="sudScrollIndicators">bottom</item>
         <item name="sudScrollBarThumb">@drawable/sud_scroll_bar_light</item>
         <item name="textAppearanceListItem">@style/TextAppearance.SudGlifItemTitle</item>
@@ -868,6 +870,7 @@
         <item name="sudMarginStart">@dimen/sud_glif_expressive_margin_start</item>
         <item name="sudMarginEnd">@dimen/sud_glif_expressive_margin_end</item>
         <item name="sudBackButtonMarginStart">@dimen/sud_glif_expressive_back_button_margin_start</item>
+        <item name="sudSetupProgressIndicatorMarginEnd">@dimen/sud_glif_expressive_setup_progress_indicator_margin_end</item>
         <item name="sudGlifContentPaddingTop">@dimen/sud_glif_expressive_content_padding_top</item>
         <item name="sucFooterButtonPaddingStart">@dimen/sud_glif_expressive_button_padding</item>
         <item name="sucFooterButtonPaddingEnd">@dimen/sud_glif_expressive_button_padding</item>
@@ -1066,6 +1069,7 @@
         <item name="sudMarginStart">@dimen/sud_glif_expressive_margin_start</item>
         <item name="sudMarginEnd">@dimen/sud_glif_expressive_margin_end</item>
         <item name="sudBackButtonMarginStart">@dimen/sud_glif_expressive_back_button_margin_start</item>
+        <item name="sudSetupProgressIndicatorMarginEnd">@dimen/sud_glif_expressive_setup_progress_indicator_margin_end</item>
         <item name="sucFooterButtonPaddingStart">@dimen/sud_glif_expressive_button_padding</item>
         <item name="sucFooterButtonPaddingEnd">@dimen/sud_glif_expressive_button_padding</item>
         <item name="sucGlifIconMarginTop">@dimen/sud_glif_expressive_icon_margin_top</item>
@@ -1924,7 +1928,7 @@
     </style>
 
     <style name="SudGlifAccountAvatar">
-        <!--TODO(b/356046683) create sudAccountAvatarMarginStart to let it as a pair with sudAccountAvatarMarginEnd -->
+        <!--TODO create sudAccountAvatarMarginStart to let it as a pair with sudAccountAvatarMarginEnd -->
         <item name="android:layout_marginRight">?attr/sudAccountAvatarMarginEnd</item>
         <item name="android:layout_marginEnd">?attr/sudAccountAvatarMarginEnd</item>
         <item name="android:adjustViewBounds">true</item>
@@ -1992,6 +1996,31 @@
     <style name="SudGlifButtonContainer">
         <item name="android:layout_marginStart" tools:ignore="NewApi">?attr/sudBackButtonMarginStart</item>
         <item name="android:layout_marginTop">@dimen/sud_glif_expressive_back_button_margin_top</item>
+    </style>
+
+    <style name="SudGlifSetupProgressContainer">
+        <item name="android:layout_marginEnd" tools:ignore="NewApi">?attr/sudSetupProgressIndicatorMarginEnd</item>
+        <item name="android:layout_marginTop">@dimen/sud_glif_expressive_back_button_margin_top</item>
+    </style>
+
+     <!-- Theme Overlay for the Dialog Window -->
+    <style name="SudThemeOverlay.BottomSheetDialog.Rounded" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/SudWidget.BottomSheet.Modal.Rounded</item>
+    </style>
+
+    <!-- Style for the BottomSheet Behavior/View -->
+    <style name="SudWidget.BottomSheet.Modal.Rounded" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="shapeAppearance">@style/SudShapeAppearance.BottomSheet.Rounded</item>
+        <item name="backgroundTint">?attr/colorSurfaceContainer</item>
+    </style>
+
+    <!-- Shape Appearance for the rounded corners -->
+    <style name="SudShapeAppearance.BottomSheet.Rounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">28dp</item>
+        <item name="cornerSizeTopRight">28dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
     </style>
 
     <style name="TextAppearance.SudGlifBody" parent="android:TextAppearance">

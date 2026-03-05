@@ -82,6 +82,7 @@
     <attr name="sudGlifAccountAvatarSize" format="dimension" />
 
     <attr name="sudBackButtonMarginStart" format="dimension" />
+    <attr name="sudSetupProgressIndicatorMarginEnd" format="dimension" />
 
     <attr name="sudButtonAllCaps" format="boolean" />
     <attr name="sudButtonCornerRadius" format="dimension" />
@@ -428,6 +429,16 @@
 
     <declare-styleable name="SudProgressBarMixin">
         <attr name="sudUseBottomProgressBar" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SudSetupProgressIndicatorMixin">
+        <attr name="sudShowSetupProgressIndicator" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SudGradientCircularProgressIndicator">
+        <attr name="sudTrackThickness" format="dimension" />
+        <attr name="sudTrackColor" format="color" />
+        <attr name="sudIsIndeterminate" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="SudGlifLoadingFramePadding">

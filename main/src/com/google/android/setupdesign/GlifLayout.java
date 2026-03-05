@@ -72,6 +72,7 @@ import com.google.android.setupcompat.util.Logger;
 import com.google.android.setupcompat.util.WizardManagerHelper;
 import com.google.android.setupdesign.template.DescriptionMixin;
 import com.google.android.setupdesign.template.FloatingBackButtonMixin;
+import com.google.android.setupdesign.template.FloatingSetupProgressIndicatorMixin;
 import com.google.android.setupdesign.template.HeaderMixin;
 import com.google.android.setupdesign.template.IconMixin;
 import com.google.android.setupdesign.template.IllustrationProgressMixin;
@@ -178,6 +179,9 @@ public class GlifLayout extends PartnerCustomizationLayout {
     registerMixin(IllustrationProgressMixin.class, new IllustrationProgressMixin(this));
     registerMixin(
         FloatingBackButtonMixin.class, new FloatingBackButtonMixin(this, attrs, defStyleAttr));
+    registerMixin(
+        FloatingSetupProgressIndicatorMixin.class,
+        new FloatingSetupProgressIndicatorMixin(this, attrs, defStyleAttr));
     final RequireScrollMixin requireScrollMixin = new RequireScrollMixin(this);
     registerMixin(RequireScrollMixin.class, requireScrollMixin);
     final ScrollView scrollView = getScrollView();
@@ -470,6 +474,16 @@ public class GlifLayout extends PartnerCustomizationLayout {
   }
 
   @Override
+  protected void onAttachedToWindow() {
+    super.onAttachedToWindow();
+    FloatingSetupProgressIndicatorMixin floatingSetupProgressIndicatorMixin =
+        getMixin(FloatingSetupProgressIndicatorMixin.class);
+    if (floatingSetupProgressIndicatorMixin != null) {
+      floatingSetupProgressIndicatorMixin.onAttachedToWindow();
+    }
+  }
+
+  @Override
   protected void onDetachedFromWindow() {
     super.onDetachedFromWindow();
     // Log metrics of UI component
@@ -495,6 +509,11 @@ public class GlifLayout extends PartnerCustomizationLayout {
     if (headerScrollView != null) {
       headerScrollView.getViewTreeObserver().removeOnScrollChangedListener(onScrollChangedListener);
       headerScrollView.getViewTreeObserver().removeOnGlobalLayoutListener(onGlobalLayoutListener);
+    }
+    FloatingSetupProgressIndicatorMixin floatingSetupProgressIndicatorMixin =
+        getMixin(FloatingSetupProgressIndicatorMixin.class);
+    if (floatingSetupProgressIndicatorMixin != null) {
+      floatingSetupProgressIndicatorMixin.onDetachFromWindow();
     }
   }
 

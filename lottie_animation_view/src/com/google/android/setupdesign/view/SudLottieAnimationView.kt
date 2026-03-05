@@ -27,8 +27,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat
 import com.airbnb.lottie.LottieAnimationView
-import com.google.android.setupcompat.R as setupcompatR
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper
+import com.google.android.setupcompat.util.FocusIndicatorDrawable
 import com.google.android.setupcompat.util.Logger
 import com.google.android.setupdesign.strings.R
 
@@ -61,11 +61,11 @@ constructor(context: Context, attrs: AttributeSet? = null) :
   }
 
   private fun applyFocusRingDrawable(view: View) {
-    val drawableResId = setupcompatR.drawable.suc_global_focus_indicator_rectangle
-    val focusIndicatorDrawable = context.getDrawable(drawableResId)
-    if (focusIndicatorDrawable != null) {
-      view.foreground = focusIndicatorDrawable
-    }
+    view.foreground =
+      FocusIndicatorDrawable.Builder(view.context)
+        .withHorizontalPaddingAdjustment(-3)
+        .withVerticalPaddingAdjustment(-3)
+        .build()
   }
 
   private fun buildAccessibilityAction(@StringRes stringId: Int) =

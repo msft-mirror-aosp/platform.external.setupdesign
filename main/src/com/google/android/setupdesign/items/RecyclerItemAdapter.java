@@ -347,7 +347,7 @@ public class RecyclerItemAdapter extends RecyclerView.Adapter<ItemViewHolder>
     updateFocusIndicatorShape(item, position);
     item.onBindView(holder.itemView);
   }
-  
+
   private void updateFocusIndicatorShape(IItem item, int position) {
     if (item instanceof Item) {
       if (isFirstItemOfGroup(position) && isLastItemOfGroup(position)) {

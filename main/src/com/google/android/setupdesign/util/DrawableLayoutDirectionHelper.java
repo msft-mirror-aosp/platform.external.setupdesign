@@ -26,6 +26,12 @@ import android.view.View;
 /** Provides convenience methods to handle drawable layout directions in different SDK versions. */
 public class DrawableLayoutDirectionHelper {
 
+  /** Returns true if the layout direction of {@code view} is RTL. */
+  public static boolean isRtl(View view) {
+    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1
+        && view.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
+  }
+
   /**
    * Creates an {@link android.graphics.drawable.InsetDrawable} according to the layout direction of
    * {@code view}.

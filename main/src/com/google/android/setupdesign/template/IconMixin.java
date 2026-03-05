@@ -25,6 +25,7 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Trace;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -33,6 +34,7 @@ import android.widget.ImageView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.RawRes;
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.setupcompat.internal.TemplateLayout;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
@@ -43,7 +45,6 @@ import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.util.HeaderAreaStyler;
 import com.google.android.setupdesign.util.LottieAnimationHelper;
 import com.google.android.setupdesign.util.PartnerStyleHelper;
-import com.google.android.setupdesign.view.SudLottieAnimationView;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,7 +67,7 @@ public class IconMixin implements Mixin {
   private final Context context;
   private boolean isAnimatedIconDelayed = true;
   @DrawableRes private int staticResIcon = 0;
-  private SudLottieAnimationView lottieView;
+  private LottieAnimationView lottieView;
   private boolean isSetAnimatedIcon = false;
 
   private final Handler handler = new Handler(Looper.getMainLooper());
@@ -74,7 +75,12 @@ public class IconMixin implements Mixin {
       () -> {
         if (lottieView != null) {
           lottieView.setProgress(0f);
-          lottieView.playAnimation();
+          Trace.beginSection("IconMixin#playAnimation");
+          try {
+            lottieView.playAnimation();
+          } finally {
+            Trace.endSection();
+          }
         }
       };
 
@@ -160,7 +166,12 @@ public class IconMixin implements Mixin {
         if (animationIcon != 0) {
           InputStream inputRaw = context.getResources().openRawResource(animationIcon);
           // Set LottieAnimationView with inputStream
-          lottieView.setAnimation(inputRaw, null);
+          Trace.beginSection("IconMixin#setAnimation");
+          try {
+            lottieView.setAnimation(inputRaw, null);
+          } finally {
+            Trace.endSection();
+          }
           isSetAnimatedIcon = true;
         } else {
           if (staticResIcon != 0 && setStaticIcon) {

@@ -282,7 +282,7 @@
     <dimen name="sud_items_preferred_height">56dp</dimen>
 
     <!-- Navigation bar -->
-    <!-- TODO: Move this dimen to gingerbread, or see if it should be in platform style as well-->
+    <!-- TODO: Move this dimen to gingerbread, or see if it should be in platform style as well -->
     <dimen name="sud_navbar_button_drawable_padding" tools:ignore="UnusedResources">6dp</dimen>
     <dimen name="sud_navbar_button_padding_sides">10dp</dimen>
     <dimen name="sud_navbar_height">56dp</dimen>
@@ -428,6 +428,35 @@
     <dimen name="sud_glif_expressive_back_button_margin_start">20dp</dimen>
     <dimen name="sud_glif_expressive_back_button_min_size">48dp</dimen>
 
+    <!-- Material floating setup progress indicator -->
+    <!-- Calculated by (sud_glif_expressive_margin_end - 4dp internal padding of indicator) -->
+    <dimen name="sud_glif_expressive_setup_progress_indicator_margin_end">20dp</dimen>
+    <!-- Same as sud_glif_expressive_back_button_min_size -->
+    <dimen name="sud_glif_expressive_setup_progress_indicator_container_min_size">48dp</dimen>
+    <!-- Same as the internal padding of the back button -->
+    <dimen name="sud_glif_expressive_setup_progress_indicator_container_padding">4dp</dimen>
+    <!-- Calculated by (sud_glif_expressive_setup_progress_indicator_container_min_size - 2 * sud_glif_expressive_setup_progress_indicator_container_padding) -->
+    <dimen name="sud_glif_expressive_setup_progress_indicator_min_size">40dp</dimen>
+    <dimen name="sud_glif_expressive_setup_progress_indicator_icon_size">30dp</dimen>
+    <!-- Calculated by (sud_glif_expressive_setup_progress_indicator_icon_size - 24dp icon_size)/2 -->
+    <dimen name="sud_glif_expressive_setup_progress_indicator_icon_padding">3dp</dimen>
+    <dimen name="sud_glif_expressive_setup_progress_indicator_track_thickness">4dp</dimen>
+
+    <!-- Material setup progress bottom sheet -->
+    <dimen name="sud_glif_expressive_setup_progress_bs_padding_horizontal">24dp</dimen>
+    <dimen name="sud_glif_expressive_setup_progress_bs_padding_vertical">0dp</dimen>
+    <dimen name="sud_glif_expressive_setup_progress_bs_icon_size">32dp</dimen>
+    <dimen name="sud_glif_expressive_setup_progress_bs_card_indicator_track_thickness">2dp</dimen>
+    <dimen name="sud_glif_expressive_setup_progress_bs_item_space">16dp</dimen>
+    <dimen name="sud_glif_expressive_setup_progress_bs_progress_percentage_margin_start">12dp</dimen>
+    <dimen name="sud_glif_expressive_setup_progress_bs_card_margin_bottom">4dp</dimen>
+    <dimen name="sud_glif_expressive_setup_progress_bs_card_padding">16dp</dimen>
+    <dimen name="sud_glif_expressive_setup_progress_bs_card_icon_size">24dp</dimen>
+    <dimen name="sud_glif_expressive_setup_progress_bs_card_icon_margin_end">16dp</dimen>
+    <dimen name="sud_glif_expressive_setup_progress_bs_card_item_space">4dp</dimen>
+    <dimen name="sud_glif_expressive_setup_progress_bs_button_min_height">56dp</dimen>
+    <dimen name="sud_glif_expressive_setup_progress_bs_button_margin_bottom">18dp</dimen>
+
     <!-- Glif expressive Additional body text -->
     <dimen name="sud_glif_expressive_additional_body_text_size">16sp</dimen>
     <dimen name="sud_glif_expressive_additional_body_text_line_height">24sp</dimen>
@@ -438,7 +467,7 @@
 
     <!-- Glif expressive footer bar -->
     <!-- footer bar padding -->
-    <!-- TODO: Add padding attributes and values to the SUW side. -->
+    <!-- TODO: b/365906034 - Add padding attributes and values to the SUW side. -->
     <dimen name="sud_glif_expressive_footer_bar_min_height">72dp</dimen>
     <!-- Calculated by (Spec = 24dp - 4dp internal padding of button) -->
     <dimen name="sud_glif_expressive_footer_bar_padding_start">20dp</dimen>
@@ -494,5 +523,18 @@
     <dimen name="sud_glif_expressive_scroll_view_margin_top">-120dp</dimen>
     <dimen name="sud_glif_expressive_scroll_view_padding_bottom">120dp</dimen>
     <dimen name="sud_glif_expressive_scroll_view_margin_bottom">-120dp</dimen>
+
+    <!-- Tooltip overlay -->
+    <dimen name="sud_setup_tooltip_padding_top">104dp</dimen>
+    <dimen name="sud_setup_tooltip_padding_bottom">92dp</dimen>
+    <dimen name="sud_setup_tooltip_min_height">336dp</dimen>
+    <dimen name="sud_setup_tooltip_min_width">336dp</dimen>
+    <dimen name="sud_setup_tooltip_width">220dp</dimen>
+    <dimen name="sud_setup_tooltip_secondary_text_padding_top">12dp</dimen>
+    <dimen name="sud_setup_tooltip_button_margin_top">16dp</dimen>
+    <dimen name="sud_setup_tooltip_button_text_size">14sp</dimen>
+    <dimen name="sud_setup_tooltip_button_corner_radius">20dp</dimen>
+    <dimen name="sud_setup_tooltip_button_stroke_width">1dp</dimen>
+    <dimen name="sud_setup_tooltip_diagonal_padding">12dp</dimen>
 
 </resources>
