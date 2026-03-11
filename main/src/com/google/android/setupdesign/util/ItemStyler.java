@@ -18,7 +18,6 @@ package com.google.android.setupdesign.util;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.view.Gravity;
@@ -29,6 +28,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import com.google.android.setupcompat.partnerconfig.PartnerConfig;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
+import com.google.android.setupcompat.util.FocusIndicatorDrawable;
 import com.google.android.setupcompat.util.Logger;
 import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.util.TextViewPartnerStyler.TextPartnerConfigs;
@@ -205,17 +205,18 @@ public final class ItemStyler {
       }
     }
   }
+
   /** Enum representing the different shapes for the focus ring drawable. */
   public enum FocusIndicatorShape {
-    /** See {@link com.google.android.setupcompat.R.drawable#suc_global_focus_indicator_rectangle}. */
+    /** See {@link R.drawable#suc_global_focus_indicator_rectangle}. */
     RECTANGLE,
     /** See {@link R.drawable#sud_global_focus_indicator_circle}. */
     CIRCLE,
-    /** See {@link com.google.android.setupcompat.R.drawable#suc_global_focus_indicator_rounded_rectangle}. */
+    /** See {@link R.drawable#suc_global_focus_indicator_rounded_rectangle}. */
     ROUNDED_RECTANGLE,
-    /** See {@link com.google.android.setupcompat.R.drawable#suc_global_focus_indicator_top_rounded_rectangle}. */
+    /** See {@link R.drawable#suc_global_focus_indicator_top_rounded_rectangle}. */
     TOP_ROUNDED_RECTANGLE,
-    /** See {@link com.google.android.setupcompat.R.drawable#suc_global_focus_indicator_bottom_rounded_rectangle}. */
+    /** See {@link R.drawable#suc_global_focus_indicator_bottom_rounded_rectangle}. */
     BOTTOM_ROUNDED_RECTANGLE
   }
 
@@ -243,34 +244,49 @@ public final class ItemStyler {
     }
 
     LOG.atInfo("Adding focus ring drawable with shape: " + shape);
-    int drawableResId;
+
+    FocusIndicatorDrawable.Builder builder =
+        new FocusIndicatorDrawable.Builder(context)
+            .withHorizontalPaddingAdjustment(-1)
+            .withVerticalPaddingAdjustment(-1);
+    if (color != null) {
+      builder.withColorInt(color);
+    }
+
+    final int rectangleCornerRadius = 2; // default radius for rectangles in dp.
+    final int circleCornerRadius = 999; // default radius for circles in dp.
+    final int roundedRectangleCornerRadius = 20; // default radius for rounded rectangles in dp.
+
     switch (shape) {
       case CIRCLE:
-        drawableResId = R.drawable.sud_global_focus_indicator_circle;
+        builder.withCornerRadius(circleCornerRadius);
         break;
       case ROUNDED_RECTANGLE:
-        drawableResId = com.google.android.setupcompat.R.drawable.suc_global_focus_indicator_rounded_rectangle;
+        builder
+            .withCornerRadius(roundedRectangleCornerRadius)
+            .withHorizontalPaddingAdjustment(3)
+            .withVerticalPaddingAdjustment(3);
         break;
       case TOP_ROUNDED_RECTANGLE:
-        drawableResId = com.google.android.setupcompat.R.drawable.suc_global_focus_indicator_top_rounded_rectangle;
+        builder.withCornerRadii(
+            /* topLeftDp= */ roundedRectangleCornerRadius,
+            /* topRightDp= */ roundedRectangleCornerRadius,
+            /* bottomRightDp= */ rectangleCornerRadius,
+            /* bottomLeftDp= */ rectangleCornerRadius);
         break;
       case BOTTOM_ROUNDED_RECTANGLE:
-        drawableResId = com.google.android.setupcompat.R.drawable.suc_global_focus_indicator_bottom_rounded_rectangle;
+        builder.withCornerRadii(
+            /* topLeftDp= */ rectangleCornerRadius,
+            /* topRightDp= */ rectangleCornerRadius,
+            /* bottomRightDp= */ roundedRectangleCornerRadius,
+            /* bottomLeftDp= */ roundedRectangleCornerRadius);
         break;
       case RECTANGLE:
       default:
-        drawableResId = com.google.android.setupcompat.R.drawable.suc_global_focus_indicator_rectangle;
         break;
     }
-    Drawable focusIndicatorDrawable = context.getDrawable(drawableResId);
-    if (focusIndicatorDrawable == null) {
-      return;
-    }
-    if (color != null) {
-      focusIndicatorDrawable = focusIndicatorDrawable.mutate();
-      focusIndicatorDrawable.setTint(color);
-    }
-    listItemView.setForeground(focusIndicatorDrawable);
+
+    listItemView.setForeground(builder.build());
   }
 
   public static void applyPartnerCustomizationItemViewLayoutStyle(@Nullable View listItemView) {

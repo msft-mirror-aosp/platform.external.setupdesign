@@ -58,7 +58,7 @@
             android:contentDescription="@null"
             android:visibility="gone" />
 
-        <com.google.android.setupdesign.view.SudLottieAnimationView
+        <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/sud_layout_animation_icon"
                 style="@style/SudContentIllustration"
                 android:layout_width="@dimen/sud_glif_expressive_icon_size"

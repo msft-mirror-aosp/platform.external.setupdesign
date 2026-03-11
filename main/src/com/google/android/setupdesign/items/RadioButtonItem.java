@@ -28,6 +28,8 @@ import androidx.core.view.AccessibilityDelegateCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 import com.google.android.material.radiobutton.MaterialRadioButton;
+import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
+import com.google.android.setupcompat.util.FocusIndicatorDrawable;
 import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.util.ThemeHelper;
 
@@ -39,6 +41,10 @@ import com.google.android.setupdesign.util.ThemeHelper;
  */
 public class RadioButtonItem extends Item
     implements CompoundButton.OnCheckedChangeListener, OnClickListener {
+
+  private static final int FOCUS_RING_HORIZONTAL_OFFSET_DP = 8;
+  private static final int FOCUS_RING_HORIZONTAL_PADDING_ADJUSTMENT_DP = 6;
+  private static final int FOCUS_RING_VERTICAL_PADDING_ADJUSTMENT_DP = 6;
 
   private final AccessibilityDelegateCompat accessibilityDelegate =
       new AccessibilityDelegateCompat() {
@@ -157,6 +163,15 @@ public class RadioButtonItem extends Item
     radioButtonView.setChecked(checked);
     radioButtonView.setOnCheckedChangeListener(this);
     radioButtonView.setEnabled(isEnabled());
+    if (PartnerConfigHelper.isSuwUseFocusRingEnabled(view.getContext())) {
+      radioButtonView.setForeground(
+          new FocusIndicatorDrawable.Builder(radioButtonView.getContext())
+              .withHorizontalOffset(FOCUS_RING_HORIZONTAL_OFFSET_DP)
+              .withHorizontalPaddingAdjustment(FOCUS_RING_HORIZONTAL_PADDING_ADJUSTMENT_DP)
+              .withVerticalPaddingAdjustment(FOCUS_RING_VERTICAL_PADDING_ADJUSTMENT_DP)
+              .withCornerRadius(999)
+              .build());
+    }
 
     ViewCompat.setAccessibilityDelegate(view, accessibilityDelegate);
   }
