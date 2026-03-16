@@ -35,4 +35,6 @@
     <string name="sud_qrcode_content_description" msgid="7201320681442117512">"Koda QR"</string>
     <string name="sud_accessibility_button_label" msgid="482144917611196550">"Dostopnost"</string>
     <string name="sud_qrcode_animation_control" msgid="219222410307225239">"začasna zaustavitev animacije"</string>
+    <string name="sud_setup_progress_percentage" msgid="618943227252023679">"<xliff:g id="PERCENTAGE">%1$s</xliff:g> %%"</string>
+    <string name="sud_setup_progress_indicator_icon_description" msgid="462742966572740442">"Indikator napredka nastavitve"</string>
 </resources>
