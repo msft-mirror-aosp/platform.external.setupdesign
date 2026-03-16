@@ -17,9 +17,9 @@
 package com.google.android.setupdesign.items;
 
 import android.graphics.Color;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+import androidx.core.view.ViewCompat;
 import com.google.android.setupcompat.partnerconfig.PartnerConfigHelper;
 import com.google.android.setupdesign.R;
 import com.google.android.setupdesign.util.LayoutStyler;
@@ -50,16 +50,9 @@ public class SectionHeaderItem extends Item implements Dividable {
     view.findViewById(R.id.sud_items_icon_container).setVisibility(View.GONE);
     view.setContentDescription(getContentDescription());
     view.setClickable(/* clickable= */ false);
+    view.setFocusable(false);
 
-    if (TextUtils.isEmpty(getTitle())) {
-      view.setFocusable(false);
-      view.setFocusableInTouchMode(false);
-      view.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
-    } else {
-      view.setFocusable(true);
-      view.setFocusableInTouchMode(true);
-      view.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
-    }
+    ViewCompat.setAccessibilityHeading(view, true);
 
     if (!PartnerConfigHelper.isGlifExpressiveEnabled(view.getContext())) {
       LayoutStyler.applyPartnerCustomizationLayoutPaddingStyle(view);
