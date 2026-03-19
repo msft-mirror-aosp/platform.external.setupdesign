@@ -48,8 +48,14 @@
             android:clipToPadding="?attr/sudClipToPadding" />
 
         <include layout="@layout/sud_glif_floating_back_button" />
-        <include layout="@layout/sud_glif_floating_setup_progress_indicator" />
-
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:orientation="horizontal">
+            <include layout="@layout/sud_glif_floating_action_button" />
+            <include layout="@layout/sud_glif_floating_setup_progress_indicator" />
+        </LinearLayout>
     </FrameLayout>
 
     <ViewStub

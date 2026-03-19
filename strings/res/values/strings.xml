@@ -67,9 +67,10 @@
     <!-- TalkBack hints for accessibility button. [CHAR LIMIT=NONE]-->
     <string name="sud_accessibility_button_label">Accessibility</string>
 
-    <!-- TODO: Update the hint of talkback after confirmation -->
     <!-- TalkBack hints for QrCode animation control. [CHAR LIMIT=NONE]-->
-    <string name="sud_qrcode_animation_control">pause the animation</string>
+    <string name="sud_qrcode_pause_animation">pause the animation</string>
+    <!-- TalkBack hints for QrCode animation control. [CHAR LIMIT=NONE]-->
+    <string name="sud_qrcode_resume_animation">resume the animation</string>
 
     <!-- Percentage of setup progress [CHAR LIMIT=10] -->
     <string name="sud_setup_progress_percentage"><xliff:g id="percentage" example="20">%1$s</xliff:g>%%</string>

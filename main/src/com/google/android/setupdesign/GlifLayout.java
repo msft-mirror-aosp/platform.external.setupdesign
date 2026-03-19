@@ -70,7 +70,9 @@ import com.google.android.setupcompat.util.ForceTwoPaneHelper;
 import com.google.android.setupcompat.util.KeyboardHelper;
 import com.google.android.setupcompat.util.Logger;
 import com.google.android.setupcompat.util.WizardManagerHelper;
+import com.google.android.setupcompat.view.ButtonBarLayout;
 import com.google.android.setupdesign.template.DescriptionMixin;
+import com.google.android.setupdesign.template.FloatingActionButtonMixin;
 import com.google.android.setupdesign.template.FloatingBackButtonMixin;
 import com.google.android.setupdesign.template.FloatingSetupProgressIndicatorMixin;
 import com.google.android.setupdesign.template.HeaderMixin;
@@ -111,8 +113,6 @@ public class GlifLayout extends PartnerCustomizationLayout {
   private ColorStateList primaryColor;
   private boolean backgroundPatterned = true;
   private boolean applyPartnerHeavyThemeResource = false;
-  private boolean footerHiddenByIme = false;
-  private int originalFooterVisibility = View.VISIBLE;
 
   private static final int ACCESSIBILITY_SETTINGS_REQUEST_CODE = 101;
 
@@ -179,6 +179,8 @@ public class GlifLayout extends PartnerCustomizationLayout {
     registerMixin(IllustrationProgressMixin.class, new IllustrationProgressMixin(this));
     registerMixin(
         FloatingBackButtonMixin.class, new FloatingBackButtonMixin(this, attrs, defStyleAttr));
+    registerMixin(
+        FloatingActionButtonMixin.class, new FloatingActionButtonMixin(this, attrs, defStyleAttr));
     registerMixin(
         FloatingSetupProgressIndicatorMixin.class,
         new FloatingSetupProgressIndicatorMixin(this, attrs, defStyleAttr));
@@ -481,6 +483,13 @@ public class GlifLayout extends PartnerCustomizationLayout {
     if (floatingSetupProgressIndicatorMixin != null) {
       floatingSetupProgressIndicatorMixin.onAttachedToWindow();
     }
+    if (isGlifExpressiveEnabled()) {
+      FooterBarMixin footerBarMixin = getMixin(FooterBarMixin.class);
+      if (footerBarMixin != null) {
+        // Ensure the footer bar guard is set up.
+        footerBarMixin.ensureFooterBarGuard();
+      }
+    }
   }
 
   @Override
@@ -514,6 +523,14 @@ public class GlifLayout extends PartnerCustomizationLayout {
         getMixin(FloatingSetupProgressIndicatorMixin.class);
     if (floatingSetupProgressIndicatorMixin != null) {
       floatingSetupProgressIndicatorMixin.onDetachFromWindow();
+    }
+
+    FooterBarMixin footerBarMixin = getMixin(FooterBarMixin.class);
+    if (footerBarMixin != null && footerBarMixin.getButtonContainer() != null) {
+      View buttonContainer = footerBarMixin.getButtonContainer();
+      if (buttonContainer instanceof ButtonBarLayout buttonBarLayout) {
+        buttonBarLayout.setOnVisibilityChangeListener(null);
+      }
     }
   }
 
@@ -1028,58 +1045,10 @@ public class GlifLayout extends PartnerCustomizationLayout {
         if (canWholeViewsScrollDown.isPresent()) {
           updateBackgroundColor(!canWholeViewsScrollDown.get());
         }
+        footerBarMixin.updateFooterBarVisibilityWhenImeVisible(insets);
       }
-
-      updateFooterBarVisibilityWhenImeVisible(footerBarMixin, insets);
     }
     return super.onApplyWindowInsets(insets);
-  }
-
-  private void updateFooterBarVisibilityWhenImeVisible(
-      FooterBarMixin footerBarMixin, WindowInsets insets) {
-    boolean hideFooterBarWhenImeShown = false;
-    PartnerConfigHelper partnerConfigHelper = PartnerConfigHelper.get(getContext());
-    if (partnerConfigHelper.isPartnerConfigAvailable(
-        PartnerConfig.CONFIG_FOOTER_BAR_HIDE_WHEN_IME_SHOWN)) {
-      hideFooterBarWhenImeShown =
-          PartnerConfigHelper.get(getContext())
-              .getBoolean(getContext(), PartnerConfig.CONFIG_FOOTER_BAR_HIDE_WHEN_IME_SHOWN, false);
-    } else {
-      hideFooterBarWhenImeShown =
-          getContext().getResources().getBoolean(R.bool.sud_footer_bar_hide_when_ime_shown);
-    }
-
-    if (!hideFooterBarWhenImeShown
-        || footerBarMixin == null
-        || footerBarMixin.getButtonContainer() == null) {
-      LOG.atDebug(
-          "Skip updateFooterBarVisibilityWhenImeVisible, hideFooterBarWhenImeShown: "
-              + hideFooterBarWhenImeShown);
-      return;
-    }
-
-    boolean imeVisibleNow =
-        WindowInsetsCompat.toWindowInsetsCompat(insets, this)
-            .isVisible(WindowInsetsCompat.Type.ime());
-
-    View buttonContainer = footerBarMixin.getButtonContainer();
-
-    if (imeVisibleNow) {
-      if (!footerHiddenByIme) {
-        footerHiddenByIme = true;
-        // Backup original footer visibility and hide the footer bar.
-        originalFooterVisibility = buttonContainer.getVisibility();
-        buttonContainer.setVisibility(View.GONE);
-        LOG.atInfo("IME visible, hiding FooterBar");
-      }
-    } else {
-      if (footerHiddenByIme) {
-        footerHiddenByIme = false;
-        // Restore the footer bar visibility to its original state.
-        buttonContainer.setVisibility(originalFooterVisibility);
-        LOG.atInfo("Restoring FooterBar visibility to " + originalFooterVisibility);
-      }
-    }
   }
 
   private Optional<Boolean> canWholeViewsScrollDown() {

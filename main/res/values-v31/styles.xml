@@ -506,12 +506,16 @@
     <item name="dialogCornerRadius">@dimen/sud_glif_device_default_dialog_corner_radius</item>
     <!-- Body text color -->
     <item name="android:textColorPrimary">@color/sud_on_surface_variant</item>
+    <item name="buttonBarPositiveButtonStyle">@style/SudDialogMaterialButton.Primary</item>
+    <item name="buttonBarNegativeButtonStyle">@style/SudDialogMaterialButton.Secondary</item>
   </style>
 
   <style name="SudGlifExpressiveDialogThemeCompat" parent="ThemeOverlay.Material3.MaterialAlertDialog">
     <item name="android:textAllCaps">false</item>
     <item name="android:fontFamily">@string/sudGlifExpressiveDialogFontFamily</item>
     <item name="dialogCornerRadius">@dimen/sud_glif_device_default_dialog_corner_radius</item>
+    <item name="buttonBarPositiveButtonStyle">@style/SudDialogMaterialButton.Primary</item>
+    <item name="buttonBarNegativeButtonStyle">@style/SudDialogMaterialButton.Secondary</item>
   </style>
 
   <style name="SudGlifExpressiveWindowTitleTextAppearance" parent="RtlOverlay.DialogWindowTitle.AppCompat">
