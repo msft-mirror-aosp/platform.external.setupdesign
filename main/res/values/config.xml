@@ -57,7 +57,4 @@
         <item>.primary:@sud_system_primary_light</item>
     </string-array>
 
-    <!-- Whether to hide the footer bar when the IME is shown. -->
-    <bool name="sud_footer_bar_hide_when_ime_shown">false</bool>
-
 </resources>

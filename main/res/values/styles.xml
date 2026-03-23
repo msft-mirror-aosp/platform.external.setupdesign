@@ -2003,6 +2003,11 @@
         <item name="android:layout_marginTop">@dimen/sud_glif_expressive_back_button_margin_top</item>
     </style>
 
+    <style name="SudGlifActionButtonContainer">
+        <item name="android:layout_marginEnd" tools:ignore="NewApi">?attr/sudMarginEnd</item>
+        <item name="android:layout_marginTop">@dimen/sud_glif_expressive_back_button_margin_top</item>
+    </style>
+
      <!-- Theme Overlay for the Dialog Window -->
     <style name="SudThemeOverlay.BottomSheetDialog.Rounded" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/SudWidget.BottomSheet.Modal.Rounded</item>
@@ -2103,6 +2108,7 @@
     </style>
 
     <style name="sudInfoFooterIconExpressive" parent="sudInfoFooterIcon">
+        <item name="android:tint">@color/sud_on_surface_variant</item>
         <item name="android:layout_width">@dimen/sud_glif_expressive_info_footer_icon_size</item>
         <item name="android:layout_height">@dimen/sud_glif_expressive_info_footer_icon_size</item>
         <item name="android:layout_marginBottom">@dimen/sud_info_footer_icon_padding_bottom</item>
@@ -2116,6 +2122,7 @@
     </style>
 
    <style name="sudInfoFooterTitleExpressive" parent="sudInfoFooterTitle">
+        <item name="android:textColor">@color/sud_on_surface_variant</item>
         <item name="android:fontFamily">@string/sudFontExpressive</item>
     </style>
 
@@ -2191,6 +2198,8 @@
 
     <style name="SudGlifExpressiveDialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="android:fontFamily">@string/sudGlifExpressiveDialogFontFamily</item>
+        <item name="buttonBarPositiveButtonStyle">@style/SudDialogMaterialButton.Primary</item>
+        <item name="buttonBarNegativeButtonStyle">@style/SudDialogMaterialButton.Secondary</item>
     </style>
 
     <style name="SudMaterialYouAlertDialogTheme.DayNight" parent="SudMaterialYouAlertDialogTheme.Light"/>
@@ -2207,6 +2216,65 @@
         <item name="colorAccent">@color/sud_color_accent_glif_v3_light</item>
         <item name="dialogCornerRadius">@dimen/sud_glif_alert_dialog_corner_radius</item>
         <item name="android:windowBackground">@drawable/sud_dialog_background_light</item>
+    </style>
+
+    <style name="SudDialogMaterialButton.Primary" parent="Widget.Material3.Button">
+        <!-- This style can be applied to a button either as a "style" in XML, or as a theme in
+             ContextThemeWrapper. These self-referencing attributes make sure this is applied as
+             both to the button. -->
+        <item name="android:buttonStyle">@style/SudDialogMaterialButton.Primary</item>
+        <item name="android:theme">@style/SudDialogMaterialButton.Primary</item>
+
+        <!-- Values used in styles -->
+        <item name="android:fontFamily">@string/sudExpressiveButtonFontFamily</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:layout_marginStart">@dimen/sud_glif_expressive_alert_dialog_button_margin_start</item>
+        <item name="android:layout_marginLeft">@dimen/sud_glif_expressive_alert_dialog_button_margin_start</item>
+        <item name="android:textAllCaps">?attr/sudButtonAllCaps</item>
+        <item name="android:stateListAnimator" tools:ignore="NewApi">@null</item>
+        <item name="android:textFontWeight" tools:targetApi="p">@integer/sud_glif_expressive_alert_dialog_button_font_weight</item>
+        <item name="android:minHeight">@dimen/sud_glif_expressive_alert_dialog_button_min_height</item>
+        <item name="android:insetTop">@dimen/sud_glif_expressive_alert_dialog_button_inset_top</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">@dimen/sud_glif_expressive_alert_dialog_button_padding_horizontal</item>
+        <item name="android:paddingLeft">@dimen/sud_glif_expressive_alert_dialog_button_padding_horizontal</item>
+        <item name="android:paddingEnd" tools:ignore="NewApi">@dimen/sud_glif_expressive_alert_dialog_button_padding_horizontal</item>
+        <item name="android:paddingRight">@dimen/sud_glif_expressive_alert_dialog_button_padding_horizontal</item>
+        <item name="android:textSize">@dimen/sud_glif_expressive_alert_dialog_button_text_size</item>
+
+        <!-- Values used in themes -->
+        <item name="android:buttonCornerRadius" tools:ignore="NewApi">?attr/sucFooterBarButtonCornerRadius</item>
+
+        <item name="viewInflaterClass">com.google.android.material.theme.MaterialComponentsViewInflater</item>
+    </style>
+
+    <style name="SudDialogMaterialButton.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+        <!-- This style can be applied to a button either as a "style" in XML, or as a theme in
+             ContextThemeWrapper. These self-referencing attributes make sure this is applied as
+             both to the button. -->
+        <item name="android:buttonStyle">@style/SudDialogMaterialButton.Secondary</item>
+        <item name="android:theme">@style/SudDialogMaterialButton.Secondary</item>
+
+        <!-- Values used in styles -->
+        <item name="android:fontFamily">@string/sudExpressiveButtonFontFamily</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:textAllCaps">?attr/sudButtonAllCaps</item>
+        <item name="android:textFontWeight" tools:targetApi="p">@integer/sud_glif_expressive_alert_dialog_button_font_weight</item>
+        <item name="android:minHeight">@dimen/sud_glif_expressive_alert_dialog_button_min_height</item>
+        <item name="android:insetTop">@dimen/sud_glif_expressive_alert_dialog_button_inset_top</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">@dimen/sud_glif_expressive_alert_dialog_button_padding_horizontal</item>
+        <item name="android:paddingLeft">@dimen/sud_glif_expressive_alert_dialog_button_padding_horizontal</item>
+        <item name="android:paddingEnd" tools:ignore="NewApi">@dimen/sud_glif_expressive_alert_dialog_button_padding_horizontal</item>
+        <item name="android:paddingRight">@dimen/sud_glif_expressive_alert_dialog_button_padding_horizontal</item>
+        <item name="android:textSize">@dimen/sud_glif_expressive_alert_dialog_button_text_size</item>
+        <item name="strokeColor">?attr/sucFooterBarButtonOutlinedColor</item>
+
+        <!-- Values used in themes -->
+        <item name="android:buttonCornerRadius" tools:ignore="NewApi">?attr/sucFooterBarButtonCornerRadius</item>
+        <item name="android:colorControlHighlight">@color/suc_customization_button_highlight_ripple</item>
+
+        <item name="viewInflaterClass">com.google.android.material.theme.MaterialComponentsViewInflater</item>
     </style>
 
     <style name="SudSwitchBarStyle">
