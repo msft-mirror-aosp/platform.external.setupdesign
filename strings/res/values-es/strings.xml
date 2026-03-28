@@ -34,10 +34,8 @@
     <string name="sud_lottie_animation_view_accessibility_description" msgid="2130817807970911136">"Animación"</string>
     <string name="sud_qrcode_content_description" msgid="7201320681442117512">"Código QR"</string>
     <string name="sud_accessibility_button_label" msgid="482144917611196550">"Accesibilidad"</string>
-    <!-- no translation found for sud_qrcode_pause_animation (8020679467838417508) -->
-    <skip />
-    <!-- no translation found for sud_qrcode_resume_animation (2599333154907970052) -->
-    <skip />
+    <string name="sud_qrcode_pause_animation" msgid="8020679467838417508">"pausa la animación"</string>
+    <string name="sud_qrcode_resume_animation" msgid="2599333154907970052">"reanuda la animación"</string>
     <string name="sud_setup_progress_percentage" msgid="618943227252023679">"<xliff:g id="PERCENTAGE">%1$s</xliff:g> %%"</string>
     <string name="sud_setup_progress_indicator_icon_description" msgid="462742966572740442">"Indicador de progreso de la configuración"</string>
 </resources>

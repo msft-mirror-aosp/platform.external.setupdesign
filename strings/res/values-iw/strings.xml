@@ -23,7 +23,7 @@
     <string name="sud_more_button_label" msgid="7621069783233060852">"עוד"</string>
     <string name="sud_expressive_accessibility_more_button_label" msgid="9095475386748768626">"גלילה למטה"</string>
     <string name="sud_default_device_name" msgid="7659799100092593458">"מכשיר"</string>
-    <string name="sud_more_info" msgid="634386452901044160">"עוד מידע"</string>
+    <string name="sud_more_info" msgid="634386452901044160">"למידע נוסף"</string>
     <string name="sud_less_info" msgid="1694784631651721536">"פחות מידע"</string>
     <string name="sud_card_view_check_mark_icon_label" msgid="3751763705689966938">"בוצע סימון"</string>
     <string name="sud_lottie_animation_view_accessibility_animation_playing_status" msgid="2429843612774477771">"האנימציה פועלת"</string>
@@ -34,10 +34,8 @@
     <string name="sud_lottie_animation_view_accessibility_description" msgid="2130817807970911136">"אנימציה"</string>
     <string name="sud_qrcode_content_description" msgid="7201320681442117512">"‏קוד QR"</string>
     <string name="sud_accessibility_button_label" msgid="482144917611196550">"נגישות"</string>
-    <!-- no translation found for sud_qrcode_pause_animation (8020679467838417508) -->
-    <skip />
-    <!-- no translation found for sud_qrcode_resume_animation (2599333154907970052) -->
-    <skip />
+    <string name="sud_qrcode_pause_animation" msgid="8020679467838417508">"השהיית האנימציה"</string>
+    <string name="sud_qrcode_resume_animation" msgid="2599333154907970052">"המשך האנימציה"</string>
     <string name="sud_setup_progress_percentage" msgid="618943227252023679">"<xliff:g id="PERCENTAGE">%1$s</xliff:g>%%"</string>
     <string name="sud_setup_progress_indicator_icon_description" msgid="462742966572740442">"אינדיקטור ההתקדמות בתהליך ההגדרה"</string>
 </resources>
